@@ -55,7 +55,7 @@ class HomeLayout extends StatelessWidget {
                 SalomonBottomBarItem(
                   icon: const Icon(Icons.menu),
                   title: const Text("More"),
-                  selectedColor: AppColors.primaryColor,
+                  selectedColor: AppColors.primaryLight,
                   unselectedColor: Colors.grey.shade600,
                 ),
               ],
