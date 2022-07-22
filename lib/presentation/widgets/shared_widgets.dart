@@ -127,7 +127,7 @@ customAppbar(String title){
         color: AppColors.primaryColor
     ),),
     titleSpacing: 0,
-    centerTitle: true,
+    // centerTitle: true,
     elevation: 0.0,
   );
 }
