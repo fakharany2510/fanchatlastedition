@@ -1,6 +1,8 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -16,10 +18,9 @@ class HomeLayout extends StatelessWidget {
         builder: (context,state){
           var cubit=AppCubit.get(context);
           return Scaffold(
-            appBar: AppBar(
-              title: const Text('World Cup'),
-            ),
+            appBar: customAppbar(cubit.screensTitles[cubit.currentIndex]),
             body: cubit.screens[cubit.currentIndex],
+
             bottomNavigationBar: SalomonBottomBar(
               currentIndex: cubit.currentIndex,
               onTap: (index){
@@ -27,7 +28,6 @@ class HomeLayout extends StatelessWidget {
               },
 
               items: [
-                /// Home
                 SalomonBottomBarItem(
                   icon: const Icon(Icons.home),
                   title: const Text("Home"),
@@ -35,7 +35,6 @@ class HomeLayout extends StatelessWidget {
                   unselectedColor: Colors.grey.shade600
                 ),
 
-                /// Likes
                 SalomonBottomBarItem(
                   icon: const Icon(Icons.people_alt),
                   title: const Text("Fan"),
@@ -43,7 +42,6 @@ class HomeLayout extends StatelessWidget {
                     unselectedColor: Colors.grey.shade600
                 ),
 
-                /// Search
                 SalomonBottomBarItem(
                   icon: const Icon(Icons.chat),
                   title: const Text("Chat"),
@@ -51,11 +49,10 @@ class HomeLayout extends StatelessWidget {
                     unselectedColor: Colors.grey.shade600
                 ),
 
-                /// Profile
                 SalomonBottomBarItem(
                   icon: const Icon(Icons.menu),
                   title: const Text("More"),
-                  selectedColor: AppColors.primaryLight,
+                  selectedColor: AppColors.primaryColor,
                   unselectedColor: Colors.grey.shade600,
                 ),
               ],

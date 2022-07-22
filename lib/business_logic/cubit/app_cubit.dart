@@ -13,7 +13,6 @@ part 'app_state.dart';
 class AppCubit extends Cubit<AppState> {
   AppCubit() : super(AppInitial());
 
-
   static AppCubit get(context)=> BlocProvider.of(context);
 
   List <Widget> screens=[
@@ -23,6 +22,22 @@ class AppCubit extends Cubit<AppState> {
     const ChatScreen(),
     const MoreScreen(),
 
+  ];
+
+  List screensTitles=[
+
+    'Home Screen',
+    'Fan Screen' ,
+    'Chat Screen',
+    'More Screen',
+
+  ];
+
+  List carouselImage=[
+    'assets/images/slider1.png',
+    'assets/images/slider2.png',
+    'assets/images/slider3.png',
+    'assets/images/slider4.png',
   ];
   int currentIndex=0;
   void navigateScreen(int index){

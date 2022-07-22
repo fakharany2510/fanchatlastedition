@@ -1,6 +1,7 @@
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 Widget textFormFieldWidget(
 {
@@ -107,3 +108,26 @@ Widget defaultSocialMediaButton({
       ),
     )
 );
+
+
+customAppbar(String title){
+
+  return AppBar(
+    systemOverlayStyle: const SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: Colors.white,
+    ),
+    iconTheme: IconThemeData(
+        color: AppColors.primaryColor
+    ),
+    backgroundColor: AppColors.myWhite,
+    title: Text(title,style: TextStyle(
+        fontSize: 21,
+        fontWeight: FontWeight.w600,
+        color: AppColors.primaryColor
+    ),),
+    titleSpacing: 0,
+    centerTitle: true,
+    elevation: 0.0,
+  );
+}
