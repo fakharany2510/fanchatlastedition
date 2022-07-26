@@ -11,6 +11,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: AppColors.myWhite,
       body: Form(
@@ -48,9 +49,10 @@ class LoginScreen extends StatelessWidget {
                 ),
                 SizedBox(height: size.height*.03,),
                 defaultButton(
+                    width: size.width*.9,
+                    height: size.height*.06,
                     buttonText: 'LOGIN',
                     buttonColor: AppColors.primaryColor,
-                    size: size,
                     function: (){
                       Navigator.push(context, MaterialPageRoute(builder: (_){
                         return const HomeLayout();

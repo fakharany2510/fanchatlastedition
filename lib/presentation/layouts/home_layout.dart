@@ -36,6 +36,13 @@ class HomeLayout extends StatelessWidget {
                 ),
 
                 SalomonBottomBarItem(
+                    icon: const Icon(Icons.timer_outlined),
+                    title: const Text("Match"),
+                    selectedColor: AppColors.primaryColor,
+                    unselectedColor: Colors.grey.shade600
+                ),
+
+                SalomonBottomBarItem(
                   icon: const Icon(Icons.people_alt),
                   title: const Text("Fan"),
                   selectedColor: AppColors.primaryColor,

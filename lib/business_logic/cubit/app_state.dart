@@ -7,3 +7,4 @@ class AppInitial extends AppState {}
 
 class NavigateScreenState extends AppState {}
 
+class CheckBoxState extends AppState {}

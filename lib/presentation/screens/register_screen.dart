@@ -71,8 +71,10 @@ class RegisterScreen extends StatelessWidget {
                 defaultButton(
                     buttonText: 'REGISTER',
                     buttonColor: AppColors.primaryColor,
-                    size: size,
+                    width: size.width*.9,
+                    height: size.height*.06,
                     function: (){
+                      Navigator.pushNamed(context, 'select_national');
                     }
                 ),
                 SizedBox(height: size.height*.02,),

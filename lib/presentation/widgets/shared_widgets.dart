@@ -50,15 +50,17 @@ Widget textFormFieldWidget(
 
 
 
+
 Widget defaultButton({
-  required Size size,
+  required double width,
+  required double height,
   required Color buttonColor,
   required String buttonText,
   required VoidCallback function
 })=>Container(
 
-    height: size.height*(.06),
-    width: size.width*(.9),
+    height: height,
+    width: width,
     decoration: BoxDecoration(
       color:buttonColor ,
       borderRadius: BorderRadius.circular(25),
@@ -74,6 +76,7 @@ Widget defaultButton({
       ),
     )
 );
+
 
 Widget defaultSocialMediaButton({
   context,
@@ -131,3 +134,4 @@ customAppbar(String title){
     elevation: 0.0,
   );
 }
+

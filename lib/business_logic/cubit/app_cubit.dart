@@ -2,6 +2,7 @@ import 'package:fanchat/presentation/screens/chat_screen.dart';
 import 'package:fanchat/presentation/screens/fan_screen.dart';
 import 'package:fanchat/presentation/screens/home_screen.dart';
 import 'package:fanchat/presentation/screens/login_screen.dart';
+import 'package:fanchat/presentation/screens/match_details.dart';
 import 'package:fanchat/presentation/screens/more_screen.dart';
 import 'package:fanchat/presentation/screens/register_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,11 @@ class AppCubit extends Cubit<AppState> {
 
   static AppCubit get(context)=> BlocProvider.of(context);
 
+
   List <Widget> screens=[
 
     const HomeScreen(),
+    const MatchDetails(),
     const FanScreen(),
     const ChatScreen(),
     const MoreScreen(),
@@ -27,13 +30,15 @@ class AppCubit extends Cubit<AppState> {
   List screensTitles=[
 
     'Home Screen',
+    'Match Details' ,
     'Fan Screen' ,
     'Chat Screen',
     'More Screen',
 
   ];
 
-  List <String> groupsImages=[
+
+  final List <String> groupsImages=[
 
     'https://img.freepik.com/premium-photo/flag-france_135932-1458.jpg?w=740',
     'https://img.freepik.com/free-vector/illustration-usa-flag_53876-18165.jpg?w=996&t=st=1658517048~exp=1658517648~hmac=cbe565f23062c2297398122d1ead56d1031b7e446121a0e059be5be3158769c1' ,
@@ -46,11 +51,31 @@ class AppCubit extends Cubit<AppState> {
 
   ];
 
+  List <String> nationalTitles=[
+
+    'France',
+    'USA' ,
+    'Argentinian',
+    'Senegal',
+    'Germany',
+    'Spanish',
+    'Greek',
+    'Cameroon',
+
+  ];
+
   List carouselImage=[
     'assets/images/slider1.png',
     'assets/images/slider2.png',
     'assets/images/slider3.png',
     'assets/images/slider4.png',
+  ];
+
+  List chatImages=[
+    'https://img.freepik.com/free-photo/successful-professional-enjoying-work-break_1262-16980.jpg?w=740&t=st=1658702118~exp=1658702718~hmac=a87514a21d49f5fa06f774fbfbe0adad396f68a7c4b24912ddd70c9aeed5eddb',
+    'https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?w=740&t=st=1658702156~exp=1658702756~hmac=e88a3db16b3bb740df629b5d80f3d6b0cb9cb693cee3663078665059aed3a6cc',
+    'https://img.freepik.com/free-photo/young-handsome-man-listens-music-with-earphones_176420-15616.jpg?w=740&t=st=1658702204~exp=1658702804~hmac=4ad64670966fe210e2226e87405fadf3971f9db7eb7a5136b5e039053e2d365a',
+    'https://img.freepik.com/free-photo/bohemian-man-with-his-arms-crossed_1368-3542.jpg?w=740&t=st=1658702142~exp=1658702742~hmac=26d3c0d7eaadc76fee6a337185a9b9288961ceb2513c8de238d3ad3b81e26ae0',
   ];
   int currentIndex=0;
   void navigateScreen(int index){
@@ -58,5 +83,16 @@ class AppCubit extends Cubit<AppState> {
     currentIndex=index;
     emit(NavigateScreenState());
   }
+
+
+
+  bool checkValue=false;
+  void checkBox(value){
+
+    checkValue=value;
+    emit(CheckBoxState());
+  }
+
+
 
 }
