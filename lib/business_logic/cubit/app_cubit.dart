@@ -17,21 +17,13 @@ class AppCubit extends Cubit<AppState> {
   static AppCubit get(context)=> BlocProvider.of(context);
 
 
-  List <Widget> screens=[
 
-    const HomeScreen(),
-    const MatchDetails(),
-    const FanScreen(),
-    const ChatScreen(),
-    const MoreScreen(),
-
-  ];
 
   List screensTitles=[
 
     'Home Screen',
     'Match Details' ,
-    'Fan Screen' ,
+    'Fan Area' ,
     'Chat Screen',
     'More Screen',
 

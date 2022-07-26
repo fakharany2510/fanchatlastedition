@@ -4,23 +4,20 @@ import 'package:flutter/material.dart';
 
 Widget buidPostItem(context)=>Padding(
   padding: const EdgeInsets.only(bottom: 5,),
-  child: Card(
-    margin:EdgeInsets.symmetric(horizontal: 10) ,
-    clipBehavior: Clip.antiAliasWithSaveLayer,
-    elevation: 10,
-    color: Colors.white,
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+  child: Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
             children: [
               const CircleAvatar(
                 backgroundImage: NetworkImage('https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/2022_FIFA_World_Cup.svg/1200px-2022_FIFA_World_Cup.svg.png',),
-                radius: 30,
+                radius: 18,
               ),
-              const SizedBox(width: 15,),
+              const SizedBox(width: 7,),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,84 +27,64 @@ Widget buidPostItem(context)=>Padding(
                         Text('Ahmed Elfakharany',
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 16,
+                              fontSize: 14,
                               fontWeight: FontWeight.w500
                           ),
                         ),
-                        SizedBox(width: 5,),
-                        Icon(Icons.check_circle,color: Colors.blue,size:15,)
                       ],
-                    ),
-                    Text('25/10',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey
-                      ),
                     ),
                   ],
                 ),
               ),
+              Spacer(),
+              Text('25/12',
+              style: TextStyle(
+                fontSize: 13,
+                color: Colors.grey
+              ),
+              ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Container(
-              width: double.infinity,
-              height: 1,
-              color: Colors.grey.shade300,
+        ),
+        SizedBox(height:10),
+        // if(model.postImage != '')
+          Container(
+            height: 200,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(3),
+                image: const DecorationImage(
+                    image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHTMtDJNrLN9o1nU2mdfTJVfjrart5NOhNeg&usqp=CAU'),
+                    fit: BoxFit.fill
+                )
             ),
           ),
-          Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: const Text('Hellow World Cup',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  height: 1.2,
+        SizedBox(height:7),
+        Padding(
+          padding: const EdgeInsets.only(top:7,right: 0),
+          child: GestureDetector(
+            onTap: (){},
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                width: MediaQuery.of(context).size.width*.2,
+                height:MediaQuery.of(context).size.height*.03,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.favorite_border,size: 20,color: Colors.red),
+                    SizedBox(width: 2,),
+                    Text('30',style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300
+                    ),),
+                  ],
                 ),
-              )),
-
-          // if(model.postImage != '')
-            Container(
-              height: 350,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(3),
-                  image: const DecorationImage(
-                      image: NetworkImage('https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/2022_FIFA_World_Cup.svg/1200px-2022_FIFA_World_Cup.svg.png'),
-                      fit: BoxFit.fill
-                  )
               ),
             ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Container(
-              width: double.infinity,
-              height: 1,
-              color: Colors.grey.shade300,
-            ),
           ),
-          Container(
-            height: MediaQuery.of(context).size.height*.05,
-            width: MediaQuery.of(context).size.width*.5,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.red),
-              borderRadius: BorderRadius.circular(50)
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text('30',style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500
-                ),),
-                SizedBox(width: 5,),
-                Icon(Icons.favorite,size: 30,color: Colors.red),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     ),
   ),
 );

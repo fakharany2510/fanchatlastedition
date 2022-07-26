@@ -40,6 +40,8 @@ dependencies:
   shared_preferences: ^2.0.15
   salomon_bottom_bar: ^3.3.1
   carousel_slider: ^4.1.1
+  flutter_speed_dial: ^6.0.0
+
 
   #Gooflr SignIn
   google_sign_in: ^5.3.3

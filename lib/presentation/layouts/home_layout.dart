@@ -6,11 +6,26 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
+import '../screens/chat_screen.dart';
+import '../screens/fan_screen.dart';
+import '../screens/home_screen.dart';
+import '../screens/match_details.dart';
+import '../screens/more_screen.dart';
+
 class HomeLayout extends StatelessWidget {
   const HomeLayout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List <Widget> screens=[
+
+      HomeScreen(pageHeight: MediaQuery.of(context).size.height,pageWidth:MediaQuery.of(context).size.width),
+      const MatchDetails(),
+      const FanScreen(),
+      const ChatScreen(),
+      const MoreScreen(),
+
+    ];
     return BlocConsumer<AppCubit,AppState>(
         listener: (context,state){
 
@@ -19,7 +34,7 @@ class HomeLayout extends StatelessWidget {
           var cubit=AppCubit.get(context);
           return Scaffold(
             appBar: customAppbar(cubit.screensTitles[cubit.currentIndex]),
-            body: cubit.screens[cubit.currentIndex],
+            body: screens[cubit.currentIndex],
 
             bottomNavigationBar: SalomonBottomBar(
               currentIndex: cubit.currentIndex,
