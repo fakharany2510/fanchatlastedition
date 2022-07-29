@@ -40,6 +40,7 @@ dependencies:
   shared_preferences: ^2.0.15
   carousel_slider: ^4.1.1
   flutter_speed_dial: ^6.0.0
+  image_picker: ^0.8.4+8
 
 
   #Gooflr SignIn

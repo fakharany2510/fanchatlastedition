@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'package:fanchat/business_logic/register/register_cubit.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/user_model.dart';
@@ -11,6 +14,7 @@ import 'package:fanchat/presentation/screens/register_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 
 part 'app_state.dart';
@@ -89,6 +93,9 @@ class AppCubit extends Cubit<AppState> {
   void navigateScreen(int index){
 
     currentIndex=index;
+    if(currentIndex==3){
+      getUser();
+    }
     emit(NavigateScreenState());
   }
 
@@ -125,5 +132,164 @@ class AppCubit extends Cubit<AppState> {
 
   }
 
+  File? coverImage;
 
+  ImageProvider cover = const AssetImage('assets/images/profile.png');
+
+  var coverPicker = ImagePicker();
+
+  Future<void> getCoverImage() async {
+    final pickedFile = await coverPicker.pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      coverImage = File(pickedFile.path);
+      cover = FileImage(coverImage!);
+      print('Path is ${pickedFile.path}');
+      emit(UploadCoverImageSuccessState());
+    } else {
+      print('No Image selected.');
+      emit(UploadCoverImageErrorState());
+    }
+  }
+
+  File? profileImage;
+
+  ImageProvider profile = const AssetImage('assets/images/profile.png');
+
+  var picker = ImagePicker();
+
+  Future<void> getProfileImage() async {
+    final pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      profileImage = File(pickedFile.path);
+      profile = FileImage(profileImage!);
+      print('Path is ${pickedFile.path}');
+      emit(UploadProfileImageSuccessState());
+    } else {
+      print('No Image selected.');
+      emit(UploadProfileImageErrorState());
+    }
+
+}
+
+
+  String ?profilePath;
+
+  Future uploadUserImage(
+      {
+        String ?name,
+        String ?phone,
+        String ?bio,
+
+      }
+      ){
+
+    emit(GetProfileImageLoadingState());
+    return firebase_storage.FirebaseStorage.instance.ref()
+        .child('users/${Uri.file(profileImage!.path).pathSegments.last}')
+        .putFile(profileImage!).then((value) {
+
+      value.ref.getDownloadURL().then((value) {
+
+        printMessage('Upload Success');
+        profilePath = value;
+        updateProfile(name: name, phone: phone, bio: bio,image: profilePath);
+
+        emit(GetProfileImageSuccessState());
+
+      }).catchError((error){
+
+        print('Error in Upload profileImage ${error.toString()}');
+        emit(GetProfileImageErrorState());
+
+      });
+
+    }).catchError((error){
+
+      print('Error in Upload profileImage ${error.toString()}');
+      emit(GetProfileImageErrorState());
+    });
+
+
+  }
+
+
+  String ?coverPath;
+  Future uploadUserCover(
+      {
+         String ?name,
+         String ?phone,
+         String ?bio,
+
+      }
+      ){
+
+
+    emit(GetCoverImageLoadingState());
+    return firebase_storage.FirebaseStorage.instance.ref()
+        .child('users/${Uri.file(coverImage!.path).pathSegments.last}')
+        .putFile(coverImage!).then((value) {
+
+      value.ref.getDownloadURL().then((value) {
+
+        printMessage('Upload Success');
+        coverPath = value;
+        updateProfile(name: name, phone: phone, bio: bio,cover: coverPath);
+        emit(GetCoverImageSuccessState());
+
+      }).catchError((error){
+
+        print('Error in Upload profileImage ${error.toString()}');
+        emit(GetCoverImageErrorState());
+
+      });
+
+    }).catchError((error){
+
+      print('Error in Upload profileImage ${error.toString()}');
+      emit(GetCoverImageErrorState());
+    });
+
+
+  }
+
+
+  Future updateProfile({
+
+      String ?image,
+      String ?cover,
+      required String ?name,
+      required String ?phone,
+      required String ?bio,
+
+   })async{
+
+    UserModel model= UserModel(
+      username: name,
+      bio: bio,
+      uId: AppStrings.uId,
+      image: image?? userModel!.image,
+      cover: cover?? userModel!.cover,
+      phone: phone,
+
+    );
+    emit(UpdateUserLoadingState());
+    FirebaseFirestore.instance.
+    collection('users').
+    doc(AppStrings.uId).update(model.toMap()).then((value) {
+
+
+      emit(UpdateUserSuccessState());
+    }).catchError((error){
+
+      printMessage('Error in Update is ${error.toString()}');
+      emit(UpdateUserErrorState());
+    });
+
+  }
 }

@@ -18,7 +18,6 @@ class MatchDetails extends StatelessWidget {
           return Scaffold(
             backgroundColor: AppColors.myWhite,
             body: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
               child: Container(
                 color: AppColors.myWhite,
                 width: double.infinity,

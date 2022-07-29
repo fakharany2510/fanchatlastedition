@@ -19,7 +19,6 @@ class SingleMatch extends StatelessWidget {
           appBar: customAppbar('Match Details'),
 
           body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
             child: Container(
               color: AppColors.myWhite,
               width: double.infinity,

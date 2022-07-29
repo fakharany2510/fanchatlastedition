@@ -58,7 +58,8 @@ Widget defaultButton({
   required double height,
   required Color buttonColor,
   required String buttonText,
-  required VoidCallback function
+  required VoidCallback function,
+  double fontSize=18,
 })=>Container(
 
     height: height,
@@ -73,7 +74,7 @@ Widget defaultButton({
           color: AppColors.myWhite,
           //fontFamily: AppStrings.appFont,
           fontWeight: FontWeight.w500,
-          fontSize: 18
+          fontSize: fontSize
       ),
       ),
     )

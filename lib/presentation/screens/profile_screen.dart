@@ -58,7 +58,6 @@ class ProfileScreen extends StatelessWidget {
                     ),
 
                   ),
-                  const SizedBox(height:5,),
                   //name
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -74,17 +73,57 @@ class ProfileScreen extends StatelessWidget {
                       const Icon(Icons.check_circle,color: Colors.blue,size:15,),
                     ],
                   ),
-                  const SizedBox(height:15,),
+                  const SizedBox(height:7,),
+                  Text('${cubit.userModel!.bio}',
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500
+                    ),
+                  ),
+                  const SizedBox(height:10,),
                   defaultButton(
                       buttonText: 'Edit Profile',
                       buttonColor: AppColors.primaryColor,
                       height: size.height*.06,
-                      width: size.width*.4,
+                      width: size.width*.9,
                       function: (){
                         cubit.getUser();
                         Navigator.pushNamed(context, 'edit_profile');
                       }
                   ),
+                  const SizedBox(height: 15,),
+                  GridView.count(
+                    shrinkWrap: true,
+                    childAspectRatio: 1/1.3,
+                    crossAxisSpacing: 2,
+                    mainAxisSpacing: 2,
+                    crossAxisCount: 3,
+                    children: List.generate(
+                        cubit.fanImages.length, (index) => Column(
+                      children: [
+                        Stack(
+                          children: [
+                            Image(
+                              height: 153,
+                              fit: BoxFit.cover,
+                              image: NetworkImage('${cubit.fanImages[index]}'),
+                            ),
+
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              child: IconButton(
+                                  onPressed: (){
+                                  },
+                                  icon:Icon(Icons.image,color: AppColors.myWhite,)
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    )),
+                  )
                 ],
               ),
             ),
