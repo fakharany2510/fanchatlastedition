@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/data/modles/user_model.dart';
 import 'package:fanchat/presentation/screens/chat_screen.dart';
 import 'package:fanchat/presentation/screens/fan_screen.dart';
 import 'package:fanchat/presentation/screens/home_screen.dart';
@@ -5,6 +8,7 @@ import 'package:fanchat/presentation/screens/login_screen.dart';
 import 'package:fanchat/presentation/screens/match_details.dart';
 import 'package:fanchat/presentation/screens/more_screen.dart';
 import 'package:fanchat/presentation/screens/register_screen.dart';
+import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -16,7 +20,9 @@ class AppCubit extends Cubit<AppState> {
 
   static AppCubit get(context)=> BlocProvider.of(context);
 
-
+  TextEditingController changeUserNameController= TextEditingController();
+  TextEditingController changeUserBioController= TextEditingController();
+  TextEditingController changeUserPhoneController= TextEditingController();
 
 
   List screensTitles=[
@@ -95,6 +101,29 @@ class AppCubit extends Cubit<AppState> {
     emit(CheckBoxState());
   }
 
+  UserModel ?userModel;
+  Future getUser()
+  async{
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(AppStrings.uId)
+        .get().then((value) {
+
+          userModel = UserModel.formJson(value.data()!);
+          printMessage('${userModel!.email}');
+          changeUserNameController.text='${userModel!.username}';
+          changeUserPhoneController.text='${userModel!.phone}';
+          changeUserBioController.text='${userModel!.bio}';
+          emit(GetUserSuccessfulState());
+    }).catchError((error){
+
+          printMessage('Error in get user is ${error.toString()}');
+          emit(GetUserErrorState());
+    });
+
+
+  }
 
 
 }

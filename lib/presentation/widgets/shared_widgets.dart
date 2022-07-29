@@ -2,6 +2,7 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 Widget textFormFieldWidget(
 {
@@ -13,9 +14,9 @@ Widget textFormFieldWidget(
  required IconData prefixIcon
 }
     )=>Container(
-  height:MediaQuery.of(context).size.height*.07,
+  // height:MediaQuery.of(context).size.height*.07,
       child: TextFormField(
-  style: TextStyle(
+    style: TextStyle(
         color:AppColors.primaryColor
   ),
   keyboardType: inputType,
@@ -25,7 +26,7 @@ Widget textFormFieldWidget(
       fillColor: Colors.white,
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color:AppColors.primaryColor),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(25),
       ),
       border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15)
@@ -34,10 +35,11 @@ Widget textFormFieldWidget(
         borderSide: BorderSide(color:AppColors.primaryColor),
         borderRadius: BorderRadius.circular(15),
       ),
-      label: Text('${labelText}',style: TextStyle(
-        color: AppColors.primaryColor
-        //fontFamily: AppStrings.appFont,
-      ),),
+      hintText: '$labelText',
+      hintStyle: TextStyle(
+      color: AppColors.primaryColor
+    //fontFamily: AppStrings.appFont,
+       ),
       prefixIcon: Icon(prefixIcon,color:AppColors.primaryColor),
   ),
   validator: (value){
@@ -129,7 +131,6 @@ customAppbar(String title){
         fontWeight: FontWeight.w600,
         color: AppColors.primaryColor
     ),),
-    titleSpacing: 0,
     // centerTitle: true,
     elevation: 0.0,
   );
@@ -142,6 +143,22 @@ customAppbar(String title){
 printMessage(String title){
 
   debugPrint(title);
+
+}
+
+customToast(
+   {
+     required String title,
+     required Color color
+   }
+    ){
+
+  Fluttertoast.showToast(
+      msg: title,
+      textColor: AppColors.myWhite,
+      backgroundColor: color,
+      gravity: ToastGravity.BOTTOM
+  );
 
 }
 

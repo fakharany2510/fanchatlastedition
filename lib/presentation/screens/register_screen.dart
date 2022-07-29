@@ -18,7 +18,15 @@ class RegisterScreen extends StatelessWidget {
       create: (BuildContext context) => RegisterCubit(),
       child: BlocConsumer<RegisterCubit,RegisterState>(
          listener: (context,state){
+            if(state is UserRegisterSuccessState){
+              customToast(title: 'Register Successful', color: AppColors.primaryColor);
+              Navigator.pushNamed(context, 'login');
 
+            }
+            if(state is UserRegisterErrorState){
+              customToast(title: 'Invalid Data ', color: Colors.red);
+
+            }
          },
         builder: (context,state){
            var cubit=RegisterCubit.get(context);
@@ -45,16 +53,16 @@ class RegisterScreen extends StatelessWidget {
                            context: context,
                            controller: name,
                            errorMessage: "please enter your name",
-                           inputType: TextInputType.emailAddress,
+                           inputType: TextInputType.name,
                            labelText:"Name",
-                           prefixIcon: Icons.account_circle_sharp
+                           prefixIcon: Icons.person
                        ),
                        SizedBox(height: size.height*.03,),
                        textFormFieldWidget(
                            context: context,
                            controller: email,
                            errorMessage:"please enter your email",
-                           inputType: TextInputType.visiblePassword,
+                           inputType: TextInputType.emailAddress,
                            labelText:"Email",
                            prefixIcon: Icons.mail_sharp
                        ),
@@ -66,7 +74,7 @@ class RegisterScreen extends StatelessWidget {
                            errorMessage:"please enter your password",
                            inputType: TextInputType.visiblePassword,
                            labelText:"password",
-                           prefixIcon: Icons.password
+                           prefixIcon: Icons.lock
                        ),
 
                        SizedBox(height: size.height*.03,),
@@ -74,7 +82,7 @@ class RegisterScreen extends StatelessWidget {
                            context: context,
                            controller: phone,
                            errorMessage:"please enter your phone",
-                           inputType: TextInputType.visiblePassword,
+                           inputType: TextInputType.phone,
                            labelText:"phone",
                            prefixIcon: Icons.phone
                        ),
@@ -85,9 +93,11 @@ class RegisterScreen extends StatelessWidget {
                            width: size.width*.9,
                            height: size.height*.06,
                            function: (){
-                             cubit.userRegister(email: email.text, pass: password.text).then((value) {
-                               Navigator.pushNamed(context, 'select_national');
-                             });
+                              if(formKey.currentState!.validate()){
+                                cubit.userRegister(email: email.text, pass: password.text,name: name.text,phone: phone.text).then((value) {
+                                });
+                              }
+
                            }
                        ),
                        SizedBox(height: size.height*.02,),
@@ -102,9 +112,9 @@ class RegisterScreen extends StatelessWidget {
                            ),),
                            TextButton(
                              onPressed: () {
-                               cubit.userRegister(email: email.text, pass: password.text).then((value) {
-                                 Navigator.pushNamed(context, 'login');
-                               });
+                               Navigator.pushNamed(context, 'login');
+
+
                              },
                              child:  Text("Login",style: TextStyle(
                                  color: AppColors.darkGreen,
