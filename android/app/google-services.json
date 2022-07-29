@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "148742212571",
+    "project_id": "fanchat-7db9e",
+    "storage_bucket": "fanchat-7db9e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:148742212571:android:acf0ab30159f68c73275fe",
+        "android_client_info": {
+          "package_name": "com.example.fanchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "148742212571-apbgjeq5dq6fr36vg7vl70cl4umidivc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXT-cvU96og5GmHSYfohMW6QpRaFcS6MY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "148742212571-apbgjeq5dq6fr36vg7vl70cl4umidivc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

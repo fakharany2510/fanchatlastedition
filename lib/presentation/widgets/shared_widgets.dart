@@ -16,7 +16,7 @@ Widget textFormFieldWidget(
   height:MediaQuery.of(context).size.height*.07,
       child: TextFormField(
   style: TextStyle(
-        color:AppColors.myWhite
+        color:AppColors.primaryColor
   ),
   keyboardType: inputType,
   controller: controller,
@@ -133,5 +133,16 @@ customAppbar(String title){
     // centerTitle: true,
     elevation: 0.0,
   );
+
+
+
 }
+
+
+printMessage(String title){
+
+  debugPrint(title);
+
+}
+
 

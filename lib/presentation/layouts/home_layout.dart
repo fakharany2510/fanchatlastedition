@@ -4,7 +4,6 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../screens/chat_screen.dart';
 import '../screens/fan_screen.dart';
@@ -36,49 +35,48 @@ class HomeLayout extends StatelessWidget {
             appBar: customAppbar(cubit.screensTitles[cubit.currentIndex]),
             body: screens[cubit.currentIndex],
 
-            bottomNavigationBar: SalomonBottomBar(
-              currentIndex: cubit.currentIndex,
-              onTap: (index){
-                cubit.navigateScreen(index);
-              },
+            bottomNavigationBar: BottomNavigationBar
+              (
+               currentIndex: cubit.currentIndex,
+                onTap: (value){
+                  cubit.navigateScreen(value);
+                },
+                elevation: 5,
 
-              items: [
-                SalomonBottomBarItem(
-                  icon: const Icon(Icons.home),
-                  title: const Text("Home"),
-                  selectedColor: AppColors.primaryColor,
-                  unselectedColor: Colors.grey.shade600
-                ),
+                items: [
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.home,color: Colors.grey.shade600),
+                      activeIcon:Icon(Icons.home,color: AppColors.primaryColor),
+                      label: '',
 
-                SalomonBottomBarItem(
-                    icon: const Icon(Icons.timer_outlined),
-                    title: const Text("Match"),
-                    selectedColor: AppColors.primaryColor,
-                    unselectedColor: Colors.grey.shade600
-                ),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.timer_outlined,color:Colors.grey.shade600),
+                      activeIcon:Icon(Icons.timer_outlined,color: AppColors.primaryColor),
+                      label: ''
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.people,color: Colors.grey.shade600),
+                      activeIcon:Icon(Icons.people,color: AppColors.primaryColor),
 
-                SalomonBottomBarItem(
-                  icon: const Icon(Icons.people_alt),
-                  title: const Text("Fan"),
-                  selectedColor: AppColors.primaryColor,
-                    unselectedColor: Colors.grey.shade600
-                ),
+                      label: ''
+                  ),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.chat,color: Colors.grey.shade600),
+                      label: '',
+                    activeIcon:Icon(Icons.chat,color: AppColors.primaryColor),
 
-                SalomonBottomBarItem(
-                  icon: const Icon(Icons.chat),
-                  title: const Text("Chat"),
-                  selectedColor: AppColors.primaryColor,
-                    unselectedColor: Colors.grey.shade600
-                ),
+                  ),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.menu,color: Colors.grey.shade600,),
+                      label: '',
+                    activeIcon:Icon(Icons.menu,color: AppColors.primaryColor),
 
-                SalomonBottomBarItem(
-                  icon: const Icon(Icons.menu),
-                  title: const Text("More"),
-                  selectedColor: AppColors.primaryColor,
-                  unselectedColor: Colors.grey.shade600,
-                ),
-              ],
-            ),
+
+                  ),
+
+                ]
+            )
 
           );
         },

@@ -69,6 +69,16 @@ class AppCubit extends Cubit<AppState> {
     'https://img.freepik.com/free-photo/young-handsome-man-listens-music-with-earphones_176420-15616.jpg?w=740&t=st=1658702204~exp=1658702804~hmac=4ad64670966fe210e2226e87405fadf3971f9db7eb7a5136b5e039053e2d365a',
     'https://img.freepik.com/free-photo/bohemian-man-with-his-arms-crossed_1368-3542.jpg?w=740&t=st=1658702142~exp=1658702742~hmac=26d3c0d7eaadc76fee6a337185a9b9288961ceb2513c8de238d3ad3b81e26ae0',
   ];
+
+
+  List fanImages=[
+    'https://img.freepik.com/free-photo/beautiful-tree-middle-field-covered-with-grass-with-tree-line-background_181624-29267.jpg?w=900&t=st=1659045801~exp=1659046401~hmac=504feac168c627bb796b580e3b468ca8d5325a36678dc17621bde464cd5d0772',
+    'https://img.freepik.com/free-photo/sahara-desert-sunlight-blue-sky-morocco-africa_181624-19549.jpg?w=996&t=st=1659045804~exp=1659046404~hmac=5c76bce362790fab659ddab0c0a41863fa3f0dc531ac51446c71ae036924a763',
+    'https://img.freepik.com/free-photo/empty-wooden-dock-lake-during-breathtaking-sunset-cool-background_181624-27469.jpg?w=740&t=st=1659045813~exp=1659046413~hmac=e3c81b3ac69beb13f9588398d3e16b10d170108d4b9d3cc18f4a7a14ad8eeca8',
+    'https://img.freepik.com/free-photo/narrow-road-green-grassy-field-surrounded-by-green-trees-with-bright-sun-background_181624-9968.jpg?w=740&t=st=1659045814~exp=1659046414~hmac=4f98cde1a1c50474249a2231811857c77a05edb5175af945997af20ef7445ce7',
+    'https://img.freepik.com/free-photo/nature-design-with-bokeh-effect_1048-1882.jpg?w=740&t=st=1659045819~exp=1659046419~hmac=ad9c886eeb0cd7dc1788e1daf28cf119b887ef66fd30040c80fbd2e98b5246da',
+    'https://img.freepik.com/free-photo/vertical-shot-people-riding-camels-sand-dune-desert_181624-34974.jpg?w=740&t=st=1659044349~exp=1659044949~hmac=3f0c742eb4e47d6cdf45dc0ce3b37df273351228ddc2ca166458d2e6f2e92ca2'
+  ];
   int currentIndex=0;
   void navigateScreen(int index){
 
