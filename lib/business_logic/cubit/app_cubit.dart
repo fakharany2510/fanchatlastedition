@@ -4,18 +4,15 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/user_model.dart';
-import 'package:fanchat/presentation/screens/chat_screen.dart';
-import 'package:fanchat/presentation/screens/fan_screen.dart';
-import 'package:fanchat/presentation/screens/home_screen.dart';
-import 'package:fanchat/presentation/screens/login_screen.dart';
-import 'package:fanchat/presentation/screens/match_details.dart';
-import 'package:fanchat/presentation/screens/more_screen.dart';
-import 'package:fanchat/presentation/screens/register_screen.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
+import 'package:video_player/video_player.dart';
+
+import '../../data/modles/create_post_model.dart';
 
 part 'app_state.dart';
 
@@ -291,5 +288,207 @@ class AppCubit extends Cubit<AppState> {
       emit(UpdateUserErrorState());
     });
 
+  }
+
+
+  //-----------------------------------------------------------------
+//create new post
+//----
+  //Any Image Picker
+// Pick post image
+  File? postImage;
+  Future<void> pickPostImage() async {
+    final pickedFile  =
+    await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      postImage=File(pickedFile.path);
+      emit(PickPostImageSuccessState());
+    } else {
+      print('no postImage selected');
+      emit(PickPostImageErrorState());
+    }
+  }
+//-------------------------------------e;
+  // change viseo upload
+  bool videoButtonTapped = false;
+  void isVideoButtonTapped(){
+    videoButtonTapped = !videoButtonTapped;
+    emit(ChangeTap());
+  }
+
+  // Pick post video
+  VideoPlayerController? videoPlayerController;
+  File? postVideo;
+
+  void pickPostVideo() async {
+    final pickedFile =
+    await picker.pickVideo(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      postVideo = File(pickedFile.path);
+      videoPlayerController = VideoPlayerController.file(postVideo!)
+        ..initialize().then((value) {
+          videoPlayerController!.play();
+          emit(PickPostVideoSuccessState());
+        }).catchError((error) {
+          print('error picking video ${error.toString()}');
+        });
+    }
+  }
+///////////////////////////////////////////
+//upload post image
+  void uploadPostImage({
+    String? userId,
+    String? name,
+    String? image,
+    required String? dateTime,
+    required String? text,
+  }){
+    emit(BrowiseCreatePostLoadingState());
+    //كدا انا بكريت instance من ال storage
+    firebase_storage.FirebaseStorage.instance
+    //كدا بقوله انا فين في الstorage
+        .ref()
+    //كدا بقةله هتحرك ازاي جوا ال storage
+    //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
+        .child('images/${Uri.file(postImage!.path).pathSegments.last}')
+    //كدا بعمل رفع للصوره
+        .putFile(postImage!).then((value){
+      value.ref.getDownloadURL().then((value){
+        createImagePost(
+          dateTime: dateTime,
+          postImage: value,
+          text: text
+        );
+        emit(BrowiseCreatePostSuccessState());
+
+      }).catchError((error){
+        emit(BrowiseCreatePostErrorState());
+      });
+    }).catchError((error){
+      emit(BrowiseCreatePostErrorState());
+    });
+  }
+//Create Post
+  void createImagePost({
+    required String? dateTime,
+    required String? text,
+    String? postImage,
+  }){
+    emit(BrowiseCreatePostLoadingState());
+
+    BrowisePostModel model=BrowisePostModel(
+      name: userModel!.username,
+      image:userModel!.image,
+      userId:userModel!.uId,
+      dateTime:dateTime,
+      postImage:postImage??'',
+      postVideo: "",
+      text: text
+    );
+
+    FirebaseFirestore.instance
+        .collection('images')
+        .add(model.toMap())
+        .then((value){
+
+      emit(BrowiseCreatePostSuccessState());
+    })
+        .catchError((error){
+      emit(BrowiseCreatePostErrorState());
+    });
+  }
+/////////////////////////////////////////////////
+//upload post video
+  void uploadPostVideo({
+    String? userId,
+    String? name,
+    String? video,
+    required String? dateTime,
+    required String? text,
+  }){
+    emit(BrowiseCreateVideoPostLoadingState());
+    //كدا انا بكريت instance من ال storage
+    firebase_storage.FirebaseStorage.instance
+    //كدا بقوله انا فين في الstorage
+        .ref()
+    //كدا بقةله هتحرك ازاي جوا ال storage
+    //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
+        .child('videos/${Uri.file(postVideo!.path).pathSegments.last}')
+    //كدا بعمل رفع للصوره
+        .putFile(postVideo!).then((value){
+      value.ref.getDownloadURL().then((value){
+        createVideoPost(
+          dateTime: dateTime,
+          postVideo: value,
+          text: text
+        );
+        emit(BrowiseCreateVideoPostSuccessState());
+
+      }).catchError((error){
+        emit(BrowiseCreateVideoPostErrorState());
+      });
+    }).catchError((error){
+      emit(BrowiseCreateVideoPostErrorState());
+    });
+  }
+//Create Post
+  void createVideoPost({
+    required String? dateTime,
+    required String? text,
+    String? postVideo,
+  }){
+    emit(BrowiseCreateVideoPostLoadingState());
+
+    BrowisePostModel model=BrowisePostModel(
+        name: userModel!.username,
+        image:userModel!.image,
+        userId:userModel!.uId,
+        dateTime:dateTime,
+        postImage:'',
+        postVideo: postVideo??'',
+      text: text
+    );
+
+    FirebaseFirestore.instance
+        .collection('videos')
+        .add(model.toMap())
+        .then((value){
+
+      emit(BrowiseCreateVideoPostSuccessState());
+    })
+        .catchError((error){
+      emit(BrowiseCreateVideoPostErrorState());
+    });
+  }
+  /////////////////////////
+  //get Posts
+  List<BrowisePostModel> posts=[];
+  List<String> postsId=[];
+  List<int> likes=[];
+
+  void getPosts(){
+    emit(BrowiseGetPostsLoadingState());
+    FirebaseFirestore.instance
+        .collection('images')
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        element.reference
+            .collection('likes')
+            .get()
+            .then((value) {
+          likes.add(value.docs.length);
+          postsId.add(element.id);
+          posts.add(BrowisePostModel.fromJson(element.data()));
+        }).catchError((error){});
+
+      });
+      emit(BrowiseGetPostsSuccessState());
+    }
+    )
+        .catchError((error){
+      print('error while getting pots ${error.toString()}');
+      emit(BrowiseGetPostsErrorState());
+    });
   }
 }

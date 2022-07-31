@@ -1,8 +1,10 @@
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/data/modles/create_post_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget buidPostItem(context)=>Padding(
+Widget buidPostItem(context,BrowisePostModel model)=>Padding(
   padding: const EdgeInsets.only(bottom: 5,),
   child: Padding(
     padding: const EdgeInsets.all(8.0),
@@ -13,8 +15,8 @@ Widget buidPostItem(context)=>Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
-              const CircleAvatar(
-                backgroundImage: NetworkImage('https://upload.wikimedia.org/wikipedia/en/thumb/e/e3/2022_FIFA_World_Cup.svg/1200px-2022_FIFA_World_Cup.svg.png',),
+               CircleAvatar(
+                backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
                 radius: 18,
               ),
               const SizedBox(width: 7,),
@@ -24,8 +26,8 @@ Widget buidPostItem(context)=>Padding(
                   children: [
                     Row(
                       children: [
-                        Text('Ahmed Elfakharany',
-                          style: TextStyle(
+                        Text('${model.name}',
+                          style: const TextStyle(
                               color: Colors.black,
                               fontSize: 14,
                               fontWeight: FontWeight.w500
@@ -36,9 +38,9 @@ Widget buidPostItem(context)=>Padding(
                   ],
                 ),
               ),
-              Spacer(),
-              Text('25/12',
-              style: TextStyle(
+              const Spacer(),
+              Text('${model.dateTime}',
+              style: const TextStyle(
                 fontSize: 13,
                 color: Colors.grey
               ),
@@ -46,20 +48,36 @@ Widget buidPostItem(context)=>Padding(
             ],
           ),
         ),
-        SizedBox(height:10),
+        const SizedBox(height:5),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text('${model.text}',
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  height: 1.2,
+                ),
+              )),
+        ),
+        const SizedBox(height:3),
         // if(model.postImage != '')
-          Container(
-            height: 200,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(3),
-                image: const DecorationImage(
-                    image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHTMtDJNrLN9o1nU2mdfTJVfjrart5NOhNeg&usqp=CAU'),
-                    fit: BoxFit.fill
-                )
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Container(
+              height: 200,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(3),
+                  image:  DecorationImage(
+                      image: NetworkImage('${model.postImage}'),
+                      fit: BoxFit.fill
+                  )
+              ),
             ),
           ),
-        SizedBox(height:7),
+        const SizedBox(height:7),
         Padding(
           padding: const EdgeInsets.only(top:7,right: 0),
           child: GestureDetector(

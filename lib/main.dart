@@ -1,10 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
-import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/firebase_options.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
+import 'package:fanchat/presentation/screens/add_new_image.dart';
+import 'package:fanchat/presentation/screens/add_new_video.dart';
 import 'package:fanchat/presentation/screens/edit_profie_screen.dart';
 import 'package:fanchat/presentation/screens/login_screen.dart';
 import 'package:fanchat/presentation/screens/profile_screen.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
       widget = '/';
     }
     return BlocProvider(
-      create: (BuildContext context) =>AppCubit()..getUser(),
+      create: (BuildContext context) =>AppCubit()..getUser()..getPosts(),
       child: BlocConsumer<AppCubit,AppState>(
         listener: (context,state){
 
@@ -61,7 +62,9 @@ class MyApp extends StatelessWidget {
               'register':(context)=>RegisterScreen(),
               'profile':(context)=>const ProfileScreen(),
               'edit_profile':(context)=>EditProfileScreen(),
-              'select_national':(context)=>SelectNational()
+              'select_national':(context)=>SelectNational(),
+              'add_image':(context)=>AddNewImage(),
+              'add_video':(context)=>AddNewVideo(),
 
             },
           );

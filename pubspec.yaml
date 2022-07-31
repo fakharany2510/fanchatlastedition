@@ -41,6 +41,7 @@ dependencies:
   carousel_slider: ^4.1.1
   flutter_speed_dial: ^6.0.0
   image_picker: ^0.8.4+8
+  video_player: ^2.4.5
 
 
   #Gooflr SignIn

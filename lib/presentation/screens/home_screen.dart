@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
+import '../../data/modles/create_post_model.dart';
 import '../widgets/post_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -81,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                         itemBuilder: (context, index) => Column(
                           children: [
                             const SizedBox(height:10,),
-                            buidPostItem(context),
+                            buidPostItem(context,AppCubit.get(context).posts[index]),
                           ],
                         ),
                         separatorBuilder: (context,index)=>Padding(
@@ -92,25 +93,39 @@ class HomeScreen extends StatelessWidget {
                             height: 1,
                           ),
                         ),
-                        itemCount: 10),
+                        itemCount: AppCubit.get(context).posts.length),
                 ),
 
               ],
             ),
           ),
-          floatingActionButton:  SpeedDial(
+          floatingActionButton:SpeedDial(
+            backgroundColor: AppColors.primaryColor,
             animatedIcon: AnimatedIcons.menu_close,
+            elevation: 1,
+            overlayColor: AppColors.myWhite,
+            overlayOpacity: 0.0001,
+
             children: [
               SpeedDialChild(
-                  child: IconButton(icon:Icon(Icons.photo),onPressed: (){},),
-                  label: 'add photo'
+                onTap: (){
+                  Navigator.pushNamed(context, 'add_video');
+                },
+                child: Icon(Icons.video_camera_back,color: AppColors.myWhite,),
+                label: 'add video',
+                backgroundColor: AppColors.darkGreen
               ),
               SpeedDialChild(
-                  child: IconButton(icon:Icon(Icons.video_camera_back_outlined),onPressed: (){},),
-                  label: 'add video'
+                onTap: (){
+                  Navigator.pushNamed(context, 'add_image');
+                },
+                child: Icon(Icons.image,color: AppColors.myWhite,),
+                label: 'add image',
+                  backgroundColor: AppColors.darkGreen
+
               ),
             ],
-          ),
+          )
         );
       },
     );
