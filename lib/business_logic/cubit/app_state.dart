@@ -19,9 +19,15 @@ class GetUserErrorState extends AppState {}
 class BrowiseCreatePostLoadingState extends AppState {}
 class BrowiseCreatePostSuccessState extends AppState {}
 class BrowiseCreatePostErrorState extends AppState {}
+class BrowiseUploadImagePostLoadingState extends AppState {}
+class BrowiseUploadImagePostSuccessState extends AppState {}
+class BrowiseUploadImagePostErrorState extends AppState {}
 class BrowiseCreateVideoPostLoadingState extends AppState {}
 class BrowiseCreateVideoPostSuccessState extends AppState {}
 class BrowiseCreateVideoPostErrorState extends AppState {}
+class BrowiseUploadVideoPostLoadingState extends AppState {}
+class BrowiseUploadVideoPostSuccessState extends AppState {}
+class BrowiseUploadVideoPostErrorState extends AppState {}
 class ChangeTap extends AppState {}
 class BrowiseGetPostsLoadingState extends AppState {}
 class BrowiseGetPostsSuccessState extends AppState {}

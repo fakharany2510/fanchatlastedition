@@ -17,30 +17,30 @@ Widget textFormFieldWidget(
   // height:MediaQuery.of(context).size.height*.07,
       child: TextFormField(
     style: TextStyle(
-        color:AppColors.primaryColor
+        color:AppColors.primaryColor1
   ),
   keyboardType: inputType,
   controller: controller,
   decoration: InputDecoration(
-      focusColor: AppColors.primaryColor,
+      focusColor: AppColors.primaryColor1,
       fillColor: Colors.white,
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color:AppColors.primaryColor),
+        borderSide: BorderSide(color:AppColors.primaryColor1),
         borderRadius: BorderRadius.circular(25),
       ),
       border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15)
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color:AppColors.primaryColor),
+        borderSide: BorderSide(color:AppColors.primaryColor1),
         borderRadius: BorderRadius.circular(15),
       ),
       hintText: '$labelText',
       hintStyle: TextStyle(
-      color: AppColors.primaryColor
+      color: AppColors.primaryColor1
     //fontFamily: AppStrings.appFont,
        ),
-      prefixIcon: Icon(prefixIcon,color:AppColors.primaryColor),
+      prefixIcon: Icon(prefixIcon,color:AppColors.primaryColor1),
   ),
   validator: (value){
       if(value!.isEmpty){
@@ -95,7 +95,7 @@ Widget defaultSocialMediaButton({
     decoration: BoxDecoration(
       color:buttonColor ,
       borderRadius: BorderRadius.circular(20),
-      border: Border.all(color: AppColors.primaryColor)
+      border: Border.all(color: AppColors.primaryColor1)
     ),
     child:TextButton(
       onPressed:function,
@@ -103,7 +103,7 @@ Widget defaultSocialMediaButton({
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('${buttonText}',style: TextStyle(
-              color: AppColors.primaryColor,
+              color: AppColors.primaryColor1,
              // fontFamily: AppStrings.appFont,
               fontWeight: FontWeight.w700,
               fontSize: 14
@@ -124,13 +124,13 @@ customAppbar(String title){
       statusBarColor: Colors.white,
     ),
     iconTheme: IconThemeData(
-        color: AppColors.primaryColor
+        color: AppColors.primaryColor1
     ),
     backgroundColor: AppColors.myWhite,
     title: Text(title,style: TextStyle(
         fontSize: 21,
         fontWeight: FontWeight.w600,
-        color: AppColors.primaryColor
+        color: AppColors.primaryColor1
     ),),
     // centerTitle: true,
     elevation: 0.0,

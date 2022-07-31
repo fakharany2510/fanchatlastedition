@@ -84,7 +84,7 @@ class ProfileScreen extends StatelessWidget {
                   const SizedBox(height:10,),
                   defaultButton(
                       buttonText: 'Edit Profile',
-                      buttonColor: AppColors.primaryColor,
+                      buttonColor: AppColors.primaryColor1,
                       height: size.height*.06,
                       width: size.width*.9,
                       function: (){

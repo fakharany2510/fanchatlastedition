@@ -39,11 +39,13 @@ Widget buidPostItem(context,BrowisePostModel model)=>Padding(
                 ),
               ),
               const Spacer(),
-              Text('${model.dateTime}',
-              style: const TextStyle(
-                fontSize: 13,
-                color: Colors.grey
-              ),
+              Expanded(
+                child: Text('${model.dateTime}',
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: Colors.grey
+                ),
+                ),
               ),
             ],
           ),
@@ -72,7 +74,7 @@ Widget buidPostItem(context,BrowisePostModel model)=>Padding(
                   borderRadius: BorderRadius.circular(3),
                   image:  DecorationImage(
                       image: NetworkImage('${model.postImage}'),
-                      fit: BoxFit.fill
+                      fit: BoxFit.cover
                   )
               ),
             ),

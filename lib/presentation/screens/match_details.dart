@@ -39,9 +39,9 @@ class MatchDetails extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(35),
                                   border: Border.all(
                                       width: 2,
-                                      color: AppColors.primaryColor
+                                      color: AppColors.primaryColor1
                                   ),
-                                  color: AppColors.primaryColor
+                                  color: AppColors.primaryColor1
                                 ),
                                 child:Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,7 +87,7 @@ class MatchDetails extends StatelessWidget {
                                                   Row(
                                                     children: [
                                                       Text('Egypt',style: TextStyle(
-                                                          color: AppColors.primaryColor,
+                                                          color: AppColors.primaryColor1,
                                                           fontSize: 15,
                                                           fontWeight: FontWeight.w500
                                                       ),),
@@ -102,7 +102,7 @@ class MatchDetails extends StatelessWidget {
                                                   Container(
                                                     height: 2,
                                                     width: 8,
-                                                    color: AppColors.primaryColor,
+                                                    color: AppColors.primaryColor1,
                                                   ),
                                                   const SizedBox(width: 5,),
                                                   Column(
@@ -113,9 +113,9 @@ class MatchDetails extends StatelessWidget {
                                                         decoration: BoxDecoration(
                                                             borderRadius: BorderRadius.circular(90),
                                                             border: Border.all(
-                                                                color: AppColors.primaryColor
+                                                                color: AppColors.primaryColor1
                                                             ),
-                                                          color: AppColors.primaryColor
+                                                          color: AppColors.primaryColor1
                                                         ),
                                                         child: Column(
                                                           mainAxisAlignment: MainAxisAlignment.center,
@@ -134,7 +134,7 @@ class MatchDetails extends StatelessWidget {
                                                       ),
                                                       SizedBox(height: 5,),
                                                       Text('20:10',style: TextStyle(
-                                                          color: AppColors.primaryColor,
+                                                          color: AppColors.primaryColor1,
                                                           fontSize: 12,
                                                           fontWeight: FontWeight.w500
                                                       ),
@@ -146,7 +146,7 @@ class MatchDetails extends StatelessWidget {
                                                   Container(
                                                     height: 2,
                                                     width: 8,
-                                                    color: AppColors.primaryColor,
+                                                    color: AppColors.primaryColor1,
                                                   ),
                                                   const SizedBox(width: 5,),
                                                   Row(
@@ -158,7 +158,7 @@ class MatchDetails extends StatelessWidget {
                                                       ),
                                                       const SizedBox(width: 5,),
                                                       Text('Italy',style: TextStyle(
-                                                          color: AppColors.primaryColor,
+                                                          color: AppColors.primaryColor1,
                                                           fontSize: 15,
                                                           fontWeight: FontWeight.w500
                                                       ),),
@@ -175,7 +175,7 @@ class MatchDetails extends StatelessWidget {
                                       return  Container(
                                         margin: EdgeInsets.fromLTRB(15, 8, 15, 8),
                                         height: 1,
-                                        color: AppColors.primaryColor,
+                                        color: AppColors.primaryColor1,
                                         width: 100,
                                       );
                                     },

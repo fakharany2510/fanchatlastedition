@@ -49,7 +49,7 @@ class MoreScreen extends StatelessWidget {
                                   width: size.width,
                                   height: size.height*.08,
                                   decoration: BoxDecoration(
-                                      color: AppColors.primaryColor,
+                                      color: AppColors.primaryColor1,
                                       borderRadius: BorderRadius.circular(10)
                                   ),
                                   child: Row(

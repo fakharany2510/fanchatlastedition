@@ -19,7 +19,7 @@ class RegisterScreen extends StatelessWidget {
       child: BlocConsumer<RegisterCubit,RegisterState>(
          listener: (context,state){
             if(state is UserRegisterSuccessState){
-              customToast(title: 'Register Successful', color: AppColors.primaryColor);
+              customToast(title: 'Register Successful', color: AppColors.primaryColor1);
               Navigator.pushNamed(context, 'login');
 
             }
@@ -89,7 +89,7 @@ class RegisterScreen extends StatelessWidget {
                        SizedBox(height: size.height*.03,),
                        defaultButton(
                            buttonText: 'REGISTER',
-                           buttonColor: AppColors.primaryColor,
+                           buttonColor: AppColors.primaryColor1,
                            width: size.width*.9,
                            height: size.height*.06,
                            function: (){
@@ -108,7 +108,7 @@ class RegisterScreen extends StatelessWidget {
                            Text("Have any account?",style: TextStyle(
                              //fontFamily: AppStrings.appFont,
                                fontSize: 18,
-                               color: AppColors.primaryColor
+                               color: AppColors.primaryColor1
                            ),),
                            TextButton(
                              onPressed: () {
@@ -117,7 +117,7 @@ class RegisterScreen extends StatelessWidget {
 
                              },
                              child:  Text("Login",style: TextStyle(
-                                 color: AppColors.darkGreen,
+                                 color: AppColors.primaryColor2,
                                  // fontFamily: AppStrings.appFont,
                                  fontSize: 18
                              ),

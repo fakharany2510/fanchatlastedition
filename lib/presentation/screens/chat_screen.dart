@@ -38,7 +38,7 @@ class ChatScreen extends StatelessWidget {
                                   Text('Ahmed Ali',style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
-                                      color: AppColors.primaryColor
+                                      color: AppColors.primaryColor1
                                   ),),
                                   const SizedBox(height: 10,),
                                   Text('How are you...?!',style: TextStyle(
@@ -55,12 +55,12 @@ class ChatScreen extends StatelessWidget {
                                   Text('04:00',style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
-                                      color: AppColors.primaryColor
+                                      color: AppColors.primaryColor1
                                   ),),
                                   const SizedBox(height: 10,),
                                   CircleAvatar(
                                     radius: 13,
-                                    backgroundColor: AppColors.primaryColor,
+                                    backgroundColor: AppColors.primaryColor1,
                                     child: Text('8',style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
@@ -82,7 +82,7 @@ class ChatScreen extends StatelessWidget {
                             vertical: 15
                         ),
                         height: 1,
-                        color: AppColors.primaryColor,
+                        color: AppColors.primaryColor1,
                       );
                     },
                     itemCount: cubit.chatImages.length

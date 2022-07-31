@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
       builder: (context,state){
         var cubit=AppCubit.get(context);
         return Scaffold(
-          backgroundColor: AppColors.myWhite,
+          backgroundColor: Colors.grey[200],
           body: SingleChildScrollView(
             controller:_parentScrollController ,
             child: Column(
@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                     );
                   }).toList(),
                   options: CarouselOptions(
-                    height: 250,
+                    height: 180,
                     initialPage: 0,
                     enableInfiniteScroll: true,
                     reverse: false,
@@ -100,7 +100,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           floatingActionButton:SpeedDial(
-            backgroundColor: AppColors.primaryColor,
+            backgroundColor: AppColors.primaryColor1,
             animatedIcon: AnimatedIcons.menu_close,
             elevation: 1,
             overlayColor: AppColors.myWhite,
@@ -113,7 +113,7 @@ class HomeScreen extends StatelessWidget {
                 },
                 child: Icon(Icons.video_camera_back,color: AppColors.myWhite,),
                 label: 'add video',
-                backgroundColor: AppColors.darkGreen
+                backgroundColor: AppColors.primaryColor2
               ),
               SpeedDialChild(
                 onTap: (){
@@ -121,7 +121,7 @@ class HomeScreen extends StatelessWidget {
                 },
                 child: Icon(Icons.image,color: AppColors.myWhite,),
                 label: 'add image',
-                  backgroundColor: AppColors.darkGreen
+                  backgroundColor: AppColors.primaryColor2
 
               ),
             ],

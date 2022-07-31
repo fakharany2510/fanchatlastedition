@@ -343,7 +343,7 @@ class AppCubit extends Cubit<AppState> {
     required String? dateTime,
     required String? text,
   }){
-    emit(BrowiseCreatePostLoadingState());
+    emit(BrowiseUploadImagePostLoadingState());
     //كدا انا بكريت instance من ال storage
     firebase_storage.FirebaseStorage.instance
     //كدا بقوله انا فين في الstorage
@@ -359,13 +359,14 @@ class AppCubit extends Cubit<AppState> {
           postImage: value,
           text: text
         );
-        emit(BrowiseCreatePostSuccessState());
+        getPosts();
+        emit(BrowiseUploadImagePostSuccessState());
 
       }).catchError((error){
-        emit(BrowiseCreatePostErrorState());
+        emit(BrowiseUploadImagePostErrorState());
       });
     }).catchError((error){
-      emit(BrowiseCreatePostErrorState());
+      emit(BrowiseUploadImagePostErrorState());
     });
   }
 //Create Post
@@ -406,7 +407,7 @@ class AppCubit extends Cubit<AppState> {
     required String? dateTime,
     required String? text,
   }){
-    emit(BrowiseCreateVideoPostLoadingState());
+    emit(BrowiseUploadVideoPostLoadingState());
     //كدا انا بكريت instance من ال storage
     firebase_storage.FirebaseStorage.instance
     //كدا بقوله انا فين في الstorage
@@ -422,13 +423,14 @@ class AppCubit extends Cubit<AppState> {
           postVideo: value,
           text: text
         );
-        emit(BrowiseCreateVideoPostSuccessState());
+        getPosts();
+        emit(BrowiseUploadVideoPostSuccessState());
 
       }).catchError((error){
-        emit(BrowiseCreateVideoPostErrorState());
+        emit(BrowiseUploadVideoPostErrorState());
       });
     }).catchError((error){
-      emit(BrowiseCreateVideoPostErrorState());
+      emit(BrowiseUploadVideoPostErrorState());
     });
   }
 //Create Post
@@ -467,6 +469,9 @@ class AppCubit extends Cubit<AppState> {
   List<int> likes=[];
 
   void getPosts(){
+     posts=[];
+     postsId=[];
+     likes=[];
     emit(BrowiseGetPostsLoadingState());
     FirebaseFirestore.instance
         .collection('images')

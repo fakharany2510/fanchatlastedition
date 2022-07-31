@@ -28,7 +28,7 @@ class LoginScreen extends StatelessWidget {
                   value: state.uId,
               );
 
-              customToast(title: 'Login Successful', color: AppColors.primaryColor);
+              customToast(title: 'Login Successful', color: AppColors.primaryColor1);
               Navigator.push(context, MaterialPageRoute(builder: (_){
                 return const HomeLayout();
               }));
@@ -80,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                            width: size.width*.9,
                            height: size.height*.06,
                            buttonText: 'LOGIN',
-                           buttonColor: AppColors.primaryColor,
+                           buttonColor: AppColors.primaryColor1,
                            function: (){
                               if(formKey.currentState!.validate()){
                                 cubit.userLogin(email: email.text, pass: password.text).then((value) {
@@ -143,14 +143,14 @@ class LoginScreen extends StatelessWidget {
                            Text("Don\'t Have Account ?",style: TextStyle(
                              //fontFamily: AppStrings.appFont,
                                fontSize: 18,
-                               color: AppColors.primaryColor
+                               color: AppColors.primaryColor1
                            ),),
                            TextButton(
                              onPressed: () {
                                Navigator.pushNamed(context, 'register');
                              },
                              child:  Text("register",style: TextStyle(
-                                 color: AppColors.darkGreen,
+                                 color: AppColors.primaryColor2,
                                  // fontFamily: AppStrings.appFont,
                                  fontSize: 18
                              ),

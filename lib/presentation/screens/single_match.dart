@@ -44,7 +44,7 @@ class SingleMatch extends StatelessWidget {
                                     children: [
                                       const SizedBox(height: 12,),
                                       Text('Group 5',style: TextStyle(
-                                          color: AppColors.primaryColor,
+                                          color: AppColors.primaryColor1,
                                           fontSize: 18,
                                           fontWeight: FontWeight.w500
                                       ),
@@ -64,7 +64,7 @@ class SingleMatch extends StatelessWidget {
                                           Row(
                                             children: [
                                               Text('Egypt',style: TextStyle(
-                                                  color: AppColors.primaryColor,
+                                                  color: AppColors.primaryColor1,
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.w500
                                               ),),
@@ -79,7 +79,7 @@ class SingleMatch extends StatelessWidget {
                                           Container(
                                             height: 2,
                                             width: 8,
-                                            color: AppColors.primaryColor,
+                                            color: AppColors.primaryColor1,
                                           ),
                                           const SizedBox(width: 5,),
                                           Column(
@@ -90,9 +90,9 @@ class SingleMatch extends StatelessWidget {
                                                 decoration: BoxDecoration(
                                                     borderRadius: BorderRadius.circular(90),
                                                     border: Border.all(
-                                                        color: AppColors.primaryColor
+                                                        color: AppColors.primaryColor1
                                                     ),
-                                                    color: AppColors.primaryColor
+                                                    color: AppColors.primaryColor1
                                                 ),
                                                 child: Column(
                                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -111,7 +111,7 @@ class SingleMatch extends StatelessWidget {
                                               ),
                                               SizedBox(height: 5,),
                                               Text('20:10',style: TextStyle(
-                                                  color: AppColors.primaryColor,
+                                                  color: AppColors.primaryColor1,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w500
                                               ),
@@ -123,7 +123,7 @@ class SingleMatch extends StatelessWidget {
                                           Container(
                                             height: 2,
                                             width: 8,
-                                            color: AppColors.primaryColor,
+                                            color: AppColors.primaryColor1,
                                           ),
                                           const SizedBox(width: 5,),
                                           Row(
@@ -134,7 +134,7 @@ class SingleMatch extends StatelessWidget {
                                               ),
                                               const SizedBox(width: 5,),
                                               Text('Italy',style: TextStyle(
-                                                  color: AppColors.primaryColor,
+                                                  color: AppColors.primaryColor1,
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.w500
                                               ),),
@@ -157,7 +157,7 @@ class SingleMatch extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Text('Most Matches',style: TextStyle(
-                                color: AppColors.primaryColor,
+                                color: AppColors.primaryColor1,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w900
                             ),
@@ -179,7 +179,7 @@ class SingleMatch extends StatelessWidget {
                                   child: Container(
                                     margin: const EdgeInsets.fromLTRB(15, 5,15,5),
                                     decoration: BoxDecoration(
-                                      color: AppColors.primaryColor,
+                                      color: AppColors.primaryColor1,
                                       borderRadius: BorderRadius.circular(50),
                                     ),
                                     width: double.infinity,
@@ -207,7 +207,7 @@ class SingleMatch extends StatelessWidget {
                                             Container(
                                               height: 2,
                                               width: 8,
-                                              color: AppColors.primaryColor,
+                                              color: AppColors.primaryColor1,
                                             ),
                                             const SizedBox(width: 5,),
                                             Column(
@@ -227,7 +227,7 @@ class SingleMatch extends StatelessWidget {
                                                     children: [
                                                       SizedBox(height: 5,),
                                                       Text('4 - 2',style: TextStyle(
-                                                          color: AppColors.primaryColor,
+                                                          color: AppColors.primaryColor1,
                                                           fontSize: 14,
                                                           fontWeight: FontWeight.w500
                                                       ),
@@ -244,7 +244,7 @@ class SingleMatch extends StatelessWidget {
                                             Container(
                                               height: 2,
                                               width: 8,
-                                              color: AppColors.primaryColor,
+                                              color: AppColors.primaryColor1,
                                             ),
                                             const SizedBox(width: 5,),
                                             Row(

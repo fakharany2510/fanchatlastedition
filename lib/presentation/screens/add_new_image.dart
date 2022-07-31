@@ -10,7 +10,12 @@ class AddNewImage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit,AppState>(
-      listener: (context,state){},
+      listener: (context,state){
+        if(state is BrowiseGetPostsSuccessState){
+          Navigator.pop(context);
+        }
+
+      },
       builder: (context,state){
         return Scaffold(
           backgroundColor: AppColors.myWhite,
@@ -19,7 +24,7 @@ class AddNewImage extends StatelessWidget {
             title: Text('Add New Image',style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.w600,
-                color: AppColors.primaryColor
+                color: AppColors.primaryColor1
             )),
             elevation: 0,
             leading: IconButton(
@@ -30,12 +35,9 @@ class AddNewImage extends StatelessWidget {
             ),
           ),
           body: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding:  EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  if(state is CreatePostLoadingState)
-                   const  LinearProgressIndicator(),
-                  const SizedBox(height: 5,),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children:  [
@@ -44,61 +46,54 @@ class AddNewImage extends StatelessWidget {
                         radius: 30,
                       ),
                       const SizedBox(width: 15,),
-                      Expanded(
-                        child:  Text('${AppCubit.get(context).userModel!.username}',
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500
-                          ),
+                      Text('${AppCubit.get(context).userModel!.username}',
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 10,),
-                  Expanded(
-                    child: TextFormField(
-                      controller: postText,
-                      decoration: const InputDecoration(
-                        hintText: 'what is on your mind.....',
-                        enabledBorder: InputBorder.none,
-                      ),
+                  TextFormField(
+                    controller: postText,
+                    decoration: const InputDecoration(
+                      hintMaxLines: 1,
+                      hintText: 'what is on your mind.....',
+                      border:InputBorder.none,
+                      enabledBorder: InputBorder.none,
                     ),
                   ),
                  const  SizedBox(height: 10,),
                   (AppCubit.get(context).postImage!= null )
-                      ?Stack(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    alignment: AlignmentDirectional.topEnd,
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional.topStart,
-                        child: Stack(
-                          alignment: AlignmentDirectional.topEnd,
-                          children: [
-                            Container(
-                              height: size.height*.4,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(3),
-                                  image: DecorationImage(
-                                      image: FileImage( AppCubit.get(context).postImage!),
-                                      fit: BoxFit.cover
-                                  )
-                              ),
+                      ?Expanded(
+                        child: Container(
+                          height: size.height*.7,
+                          width: size.width*.7,
+                          child: Align(
+                            alignment: AlignmentDirectional.bottomCenter,
+                            child: Image(
+                              image: FileImage(AppCubit.get(context).postImage!),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                     :Container(),
-                  const Spacer(),
+                      )
+                     :Expanded(child: Container(
+                    child: Center(child: Text('No Photo Selected Yet',
+                        style: TextStyle(
+                            fontSize: 21,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primaryColor1
+                        )
+                    )),
+                  )),
+SizedBox(height: size.height*.03,),
                   Container(
                     width: size.width*.8,
                     height: size.height*.06,
                     decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.primaryColor),
+                        border: Border.all(color: AppColors.primaryColor1),
                         borderRadius: BorderRadius.circular(25)
                     ),
                     child: TextButton(onPressed: (){
@@ -106,10 +101,10 @@ class AddNewImage extends StatelessWidget {
                     }, child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.camera_alt,color: AppColors.primaryColor,size: 26),
+                        Icon(Icons.camera_alt,color: AppColors.primaryColor1,size: 26),
                         const SizedBox(width:7),
                         Text('Choose photo',style: TextStyle(
-                            color: AppColors.primaryColor,
+                            color: AppColors.primaryColor1,
                             fontSize: 15
                         ),)
                       ],
@@ -117,28 +112,32 @@ class AddNewImage extends StatelessWidget {
                     )),
                   ),
                   const SizedBox(height: 10,),
-                  defaultButton(
+                  state is BrowiseUploadImagePostLoadingState || state is BrowiseGetPostsLoadingState?
+                  Center(child:CircularProgressIndicator(),)
+                  :defaultButton(
                       width: size.width*.8,
                       height: size.height*.06,
                       function: (){
                         var now=DateTime.now();
-                       // AppCubit.get(context).uploadPostImage(
-                       //    dateTime:now.microsecondsSinceEpoch.toString(),
-                       //  );
                         if(AppCubit.get(context).postImage == null){
                           AppCubit.get(context).createImagePost(
                               dateTime: now.toString(),
                               text:postText.text );
+
                         }else{
                           AppCubit.get(context).uploadPostImage(
                               dateTime: now.toString(),
-                              text:postText.text
+                              text:postText.text,
                           );
+
                         }
+
                       },
+
                       buttonText: 'Upload Image',
-                      buttonColor: AppColors.primaryColor
-                  )
+                      buttonColor: AppColors.primaryColor1
+                  ),
+
                 ],
               )
           ),

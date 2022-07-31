@@ -22,8 +22,8 @@ class SplashScreen extends StatelessWidget {
         fontFamily: 'komax',
       ),
       colors: [
-        AppColors.primaryColor,
-        AppColors.primaryColor,
+        AppColors.primaryColor1,
+        AppColors.primaryColor1,
       ],
       backgroundColor:AppColors.myWhite,
     );

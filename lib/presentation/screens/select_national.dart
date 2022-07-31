@@ -29,7 +29,7 @@ class _SelectNationalState extends State<SelectNational> {
                   backgroundColor: AppColors.myWhite,
                   elevation: 0.0,
                   iconTheme: IconThemeData(
-                    color: AppColors.primaryColor
+                    color: AppColors.primaryColor1
                   ),
                   titleSpacing: 0.0,
                   systemOverlayStyle: SystemUiOverlayStyle(
@@ -38,7 +38,7 @@ class _SelectNationalState extends State<SelectNational> {
                     statusBarColor:AppColors.myWhite
                   ),
                   title: Text('Select Favorite Team',style: TextStyle(
-                    color: AppColors.primaryColor,
+                    color: AppColors.primaryColor1,
                     fontSize: 19,
                     fontWeight: FontWeight.w500
                   ),),
@@ -66,7 +66,7 @@ class _SelectNationalState extends State<SelectNational> {
                             Align(
                               alignment: Alignment.topRight,
                               child: Checkbox(
-                                activeColor: AppColors.primaryColor,
+                                activeColor: AppColors.primaryColor1,
                                 checkColor: AppColors.myWhite,
                                   side: const BorderSide(color: Colors.red,width: 2),
                                   shape: RoundedRectangleBorder(
@@ -86,7 +86,7 @@ class _SelectNationalState extends State<SelectNational> {
                             ),
                             const SizedBox(height: 10,),
                             Text(cubit.nationalTitles[index],style: TextStyle(
-                                color: AppColors.primaryColor,
+                                color: AppColors.primaryColor1,
                                 fontSize: 19,
                                 fontWeight: FontWeight.w500
                             ),),
