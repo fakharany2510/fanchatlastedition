@@ -480,7 +480,11 @@ class AppCubit extends Cubit<AppState> {
           likes.add(value.docs.length);
           postsId.add(element.id);
           posts.add(BrowisePostModel.fromJson(element.data()));
-        }).catchError((error){});
+          emit(BrowiseGetPostsSuccessState());
+        }).catchError((error){
+          emit(BrowiseGetPostsErrorState());
+          print('error while getting posts ${error.toString()}');
+        });
 
       });
       emit(BrowiseGetPostsSuccessState());
