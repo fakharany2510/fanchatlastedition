@@ -105,7 +105,7 @@ class ProfileScreen extends StatelessWidget {
                         Stack(
                           children: [
                             Image(
-                              height: 153,
+                              height: MediaQuery.of(context).size.height*.2,
                               fit: BoxFit.cover,
                               image: NetworkImage('${cubit.fanImages[index]}'),
                             ),
