@@ -317,6 +317,7 @@ class AppCubit extends Cubit<AppState> {
 ///////////////////////////////////////////////////////
   // Pick post video
   VideoPlayerController? videoPlayerController;
+
   File? postVideo;
 
   void pickPostVideo() async {
@@ -365,7 +366,7 @@ class AppCubit extends Cubit<AppState> {
         .ref()
     //كدا بقةله هتحرك ازاي جوا ال storage
     //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
-        .child('images/${Uri.file(postImage!.path).pathSegments.last}')
+        .child('posts/${Uri.file(postImage!.path).pathSegments.last}')
     //كدا بعمل رفع للصوره
         .putFile(postImage!).then((value){
       value.ref.getDownloadURL().then((value){
@@ -404,7 +405,7 @@ class AppCubit extends Cubit<AppState> {
     );
 
     FirebaseFirestore.instance
-        .collection('images')
+        .collection('posts')
         .add(model.toMap())
         .then((value){
 
@@ -431,7 +432,7 @@ class AppCubit extends Cubit<AppState> {
         .ref()
     //كدا بقةله هتحرك ازاي جوا ال storage
     //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
-        .child('videos/${Uri.file(postVideo!.path).pathSegments.last}')
+        .child('posts/${Uri.file(postVideo!.path).pathSegments.last}')
     //كدا بعمل رفع للصوره
         .putFile(postVideo!).then((value){
       value.ref.getDownloadURL().then((value){
@@ -470,7 +471,7 @@ class AppCubit extends Cubit<AppState> {
     );
 
     FirebaseFirestore.instance
-        .collection('videos')
+        .collection('posts')
         .add(model.toMap())
         .then((value){
 
@@ -492,7 +493,7 @@ class AppCubit extends Cubit<AppState> {
      likes=[];
     emit(BrowiseGetPostsLoadingState());
     FirebaseFirestore.instance
-        .collection('images')
+        .collection('posts')
         .get()
         .then((value) {
       value.docs.forEach((element) {
@@ -517,7 +518,7 @@ class AppCubit extends Cubit<AppState> {
   /////////////////////////////////////////////////
   Future likePosts(String postId)async{
     FirebaseFirestore.instance
-        .collection('images')
+        .collection('posts')
         .doc(postId)
         .collection('likes')
         .doc(userModel!.uId)

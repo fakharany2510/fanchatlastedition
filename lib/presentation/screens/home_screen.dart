@@ -84,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                         itemBuilder: (context, index) => Column(
                           children: [
                             const SizedBox(height:10,),
-                            buidPostItem(context,AppCubit.get(context).posts[index],index),
+                            PostWidget(index: index,),
                           ],
                         ),
                         separatorBuilder: (context,index)=>Padding(

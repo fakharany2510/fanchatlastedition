@@ -19,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
           return Scaffold(
             appBar: customAppbar('Profile'),
             backgroundColor: AppColors.myWhite,
-            body: SingleChildScrollView(
+            body: cubit.userModel !=null?SingleChildScrollView(
               child: Column(
                 children: [
                   //profile
@@ -126,6 +126,8 @@ class ProfileScreen extends StatelessWidget {
                   )
                 ],
               ),
+            ):Center(
+              child: CircularProgressIndicator(),
             ),
           );
       },

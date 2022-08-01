@@ -32,7 +32,10 @@ class LoginScreen extends StatelessWidget {
 
               customToast(title: 'Login Successful', color: AppColors.primaryColor1);
               AppCubit.get(context).getPosts().then((value) {
+                AppCubit.get(context).getUser();
                 Navigator.pushNamed(context, 'home_layout');
+
+
               });
            }
            if(state is UserLoginErrorState){
@@ -91,6 +94,8 @@ class LoginScreen extends StatelessWidget {
                            buttonColor: AppColors.primaryColor1,
                            function: (){
                               if(formKey.currentState!.validate()){
+
+
                                 cubit.userLogin(email: email.text, pass: password.text).then((value) {
                                 });
                               }

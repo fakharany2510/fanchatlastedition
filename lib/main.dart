@@ -12,6 +12,7 @@ import 'package:fanchat/presentation/screens/profile_screen.dart';
 import 'package:fanchat/presentation/screens/register_screen.dart';
 import 'package:fanchat/presentation/screens/select_national.dart';
 import 'package:fanchat/presentation/screens/splash_screen.dart';
+import 'package:fanchat/presentation/screens/test.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
             ),
             initialRoute: widget,
             routes: {
+              'test' :(context)=>const TestViedo(),
               '/' :(context)=>const SplashScreen(),
               'home_layout':(context)=> const HomeLayout(),
               'login':(context)=> LoginScreen(),
