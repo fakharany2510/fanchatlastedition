@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
       builder: (context,state){
         var cubit=AppCubit.get(context);
         return Scaffold(
-          backgroundColor: Colors.grey[200],
+          backgroundColor:AppColors.myWhite,
           body: SingleChildScrollView(
             controller:_parentScrollController ,
             child: Column(
@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                 CarouselSlider(
                   items: cubit.carouselImage.map((e) {
                     return Image(
-                      image: AssetImage(e),
+                      image: NetworkImage(e),
                       width: double.infinity,fit: BoxFit.cover,
                     );
                   }).toList(),
@@ -53,7 +53,8 @@ class HomeScreen extends StatelessWidget {
                     autoPlayCurve: Curves.fastOutSlowIn
                   ),
                 ),
-                const SizedBox(height: 15,),
+                Divider(color: Colors.grey),
+                const SizedBox(height: 0,),
                 NotificationListener(
                   onNotification: (ScrollNotification notification) {
                     if (notification is ScrollUpdateNotification) {
@@ -88,8 +89,6 @@ class HomeScreen extends StatelessWidget {
                         separatorBuilder: (context,index)=>Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Container(
-                            color: Colors.grey.shade300,
-                            width: double.infinity,
                             height: 1,
                           ),
                         ),

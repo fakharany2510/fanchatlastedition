@@ -89,54 +89,62 @@ class AddNewImage extends StatelessWidget {
                     )),
                   )),
 SizedBox(height: size.height*.03,),
-                  Container(
-                    width: size.width*.8,
-                    height: size.height*.06,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.primaryColor1),
-                        borderRadius: BorderRadius.circular(25)
-                    ),
-                    child: TextButton(onPressed: (){
-                      AppCubit.get(context).pickPostImage();
-                    }, child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.camera_alt,color: AppColors.primaryColor1,size: 26),
-                        const SizedBox(width:7),
-                        Text('Choose photo',style: TextStyle(
-                            color: AppColors.primaryColor1,
-                            fontSize: 15
-                        ),)
-                      ],
+                 Row(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   children: [
+                     Container(
+                       width: size.width/2.5,
+                       height: size.height*.06,
+                       decoration: BoxDecoration(
+                           border: Border.all(color: AppColors.primaryColor1),
+                           borderRadius: BorderRadius.circular(25)
+                       ),
+                       child: TextButton(onPressed: (){
+                         AppCubit.get(context).pickPostImage();
+                       },
+                           child: Row(
+                             mainAxisAlignment: MainAxisAlignment.center,
+                             children: [
+                               Icon(Icons.camera_alt,color: AppColors.primaryColor1,size: 26),
+                               const SizedBox(width:7),
+                               Expanded(
+                                 child: Text('Choose photo',style: TextStyle(
+                                     color: AppColors.primaryColor1,
+                                     fontSize: 15
+                                 ),),
+                               )
+                             ],
 
-                    )),
-                  ),
-                  const SizedBox(height: 10,),
-                  state is BrowiseUploadImagePostLoadingState || state is BrowiseGetPostsLoadingState?
-                  Center(child:CircularProgressIndicator(),)
-                  :defaultButton(
-                      width: size.width*.8,
-                      height: size.height*.06,
-                      function: (){
-                        var now=DateTime.now();
-                        if(AppCubit.get(context).postImage == null){
-                          AppCubit.get(context).createImagePost(
-                              dateTime: now.toString(),
-                              text:postText.text );
+                           )),
+                     ),
+                     const SizedBox(width: 10,),
+                     state is BrowiseUploadImagePostLoadingState || state is BrowiseGetPostsLoadingState?
+                     Center(child:CircularProgressIndicator(),)
+                         :defaultButton(
+                         width: size.width/2.5,
+                         height: size.height*.06,
+                         function: (){
+                           var now=DateTime.now();
+                           if(AppCubit.get(context).postImage == null){
+                             AppCubit.get(context).createImagePost(
+                                 dateTime: now.toString(),
+                                 text:postText.text );
 
-                        }else{
-                          AppCubit.get(context).uploadPostImage(
-                              dateTime: now.toString(),
-                              text:postText.text,
-                          );
+                           }else{
+                             AppCubit.get(context).uploadPostImage(
+                               dateTime: now.toString(),
+                               text:postText.text,
+                             );
 
-                        }
+                           }
 
-                      },
+                         },
 
-                      buttonText: 'Upload Image',
-                      buttonColor: AppColors.primaryColor1
-                  ),
+                         buttonText: 'Upload Post',
+                         buttonColor: AppColors.primaryColor1
+                     ),
+                   ],
+                 )
 
                 ],
               )

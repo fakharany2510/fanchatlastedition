@@ -14,13 +14,7 @@ class SplashScreen extends StatelessWidget {
       navigateRoute: LoginScreen(),
       duration: 200,
       imageSize: 170,
-      imageSrc: "assets/images/worldcup.jpg",
-      text: 'Fan-chat',
-      textType: TextType.ColorizeAnimationText,
-      textStyle: const TextStyle(
-        fontSize: 35.0,
-        fontFamily: 'komax',
-      ),
+      imageSrc: "assets/images/app.jpg",
       colors: [
         AppColors.primaryColor1,
         AppColors.primaryColor1,

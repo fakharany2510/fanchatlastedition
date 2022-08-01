@@ -64,10 +64,9 @@ class AppCubit extends Cubit<AppState> {
   ];
 
   List carouselImage=[
-    'assets/images/slider1.png',
-    'assets/images/slider2.png',
-    'assets/images/slider3.png',
-    'assets/images/slider4.png',
+'https://img.freepik.com/free-photo/fizzy-cola-drink-macro-shot_53876-14910.jpg?w=740&t=st=1659277350~exp=1659277950~hmac=45c21685c87c74c08a36b9e06c78941df495a4ac01d887e87a2b34a4bd304320',
+    'https://img.freepik.com/free-photo/front-right-side-blue-sedan-car_114579-4394.jpg?w=740&t=st=1659277380~exp=1659277980~hmac=dadc794df23aeeabeac4b43f3d81303a981d8b15ff549cc720ba8b4d95bbc72c',
+ 'https://img.freepik.com/free-photo/beautiful-cold-drink-cola-with-ice-cubes_1150-26255.jpg?w=740&t=st=1659277429~exp=1659278029~hmac=216e0d1c26ca832ba14ace6f0b3d22a1409a30d9218534ebe15e1f503f41a285',
   ];
 
   List chatImages=[

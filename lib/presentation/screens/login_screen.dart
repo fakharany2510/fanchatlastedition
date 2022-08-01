@@ -4,6 +4,7 @@ import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -42,6 +43,14 @@ class LoginScreen extends StatelessWidget {
            var cubit=LoginCubit.get(context);
            return Scaffold(
              backgroundColor: AppColors.myWhite,
+             appBar: AppBar(
+               backgroundColor: AppColors.myWhite,
+               toolbarHeight: 0,
+               systemOverlayStyle: const SystemUiOverlayStyle(
+                 statusBarIconBrightness: Brightness.dark,
+                 statusBarColor: Colors.white,
+               ),
+             ),
              body: Form(
                key: formKey,
                child: Padding(
@@ -52,10 +61,7 @@ class LoginScreen extends StatelessWidget {
                      children:  [
                        const Padding(
                          padding: EdgeInsets.symmetric(vertical: 30),
-                         child: CircleAvatar(
-                           radius: 100,
-                           backgroundImage:AssetImage('assets/images/worldcup.jpg'),
-                         ),
+                         child: Image(image: AssetImage('assets/images/app.jpg'))
                        ),
 
                        textFormFieldWidget(
