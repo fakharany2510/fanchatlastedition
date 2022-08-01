@@ -40,7 +40,7 @@ class RegisterCubit extends Cubit<RegisterState>{
         uId: value.user!.uid,
         phone: phone,
     );
-    emit(UserRegisterSuccessState());
+    emit(UserRegisterSuccessState(value.user!.uid));
 
   }).catchError((error){
     printMessage('Error is user register is ${error.toString()}');

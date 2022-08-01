@@ -28,7 +28,8 @@ class HomeScreen extends StatelessWidget {
         var cubit=AppCubit.get(context);
         return Scaffold(
           backgroundColor:AppColors.myWhite,
-          body: SingleChildScrollView(
+          body:cubit.posts.isNotEmpty && AppCubit.get(context).userModel !=null
+              ? SingleChildScrollView(
             controller:_parentScrollController ,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                         itemBuilder: (context, index) => Column(
                           children: [
                             const SizedBox(height:10,),
-                            buidPostItem(context,AppCubit.get(context).posts[index]),
+                            buidPostItem(context,AppCubit.get(context).posts[index],index),
                           ],
                         ),
                         separatorBuilder: (context,index)=>Padding(
@@ -96,6 +97,11 @@ class HomeScreen extends StatelessWidget {
                 ),
 
               ],
+            ),
+          )
+          :Center(
+            child: CircularProgressIndicator(
+              color: AppColors.primaryColor1,
             ),
           ),
           floatingActionButton:SpeedDial(

@@ -4,11 +4,11 @@ import 'package:fanchat/data/modles/create_post_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget buidPostItem(context,BrowisePostModel model)=>Card(
+Widget buidPostItem(context,BrowisePostModel model,index)=>Card(
   elevation: 2,
   shadowColor: Colors.grey[150],
   child: Padding(
-    padding: const EdgeInsets.only(bottom: 9,),
+    padding: const EdgeInsets.only(bottom: 0,),
     child: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -19,7 +19,7 @@ Widget buidPostItem(context,BrowisePostModel model)=>Card(
             child: Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
+                  backgroundImage: NetworkImage('${model.image}'),
                   radius: 18,
                 ),
                 const SizedBox(width: 7,),
@@ -29,11 +29,14 @@ Widget buidPostItem(context,BrowisePostModel model)=>Card(
                     children: [
                       Row(
                         children: [
-                          Text('${model.name}',
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500
+                          Expanded(
+                            child: Text('${model.name}',
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500
+                              ),
                             ),
                           ),
                         ],
@@ -42,12 +45,11 @@ Widget buidPostItem(context,BrowisePostModel model)=>Card(
                   ),
                 ),
                 const Spacer(),
-                Expanded(
-                  child: Text('${model.dateTime}',
-                    style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.grey
-                    ),
+                Text('${model.dateTime}',
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontSize: 13,
+                      color: Colors.grey
                   ),
                 ),
               ],
@@ -66,7 +68,7 @@ Widget buidPostItem(context,BrowisePostModel model)=>Card(
                   ),
                 )),
           ),
-          (AppCubit.get(context).postImage!="")
+          (model.postImage!='')
           ?Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Container(
@@ -93,7 +95,10 @@ Widget buidPostItem(context,BrowisePostModel model)=>Card(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               InkWell(
-                onTap: (){},
+                onTap: (){
+                  AppCubit.get(context).likePosts((AppCubit.get(context).postsId[index])).then((value) {
+                  });
+                },
                 child: Container(
                   width: MediaQuery.of(context).size.width*.3,
                   height: MediaQuery.of(context).size.height*.05,
@@ -101,7 +106,7 @@ Widget buidPostItem(context,BrowisePostModel model)=>Card(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text('3000',
+                      Text('${AppCubit.get(context).likes[index]}',
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 13,

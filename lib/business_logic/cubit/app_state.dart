@@ -50,3 +50,5 @@ class GetCoverImageErrorState extends AppState {}
 class UpdateUserLoadingState extends AppState {}
 class UpdateUserSuccessState extends AppState {}
 class UpdateUserErrorState extends AppState {}
+class CreateLikesSuccessState extends AppState {}
+class CreateLikesErrorState extends AppState {}

@@ -1,5 +1,7 @@
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/register/register_cubit.dart';
 import 'package:fanchat/business_logic/register/register_states.dart';
+import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +22,15 @@ class RegisterScreen extends StatelessWidget {
       child: BlocConsumer<RegisterCubit,RegisterState>(
          listener: (context,state){
             if(state is UserRegisterSuccessState){
-              customToast(title: 'Register Successful', color: AppColors.primaryColor1);
-              Navigator.pushNamed(context, 'login');
+                CashHelper.saveData(
+                  key: 'uid',
+                  value: state.uId,
+                );
 
+                customToast(title: 'Register Successful', color: AppColors.primaryColor1);
+                AppCubit.get(context).getPosts().then((value) {
+                  Navigator.pushNamed(context, 'home_layout');
+                });
             }
             if(state is UserRegisterErrorState){
               customToast(title: 'Invalid Data ', color: Colors.red);
@@ -36,6 +44,7 @@ class RegisterScreen extends StatelessWidget {
              appBar: AppBar(
                backgroundColor: AppColors.myWhite,
                toolbarHeight: 0,
+               elevation: 0,
                systemOverlayStyle: const SystemUiOverlayStyle(
                  statusBarIconBrightness: Brightness.dark,
                  statusBarColor: Colors.white,
@@ -44,7 +53,7 @@ class RegisterScreen extends StatelessWidget {
              body: Form(
                key: formKey,
                child: Padding(
-                 padding: const EdgeInsets.only(top: 60, left: 30, right: 30),
+                 padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
                  child: SingleChildScrollView(
                    child: Column(
                      crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,7 +127,7 @@ class RegisterScreen extends StatelessWidget {
                            ),),
                            TextButton(
                              onPressed: () {
-                               Navigator.pushNamed(context, 'login');
+                               Navigator.pushNamed(context, 'h');
 
 
                              },

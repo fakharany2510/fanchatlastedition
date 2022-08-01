@@ -1,3 +1,4 @@
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/login/login_cubit.dart';
 import 'package:fanchat/business_logic/login/login_state.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
@@ -30,9 +31,9 @@ class LoginScreen extends StatelessWidget {
               );
 
               customToast(title: 'Login Successful', color: AppColors.primaryColor1);
-              Navigator.push(context, MaterialPageRoute(builder: (_){
-                return const HomeLayout();
-              }));
+              AppCubit.get(context).getPosts().then((value) {
+                Navigator.pushNamed(context, 'home_layout');
+              });
            }
            if(state is UserLoginErrorState){
              customToast(title: 'Email or Password isn\'t correct', color: Colors.red);
@@ -46,6 +47,7 @@ class LoginScreen extends StatelessWidget {
              appBar: AppBar(
                backgroundColor: AppColors.myWhite,
                toolbarHeight: 0,
+               elevation: 0,
                systemOverlayStyle: const SystemUiOverlayStyle(
                  statusBarIconBrightness: Brightness.dark,
                  statusBarColor: Colors.white,

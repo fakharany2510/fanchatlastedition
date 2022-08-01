@@ -4,15 +4,22 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddNewImage extends StatelessWidget {
+class AddNewImage extends StatefulWidget {
+  @override
+  State<AddNewImage> createState() => _AddNewImageState();
+}
+
+class _AddNewImageState extends State<AddNewImage> {
   @override
   TextEditingController postText=TextEditingController();
+
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
         if(state is BrowiseGetPostsSuccessState){
-          Navigator.pop(context);
+          Navigator.of(context).popAndPushNamed('home_layout');
+          AppCubit.get(context).postImage=null;
         }
 
       },
@@ -29,8 +36,15 @@ class AddNewImage extends StatelessWidget {
             elevation: 0,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back,color: Colors.black),
-              onPressed: ()async{
-                Navigator.pop(context);
+              onPressed: (){
+              setState((){
+                //AppCubit.get(context).postImage='';
+                AppCubit.get(context).postImage=null;
+                print('${AppCubit.get(context).postImage}');
+               Navigator.pop(context);
+
+              });
+
               },
             ),
           ),
@@ -39,13 +53,14 @@ class AddNewImage extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
-                    mainAxisSize: MainAxisSize.min,
+                 mainAxisAlignment: MainAxisAlignment.start,
+
                     children:  [
                       CircleAvatar(
                         backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
                         radius: 30,
                       ),
-                      const SizedBox(width: 15,),
+                      const SizedBox(width: 10,),
                       Text('${AppCubit.get(context).userModel!.username}',
                         style: const TextStyle(
                             color: Colors.black,
@@ -79,7 +94,7 @@ class AddNewImage extends StatelessWidget {
                           ),
                         ),
                       )
-                     :Expanded(child: Container(
+                  :Expanded(child: Container(
                     child: Center(child: Text('No Photo Selected Yet',
                         style: TextStyle(
                             fontSize: 21,
@@ -88,7 +103,7 @@ class AddNewImage extends StatelessWidget {
                         )
                     )),
                   )),
-SizedBox(height: size.height*.03,),
+                   Spacer(),
                  Row(
                    mainAxisAlignment: MainAxisAlignment.center,
                    children: [
@@ -124,18 +139,19 @@ SizedBox(height: size.height*.03,),
                          width: size.width/2.5,
                          height: size.height*.06,
                          function: (){
-                           var now=DateTime.now();
+
                            if(AppCubit.get(context).postImage == null){
                              AppCubit.get(context).createImagePost(
-                                 dateTime: now.toString(),
-                                 text:postText.text );
-
+                                 dateTime: DateTime.now(),
+                                 text:postText.text,
+                             );
                            }else{
                              AppCubit.get(context).uploadPostImage(
-                               dateTime: now.toString(),
+                               dateTime: DateTime.now(),
                                text:postText.text,
+                               image: AppCubit.get(context).userModel!.image,
+                               name: AppCubit.get(context).userModel!.username,
                              );
-
                            }
 
                          },

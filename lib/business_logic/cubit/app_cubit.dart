@@ -314,7 +314,7 @@ class AppCubit extends Cubit<AppState> {
     videoButtonTapped = !videoButtonTapped;
     emit(ChangeTap());
   }
-
+///////////////////////////////////////////////////////
   // Pick post video
   VideoPlayerController? videoPlayerController;
   File? postVideo;
@@ -333,13 +333,29 @@ class AppCubit extends Cubit<AppState> {
         });
     }
   }
+  ////////////////////////////////////////
+  //format time
+  String getTimeDifferenceFromNow(DateTime dateTime) {
+    Duration difference = DateTime.now().difference(dateTime);
+    if (difference.inSeconds < 5) {
+      return "Just now";
+    } else if (difference.inMinutes < 1) {
+      return "${difference.inSeconds}s ago";
+    } else if (difference.inHours < 1) {
+      return "${difference.inMinutes}m ago";
+    } else if (difference.inHours < 24) {
+      return "${difference.inHours}h ago";
+    } else {
+      return "${difference.inDays}d ago";
+    }
+  }
 ///////////////////////////////////////////
 //upload post image
   void uploadPostImage({
     String? userId,
     String? name,
     String? image,
-    required String? dateTime,
+    required DateTime? dateTime,
     required String? text,
   }){
     emit(BrowiseUploadImagePostLoadingState());
@@ -368,9 +384,10 @@ class AppCubit extends Cubit<AppState> {
       emit(BrowiseUploadImagePostErrorState());
     });
   }
+  //////////////////////////////////////////////
 //Create Post
   void createImagePost({
-    required String? dateTime,
+    required DateTime? dateTime,
     required String? text,
     String? postImage,
   }){
@@ -380,7 +397,7 @@ class AppCubit extends Cubit<AppState> {
       name: userModel!.username,
       image:userModel!.image,
       userId:userModel!.uId,
-      dateTime:dateTime,
+      dateTime:getTimeDifferenceFromNow(dateTime!),
       postImage:postImage??'',
       postVideo: "",
       text: text
@@ -399,11 +416,12 @@ class AppCubit extends Cubit<AppState> {
   }
 /////////////////////////////////////////////////
 //upload post video
+  BrowisePostModel? postModel;
   void uploadPostVideo({
     String? userId,
     String? name,
     String? video,
-    required String? dateTime,
+    required DateTime? dateTime,
     required String? text,
   }){
     emit(BrowiseUploadVideoPostLoadingState());
@@ -418,7 +436,7 @@ class AppCubit extends Cubit<AppState> {
         .putFile(postVideo!).then((value){
       value.ref.getDownloadURL().then((value){
         createVideoPost(
-          dateTime: dateTime,
+          dateTime:dateTime,
           postVideo: value,
           text: text
         );
@@ -432,9 +450,10 @@ class AppCubit extends Cubit<AppState> {
       emit(BrowiseUploadVideoPostErrorState());
     });
   }
+  ////////////////////////////////////////////////////
 //Create Post
   void createVideoPost({
-    required String? dateTime,
+    required DateTime? dateTime,
     required String? text,
     String? postVideo,
   }){
@@ -444,7 +463,7 @@ class AppCubit extends Cubit<AppState> {
         name: userModel!.username,
         image:userModel!.image,
         userId:userModel!.uId,
-        dateTime:dateTime,
+        dateTime:getTimeDifferenceFromNow(dateTime!),
         postImage:'',
         postVideo: postVideo??'',
       text: text
@@ -467,7 +486,7 @@ class AppCubit extends Cubit<AppState> {
   List<String> postsId=[];
   List<int> likes=[];
 
-  void getPosts(){
+  Future<void> getPosts()async{
      posts=[];
      postsId=[];
      likes=[];
@@ -479,17 +498,13 @@ class AppCubit extends Cubit<AppState> {
       value.docs.forEach((element) {
         element.reference
             .collection('likes')
-            .get()
-            .then((value) {
-          likes.add(value.docs.length);
+            .snapshots(
+        ).listen((event) {
+          likes.add(event.docs.length);
           postsId.add(element.id);
           posts.add(BrowisePostModel.fromJson(element.data()));
           emit(BrowiseGetPostsSuccessState());
-        }).catchError((error){
-          emit(BrowiseGetPostsErrorState());
-          print('error while getting posts ${error.toString()}');
         });
-
       });
       emit(BrowiseGetPostsSuccessState());
     }
@@ -499,4 +514,23 @@ class AppCubit extends Cubit<AppState> {
       emit(BrowiseGetPostsErrorState());
     });
   }
+  /////////////////////////////////////////////////
+  Future likePosts(String postId)async{
+    FirebaseFirestore.instance
+        .collection('images')
+        .doc(postId)
+        .collection('likes')
+        .doc(userModel!.uId)
+        .set({
+      'likes':true,
+    })
+        .then((value){
+      emit(CreateLikesSuccessState());
+    })
+        .catchError((error){
+      emit(CreateLikesErrorState()
+      );
+    });
+  }
+
 }

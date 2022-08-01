@@ -14,7 +14,8 @@ class AddNewVideo extends StatelessWidget {
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
         if(state is BrowiseGetPostsSuccessState){
-          Navigator.pop(context);
+          Navigator.of(context).popAndPushNamed('home_layout');
+          AppCubit.get(context).postVideo=null;
         }
       },
       builder: (context,state){
@@ -31,6 +32,7 @@ class AddNewVideo extends StatelessWidget {
             leading: IconButton(
               icon: Icon(Icons.arrow_back,color: Colors.black),
               onPressed: ()async{
+                AppCubit.get(context).postVideo=null;
                 Navigator.pop(context);
                 await  AppCubit.get(context).videoPlayerController!.pause();
               },
@@ -44,13 +46,13 @@ class AddNewVideo extends StatelessWidget {
                     LinearProgressIndicator(),
                   SizedBox(height: 5,),
                   Row(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children:  [
                       CircleAvatar(
                         backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
                         radius: 30,
                       ),
-                      SizedBox(width: 15,),
+                      SizedBox(width: 10,),
                       Expanded(
                         child:   Text('${AppCubit.get(context).userModel!.username}',
                           style: TextStyle(
@@ -100,61 +102,62 @@ class AddNewVideo extends StatelessWidget {
                     )),
                   )),
                   Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 0),
-                    child: TextButton(onPressed: (){
-                      AppCubit.get(context).pickPostVideo();
-                      AppCubit.get(context).isVideoButtonTapped==true;
-                    }, child: Container(
-                      width: size.width*.8,
-                      height: size.height*.06,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.primaryColor1),
-                          borderRadius: BorderRadius.circular(25)
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.video_camera_back,color: AppColors.primaryColor1,size: 26),
-                          SizedBox(width:7),
-                          Text('add video',
-                            style: TextStyle(
-                                color: AppColors.primaryColor1,
-                                fontSize: 15
-                            ),
-                          )
-                        ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(onPressed: (){
+                        AppCubit.get(context).pickPostVideo();
+                        AppCubit.get(context).isVideoButtonTapped==true;
+                      }, child: Container(
+                        width: size.width/2.5,
+                        height: size.height*.06,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.primaryColor1),
+                            borderRadius: BorderRadius.circular(25)
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.video_camera_back,color: AppColors.primaryColor1,size: 26),
+                            SizedBox(width:7),
+                            Text('choose video',
+                              style: TextStyle(
+                                  color: AppColors.primaryColor1,
+                                  fontSize: 15
+                              ),
+                            )
+                          ],
 
-                      ),
-                    )),
+                        ),
+                      )),
+                      SizedBox(width: 10,),
+                      state is BrowiseCreateVideoPostLoadingState||state is BrowiseGetPostsLoadingState || state is BrowiseUploadVideoPostLoadingState
+                          ? Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryColor1,
+                        ),
+                      )
+                          :defaultButton(
+                          width: size.width/2.5,
+                          height: size.height*.06,
+                          function: (){
+                            if(AppCubit.get(context).postVideo == null){
+                              AppCubit.get(context).createVideoPost(
+                                  dateTime: DateTime.now(),
+                                  text:postText.text );
+                            }else{
+                              AppCubit.get(context).uploadPostVideo(
+                                  dateTime:DateTime.now(),
+                                  text:postText.text
+                              );
+                            }
+                          },
+                          buttonText: 'upload post',
+                          buttonColor: AppColors.primaryColor1
+                      )
+                    ],
                   ),
-                  SizedBox(height: 10,),
-                  (state is BrowiseCreateVideoPostLoadingState || state is BrowiseGetPostsLoadingState)?
-                  Center(
-                    child: CircularProgressIndicator(
-                       color: AppColors.primaryColor1,
-                    ),
-                  )
-                  :defaultButton(
-                      width: size.width*.8,
-                      height: size.height*.06,
-                      function: (){
-                        var now=DateTime.now();
-                        // AppCubit.get(context).uploadPostVideo(dateTime: now.toString());
-                        if(AppCubit.get(context).postVideo == null){
-                          AppCubit.get(context).createVideoPost(
-                              dateTime: now.toString(),
-                              text:postText.text );
-                        }else{
-                          AppCubit.get(context).uploadPostVideo(
-                              dateTime: now.toString(),
-                              text:postText.text
-                          );
-                        }
-                      },
-                      buttonText: 'Upload Video',
-                      buttonColor: AppColors.primaryColor1
-                  )
+
                 ],
               )
           ),
