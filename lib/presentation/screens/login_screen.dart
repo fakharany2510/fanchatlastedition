@@ -30,7 +30,9 @@ class LoginScreen extends StatelessWidget {
                   value: state.uId,
               );
               customToast(title: 'Login Successful', color: AppColors.primaryColor1);
-                Navigator.pushNamed(context, 'home_layout');
+                Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context)=>HomeLayout())
+                );
 
            }
            if(state is UserLoginErrorState){

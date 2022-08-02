@@ -407,7 +407,7 @@ class AppCubit extends Cubit<AppState> {
         .collection('posts')
         .add(model.toMap())
         .then((value){
-          getPosts();
+        //  getPosts();
       emit(BrowiseCreatePostSuccessState());
     })
         .catchError((error){
@@ -440,7 +440,7 @@ class AppCubit extends Cubit<AppState> {
           postVideo: value,
           text: text
         );
-       // getPosts();
+        getPosts();
         emit(BrowiseUploadVideoPostSuccessState());
 
       }).catchError((error){
@@ -503,10 +503,11 @@ class AppCubit extends Cubit<AppState> {
           likes.add(value.docs.length);
           postsId.add(element.id);
           posts.add(BrowisePostModel.fromJson(element.data()));
+          emit(BrowiseGetPostsSuccessState());
         }).catchError((error){});
 
       });
-      emit(BrowiseGetPostsSuccessState());
+
     }
     )
         .catchError((error){

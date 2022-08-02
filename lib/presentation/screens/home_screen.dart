@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
         var cubit=AppCubit.get(context);
         return Scaffold(
           backgroundColor:AppColors.myWhite,
-          body:cubit.posts.isNotEmpty && AppCubit.get(context).userModel !=null
+          body:cubit.posts.length !=0 && AppCubit.get(context).userModel !=null
               ? SingleChildScrollView(
             controller:_parentScrollController ,
             child: Column(

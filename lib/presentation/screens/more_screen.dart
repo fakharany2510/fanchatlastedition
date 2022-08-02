@@ -81,7 +81,9 @@ class MoreScreen extends StatelessWidget {
               ),
             )
                 :Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: AppColors.primaryColor1,
+              ),
             )
 
         );

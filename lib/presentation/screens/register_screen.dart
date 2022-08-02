@@ -3,10 +3,13 @@ import 'package:fanchat/business_logic/register/register_cubit.dart';
 import 'package:fanchat/business_logic/register/register_states.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/presentation/screens/home_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../layouts/home_layout.dart';
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
   var formKey =GlobalKey<FormState>();
@@ -28,8 +31,10 @@ class RegisterScreen extends StatelessWidget {
                 );
 
                 customToast(title: 'Register Successful', color: AppColors.primaryColor1);
-                AppCubit.get(context).getPosts();
-                  Navigator.pushNamed(context, 'home_layout');
+                //AppCubit.get(context).getPosts();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute
+                        (builder: (context)=>HomeLayout()));
 
             }
             if(state is UserRegisterErrorState){

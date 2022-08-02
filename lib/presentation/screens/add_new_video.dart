@@ -15,7 +15,9 @@ class AddNewVideo extends StatelessWidget {
       listener: (context,state){
         if(state is BrowiseGetPostsSuccessState){
           Navigator.of(context).popAndPushNamed('home_layout');
+          AppCubit.get(context).videoPlayerController!.dispose();
           AppCubit.get(context).postVideo=null;
+
         }
       },
       builder: (context,state){
@@ -148,7 +150,8 @@ class AddNewVideo extends StatelessWidget {
                             }else{
                               AppCubit.get(context).uploadPostVideo(
                                   dateTime:DateTime.now(),
-                                  text:postText.text
+                                  text:postText.text,
+                                name: AppCubit.get(context).userModel!.username,
                               );
                             }
                           },
