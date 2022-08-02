@@ -480,6 +480,37 @@ class AppCubit extends Cubit<AppState> {
       emit(BrowiseCreateVideoPostErrorState());
     });
   }
+  ///////////////////////////////////////////
+//upload post text
+  void uploadText({
+    String? userId,
+    String? name,
+    String? image,
+    required DateTime? dateTime,
+    required String? text,
+  }){
+    emit(BrowiseUploadImagePostLoadingState());
+    //كدا انا بكريت instance من ال storage
+    firebase_storage.FirebaseStorage.instance
+    //كدا بقوله انا فين في الstorage
+        .ref()
+    //كدا بقةله هتحرك ازاي جوا ال storage
+    //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
+        .child('posts')
+    //كدا بعمل رفع للصوره
+        .putString(text!).then((value){
+      createImagePost(
+          dateTime: dateTime,
+          text: text
+      );
+      getPosts();
+      emit(BrowiseUploadTextPostSuccessState());
+
+    }).catchError((error){
+      emit(BrowiseUploadTextPostErrorState());
+    });
+  }
+//////////////////////////////////////////////
   /////////////////////////
   //get Posts
   List<BrowisePostModel> posts=[];
@@ -533,5 +564,4 @@ class AppCubit extends Cubit<AppState> {
       );
     });
   }
-
 }

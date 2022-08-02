@@ -20,6 +20,9 @@ class GetUserDataErrorState extends AppState {}
 class BrowiseCreatePostLoadingState extends AppState {}
 class BrowiseCreatePostSuccessState extends AppState {}
 class BrowiseCreatePostErrorState extends AppState {}
+class BrowiseUploadTextPostLoadingState extends AppState {}
+class BrowiseUploadTextPostSuccessState extends AppState {}
+class BrowiseUploadTextPostErrorState extends AppState {}
 class BrowiseUploadImagePostLoadingState extends AppState {}
 class BrowiseUploadImagePostSuccessState extends AppState {}
 class BrowiseUploadImagePostErrorState extends AppState {}

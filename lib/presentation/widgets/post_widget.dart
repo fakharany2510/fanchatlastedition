@@ -115,8 +115,9 @@ class _PostWidgetState extends State<PostWidget> {
                          )
                      ),
                    ),
-                 ):
-                 Stack(
+                 )
+                     : (AppCubit.get(context).posts[widget.index!].postVideo!="")
+                 ?Stack(
                    children: [
                      Container(
                        height: MediaQuery.of(context).size.height*.2,
@@ -162,7 +163,21 @@ class _PostWidgetState extends State<PostWidget> {
                          )
                      ),
                    ],
-                 ),
+                 )
+                 // :Padding(
+                 //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                 //   child: Container(
+                 //     height: MediaQuery.of(context).size.height*.2,
+                 //     width: double.infinity,
+                 //     decoration: BoxDecoration(
+                 //         borderRadius: BorderRadius.circular(3),
+                 //     ),
+                 //     child: Expanded(
+                 //       child: Text('${AppCubit.get(context).posts[widget.index!].text}'),
+                 //     ),
+                 //   ),
+                 // ),
+                 :SizedBox(width: 0,),
                  SizedBox(height: 3,),
                  Divider(color: Colors.grey,),
                  Row(

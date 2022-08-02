@@ -28,7 +28,7 @@ class _AddNewImageState extends State<AddNewImage> {
           backgroundColor: AppColors.myWhite,
           appBar:AppBar(
             backgroundColor: AppColors.myWhite,
-            title: Text('Add New Image',style: TextStyle(
+            title: Text('Add new post',style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor1
@@ -107,36 +107,10 @@ class _AddNewImageState extends State<AddNewImage> {
                  Row(
                    mainAxisAlignment: MainAxisAlignment.center,
                    children: [
-                     Container(
-                       width: size.width/2.5,
-                       height: size.height*.06,
-                       decoration: BoxDecoration(
-                           border: Border.all(color: AppColors.primaryColor1),
-                           borderRadius: BorderRadius.circular(25)
-                       ),
-                       child: TextButton(onPressed: (){
-                         AppCubit.get(context).pickPostImage();
-                       },
-                           child: Row(
-                             mainAxisAlignment: MainAxisAlignment.center,
-                             children: [
-                               Icon(Icons.camera_alt,color: AppColors.primaryColor1,size: 26),
-                               const SizedBox(width:7),
-                               Expanded(
-                                 child: Text('Choose photo',style: TextStyle(
-                                     color: AppColors.primaryColor1,
-                                     fontSize: 15
-                                 ),),
-                               )
-                             ],
-
-                           )),
-                     ),
-                     const SizedBox(width: 10,),
                      state is BrowiseUploadImagePostLoadingState || state is BrowiseGetPostsLoadingState?
                      Center(child:CircularProgressIndicator(),)
                          :defaultButton(
-                         width: size.width/2.5,
+                         width: size.width*.8,
                          height: size.height*.06,
                          function: (){
 
@@ -156,7 +130,7 @@ class _AddNewImageState extends State<AddNewImage> {
 
                          },
 
-                         buttonText: 'Upload Post',
+                         buttonText: 'Create Post',
                          buttonColor: AppColors.primaryColor1
                      ),
                    ],

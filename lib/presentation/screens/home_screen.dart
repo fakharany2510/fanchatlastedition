@@ -22,7 +22,12 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
-
+        if(state is PickPostImageSuccessState){
+          Navigator.pushNamed(context, 'add_image');
+        }
+        if(state is PickPostVideoSuccessState){
+          Navigator.pushNamed(context, 'add_video');
+        }
       },
       builder: (context,state){
         var cubit=AppCubit.get(context);
@@ -54,8 +59,120 @@ class HomeScreen extends StatelessWidget {
                     autoPlayCurve: Curves.fastOutSlowIn
                   ),
                 ),
-                Divider(color: Colors.grey),
-                const SizedBox(height: 0,),
+                SizedBox(height: 3,),
+                Container(height: MediaQuery.of(context).size.height*.01,width: MediaQuery.of(context).size.width,color: Colors.grey[300],),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                  child: Column(
+                    children: [
+                      InkWell(
+                        onTap: (){
+                          Navigator.pushNamed(context, 'add_text');
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height*.06,
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                child: CircleAvatar(
+                                  backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
+                                  radius: 20,
+                                ),
+                              ),
+                              const Padding(
+                                padding:  EdgeInsets.only(left: 10,top: 0),
+                                child: Text('What\'s on your mind?',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 17
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                        ),
+                      ),
+                      SizedBox(height: 3,),
+                      Container(
+                        height: 1,
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.grey,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: (){
+                                AppCubit.get(context).pickPostImage();
+                              },
+                              child: Container(
+                                height: MediaQuery.of(context).size.height*.03,
+                                width: MediaQuery.of(context).size.width*.2,
+                                child:Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(Icons.camera_alt,color:Colors.green,size: 17),
+                                     SizedBox(width:4),
+                                    Expanded(
+                                      child: Text('Photo',style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 15
+                                      ),),
+                                    )
+                                  ],
+
+                                )
+                              ),
+                            ),
+                            SizedBox(width:MediaQuery.of(context).size.width*.15,),
+                            Container(
+                              color: Colors.grey,
+                              height: 25,
+                              width: 1,
+                            ),
+                            SizedBox(width:MediaQuery.of(context).size.width*.15,),
+                            InkWell(
+                              onTap: (){
+                                AppCubit.get(context).pickPostVideo();
+                                AppCubit.get(context).isVideoButtonTapped==true;
+                              },
+                              child: Container(
+                                height: MediaQuery.of(context).size.height*.03,
+                                width: MediaQuery.of(context).size.width*.2,
+                                child:Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(Icons.video_camera_back,color:Colors.red,size: 17),
+                                    const SizedBox(width:4),
+                                    Expanded(
+                                      child: Text('Video',style: TextStyle(
+                                          color:Colors.black,
+                                          fontSize: 15
+                                      ),),
+                                    )
+                                  ],
+
+                                )
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+
+                    ],
+                  )
+                ),
+                Container(height: MediaQuery.of(context).size.height*.01,width: MediaQuery.of(context).size.width,color: Colors.grey[300],),
+                const SizedBox(height: 5,),
+
+                const SizedBox(height: 5,),
                 NotificationListener(
                   onNotification: (ScrollNotification notification) {
                     if (notification is ScrollUpdateNotification) {
@@ -104,33 +221,33 @@ class HomeScreen extends StatelessWidget {
               color: AppColors.primaryColor1,
             ),
           ),
-          floatingActionButton:SpeedDial(
-            backgroundColor: AppColors.primaryColor1,
-            animatedIcon: AnimatedIcons.menu_close,
-            elevation: 1,
-            overlayColor: AppColors.myWhite,
-            overlayOpacity: 0.0001,
-
-            children: [
-              SpeedDialChild(
-                onTap: (){
-                  Navigator.pushNamed(context, 'add_video');
-                },
-                child: Icon(Icons.video_camera_back,color: AppColors.myWhite,),
-                label: 'add video',
-                backgroundColor: AppColors.primaryColor2
-              ),
-              SpeedDialChild(
-                onTap: (){
-                  Navigator.pushNamed(context, 'add_image');
-                },
-                child: Icon(Icons.image,color: AppColors.myWhite,),
-                label: 'add image',
-                  backgroundColor: AppColors.primaryColor2
-
-              ),
-            ],
-          )
+          // floatingActionButton:SpeedDial(
+          //   backgroundColor: AppColors.primaryColor1,
+          //   animatedIcon: AnimatedIcons.menu_close,
+          //   elevation: 1,
+          //   overlayColor: AppColors.myWhite,
+          //   overlayOpacity: 0.0001,
+          //
+          //   children: [
+          //     SpeedDialChild(
+          //       onTap: (){
+          //         Navigator.pushNamed(context, 'add_video');
+          //       },
+          //       child: Icon(Icons.video_camera_back,color: AppColors.myWhite,),
+          //       label: 'add video',
+          //       backgroundColor: AppColors.primaryColor2
+          //     ),
+          //     SpeedDialChild(
+          //       onTap: (){
+          //         Navigator.pushNamed(context, 'add_image');
+          //       },
+          //       child: Icon(Icons.image,color: AppColors.myWhite,),
+          //       label: 'add image',
+          //         backgroundColor: AppColors.primaryColor2
+          //
+          //     ),
+          //   ],
+          // )
         );
       },
     );

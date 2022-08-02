@@ -25,7 +25,7 @@ class AddNewVideo extends StatelessWidget {
           backgroundColor: AppColors.myWhite,
           appBar:AppBar(
             backgroundColor: AppColors.myWhite,
-            title: Text('Add New Video',style: TextStyle(
+            title: Text('Add vew post',style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor1
@@ -107,32 +107,6 @@ class AddNewVideo extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextButton(onPressed: (){
-                        AppCubit.get(context).pickPostVideo();
-                        AppCubit.get(context).isVideoButtonTapped==true;
-                      }, child: Container(
-                        width: size.width/2.5,
-                        height: size.height*.06,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.primaryColor1),
-                            borderRadius: BorderRadius.circular(25)
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.video_camera_back,color: AppColors.primaryColor1,size: 26),
-                            SizedBox(width:7),
-                            Text('choose video',
-                              style: TextStyle(
-                                  color: AppColors.primaryColor1,
-                                  fontSize: 15
-                              ),
-                            )
-                          ],
-
-                        ),
-                      )),
-                      SizedBox(width: 10,),
                       state is BrowiseCreateVideoPostLoadingState||state is BrowiseGetPostsLoadingState || state is BrowiseUploadVideoPostLoadingState
                           ? Center(
                         child: CircularProgressIndicator(
@@ -140,7 +114,7 @@ class AddNewVideo extends StatelessWidget {
                         ),
                       )
                           :defaultButton(
-                          width: size.width/2.5,
+                          width: size.width*.8,
                           height: size.height*.06,
                           function: (){
                             if(AppCubit.get(context).postVideo == null){
@@ -155,7 +129,7 @@ class AddNewVideo extends StatelessWidget {
                               );
                             }
                           },
-                          buttonText: 'upload post',
+                          buttonText: 'Create post',
                           buttonColor: AppColors.primaryColor1
                       )
                     ],

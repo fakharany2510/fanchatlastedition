@@ -6,6 +6,7 @@ import 'package:fanchat/firebase_options.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/screens/add_new_image.dart';
 import 'package:fanchat/presentation/screens/add_new_video.dart';
+import 'package:fanchat/presentation/screens/add_text_post.dart';
 import 'package:fanchat/presentation/screens/edit_profie_screen.dart';
 import 'package:fanchat/presentation/screens/login_screen.dart';
 import 'package:fanchat/presentation/screens/profile_screen.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
             'select_national':(context)=>SelectNational(),
             'add_image':(context)=>AddNewImage(),
             'add_video':(context)=>AddNewVideo(),
+            'add_text':(context)=>AddTextPost(),
 
           },
         ),);
