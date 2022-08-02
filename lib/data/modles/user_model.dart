@@ -7,10 +7,7 @@ class UserModel{
   String ?phone;
   String ?bio;
   String ?image;
-  String ?video;
   String ?cover;
-
-
 
 
   UserModel({
@@ -20,7 +17,6 @@ class UserModel{
     this.phone,
     this.image,
     this.cover,
-    this.video,
     this.bio
 
   });
@@ -32,7 +28,6 @@ class UserModel{
     phone=json['phone'];
     image=json['image'];
     cover=json['cover'];
-    video=json['video'];
     bio=json['bio'];
   }
 
@@ -44,7 +39,6 @@ class UserModel{
       'phone':phone,
       'image':image,
       'cover':cover,
-      'video':video,
       'bio':bio,
     };
   }

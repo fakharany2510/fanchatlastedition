@@ -14,8 +14,9 @@ class CreatePostLoadingState extends AppState {}
 class PickPostVideoSuccessState extends AppState {}
 class PickPostVideoErrorState extends AppState {}
 
-class GetUserSuccessfulState extends AppState {}
-class GetUserErrorState extends AppState {}
+class GetUserDataSuccessfulState extends AppState {}
+class GetUserDataLoadingState extends AppState {}
+class GetUserDataErrorState extends AppState {}
 class BrowiseCreatePostLoadingState extends AppState {}
 class BrowiseCreatePostSuccessState extends AppState {}
 class BrowiseCreatePostErrorState extends AppState {}

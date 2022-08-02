@@ -104,25 +104,24 @@ class AppCubit extends Cubit<AppState> {
     emit(CheckBoxState());
   }
 
-  UserModel ?userModel;
-  Future getUser()
-  async{
-
+  UserModel? userModel;
+  void getUser() {
+    emit(GetUserDataLoadingState());
     FirebaseFirestore.instance
         .collection('users')
         .doc(AppStrings.uId)
         .get().then((value) {
-
           userModel = UserModel.formJson(value.data()!);
           printMessage('${userModel!.email}');
           changeUserNameController.text='${userModel!.username}';
           changeUserPhoneController.text='${userModel!.phone}';
           changeUserBioController.text='${userModel!.bio}';
-          emit(GetUserSuccessfulState());
+          //getPosts();
+          emit(GetUserDataSuccessfulState());
     }).catchError((error){
 
-          printMessage('Error in get user is ${error.toString()}');
-          emit(GetUserErrorState());
+      printMessage('Error in get user is ${error.toString()}');
+          emit(GetUserDataErrorState());
     });
 
 
@@ -408,7 +407,7 @@ class AppCubit extends Cubit<AppState> {
         .collection('posts')
         .add(model.toMap())
         .then((value){
-
+          getPosts();
       emit(BrowiseCreatePostSuccessState());
     })
         .catchError((error){
@@ -441,7 +440,7 @@ class AppCubit extends Cubit<AppState> {
           postVideo: value,
           text: text
         );
-        getPosts();
+       // getPosts();
         emit(BrowiseUploadVideoPostSuccessState());
 
       }).catchError((error){
@@ -474,7 +473,7 @@ class AppCubit extends Cubit<AppState> {
         .collection('posts')
         .add(model.toMap())
         .then((value){
-
+          //getPosts();
       emit(BrowiseCreateVideoPostSuccessState());
     })
         .catchError((error){
@@ -487,10 +486,10 @@ class AppCubit extends Cubit<AppState> {
   List<String> postsId=[];
   List<int> likes=[];
 
-  Future<void> getPosts()async{
-     posts=[];
-     postsId=[];
-     likes=[];
+  void getPosts(){
+    posts=[];
+    postsId=[];
+    likes=[];
     emit(BrowiseGetPostsLoadingState());
     FirebaseFirestore.instance
         .collection('posts')
@@ -499,20 +498,20 @@ class AppCubit extends Cubit<AppState> {
       value.docs.forEach((element) {
         element.reference
             .collection('likes')
-            .snapshots(
-        ).listen((event) {
-          likes.add(event.docs.length);
+            .get()
+            .then((value) {
+          likes.add(value.docs.length);
           postsId.add(element.id);
           posts.add(BrowisePostModel.fromJson(element.data()));
-          emit(BrowiseGetPostsSuccessState());
-        });
+        }).catchError((error){});
+
       });
       emit(BrowiseGetPostsSuccessState());
     }
     )
         .catchError((error){
-      print('error while getting pots ${error.toString()}');
       emit(BrowiseGetPostsErrorState());
+      print('error while getting posts ${error.toString()}');
     });
   }
   /////////////////////////////////////////////////

@@ -28,9 +28,9 @@ class RegisterScreen extends StatelessWidget {
                 );
 
                 customToast(title: 'Register Successful', color: AppColors.primaryColor1);
-                AppCubit.get(context).getPosts().then((value) {
+                AppCubit.get(context).getPosts();
                   Navigator.pushNamed(context, 'home_layout');
-                });
+
             }
             if(state is UserRegisterErrorState){
               customToast(title: 'Invalid Data ', color: Colors.red);

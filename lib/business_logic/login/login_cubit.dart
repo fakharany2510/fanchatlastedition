@@ -10,22 +10,21 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(InitialState());
 
   static LoginCubit get(context) => BlocProvider.of(context);
-
-   Future userLogin({
+   void userLogin({
     required String email,
-    required String pass
+    required String password
    })async{
-
-
+     emit(LoginLoadingState());
       FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
-          password: pass).then((value) {
-
+          password: password
+      ).then((value) {
             printMessage('Login Successful');
             printMessage(value.user!.uid);
+            AppStrings.uId=value.user!.uid;
             emit(UserLoginSuccessState(value.user!.uid));
          }).catchError((error){
-
+            print('error while login------------>   ${error}');
             emit(UserLoginErrorState());
          });
 

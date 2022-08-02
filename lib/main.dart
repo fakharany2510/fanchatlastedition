@@ -43,36 +43,29 @@ class MyApp extends StatelessWidget {
     }else{
       widget = '/';
     }
-    return BlocProvider(
-      create: (BuildContext context) =>AppCubit()..getUser()..getPosts(),
-      child: BlocConsumer<AppCubit,AppState>(
-        listener: (context,state){
+    return MultiBlocProvider(
+        providers:[
+          BlocProvider(create: (context)=>AppCubit()..getUser()..getPosts()),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          initialRoute: widget,
+          routes: {
+            '/' :(context)=>const SplashScreen(),
+            'home_layout':(context)=> const HomeLayout(),
+            'login':(context)=> LoginScreen(),
+            'register':(context)=>RegisterScreen(),
+            'profile':(context)=> ProfileScreen(),
+            'edit_profile':(context)=>EditProfileScreen(),
+            'select_national':(context)=>SelectNational(),
+            'add_image':(context)=>AddNewImage(),
+            'add_video':(context)=>AddNewVideo(),
 
-        },
-        builder: (context,state){
-          return  MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
-            initialRoute: widget,
-            routes: {
-              'test' :(context)=>const TestViedo(),
-              '/' :(context)=>const SplashScreen(),
-              'home_layout':(context)=> const HomeLayout(),
-              'login':(context)=> LoginScreen(),
-              'register':(context)=>RegisterScreen(),
-              'profile':(context)=>const ProfileScreen(),
-              'edit_profile':(context)=>EditProfileScreen(),
-              'select_national':(context)=>SelectNational(),
-              'add_image':(context)=>AddNewImage(),
-              'add_video':(context)=>AddNewVideo(),
-
-            },
-          );
-        },
-      )
-    );
+          },
+        ),);
   }
 }
 
