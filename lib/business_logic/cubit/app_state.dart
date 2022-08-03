@@ -56,3 +56,8 @@ class UpdateUserSuccessState extends AppState {}
 class UpdateUserErrorState extends AppState {}
 class CreateLikesSuccessState extends AppState {}
 class CreateLikesErrorState extends AppState {}
+//comments state
+class CreateCommentsSuccessState extends AppState {}
+class CreateCommentsErrorState extends AppState {}
+class GetCommentsSuccessState extends AppState {}
+class GetCommentsErrorState extends AppState {}

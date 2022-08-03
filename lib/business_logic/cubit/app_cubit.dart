@@ -12,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../data/modles/comment_model.dart';
 import '../../data/modles/create_post_model.dart';
 
 part 'app_state.dart';
@@ -547,6 +548,7 @@ class AppCubit extends Cubit<AppState> {
     });
   }
   /////////////////////////////////////////////////
+  //post likes
   Future likePosts(String postId)async{
     FirebaseFirestore.instance
         .collection('posts')
@@ -562,6 +564,53 @@ class AppCubit extends Cubit<AppState> {
         .catchError((error){
       emit(CreateLikesErrorState()
       );
+    });
+  }
+  /////////////////////////////////////////////////////////
+// Create Comment
+  /////////////////////////////////////
+
+  List <CommentModel> comments=[];
+  void commentHomePost(String postId, String comment) {
+    CommentModel model = CommentModel(
+      username: userModel!.username,
+      userImage: userModel!.image!,
+      userId: userModel!.uId,
+      comment: comment,
+    );
+    FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .add(model.toMap())
+        .then((value) {
+      print('Comment Add');
+      getComment(postId);
+      emit(CreateCommentsSuccessState());
+    }).catchError((error) {
+      print('Error When set comment in home : ${error.toString()}');
+      emit(CreateCommentsErrorState());
+    });
+  }
+
+  void getComment(String postId) {
+    comments=[];
+    FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .get()
+        .then((value) {
+      print('Get Comments Success');
+      value.docs.forEach((element) {
+
+        comments.add(CommentModel.fromFire(element.data()));
+
+      });
+      emit(GetCommentsSuccessState());
+    }).catchError((error) {
+      print('Error When set comment in home : ${error.toString()}');
+      emit(GetCommentsErrorState());
     });
   }
 }

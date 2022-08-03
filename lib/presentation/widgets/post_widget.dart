@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
+import '../screens/comment_screen.dart';
+
 class PostWidget extends StatefulWidget {
   int ?index;
   PostWidget({Key? key,this.index}) : super(key: key);
@@ -244,7 +246,43 @@ class _PostWidgetState extends State<PostWidget> {
 
                      ),
                    ],
-                 )
+                 ),
+                 const Divider(color: Colors.grey,),
+                 Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: Row(
+                     children: [
+                       CircleAvatar(
+                         backgroundImage: NetworkImage('${AppCubit.get(context).posts[widget.index!].image}'),
+                         radius: 20,
+                       ),
+                       const SizedBox(width: 7,),
+                       InkWell(
+                         onTap: (){
+                           AppCubit.get(context).getComment( AppCubit.get(context).postsId[widget.index!]);
+                           Navigator.push(context, MaterialPageRoute(builder: (_){
+                             return CommentScreen(postId: AppCubit.get(context).postsId[widget.index!] ,);
+                           }));
+                         },
+                         child: Container(
+                           width: MediaQuery.of(context).size.width*.74,
+                           padding: EdgeInsets.all(12),
+                           decoration: BoxDecoration(
+                               color: Colors.grey.shade200,
+                               borderRadius: BorderRadius.circular(50)
+                           ),
+                           child: Text(
+                             'Write a comment ...',style: TextStyle(
+                               color: Colors.grey.shade600,
+                               fontSize: 16
+                           ),
+                           ),
+                         ),
+                       )
+
+                     ],
+                   ),
+                 ),
                ],
              ),
            ),
