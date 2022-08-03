@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../constants/app_colors.dart';
+import '../../constants/app_strings.dart';
 import '../widgets/shared_widgets.dart';
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -17,8 +18,8 @@ class ProfileScreen extends StatelessWidget {
       builder: (context,state){
           var cubit=AppCubit.get(context);
           return Scaffold(
-            appBar: customAppbar('Profile'),
-            backgroundColor: AppColors.myWhite,
+            appBar: customAppbar('Profile',context),
+            backgroundColor: AppColors.primaryColor1,
             body: cubit.userModel !=null?SingleChildScrollView(
               child: Column(
                 children: [
@@ -63,10 +64,11 @@ class ProfileScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children:  [
                       Text('${cubit.userModel!.username}',
-                        style: const TextStyle(
-                            color: Colors.black,
+                        style:  TextStyle(
+                            color: AppColors.myWhite,
                             fontSize: 20,
-                            fontWeight: FontWeight.w500
+                            fontWeight: FontWeight.w500,
+                            fontFamily: AppStrings.appFont
                         ),
                       ),
                       const SizedBox(width: 5,),
@@ -75,16 +77,18 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(height:7,),
                   Text('${cubit.userModel!.bio}',
-                    style: const TextStyle(
-                        color: Colors.black,
+                    style:  TextStyle(
+                        color: AppColors.myWhite,
                         fontSize: 16,
-                        fontWeight: FontWeight.w500
+                        fontWeight: FontWeight.w500,
+                        fontFamily: AppStrings.appFont
                     ),
                   ),
                   const SizedBox(height:10,),
                   defaultButton(
+                      textColor: AppColors.primaryColor1,
                       buttonText: 'Edit Profile',
-                      buttonColor: AppColors.primaryColor1,
+                      buttonColor: AppColors.myGrey,
                       height: size.height*.06,
                       width: size.width*.9,
                       function: (){

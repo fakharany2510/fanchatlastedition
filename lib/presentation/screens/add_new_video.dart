@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../constants/app_strings.dart';
+
 class AddNewVideo extends StatelessWidget {
   //const AddNewVideo({Key? key}) : super(key: key);
   @override
@@ -28,7 +30,8 @@ class AddNewVideo extends StatelessWidget {
             title: Text('Add vew post',style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.w600,
-                color: AppColors.primaryColor1
+                color: AppColors.primaryColor1,
+                fontFamily: AppStrings.appFont
             )),
             elevation: 0,
             leading: IconButton(
@@ -57,10 +60,11 @@ class AddNewVideo extends StatelessWidget {
                       SizedBox(width: 10,),
                       Expanded(
                         child:   Text('${AppCubit.get(context).userModel!.username}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.black,
                               fontSize: 16,
-                              fontWeight: FontWeight.w500
+                              fontWeight: FontWeight.w500,
+                              fontFamily: AppStrings.appFont
                           ),
                         ),
                       ),
@@ -99,7 +103,8 @@ class AddNewVideo extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 21,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.primaryColor1
+                            color: AppColors.primaryColor1,
+                            fontFamily: AppStrings.appFont
                         )
                     )),
                   )),
@@ -114,6 +119,7 @@ class AddNewVideo extends StatelessWidget {
                         ),
                       )
                           :defaultButton(
+                          textColor: AppColors.myWhite,
                           width: size.width*.8,
                           height: size.height*.06,
                           function: (){

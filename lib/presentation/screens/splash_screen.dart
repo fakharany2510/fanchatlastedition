@@ -14,12 +14,13 @@ class SplashScreen extends StatelessWidget {
       navigateRoute: LoginScreen(),
       duration: 200,
       imageSize: 170,
-      imageSrc: "assets/images/app.jpg",
+      imageSrc: "assets/images/splashicon.png",
+
       colors: [
         AppColors.primaryColor1,
         AppColors.primaryColor1,
       ],
-      backgroundColor:AppColors.myWhite,
+      backgroundColor:AppColors.primaryColor1,
     );
   }
 }

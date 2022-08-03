@@ -43,14 +43,14 @@ class LoginScreen extends StatelessWidget {
         builder: (context,state){
            var cubit=LoginCubit.get(context);
            return Scaffold(
-             backgroundColor: AppColors.myWhite,
+             backgroundColor: AppColors.primaryColor1,
              appBar: AppBar(
                backgroundColor: AppColors.myWhite,
                toolbarHeight: 0,
                elevation: 0,
-               systemOverlayStyle: const SystemUiOverlayStyle(
-                 statusBarIconBrightness: Brightness.dark,
-                 statusBarColor: Colors.white,
+               systemOverlayStyle:  SystemUiOverlayStyle(
+                 statusBarIconBrightness: Brightness.light,
+                 statusBarColor: AppColors.primaryColor1,
                ),
              ),
              body: Form(
@@ -63,7 +63,7 @@ class LoginScreen extends StatelessWidget {
                      children:  [
                        const Padding(
                          padding: EdgeInsets.symmetric(vertical: 30),
-                         child: Image(image: AssetImage('assets/images/app.jpg'))
+                         child: Image(image: AssetImage('assets/images/fanicon.png'),width: 190,height: 190,)
                        ),
 
                        textFormFieldWidget(
@@ -89,10 +89,11 @@ class LoginScreen extends StatelessWidget {
                          color: AppColors.primaryColor1,
                        ),)
                        :defaultButton(
+                         textColor: AppColors.primaryColor1,
                            width: size.width*.9,
                            height: size.height*.06,
                            buttonText: 'LOGIN',
-                           buttonColor: AppColors.primaryColor1,
+                           buttonColor: AppColors.myGrey,
                            function: (){
                               if(formKey.currentState!.validate()){
                                 cubit.userLogin(email: email.text,
@@ -111,10 +112,11 @@ class LoginScreen extends StatelessWidget {
                              color: Colors.grey.shade400,
                            ),
                            const SizedBox(width: 5,),
-                           const Text('or',
+                            Text('or',
                              style: TextStyle(
                                  fontSize:16,
-                                 color: Colors.black
+                                 color: AppColors.myGrey,
+                               fontFamily: AppStrings.appFont
                              ),
                            ),
                            const SizedBox(width: 5,),
@@ -132,7 +134,7 @@ class LoginScreen extends StatelessWidget {
                                context: context,
                                function: (){},
                                size:size,
-                               buttonColor: AppColors.myWhite,
+                               buttonColor: AppColors.primaryColor1,
                                buttonText: "Facebook",
                                imagePath: 'assets/images/face.png'
                            ),
@@ -143,7 +145,7 @@ class LoginScreen extends StatelessWidget {
 
                                },
                                size:size,
-                               buttonColor: AppColors.myWhite,
+                               buttonColor: AppColors.primaryColor1,
                                buttonText: "Google",
                                imagePath: 'assets/images/google1.png'
                            ),
@@ -154,9 +156,9 @@ class LoginScreen extends StatelessWidget {
                          mainAxisAlignment: MainAxisAlignment.center,
                          children: [
                            Text("Don\'t Have Account ?",style: TextStyle(
-                             //fontFamily: AppStrings.appFont,
+                             fontFamily: AppStrings.appFont,
                                fontSize: 18,
-                               color: AppColors.primaryColor1
+                               color: AppColors.myGrey
                            ),),
                            TextButton(
                              onPressed: () {
@@ -164,7 +166,7 @@ class LoginScreen extends StatelessWidget {
                              },
                              child:  Text("register",style: TextStyle(
                                  color: AppColors.primaryColor2,
-                                 // fontFamily: AppStrings.appFont,
+                                  fontFamily: AppStrings.appFont,
                                  fontSize: 18
                              ),
                              ),

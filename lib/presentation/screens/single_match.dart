@@ -4,6 +4,8 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../constants/app_strings.dart';
+
 class SingleMatch extends StatelessWidget {
   const SingleMatch({Key? key}) : super(key: key);
 
@@ -16,7 +18,7 @@ class SingleMatch extends StatelessWidget {
       builder: (context,state){
         return Scaffold(
           backgroundColor: AppColors.myWhite,
-          appBar: customAppbar('Match Details'),
+          appBar: customAppbar('Match Details',context),
 
           body: SingleChildScrollView(
             child: Container(
@@ -46,7 +48,8 @@ class SingleMatch extends StatelessWidget {
                                       Text('Group 5',style: TextStyle(
                                           color: AppColors.primaryColor1,
                                           fontSize: 18,
-                                          fontWeight: FontWeight.w500
+                                          fontWeight: FontWeight.w500,
+                                          fontFamily: AppStrings.appFont
                                       ),
                                         textAlign: TextAlign.center,
                                       ),
@@ -66,7 +69,8 @@ class SingleMatch extends StatelessWidget {
                                               Text('Egypt',style: TextStyle(
                                                   color: AppColors.primaryColor1,
                                                   fontSize: 15,
-                                                  fontWeight: FontWeight.w500
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: AppStrings.appFont
                                               ),),
                                               const  SizedBox(width: 5,),
                                               CircleAvatar(
@@ -101,7 +105,8 @@ class SingleMatch extends StatelessWidget {
                                                     Text('Not start',style: TextStyle(
                                                         color: AppColors.myWhite,
                                                         fontSize: 13,
-                                                        fontWeight: FontWeight.w500
+                                                        fontWeight: FontWeight.w500,
+                                                        fontFamily: AppStrings.appFont
                                                     ),
                                                       textAlign: TextAlign.center,
                                                     ),
@@ -113,7 +118,8 @@ class SingleMatch extends StatelessWidget {
                                               Text('20:10',style: TextStyle(
                                                   color: AppColors.primaryColor1,
                                                   fontSize: 12,
-                                                  fontWeight: FontWeight.w500
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: AppStrings.appFont
                                               ),
                                                 textAlign: TextAlign.center,
                                               ),
@@ -136,7 +142,8 @@ class SingleMatch extends StatelessWidget {
                                               Text('Italy',style: TextStyle(
                                                   color: AppColors.primaryColor1,
                                                   fontSize: 15,
-                                                  fontWeight: FontWeight.w500
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: AppStrings.appFont
                                               ),),
                                             ],
                                           ),
@@ -159,7 +166,8 @@ class SingleMatch extends StatelessWidget {
                             child: Text('Most Matches',style: TextStyle(
                                 color: AppColors.primaryColor1,
                                 fontSize: 16,
-                                fontWeight: FontWeight.w900
+                                fontWeight: FontWeight.w900,
+                                fontFamily: AppStrings.appFont
                             ),
                               textAlign: TextAlign.center,
                             ),
@@ -194,7 +202,8 @@ class SingleMatch extends StatelessWidget {
                                                 Text('Egypt',style: TextStyle(
                                                     color: AppColors.myWhite,
                                                     fontSize: 15,
-                                                    fontWeight: FontWeight.w500
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily: AppStrings.appFont
                                                 ),),
                                                 const  SizedBox(width: 5,),
                                                 CircleAvatar(
@@ -229,7 +238,8 @@ class SingleMatch extends StatelessWidget {
                                                       Text('4 - 2',style: TextStyle(
                                                           color: AppColors.primaryColor1,
                                                           fontSize: 14,
-                                                          fontWeight: FontWeight.w500
+                                                          fontWeight: FontWeight.w500,
+                                                          fontFamily: AppStrings.appFont
                                                       ),
                                                         textAlign: TextAlign.center,
                                                       ),
@@ -258,7 +268,8 @@ class SingleMatch extends StatelessWidget {
                                                 Text('Italy',style: TextStyle(
                                                     color: AppColors.myWhite,
                                                     fontSize: 15,
-                                                    fontWeight: FontWeight.w500
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily: AppStrings.appFont
                                                 ),),
                                               ],
                                             ),

@@ -25,31 +25,8 @@ class EditProfileScreen extends StatelessWidget {
         var cubit=AppCubit.get(context);
 
         return Scaffold(
-          backgroundColor: AppColors.myWhite,
-          appBar: AppBar(
-            systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarIconBrightness: Brightness.dark,
-              statusBarColor: Colors.white,
-            ),
-            iconTheme: IconThemeData(
-                color: AppColors.primaryColor1
-            ),
-            leading: IconButton(
-              onPressed: (){
-                  cubit.getUser();
-                  Navigator.pop(context);
-              },
-              icon:  Icon(Icons.arrow_back_ios,color: AppColors.primaryColor1,),
-            ),
-            backgroundColor: AppColors.myWhite,
-            title: Text('Edit Profile',style: TextStyle(
-                fontSize: 21,
-                fontWeight: FontWeight.w600,
-                color: AppColors.primaryColor1
-            ),),
-            // centerTitle: true,
-            elevation: 0.0,
-          ),
+          backgroundColor: AppColors.primaryColor1,
+          appBar: customAppbar('Edit Profile',context),
           body: SingleChildScrollView(
             child: Column(
               children: [
@@ -82,12 +59,12 @@ class EditProfileScreen extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: CircleAvatar(
-                                  backgroundColor: AppColors.primaryColor1,
+                                  backgroundColor: AppColors.myGrey,
                                   radius: 20,
                                   child: IconButton(onPressed: (){
                                     cubit.getCoverImage();
                                   },
-                                      icon: Icon(Icons.camera_alt_outlined,color:AppColors.myWhite,)
+                                      icon: Icon(Icons.camera_alt_outlined,color:AppColors.primaryColor1,)
                                   ),
                                 ),
                               ),
@@ -106,13 +83,13 @@ class EditProfileScreen extends StatelessWidget {
                               ),
                             ),
                             CircleAvatar(
-                              backgroundColor: AppColors.primaryColor1,
+                              backgroundColor: AppColors.myGrey,
                               radius: 20,
                               child: IconButton(onPressed: (){
                                 cubit.getProfileImage();
                                 print('change personal photo');
                               },
-                                  icon: Icon(Icons.camera_alt_outlined,color:AppColors.myWhite,)
+                                  icon: Icon(Icons.camera_alt_outlined,color:AppColors.primaryColor1,)
                               ),
                             ),
 
@@ -134,10 +111,11 @@ class EditProfileScreen extends StatelessWidget {
                             child: Column(
                               children: [
                               defaultButton(
+                                textColor: AppColors.primaryColor1,
                                 width: size.width*.6,
                                 height: size.height*.06,
                               fontSize: 14,
-                              buttonColor: AppColors.primaryColor1,
+                              buttonColor: AppColors.myGrey,
                               buttonText: 'Upload profile image',
                                 function: (){
                                   cubit.uploadUserImage(
@@ -159,10 +137,11 @@ class EditProfileScreen extends StatelessWidget {
                               children: [
 
                                 defaultButton(
+                                  textColor: AppColors.primaryColor1,
                                   width: size.width*.6,
                                   height: size.height*.06,
                                   fontSize: 14,
-                                    buttonColor: AppColors.primaryColor1,
+                                    buttonColor: AppColors.myGrey,
                                     buttonText: 'Upload cover image',
                                     function: (){
                                       cubit.uploadUserCover(
@@ -216,8 +195,9 @@ class EditProfileScreen extends StatelessWidget {
                 state is UpdateUserLoadingState || state is GetCoverImageSuccessState || state is GetProfileImageSuccessState?
                 const CircularProgressIndicator():
                 defaultButton(
+                  textColor: AppColors.primaryColor1,
                     buttonText: 'Save Changes',
-                    buttonColor: AppColors.primaryColor1,
+                    buttonColor: AppColors.myGrey,
                     height: size.height*.06,
                     width: size.width*.9,
                     function: (){

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../constants/app_strings.dart';
 import '../screens/comment_screen.dart';
 
 class PostWidget extends StatefulWidget {
@@ -71,7 +72,8 @@ class _PostWidgetState extends State<PostWidget> {
                                      style:  TextStyle(
                                          color: AppColors.myWhite,
                                          fontSize: 14,
-                                         fontWeight: FontWeight.w500
+                                         fontWeight: FontWeight.w500,
+                                         fontFamily: AppStrings.appFont
                                      ),
                                    ),
                                  ),
@@ -85,7 +87,8 @@ class _PostWidgetState extends State<PostWidget> {
                          overflow: TextOverflow.ellipsis,
                          style:  TextStyle(
                              fontSize: 13,
-                             color: AppColors.myWhite
+                             color: AppColors.myWhite,
+                             fontFamily: AppStrings.appFont
                          ),
                        ),
                      ],
@@ -102,6 +105,7 @@ class _PostWidgetState extends State<PostWidget> {
                            fontSize: 14,
                            fontWeight: FontWeight.w700,
                            height: 1.2,
+                             fontFamily: AppStrings.appFont
                          ),
                        )),
                  ),
@@ -194,7 +198,8 @@ class _PostWidgetState extends State<PostWidget> {
                            style: TextStyle(
                           color: AppColors.myWhite,
                           fontSize: 13,
-                               fontWeight: FontWeight.w500
+                               fontWeight: FontWeight.w500,
+                               fontFamily: AppStrings.appFont
                           ),),
                            IconButton(
                              padding:EdgeInsets.zero,
@@ -214,7 +219,8 @@ class _PostWidgetState extends State<PostWidget> {
                            style: TextStyle(
                           color: AppColors.myWhite,
                           fontSize: 13,
-                               fontWeight: FontWeight.w500
+                               fontWeight: FontWeight.w500,
+                               fontFamily: AppStrings.appFont
                           ),),
                            IconButton(
                              padding:EdgeInsets.zero,
@@ -254,6 +260,7 @@ class _PostWidgetState extends State<PostWidget> {
                              'Write a comment ...',style: TextStyle(
                                color: AppColors.primaryColor1,
                                fontSize: 13,
+                               fontFamily: AppStrings.appFont
                            ),
                            ),
                          ),

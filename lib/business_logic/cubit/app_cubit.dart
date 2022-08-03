@@ -416,7 +416,7 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 /////////////////////////////////////////////////
-//upload post video
+//upload post video to storage
   BrowisePostModel? postModel;
   void uploadPostVideo({
     String? userId,
@@ -486,7 +486,6 @@ class AppCubit extends Cubit<AppState> {
   void uploadText({
     String? userId,
     String? name,
-    String? image,
     required DateTime? dateTime,
     required String? text,
   }){

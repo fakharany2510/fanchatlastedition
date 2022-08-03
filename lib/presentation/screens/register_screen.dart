@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../constants/app_strings.dart';
 import '../layouts/home_layout.dart';
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -45,14 +46,14 @@ class RegisterScreen extends StatelessWidget {
         builder: (context,state){
            var cubit=RegisterCubit.get(context);
            return Scaffold(
-             backgroundColor: AppColors.myWhite,
+             backgroundColor: AppColors.primaryColor1,
              appBar: AppBar(
                backgroundColor: AppColors.myWhite,
                toolbarHeight: 0,
                elevation: 0,
-               systemOverlayStyle: const SystemUiOverlayStyle(
-                 statusBarIconBrightness: Brightness.dark,
-                 statusBarColor: Colors.white,
+               systemOverlayStyle:  SystemUiOverlayStyle(
+                 statusBarIconBrightness: Brightness.light,
+                 statusBarColor: AppColors.primaryColor1,
                ),
              ),
              body: Form(
@@ -65,7 +66,7 @@ class RegisterScreen extends StatelessWidget {
                      children:  [
                        const Padding(
                          padding: EdgeInsets.symmetric(vertical: 30),
-                         child:Image(image:AssetImage('assets/images/app.jpg'))
+                         child:Image(image:AssetImage('assets/images/fanicon.png'),height: 190,width: 190,)
                        ),
 
                        SizedBox(height: size.height*.01,),
@@ -108,8 +109,9 @@ class RegisterScreen extends StatelessWidget {
                        ),
                        SizedBox(height: size.height*.03,),
                        defaultButton(
+                         textColor: AppColors.primaryColor1,
                            buttonText: 'REGISTER',
-                           buttonColor: AppColors.primaryColor1,
+                           buttonColor: AppColors.myGrey,
                            width: size.width*.9,
                            height: size.height*.06,
                            function: (){
@@ -126,19 +128,19 @@ class RegisterScreen extends StatelessWidget {
                          mainAxisAlignment: MainAxisAlignment.center,
                          children: [
                            Text("Have any account?",style: TextStyle(
-                             //fontFamily: AppStrings.appFont,
+                               fontFamily: AppStrings.appFont,
                                fontSize: 18,
-                               color: AppColors.primaryColor1
+                               color: AppColors.myGrey
                            ),),
                            TextButton(
                              onPressed: () {
-                               Navigator.pushNamed(context, 'h');
+                               Navigator.pushNamed(context, 'login');
 
 
                              },
                              child:  Text("Login",style: TextStyle(
                                  color: AppColors.primaryColor2,
-                                 // fontFamily: AppStrings.appFont,
+                                 fontFamily: AppStrings.appFont,
                                  fontSize: 18
                              ),
                              ),

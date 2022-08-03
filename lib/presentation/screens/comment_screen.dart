@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../constants/app_strings.dart';
+
 
 class CommentScreen extends StatelessWidget {
   var commentController = TextEditingController();
@@ -32,9 +34,9 @@ class CommentScreen extends StatelessWidget {
               return Scaffold(
                 backgroundColor: AppColors.myWhite,
                 appBar: AppBar(
-                  systemOverlayStyle: const SystemUiOverlayStyle(
-                    statusBarIconBrightness: Brightness.dark,
-                    statusBarColor: Colors.white,
+                  systemOverlayStyle:  SystemUiOverlayStyle(
+                    statusBarIconBrightness: Brightness.light,
+                    statusBarColor: AppColors.primaryColor1,
                   ),
                   iconTheme: IconThemeData(
                       color: AppColors.primaryColor1
@@ -43,7 +45,8 @@ class CommentScreen extends StatelessWidget {
                   title: Text('Comment Screen',style: TextStyle(
                       fontSize: 19,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.primaryColor1
+                      color: AppColors.primaryColor1,
+                      fontFamily: AppStrings.appFont
                   ),),
                   titleSpacing: 0.0,
                   // centerTitle: true,
@@ -99,7 +102,7 @@ class CommentScreen extends StatelessWidget {
                                             right: 15.0,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: Colors.grey[200],
+                                            color: AppColors.primaryColor1,
                                             borderRadius: BorderRadius.circular(12.0),
                                           ),
                                           child: Column(
@@ -109,8 +112,9 @@ class CommentScreen extends StatelessWidget {
                                                 '${AppCubit.get(context).comments[index].username}',
                                                 style: TextStyle(
                                                   fontSize: 16.0,
-                                                  color: Colors.grey.shade700,
+                                                  color: AppColors.myWhite,
                                                   height: 1.3,
+                                                    fontFamily: AppStrings.appFont
                                                 ),
                                               ),
                                               const SizedBox(
@@ -118,8 +122,10 @@ class CommentScreen extends StatelessWidget {
                                               ),
                                               Text(
                                                 '${AppCubit.get(context).comments[index].comment}' ,
-                                                style: const TextStyle(
+                                                style:  TextStyle(
                                                   fontSize: 16.0,
+                                                  color: AppColors.myWhite,
+                                                    fontFamily: AppStrings.appFont
                                                 ),
                                               ),
                                             ],
@@ -285,6 +291,7 @@ class CommentScreen extends StatelessWidget {
                           fontSize: 16.0,
                           fontWeight: FontWeight.w900,
                           height: 1.3,
+                            fontFamily: AppStrings.appFont
                         ),
                       ),
                       const SizedBox(
@@ -294,6 +301,7 @@ class CommentScreen extends StatelessWidget {
                         '${model.comment}',
                         style: const TextStyle(
                           fontSize: 16.0,
+                            fontFamily: AppStrings.appFont
                         ),
                       ),
                     ],

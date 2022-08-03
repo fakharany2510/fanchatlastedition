@@ -4,6 +4,8 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../constants/app_strings.dart';
+
 class AddTextPost extends StatefulWidget {
   @override
   State<AddTextPost> createState() => _AddTextPostState();
@@ -18,7 +20,7 @@ class _AddTextPostState extends State<AddTextPost> {
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
         if(state is BrowiseGetPostsSuccessState){
-          Navigator.of(context).popAndPushNamed('home_layout');
+          Navigator.of(context).pushReplacementNamed('home_layout');
           AppCubit.get(context).postImage=null;
         }
 
@@ -31,7 +33,8 @@ class _AddTextPostState extends State<AddTextPost> {
             title: Text('Add new post',style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.w600,
-                color: AppColors.primaryColor1
+                color: AppColors.primaryColor1,
+                fontFamily: AppStrings.appFont
             )),
             elevation: 0,
             leading: IconButton(
@@ -65,7 +68,8 @@ class _AddTextPostState extends State<AddTextPost> {
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 16,
-                            fontWeight: FontWeight.w500
+                            fontWeight: FontWeight.w500,
+                            fontFamily: AppStrings.appFont
                         ),
                       ),
                     ],
@@ -88,6 +92,7 @@ class _AddTextPostState extends State<AddTextPost> {
                       state is BrowiseUploadImagePostLoadingState || state is BrowiseGetPostsLoadingState?
                       Center(child:CircularProgressIndicator(),)
                           :defaultButton(
+                        textColor: AppColors.myWhite,
                           width: size.width*.8,
                           height: size.height*.06,
                           function: (){
@@ -108,7 +113,7 @@ class _AddTextPostState extends State<AddTextPost> {
                           },
 
                           buttonText: 'Create Post',
-                          buttonColor: AppColors.primaryColor1
+                          buttonColor: AppColors.primaryColor1,
                       ),
                     ],
                   )

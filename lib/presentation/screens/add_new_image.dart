@@ -4,6 +4,8 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../constants/app_strings.dart';
+
 class AddNewImage extends StatefulWidget {
   @override
   State<AddNewImage> createState() => _AddNewImageState();
@@ -31,7 +33,8 @@ class _AddNewImageState extends State<AddNewImage> {
             title: Text('Add new post',style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.w600,
-                color: AppColors.primaryColor1
+                color: AppColors.primaryColor1,
+                fontFamily: AppStrings.appFont
             )),
             elevation: 0,
             leading: IconButton(
@@ -65,7 +68,8 @@ class _AddNewImageState extends State<AddNewImage> {
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 16,
-                            fontWeight: FontWeight.w500
+                            fontWeight: FontWeight.w500,
+                            fontFamily: AppStrings.appFont
                         ),
                       ),
                     ],
@@ -99,7 +103,8 @@ class _AddNewImageState extends State<AddNewImage> {
                         style: TextStyle(
                             fontSize: 21,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.primaryColor1
+                            color: AppColors.primaryColor1,
+                            fontFamily: AppStrings.appFont
                         )
                     )),
                   )),
@@ -110,6 +115,7 @@ class _AddNewImageState extends State<AddNewImage> {
                      state is BrowiseUploadImagePostLoadingState || state is BrowiseGetPostsLoadingState?
                      Center(child:CircularProgressIndicator(),)
                          :defaultButton(
+                         textColor: AppColors.myWhite,
                          width: size.width*.8,
                          height: size.height*.06,
                          function: (){

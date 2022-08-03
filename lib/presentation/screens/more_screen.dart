@@ -3,6 +3,8 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../constants/app_strings.dart';
+
 class MoreScreen extends StatelessWidget {
   const MoreScreen({Key? key}) : super(key: key);
 
@@ -15,23 +17,25 @@ class MoreScreen extends StatelessWidget {
       builder: (context,state){
         var cubit =AppCubit.get(context);
         return Scaffold(
-            backgroundColor: AppColors.myWhite,
+            backgroundColor: AppColors.primaryColor1,
             body:(cubit.userModel!.uId !=null)
                 ? Padding(
               padding:const  EdgeInsets.all(10),
               child: Column(
                 children: [
-
+                  SizedBox(height: 10,),
                   CircleAvatar(
                     backgroundImage: NetworkImage('${cubit.userModel!.image}'),
                     radius: 60,
                   ),
                   const SizedBox(height: 10,),
-                  Text('${cubit.userModel!.username}',style: const TextStyle(
+                  Text('${cubit.userModel!.username}',style:  TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 20
+                      fontSize: 20,
+                      fontFamily: AppStrings.appFont,
+                    color: AppColors.myWhite
                   ),),
-                  const SizedBox(height: 20,),
+                  const SizedBox(height: 40,),
                   Expanded(
                     child: Container(
                       height: size.height,
@@ -40,30 +44,33 @@ class MoreScreen extends StatelessWidget {
                           InkWell(
                             child: Container(
                               padding: const EdgeInsets.symmetric(
-                                  vertical: 10,
+                                  vertical: 0,
                                   horizontal: 10
                               ),
                               margin: const EdgeInsets.symmetric(
-                                  vertical: 10,
+                                  vertical: 0,
                                   horizontal: 10
                               ),
                               width: size.width,
-                              height: size.height*.08,
+                              height: size.height*.05,
                               decoration: BoxDecoration(
-                                  color: AppColors.primaryColor1,
+                                  color: AppColors.myGrey,
                                   borderRadius: BorderRadius.circular(10)
                               ),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icon(Icons.person,color: AppColors.myWhite,size: 35,),
+                                  Icon(Icons.person,color: AppColors.primaryColor1,size: 25,),
                                   const SizedBox(width: 5,),
                                   Text('Profile',style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.w500,
-                                      color: AppColors.myWhite
+                                      color: AppColors.primaryColor1,
+                                      fontFamily: AppStrings.appFont
                                   ),),
                                   const Spacer(),
-                                  Icon(Icons.arrow_forward_ios_outlined,color: AppColors.myWhite,size: 20,),
+                                  Icon(Icons.arrow_forward_ios_outlined,color: AppColors.primaryColor1,size: 20,),
                                 ],
                               ),
                             ),

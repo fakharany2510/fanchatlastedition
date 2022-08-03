@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../constants/app_strings.dart';
+
 Widget textFormFieldWidget(
 {
   context,
@@ -17,30 +19,31 @@ Widget textFormFieldWidget(
   // height:MediaQuery.of(context).size.height*.07,
       child: TextFormField(
     style: TextStyle(
-        color:AppColors.primaryColor1
+        color:AppColors.myGrey,
+      fontFamily: AppStrings.appFont,
   ),
   keyboardType: inputType,
   controller: controller,
   decoration: InputDecoration(
-      focusColor: AppColors.primaryColor1,
+      focusColor: AppColors.myGrey,
       fillColor: Colors.white,
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color:AppColors.primaryColor1),
+        borderSide: BorderSide(color:AppColors.myGrey),
         borderRadius: BorderRadius.circular(25),
       ),
       border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15)
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color:AppColors.primaryColor1),
+        borderSide: BorderSide(color:AppColors.myGrey),
         borderRadius: BorderRadius.circular(15),
       ),
       hintText: '$labelText',
       hintStyle: TextStyle(
-      color: AppColors.primaryColor1
-    //fontFamily: AppStrings.appFont,
+      color: AppColors.myGrey,
+      fontFamily: AppStrings.appFont,
        ),
-      prefixIcon: Icon(prefixIcon,color:AppColors.primaryColor1),
+      prefixIcon: Icon(prefixIcon,color:AppColors.myGrey),
   ),
   validator: (value){
       if(value!.isEmpty){
@@ -57,6 +60,7 @@ Widget defaultButton({
   required double width,
   required double height,
   required Color buttonColor,
+  required Color textColor,
   required String buttonText,
   required VoidCallback function,
   double fontSize=18,
@@ -71,9 +75,9 @@ Widget defaultButton({
     child:TextButton(
       onPressed:function,
       child:  Text('${buttonText}',style: TextStyle(
-          color: AppColors.myWhite,
-          //fontFamily: AppStrings.appFont,
-          fontWeight: FontWeight.w500,
+          color:textColor,
+          fontFamily: AppStrings.appFont,
+          fontWeight: FontWeight.w600,
           fontSize: fontSize
       ),
       ),
@@ -95,7 +99,7 @@ Widget defaultSocialMediaButton({
     decoration: BoxDecoration(
       color:buttonColor ,
       borderRadius: BorderRadius.circular(20),
-      border: Border.all(color: AppColors.primaryColor1)
+      border: Border.all(color: AppColors.myGrey)
     ),
     child:TextButton(
       onPressed:function,
@@ -103,8 +107,8 @@ Widget defaultSocialMediaButton({
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('${buttonText}',style: TextStyle(
-              color: AppColors.primaryColor1,
-             // fontFamily: AppStrings.appFont,
+              color: AppColors.myGrey,
+             fontFamily: AppStrings.appFont,
               fontWeight: FontWeight.w700,
               fontSize: 14
           ),),
@@ -116,7 +120,7 @@ Widget defaultSocialMediaButton({
 );
 
 
-customAppbar(String title){
+customAppbar(String title,context){
 
   return AppBar(
     systemOverlayStyle:  SystemUiOverlayStyle(
@@ -127,11 +131,11 @@ customAppbar(String title){
         color: AppColors.myWhite
     ),
     backgroundColor: AppColors.primaryColor1,
-    title: Text(title,style: TextStyle(
-        fontSize: 21,
-        fontWeight: FontWeight.w600,
-        color: AppColors.myWhite
-    ),),
+    title:Image(
+      image: AssetImage('assets/images/fanicon2.png'),
+      height: MediaQuery.of(context).size.height*3,
+      width: MediaQuery.of(context).size.width*3,
+    ),
     centerTitle: true,
     elevation: 0.0,
   );
