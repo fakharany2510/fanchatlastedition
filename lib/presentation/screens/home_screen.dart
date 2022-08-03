@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
       builder: (context,state){
         var cubit=AppCubit.get(context);
         return Scaffold(
-          backgroundColor:AppColors.myWhite,
+          backgroundColor:AppColors.primaryColor1,
           body:cubit.posts.length !=0 && AppCubit.get(context).userModel !=null
               ? SingleChildScrollView(
             controller:_parentScrollController ,
@@ -60,7 +60,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 3,),
-                Container(height: MediaQuery.of(context).size.height*.01,width: MediaQuery.of(context).size.width,color: Colors.grey[300],),
+                  Container(height: MediaQuery.of(context).size.height*.005,width: MediaQuery.of(context).size.width,color: AppColors.myGrey),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                   child: Column(
@@ -81,12 +81,12 @@ class HomeScreen extends StatelessWidget {
                                   radius: 20,
                                 ),
                               ),
-                              const Padding(
+                               Padding(
                                 padding:  EdgeInsets.only(left: 10,top: 0),
                                 child: Text('What\'s on your mind?',
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                      color: Colors.black,
+                                      color: AppColors.myWhite,
                                       fontWeight: FontWeight.w400,
                                       fontSize: 17
                                   ),
@@ -117,12 +117,12 @@ class HomeScreen extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width*.2,
                                 child:Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children:  [
                                     Icon(Icons.camera_alt,color:Colors.green,size: 17),
                                      SizedBox(width:4),
                                     Expanded(
                                       child: Text('Photo',style: TextStyle(
-                                          color: Colors.black,
+                                          color: AppColors.myWhite,
                                           fontSize: 15
                                       ),),
                                     )
@@ -148,12 +148,12 @@ class HomeScreen extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width*.2,
                                 child:Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children:  [
                                     Icon(Icons.video_camera_back,color:Colors.red,size: 17),
                                     const SizedBox(width:4),
                                     Expanded(
                                       child: Text('Video',style: TextStyle(
-                                          color:Colors.black,
+                                          color:AppColors.myWhite,
                                           fontSize: 15
                                       ),),
                                     )
@@ -169,7 +169,7 @@ class HomeScreen extends StatelessWidget {
                     ],
                   )
                 ),
-                Container(height: MediaQuery.of(context).size.height*.01,width: MediaQuery.of(context).size.width,color: Colors.grey[300],),
+                Container(height: MediaQuery.of(context).size.height*.005,width: MediaQuery.of(context).size.width,color:AppColors.myGrey),
                 const SizedBox(height: 5,),
 
                 const SizedBox(height: 5,),
@@ -205,9 +205,11 @@ class HomeScreen extends StatelessWidget {
                           ],
                         ),
                         separatorBuilder: (context,index)=>Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 0),
                           child: Container(
-                            height: 1,
+                            height: MediaQuery.of(context).size.height*.005,
+                            width: double.infinity,
+                             color: AppColors.myGrey,
                           ),
                         ),
                         itemCount: AppCubit.get(context).posts.length),
@@ -218,7 +220,7 @@ class HomeScreen extends StatelessWidget {
           )
           :Center(
             child: CircularProgressIndicator(
-              color: AppColors.primaryColor1,
+              color: AppColors.myGrey,
             ),
           ),
           // floatingActionButton:SpeedDial(

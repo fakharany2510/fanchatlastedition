@@ -119,20 +119,20 @@ Widget defaultSocialMediaButton({
 customAppbar(String title){
 
   return AppBar(
-    systemOverlayStyle: const SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.dark,
-      statusBarColor: Colors.white,
+    systemOverlayStyle:  SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.light,
+      statusBarColor: AppColors.primaryColor1,
     ),
     iconTheme: IconThemeData(
-        color: AppColors.primaryColor1
+        color: AppColors.myWhite
     ),
-    backgroundColor: AppColors.myWhite,
+    backgroundColor: AppColors.primaryColor1,
     title: Text(title,style: TextStyle(
         fontSize: 21,
         fontWeight: FontWeight.w600,
-        color: AppColors.primaryColor1
+        color: AppColors.myWhite
     ),),
-    // centerTitle: true,
+    centerTitle: true,
     elevation: 0.0,
   );
 

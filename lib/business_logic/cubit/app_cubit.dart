@@ -592,7 +592,8 @@ class AppCubit extends Cubit<AppState> {
       emit(CreateCommentsErrorState());
     });
   }
-
+/////////////////////////////////////////
+  //get comments
   void getComment(String postId) {
     comments=[];
     FirebaseFirestore.instance
@@ -611,6 +612,52 @@ class AppCubit extends Cubit<AppState> {
     }).catchError((error) {
       print('Error When set comment in home : ${error.toString()}');
       emit(GetCommentsErrorState());
+    });
+  }
+  //////////////////////////////////////////////////////////
+// get likes number
+  /////////////////////////////////////
+
+  void testLikes() {
+    // posts=[];
+    postsId = [];
+    likes = [];
+    FirebaseFirestore.instance
+        .collection('posts')
+        .snapshots().listen((event) {
+      event.docs.forEach((element) {
+        element.reference
+            .collection('likes')
+            .snapshots().listen((event) {
+          likes.add(event.docs.length);
+          postsId.add(element.id);
+          // posts.add(BrowisePostModel.fromJson(element.data()));
+          emit(TestLikesSuccessState());
+        });
+      });
+    });
+  }
+
+  //get comments number
+  /////////////////////////
+  List<int> commentNum=[];
+  void testComments() {
+    // posts=[];
+    postsId = [];
+    commentNum = [];
+    FirebaseFirestore.instance
+        .collection('posts')
+        .snapshots().listen((event) {
+      event.docs.forEach((element) {
+        element.reference
+            .collection('comments')
+            .snapshots().listen((event) {
+          commentNum.add(event.docs.length);
+          postsId.add(element.id);
+          // posts.add(BrowisePostModel.fromJson(element.data()));
+          emit(TestLikesSuccessState());
+        });
+      });
     });
   }
 }

@@ -42,10 +42,11 @@ class _PostWidgetState extends State<PostWidget> {
        return Card(
          elevation: 2,
          shadowColor: Colors.grey[150],
+         color: AppColors.primaryColor1,
          child: Padding(
            padding: const EdgeInsets.only(bottom: 0,),
            child: Padding(
-             padding: const EdgeInsets.all(8.0),
+             padding: const EdgeInsets.all(0),
              child: Column(
                crossAxisAlignment: CrossAxisAlignment.start,
                children: [
@@ -67,8 +68,8 @@ class _PostWidgetState extends State<PostWidget> {
                                  Expanded(
                                    child: Text('${AppCubit.get(context).posts[widget.index!].name}',
                                      overflow: TextOverflow.ellipsis,
-                                     style: const TextStyle(
-                                         color: Colors.black,
+                                     style:  TextStyle(
+                                         color: AppColors.myWhite,
                                          fontSize: 14,
                                          fontWeight: FontWeight.w500
                                      ),
@@ -82,9 +83,9 @@ class _PostWidgetState extends State<PostWidget> {
                        const Spacer(),
                        Text('${AppCubit.get(context).posts[widget.index!].dateTime}',
                          overflow: TextOverflow.ellipsis,
-                         style: const TextStyle(
+                         style:  TextStyle(
                              fontSize: 13,
-                             color: Colors.grey
+                             color: AppColors.myWhite
                          ),
                        ),
                      ],
@@ -96,7 +97,8 @@ class _PostWidgetState extends State<PostWidget> {
                    child: Container(
                        padding: const EdgeInsets.symmetric(horizontal: 10),
                        child: Text('${AppCubit.get(context).posts[widget.index!].text}',
-                         style: const TextStyle(
+                         style:  TextStyle(
+                           color: AppColors.myWhite,
                            fontSize: 14,
                            fontWeight: FontWeight.w700,
                            height: 1.2,
@@ -105,9 +107,9 @@ class _PostWidgetState extends State<PostWidget> {
                  ),
                  (AppCubit.get(context).posts[widget.index!].postImage!="")
                  ?Padding(
-                   padding: const EdgeInsets.symmetric(horizontal: 10),
+                   padding: const EdgeInsets.symmetric(horizontal: 0),
                    child: Container(
-                     height: MediaQuery.of(context).size.height*.2,
+                     height: MediaQuery.of(context).size.height*.25,
                      width: double.infinity,
                      decoration: BoxDecoration(
                          borderRadius: BorderRadius.circular(3),
@@ -122,7 +124,7 @@ class _PostWidgetState extends State<PostWidget> {
                  ?Stack(
                    children: [
                      Container(
-                       height: MediaQuery.of(context).size.height*.2,
+                       height: MediaQuery.of(context).size.height*.25,
                        width: double.infinity,
                        child: FutureBuilder(
                          future: intilize,
@@ -157,10 +159,10 @@ class _PostWidgetState extends State<PostWidget> {
                                }
                              });
                            },
-                           child:  CircleAvatar(
+                           child: CircleAvatar(
                              backgroundColor: AppColors.primaryColor1,
-                             child: Icon(Icons.play_arrow),
                              radius: 20,
+                             child: videoPlayerController!.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
                            ),
                          )
                      ),
@@ -181,80 +183,56 @@ class _PostWidgetState extends State<PostWidget> {
                  // ),
                  :SizedBox(width: 0,),
                  SizedBox(height: 3,),
-                 Divider(color: Colors.grey,),
-                 Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                     InkWell(
-                       onTap: (){
-                         AppCubit.get(context).likePosts((AppCubit.get(context).postsId[widget.index!])).then((value) {
-                         });
-                       },
-                       child: Container(
-                         width: MediaQuery.of(context).size.width*.3,
-                         height: MediaQuery.of(context).size.height*.05,
-                         child: Row(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                           crossAxisAlignment: CrossAxisAlignment.center,
-                           children: [
-                             Text('55',
-                               style: TextStyle(
-                                   color: Colors.grey,
-                                   fontSize: 13,
-                                   fontWeight: FontWeight.w500
-                               ),),
-                             SizedBox(width: 3,),
-                             Icon(Icons.favorite_border_outlined,size:22,
-                               color: Colors.grey,
-                             )
-                           ],
-                         ),
+                 Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: Row(
+                     mainAxisAlignment: MainAxisAlignment.end,
+                     children: [
+                       Row(
+                         children: [
+                           Text('${AppCubit.get(context).likes[widget.index!]}',
+                           style: TextStyle(
+                          color: AppColors.myWhite,
+                          fontSize: 13,
+                               fontWeight: FontWeight.w500
+                          ),),
+                           IconButton(
+                             padding:EdgeInsets.zero,
+                             constraints: BoxConstraints(),
+                             onPressed:(){
+                               AppCubit.get(context).likePosts((AppCubit.get(context).postsId[widget.index!])).then((value) {
+                                 AppCubit.get(context).testLikes();
+                               });
+                             },
+                               icon: Icon(Icons.favorite_outline,color: AppColors.myGrey,size: 20),)
+                         ],
                        ),
-
-                     ),
-                     SizedBox(width: MediaQuery.of(context).size.width*.1,),
-                     Container(
-                       color: Colors.grey,
-                       height: 25,
-                       width: 1,
-
-                     ),
-                     SizedBox(width: MediaQuery.of(context).size.width*.1,),
-                     InkWell(
-                       onTap: (){},
-                       child: Container(
-                         width: MediaQuery.of(context).size.width*.3,
-                         height: MediaQuery.of(context).size.height*.05,
-                         child: Row(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                           crossAxisAlignment: CrossAxisAlignment.center,
-                           children: [
-                             Text('300',
-                               style: TextStyle(
-                                   color: Colors.grey,
-                                   fontSize: 13,
-                                   fontWeight: FontWeight.w500
-                               ),),
-                             SizedBox(width: 3,),
-                             Icon(Icons.comment,size:22,
-                               color: Colors.grey,
-                             )
-
-                           ],
-                         ),
+                       SizedBox(width: 15,),
+                       Row(
+                         children: [
+                           Text('${AppCubit.get(context).commentNum[widget.index!]}',
+                           style: TextStyle(
+                          color: AppColors.myWhite,
+                          fontSize: 13,
+                               fontWeight: FontWeight.w500
+                          ),),
+                           IconButton(
+                             padding:EdgeInsets.zero,
+                             constraints: BoxConstraints(),
+                             onPressed:(){},
+                               icon: Icon(Icons.mode_comment_outlined,color: AppColors.myGrey,size: 20),)
+                         ],
                        ),
-
-                     ),
-                   ],
+                     ],
+                   ),
                  ),
-                 const Divider(color: Colors.grey,),
                  Padding(
                    padding: const EdgeInsets.all(8.0),
                    child: Row(
                      children: [
                        CircleAvatar(
                          backgroundImage: NetworkImage('${AppCubit.get(context).posts[widget.index!].image}'),
-                         radius: 20,
+                         radius: 18,
                        ),
                        const SizedBox(width: 7,),
                        InkWell(
@@ -266,15 +244,16 @@ class _PostWidgetState extends State<PostWidget> {
                          },
                          child: Container(
                            width: MediaQuery.of(context).size.width*.74,
-                           padding: EdgeInsets.all(12),
+                           height: MediaQuery.of(context).size.height*.04,
+                           padding: EdgeInsets.all(9),
                            decoration: BoxDecoration(
-                               color: Colors.grey.shade200,
+                               color: AppColors.myGrey,
                                borderRadius: BorderRadius.circular(50)
                            ),
                            child: Text(
                              'Write a comment ...',style: TextStyle(
-                               color: Colors.grey.shade600,
-                               fontSize: 16
+                               color: AppColors.primaryColor1,
+                               fontSize: 13,
                            ),
                            ),
                          ),

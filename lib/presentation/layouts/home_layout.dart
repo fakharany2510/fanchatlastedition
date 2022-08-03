@@ -35,48 +35,52 @@ class HomeLayout extends StatelessWidget {
             appBar: customAppbar(cubit.screensTitles[cubit.currentIndex]),
             body: screens[cubit.currentIndex],
 
-            bottomNavigationBar: BottomNavigationBar
-              (
-              type: BottomNavigationBarType.fixed,
-               currentIndex: cubit.currentIndex,
-                onTap: (value){
-                  cubit.navigateScreen(value);
-                },
-                elevation: 5,
+            bottomNavigationBar: Container(
+              width:MediaQuery.of(context).size.width,
+              height:MediaQuery.of(context).size.height*.07,
+              child: BottomNavigationBar
+                (
+                backgroundColor: AppColors.primaryColor1,
+                type: BottomNavigationBarType.fixed,
+                 currentIndex: cubit.currentIndex,
+                  onTap: (value){
+                    cubit.navigateScreen(value);
+                  },
+                  elevation: 5,
 
-                items: [
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home,color: Colors.grey.shade600),
-                      activeIcon:Icon(Icons.home,color: AppColors.primaryColor1),
-                      label: '',
+                  items: [
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.home,color: AppColors.myGrey),
+                        activeIcon:Icon(Icons.home,color: AppColors.navBarActiveIcon),
+                        label: 'Home',
 
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.timer_outlined,color:Colors.grey.shade600),
-                      activeIcon:Icon(Icons.timer_outlined,color: AppColors.primaryColor1),
-                      label: ''
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.people,color: Colors.grey.shade600),
-                      activeIcon:Icon(Icons.people,color: AppColors.primaryColor1),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.timer_outlined,color:AppColors.myGrey),
+                        activeIcon:Icon(Icons.timer_outlined,color: AppColors.navBarActiveIcon),
+                        label: 'Matches'
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.people,color: AppColors.myGrey),
+                        activeIcon:Icon(Icons.people,color: AppColors.navBarActiveIcon),
+                        label: 'Fan'
+                    ),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.chat,color: AppColors.myGrey),
+                        label: 'Chat',
+                      activeIcon:Icon(Icons.chat,color: AppColors.navBarActiveIcon),
 
-                      label: ''
-                  ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.chat,color: Colors.grey.shade600),
-                      label: '',
-                    activeIcon:Icon(Icons.chat,color: AppColors.primaryColor1),
-
-                  ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.menu,color: Colors.grey.shade600,),
-                      label: '',
-                    activeIcon:Icon(Icons.menu,color: AppColors.primaryColor1),
+                    ),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.menu,color:AppColors.myGrey),
+                        label: 'More',
+                      activeIcon:Icon(Icons.menu,color: AppColors.navBarActiveIcon),
 
 
-                  ),
+                    ),
 
-                ]
+                  ]
+              ),
             )
 
           );

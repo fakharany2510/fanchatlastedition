@@ -61,3 +61,6 @@ class CreateCommentsSuccessState extends AppState {}
 class CreateCommentsErrorState extends AppState {}
 class GetCommentsSuccessState extends AppState {}
 class GetCommentsErrorState extends AppState {}
+//like and comments number
+class TestLikesSuccessState extends AppState {}
+class TestCommentsSuccessState extends AppState {}
