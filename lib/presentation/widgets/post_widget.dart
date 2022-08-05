@@ -11,7 +11,10 @@ import '../screens/comment_screen.dart';
 
 class PostWidget extends StatefulWidget {
   int ?index;
-  PostWidget({Key? key,this.index}) : super(key: key);
+  PostModel post;
+
+
+  PostWidget({required this.post , required this.index});
 
   @override
   State<PostWidget> createState() => _PostWidgetState();
@@ -25,7 +28,8 @@ class _PostWidgetState extends State<PostWidget> {
   @override
   void initState() {
     videoPlayerController=VideoPlayerController.network(
-        AppCubit.get(context).posts[widget.index!].postVideo!
+      //  AppCubit.get(context).post.postVideo!
+            widget.post.postVideo!
     );
     intilize=videoPlayerController!.initialize();
     videoPlayerController!.setLooping(true);
@@ -56,7 +60,7 @@ class _PostWidgetState extends State<PostWidget> {
                    child: Row(
                      children: [
                        CircleAvatar(
-                         backgroundImage: NetworkImage('${AppCubit.get(context).posts[widget.index!].image}'),
+                         backgroundImage: NetworkImage('${widget.post.image}'),
                          radius: 18,
                        ),
                        const SizedBox(width: 7,),
@@ -67,7 +71,7 @@ class _PostWidgetState extends State<PostWidget> {
                              Row(
                                children: [
                                  Expanded(
-                                   child: Text('${AppCubit.get(context).posts[widget.index!].name}',
+                                   child: Text('${widget.post.name}',
                                      overflow: TextOverflow.ellipsis,
                                      style:  TextStyle(
                                          color: AppColors.myWhite,
@@ -83,7 +87,7 @@ class _PostWidgetState extends State<PostWidget> {
                          ),
                        ),
                        const Spacer(),
-                       Text('${AppCubit.get(context).posts[widget.index!].dateTime}',
+                       Text('${widget.post.dateTime}',
                          overflow: TextOverflow.ellipsis,
                          style:  TextStyle(
                              fontSize: 13,
@@ -99,7 +103,7 @@ class _PostWidgetState extends State<PostWidget> {
                    padding: const EdgeInsets.only(bottom: 5,top: 5),
                    child: Container(
                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                       child: Text('${AppCubit.get(context).posts[widget.index!].text}',
+                       child: Text('${widget.post.text}',
                          style:  TextStyle(
                            color: AppColors.myWhite,
                            fontSize: 14,
@@ -109,7 +113,7 @@ class _PostWidgetState extends State<PostWidget> {
                          ),
                        )),
                  ),
-                 (AppCubit.get(context).posts[widget.index!].postImage!="")
+                 (widget.post.postImage!="")
                  ?Material(
                    elevation: 1000,
                    child: Padding(
@@ -121,14 +125,14 @@ class _PostWidgetState extends State<PostWidget> {
                        decoration: BoxDecoration(
                            borderRadius: BorderRadius.circular(3),
                            image:  DecorationImage(
-                               image: NetworkImage('${AppCubit.get(context).posts[widget.index!].postImage}'),
+                               image: NetworkImage('${widget.post.postImage}'),
                                fit: BoxFit.cover
                            )
                        ),
                      ),
                    ),
                  )
-                     : (AppCubit.get(context).posts[widget.index!].postVideo!="")
+                     : (widget.post.postVideo!="")
                  ?Stack(
                    children: [
                      Container(
@@ -210,7 +214,7 @@ class _PostWidgetState extends State<PostWidget> {
                              constraints: BoxConstraints(),
                              onPressed:(){
                                AppCubit.get(context).likePosts((AppCubit.get(context).postsId[widget.index!])).then((value) {
-                                // AppCubit.get(context).testLikes();
+                                AppCubit.get(context).testLikes();
                                });
                              },
                                icon: Icon(Icons.favorite_outline,color: AppColors.myGrey,size: 20),)
@@ -219,13 +223,13 @@ class _PostWidgetState extends State<PostWidget> {
                        SizedBox(width: 15,),
                        Row(
                          children: [
-                          //  Text('${AppCubit.get(context).commentNum[widget.index!]}',
-                          //  style: TextStyle(
-                          // color: AppColors.myWhite,
-                          // fontSize: 13,
-                          //      fontWeight: FontWeight.w500,
-                          //      fontFamily: AppStrings.appFont
-                          // ),),
+                           Text('${AppCubit.get(context).commentNum[widget.index!]}',
+                           style: TextStyle(
+                          color: AppColors.myWhite,
+                          fontSize: 13,
+                               fontWeight: FontWeight.w500,
+                               fontFamily: AppStrings.appFont
+                          ),),
                            IconButton(
                              padding:EdgeInsets.zero,
                              constraints: BoxConstraints(),

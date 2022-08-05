@@ -1,9 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:paginate_firestore/paginate_firestore.dart';
+
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import '../../data/modles/create_post_model.dart';
@@ -100,76 +103,6 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 3,),
-                      // Container(
-                      //   height: .4,
-                      //   width: MediaQuery.of(context).size.width,
-                      //   color: Colors.grey,
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(vertical: 5),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     children: [
-                      //       InkWell(
-                      //         onTap: (){
-                      //           AppCubit.get(context).pickPostImage();
-                      //         },
-                      //         child: Container(
-                      //           height: MediaQuery.of(context).size.height*.03,
-                      //           width: MediaQuery.of(context).size.width*.2,
-                      //           child:Row(
-                      //             mainAxisAlignment: MainAxisAlignment.center,
-                      //             children:  [
-                      //               Icon(Icons.camera_alt,color:Colors.green,size: 17),
-                      //                SizedBox(width:4),
-                      //               Expanded(
-                      //                 child: Text('Photo',style: TextStyle(
-                      //                     color: AppColors.myWhite,
-                      //                     fontSize: 15,
-                      //                     fontFamily: AppStrings.appFont
-                      //                 ),),
-                      //               )
-                      //             ],
-                      //
-                      //           )
-                      //         ),
-                      //       ),
-                      //       SizedBox(width:MediaQuery.of(context).size.width*.15,),
-                      //       Container(
-                      //         color: Colors.grey,
-                      //         height: 25,
-                      //         width: .4,
-                      //       ),
-                      //       SizedBox(width:MediaQuery.of(context).size.width*.15,),
-                      //       InkWell(
-                      //         onTap: (){
-                      //           AppCubit.get(context).pickPostVideo();
-                      //           AppCubit.get(context).isVideoButtonTapped==true;
-                      //         },
-                      //         child: Container(
-                      //           height: MediaQuery.of(context).size.height*.03,
-                      //           width: MediaQuery.of(context).size.width*.2,
-                      //           child:Row(
-                      //             mainAxisAlignment: MainAxisAlignment.center,
-                      //             children:  [
-                      //               Icon(Icons.video_camera_back,color:Colors.red,size: 17),
-                      //               const SizedBox(width:4),
-                      //               Expanded(
-                      //                 child: Text('Video',style: TextStyle(
-                      //                     color:AppColors.myWhite,
-                      //                     fontSize: 15,
-                      //                   fontFamily: AppStrings.appFont
-                      //                 ),),
-                      //               )
-                      //             ],
-                      //
-                      //           )
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // )
-
                     ],
                   )
                 ),
@@ -199,25 +132,23 @@ class HomeScreen extends StatelessWidget {
                     return true;
                   },
                     child:cubit.posts.length !=0
-        ?ListView.separated(
-                        controller: _childScrollController,
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => Column(
-                          children: [
-                            const SizedBox(height:10,),
-                            PostWidget(index: index,),
-                          ],
-                        ),
-                        separatorBuilder: (context,index)=>Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 0),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height*.00019,
-                            width: double.infinity,
-                             color: AppColors.myGrey,
-                          ),
-                        ),
-                        itemCount: AppCubit.get(context).posts.length)
+        ? PaginateFirestore(separator: SizedBox(height: 10,),
+        itemBuilderType: PaginateBuilderType.listView,
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(0),//Change types accordingly
+        itemBuilder: ( context, documentSnapshot,index) {
+        return  PostWidget(
+        //invoice: Invoice.fromFirestore(documentSnapshot[index]
+        post: PostModel.fromFirestore(documentSnapshot[index]),
+          index: index,
+        );
+        },
+        query: FirebaseFirestore.instance.collection('posts')
+            .orderBy('dateTime', descending: true),
+        // to fetch real-time data
+        isLive: true,
+        )
                         :Padding(
                           padding: const EdgeInsets.only(top:170),
                           child: Center(
@@ -236,36 +167,37 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
 
-          // floatingActionButton:SpeedDial(
-          //   backgroundColor: AppColors.primaryColor1,
-          //   animatedIcon: AnimatedIcons.menu_close,
-          //   elevation: 1,
-          //   overlayColor: AppColors.myWhite,
-          //   overlayOpacity: 0.0001,
-          //
-          //   children: [
-          //     SpeedDialChild(
-          //       onTap: (){
-          //         Navigator.pushNamed(context, 'add_video');
-          //       },
-          //       child: Icon(Icons.video_camera_back,color: AppColors.myWhite,),
-          //       label: 'add video',
-          //       backgroundColor: AppColors.primaryColor2
-          //     ),
-          //     SpeedDialChild(
-          //       onTap: (){
-          //         Navigator.pushNamed(context, 'add_image');
-          //       },
-          //       child: Icon(Icons.image,color: AppColors.myWhite,),
-          //       label: 'add image',
-          //         backgroundColor: AppColors.primaryColor2
-          //
-          //     ),
-          //   ],
-          // )
+
         );
       },
     );
   }
 }
 
+// floatingActionButton:SpeedDial(
+//   backgroundColor: AppColors.primaryColor1,
+//   animatedIcon: AnimatedIcons.menu_close,
+//   elevation: 1,
+//   overlayColor: AppColors.myWhite,
+//   overlayOpacity: 0.0001,
+//
+//   children: [
+//     SpeedDialChild(
+//       onTap: (){
+//         Navigator.pushNamed(context, 'add_video');
+//       },
+//       child: Icon(Icons.video_camera_back,color: AppColors.myWhite,),
+//       label: 'add video',
+//       backgroundColor: AppColors.primaryColor2
+//     ),
+//     SpeedDialChild(
+//       onTap: (){
+//         Navigator.pushNamed(context, 'add_image');
+//       },
+//       child: Icon(Icons.image,color: AppColors.myWhite,),
+//       label: 'add image',
+//         backgroundColor: AppColors.primaryColor2
+//
+//     ),
+//   ],
+// )

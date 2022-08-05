@@ -31,7 +31,7 @@ void main()async {
   AppStrings.uId = CashHelper.getData(key: 'uid');
   printMessage('userId is: ${AppStrings.uId}');
 
-  Bloc.observer = MyBlocObserver();
+  //Bloc.observer = MyBlocObserver();
   runApp( MyApp());
 }
 
@@ -46,15 +46,13 @@ class MyApp extends StatelessWidget {
     }
     return MultiBlocProvider(
         providers:[
-          BlocProvider(create: (context)=>AppCubit()..getUser()..getPosts()),
-    // ..testLikes()..testComments()
+          BlocProvider(create: (context)=>AppCubit()..getUser()..getPosts()..testLikes()..testComments()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             navigationBarTheme: NavigationBarThemeData(
               elevation: 1000,
-
             ),
             primarySwatch: Colors.blue,
             appBarTheme: AppBarTheme(

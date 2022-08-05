@@ -412,7 +412,7 @@ class AppCubit extends Cubit<AppState> {
   }){
     emit(BrowiseCreatePostLoadingState());
 
-    BrowisePostModel model=BrowisePostModel(
+    PostModel model=PostModel(
       name: userModel!.username,
       image:userModel!.image,
       userId:userModel!.uId,
@@ -435,7 +435,7 @@ class AppCubit extends Cubit<AppState> {
   }
 /////////////////////////////////////////////////
 //upload post video to storage
-  BrowisePostModel? postModel;
+  PostModel? postModel;
   void uploadPostVideo({
     String? userId,
     String? name,
@@ -478,7 +478,7 @@ class AppCubit extends Cubit<AppState> {
   }){
     emit(BrowiseCreateVideoPostLoadingState());
 
-    BrowisePostModel model=BrowisePostModel(
+    PostModel model=PostModel(
         name: userModel!.username,
         image:userModel!.image,
         userId:userModel!.uId,
@@ -507,7 +507,7 @@ class AppCubit extends Cubit<AppState> {
   }){
     emit(BrowiseCreateTextPostLoadingState());
 
-    BrowisePostModel model=BrowisePostModel(
+    PostModel model=PostModel(
         name: userModel!.username,
         image:userModel!.image,
         userId:userModel!.uId,
@@ -560,7 +560,7 @@ class AppCubit extends Cubit<AppState> {
 //////////////////////////////////////////////
   /////////////////////////
   //get Posts
-  List<BrowisePostModel> posts=[];
+    List<PostModel> posts=[];
   List<String> postsId=[];
   List<int> likes=[];
 
@@ -580,7 +580,7 @@ class AppCubit extends Cubit<AppState> {
             .then((value) {
           likes.add(value.docs.length);
           postsId.add(element.id);
-          posts.add(BrowisePostModel.fromJson(element.data()));
+          posts.add(PostModel.fromFirestore(element));
           emit(BrowiseGetPostsSuccessState());
         }).catchError((error){});
 
@@ -664,48 +664,48 @@ class AppCubit extends Cubit<AppState> {
 // get likes number
   /////////////////////////////////////
 
-  // void testLikes() {
-  //   // posts=[];
-  //   postsId = [];
-  //   likes = [];
-  //   FirebaseFirestore.instance
-  //       .collection('posts')
-  //       .snapshots().listen((event) {
-  //     event.docs.forEach((element) {
-  //       element.reference
-  //           .collection('likes')
-  //           .snapshots().listen((event) {
-  //         likes.add(event.docs.length);
-  //         postsId.add(element.id);
-  //         // posts.add(BrowisePostModel.fromJson(element.data()));
-  //         emit(TestLikesSuccessState());
-  //       });
-  //     });
-  //   });
-  // }
+  void testLikes() {
+    // posts=[];
+    postsId = [];
+    likes = [];
+    FirebaseFirestore.instance
+        .collection('posts')
+        .snapshots().listen((event) {
+      event.docs.forEach((element) {
+        element.reference
+            .collection('likes')
+            .snapshots().listen((event) {
+          likes.add(event.docs.length);
+          postsId.add(element.id);
+          // posts.add(BrowisePostModel.fromJson(element.data()));
+          emit(TestLikesSuccessState());
+        });
+      });
+    });
+  }
 
   // //get comments number
   // /////////////////////////
-  // List<int> commentNum=[];
-  // void testComments() {
-  //   // posts=[];
-  //   postsId = [];
-  //   commentNum = [];
-  //   FirebaseFirestore.instance
-  //       .collection('posts')
-  //       .snapshots().listen((event) {
-  //     event.docs.forEach((element) {
-  //       element.reference
-  //           .collection('comments')
-  //           .snapshots().listen((event) {
-  //         commentNum.add(event.docs.length);
-  //         postsId.add(element.id);
-  //         // posts.add(BrowisePostModel.fromJson(element.data()));
-  //         emit(TestLikesSuccessState());
-  //       });
-  //     });
-  //   });
-  // }
+  List<int> commentNum=[];
+  void testComments() {
+    // posts=[];
+    postsId = [];
+    commentNum = [];
+    FirebaseFirestore.instance
+        .collection('posts')
+        .snapshots().listen((event) {
+      event.docs.forEach((element) {
+        element.reference
+            .collection('comments')
+            .snapshots().listen((event) {
+          commentNum.add(event.docs.length);
+          postsId.add(element.id);
+          // posts.add(BrowisePostModel.fromJson(element.data()));
+          emit(TestLikesSuccessState());
+        });
+      });
+    });
+  }
 
 
 }
