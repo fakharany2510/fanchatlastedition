@@ -63,7 +63,7 @@ class LoginScreen extends StatelessWidget {
                      children:  [
                        const Padding(
                          padding: EdgeInsets.symmetric(vertical: 30),
-                         child: Image(image: AssetImage('assets/images/fanicon.png'),width: 190,height: 190,)
+                         child: Image(image: AssetImage('assets/images/loginlogo.png'),width: 190,height: 190,)
                        ),
 
                        textFormFieldWidget(
@@ -165,7 +165,7 @@ class LoginScreen extends StatelessWidget {
                                Navigator.pushNamed(context, 'register');
                              },
                              child:  Text("register",style: TextStyle(
-                                 color: AppColors.primaryColor2,
+                                 color: AppColors.navBarActiveIcon,
                                   fontFamily: AppStrings.appFont,
                                  fontSize: 18
                              ),

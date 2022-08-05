@@ -110,17 +110,21 @@ class _PostWidgetState extends State<PostWidget> {
                        )),
                  ),
                  (AppCubit.get(context).posts[widget.index!].postImage!="")
-                 ?Padding(
-                   padding: const EdgeInsets.symmetric(horizontal: 0),
-                   child: Container(
-                     height: MediaQuery.of(context).size.height*.25,
-                     width: double.infinity,
-                     decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(3),
-                         image:  DecorationImage(
-                             image: NetworkImage('${AppCubit.get(context).posts[widget.index!].postImage}'),
-                             fit: BoxFit.cover
-                         )
+                 ?Material(
+                   elevation: 1000,
+                   child: Padding(
+                     padding: const EdgeInsets.all(0),
+                     child: Container(
+                       padding: EdgeInsets.all(8),
+                       height: MediaQuery.of(context).size.height*.25,
+                       width: double.infinity,
+                       decoration: BoxDecoration(
+                           borderRadius: BorderRadius.circular(3),
+                           image:  DecorationImage(
+                               image: NetworkImage('${AppCubit.get(context).posts[widget.index!].postImage}'),
+                               fit: BoxFit.cover
+                           )
+                       ),
                      ),
                    ),
                  )
@@ -206,7 +210,7 @@ class _PostWidgetState extends State<PostWidget> {
                              constraints: BoxConstraints(),
                              onPressed:(){
                                AppCubit.get(context).likePosts((AppCubit.get(context).postsId[widget.index!])).then((value) {
-                                 AppCubit.get(context).testLikes();
+                                // AppCubit.get(context).testLikes();
                                });
                              },
                                icon: Icon(Icons.favorite_outline,color: AppColors.myGrey,size: 20),)
@@ -215,13 +219,13 @@ class _PostWidgetState extends State<PostWidget> {
                        SizedBox(width: 15,),
                        Row(
                          children: [
-                           Text('${AppCubit.get(context).commentNum[widget.index!]}',
-                           style: TextStyle(
-                          color: AppColors.myWhite,
-                          fontSize: 13,
-                               fontWeight: FontWeight.w500,
-                               fontFamily: AppStrings.appFont
-                          ),),
+                          //  Text('${AppCubit.get(context).commentNum[widget.index!]}',
+                          //  style: TextStyle(
+                          // color: AppColors.myWhite,
+                          // fontSize: 13,
+                          //      fontWeight: FontWeight.w500,
+                          //      fontFamily: AppStrings.appFont
+                          // ),),
                            IconButton(
                              padding:EdgeInsets.zero,
                              constraints: BoxConstraints(),

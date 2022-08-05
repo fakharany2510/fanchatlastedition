@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../constants/app_strings.dart';
+import '../layouts/home_layout.dart';
 
 class AddNewVideo extends StatelessWidget {
   //const AddNewVideo({Key? key}) : super(key: key);
@@ -16,7 +17,8 @@ class AddNewVideo extends StatelessWidget {
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
         if(state is BrowiseGetPostsSuccessState){
-          Navigator.of(context).popAndPushNamed('home_layout');
+         // Navigator.of(context).popAndPushNamed('home_layout');
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
           AppCubit.get(context).videoPlayerController!.dispose();
           AppCubit.get(context).postVideo=null;
 
@@ -42,6 +44,40 @@ class AddNewVideo extends StatelessWidget {
                 await  AppCubit.get(context).videoPlayerController!.pause();
               },
             ),
+            actions: [
+              state is BrowiseCreateVideoPostLoadingState||state is BrowiseGetPostsLoadingState || state is BrowiseUploadVideoPostLoadingState
+                  ? Center(
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.primaryColor1,
+                  ),
+                ),
+              )
+                  :Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: defaultButton(
+                    textColor: AppColors.myWhite,
+                    width: size.width*.2,
+                    height: size.height*.05,
+                    raduis: 10,
+                    function: (){
+                      if(AppCubit.get(context).postVideo == null){
+                        AppCubit.get(context).createVideoPost(
+                            dateTime: DateTime.now(),
+                            text:postText.text );
+                      }else{
+                        AppCubit.get(context).uploadPostVideo(
+                          dateTime:DateTime.now(),
+                          text:postText.text,
+                          name: AppCubit.get(context).userModel!.username,
+                        );
+                      }
+                    },
+                    buttonText: 'post',
+                    buttonColor: AppColors.primaryColor1
+              ),
+                  ),
+            ],
           ),
           body: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -75,7 +111,7 @@ class AddNewVideo extends StatelessWidget {
                     child: TextFormField(
                       controller: postText,
                       decoration: const InputDecoration(
-                        hintText: 'what is on your mind.....',
+                        hintText: 'Say something about this video.....',
                         enabledBorder: InputBorder.none,
                         border: InputBorder.none,
                       ),
@@ -85,8 +121,8 @@ class AddNewVideo extends StatelessWidget {
                   ( AppCubit.get(context).postVideo!= null && AppCubit.get(context).videoPlayerController!.value.isInitialized)
                       ?Expanded(
                         child: Container(
-                    height: size.height*.9,
-                    width: double.infinity,
+                    height: size.height,
+                    width: size.width,
                     child: AspectRatio(
                         aspectRatio:AppCubit.get(context).videoPlayerController!.value.aspectRatio,
                         child: AppCubit.get(context).videoPlayerController ==null
@@ -109,37 +145,7 @@ class AddNewVideo extends StatelessWidget {
                     )),
                   )),
                   Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      state is BrowiseCreateVideoPostLoadingState||state is BrowiseGetPostsLoadingState || state is BrowiseUploadVideoPostLoadingState
-                          ? Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.primaryColor1,
-                        ),
-                      )
-                          :defaultButton(
-                          textColor: AppColors.myWhite,
-                          width: size.width*.8,
-                          height: size.height*.06,
-                          function: (){
-                            if(AppCubit.get(context).postVideo == null){
-                              AppCubit.get(context).createVideoPost(
-                                  dateTime: DateTime.now(),
-                                  text:postText.text );
-                            }else{
-                              AppCubit.get(context).uploadPostVideo(
-                                  dateTime:DateTime.now(),
-                                  text:postText.text,
-                                name: AppCubit.get(context).userModel!.username,
-                              );
-                            }
-                          },
-                          buttonText: 'Create post',
-                          buttonColor: AppColors.primaryColor1
-                      )
-                    ],
-                  ),
+
 
                 ],
               )

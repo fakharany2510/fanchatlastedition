@@ -63,6 +63,7 @@ Widget defaultButton({
   required Color textColor,
   required String buttonText,
   required VoidCallback function,
+   double raduis = 25,
   double fontSize=18,
 })=>Container(
 
@@ -70,7 +71,7 @@ Widget defaultButton({
     width: width,
     decoration: BoxDecoration(
       color:buttonColor ,
-      borderRadius: BorderRadius.circular(25),
+      borderRadius: BorderRadius.circular(raduis),
     ),
     child:TextButton(
       onPressed:function,
@@ -131,19 +132,36 @@ customAppbar(String title,context){
         color: AppColors.myWhite
     ),
     backgroundColor: AppColors.primaryColor1,
-    title:Image(
-      image: AssetImage('assets/images/fanicon2.png'),
-      height: MediaQuery.of(context).size.height*3,
-      width: MediaQuery.of(context).size.width*3,
+    title:Container(
+      height: MediaQuery.of(context).size.height*02,
+      width: MediaQuery.of(context).size.width*.4,
+      child: Image(
+        image: AssetImage('assets/images/appbarLogo.png'),
+
+      ),
     ),
     centerTitle: true,
     elevation: 0.0,
+    actions: [
+      IconButton(onPressed: (){}, constraints: BoxConstraints(),
+        icon: ImageIcon(
+        AssetImage("assets/images/notification.png"),
+        color:AppColors.navBarActiveIcon,
+
+      ),),
+      SizedBox(width: 3,),
+      Padding(
+        padding: const EdgeInsets.only(right: 3),
+        child: IconButton(onPressed: (){},
+          constraints: BoxConstraints(),
+          icon: ImageIcon(
+          AssetImage("assets/images/lang.png"),
+          color:AppColors.navBarActiveIcon,
+        ),),
+      ),
+    ],
   );
-
-
-
 }
-
 
 printMessage(String title){
 

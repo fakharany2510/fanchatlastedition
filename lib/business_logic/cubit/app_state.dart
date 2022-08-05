@@ -29,6 +29,9 @@ class BrowiseUploadImagePostErrorState extends AppState {}
 class BrowiseCreateVideoPostLoadingState extends AppState {}
 class BrowiseCreateVideoPostSuccessState extends AppState {}
 class BrowiseCreateVideoPostErrorState extends AppState {}
+class BrowiseCreateTextPostLoadingState extends AppState {}
+class BrowiseCreateTextPostSuccessState extends AppState {}
+class BrowiseCreateTextPostErrorState extends AppState {}
 class BrowiseUploadVideoPostLoadingState extends AppState {}
 class BrowiseUploadVideoPostSuccessState extends AppState {}
 class BrowiseUploadVideoPostErrorState extends AppState {}

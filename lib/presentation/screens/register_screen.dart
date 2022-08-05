@@ -66,7 +66,7 @@ class RegisterScreen extends StatelessWidget {
                      children:  [
                        const Padding(
                          padding: EdgeInsets.symmetric(vertical: 30),
-                         child:Image(image:AssetImage('assets/images/fanicon.png'),height: 190,width: 190,)
+                         child:Image(image:AssetImage('assets/images/loginlogo.png'),height: 190,width: 190,)
                        ),
 
                        SizedBox(height: size.height*.01,),
@@ -139,7 +139,7 @@ class RegisterScreen extends StatelessWidget {
 
                              },
                              child:  Text("Login",style: TextStyle(
-                                 color: AppColors.primaryColor2,
+                                 color: AppColors.navBarActiveIcon,
                                  fontFamily: AppStrings.appFont,
                                  fontSize: 18
                              ),

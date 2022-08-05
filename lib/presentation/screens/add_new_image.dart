@@ -1,5 +1,6 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,8 +21,8 @@ class _AddNewImageState extends State<AddNewImage> {
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
         if(state is BrowiseGetPostsSuccessState){
-          Navigator.of(context).popAndPushNamed('home_layout');
-          AppCubit.get(context).postImage=null;
+         // Navigator.of(context).popAndPushNamed('home_layout');
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
         }
 
       },
@@ -42,7 +43,7 @@ class _AddNewImageState extends State<AddNewImage> {
               onPressed: (){
               setState((){
                 //AppCubit.get(context).postImage='';
-                AppCubit.get(context).postImage=null;
+                //AppCubit.get(context).postImage=null;
                 print('${AppCubit.get(context).postImage}');
                Navigator.pop(context);
 
@@ -50,6 +51,39 @@ class _AddNewImageState extends State<AddNewImage> {
 
               },
             ),
+            actions: [
+              state is BrowiseUploadImagePostLoadingState || state is BrowiseGetPostsLoadingState?
+              Center(child:CircularProgressIndicator(),)
+                  :Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: defaultButton(
+                    textColor: AppColors.myWhite,
+                    width: size.width*.2,
+                    height: size.height*.05,
+                    raduis: 10,
+                    function: (){
+
+                      if(AppCubit.get(context).postImage == null){
+                        AppCubit.get(context).createImagePost(
+                          dateTime: DateTime.now(),
+                          text:postText.text,
+                        );
+                      }else{
+                        AppCubit.get(context).uploadPostImage(
+                          dateTime: DateTime.now(),
+                          text:postText.text,
+                          image: AppCubit.get(context).userModel!.image,
+                          name: AppCubit.get(context).userModel!.username,
+                        );
+                      }
+
+                    },
+
+                    buttonText: 'post',
+                    buttonColor: AppColors.primaryColor1
+              ),
+                  )
+            ],
           ),
           body: Padding(
               padding:  EdgeInsets.all(20.0),
@@ -75,25 +109,32 @@ class _AddNewImageState extends State<AddNewImage> {
                     ],
                   ),
                   const SizedBox(height: 10,),
-                  TextFormField(
-                    controller: postText,
-                    decoration: const InputDecoration(
-                      hintMaxLines: 1,
-                      hintText: 'what is on your mind.....',
-                      border:InputBorder.none,
-                      enabledBorder: InputBorder.none,
+                  Container(
+                    height: MediaQuery.of(context).size.height*.08,
+                    width: MediaQuery.of(context).size.width,
+                    child: TextFormField(
+                      maxLines: 3,
+                      controller: postText,
+                      decoration: const InputDecoration(
+                        hintMaxLines: 1,
+                        hintText: 'Say someting about this photo.....',
+                        border:InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                      ),
                     ),
                   ),
-                 const  SizedBox(height: 10,),
+                 const  SizedBox(height: 0,),
                   (AppCubit.get(context).postImage!= null )
                       ?Expanded(
                         child: Container(
-                          height: size.height*.7,
-                          width: size.width*.7,
+                          height: size.height,
+                          width: size.width,
                           child: Align(
                             alignment: AlignmentDirectional.bottomCenter,
                             child: Image(
                               image: FileImage(AppCubit.get(context).postImage!),
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
                             ),
                           ),
                         ),
@@ -108,39 +149,7 @@ class _AddNewImageState extends State<AddNewImage> {
                         )
                     )),
                   )),
-                   Spacer(),
-                 Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                     state is BrowiseUploadImagePostLoadingState || state is BrowiseGetPostsLoadingState?
-                     Center(child:CircularProgressIndicator(),)
-                         :defaultButton(
-                         textColor: AppColors.myWhite,
-                         width: size.width*.8,
-                         height: size.height*.06,
-                         function: (){
 
-                           if(AppCubit.get(context).postImage == null){
-                             AppCubit.get(context).createImagePost(
-                                 dateTime: DateTime.now(),
-                                 text:postText.text,
-                             );
-                           }else{
-                             AppCubit.get(context).uploadPostImage(
-                               dateTime: DateTime.now(),
-                               text:postText.text,
-                               image: AppCubit.get(context).userModel!.image,
-                               name: AppCubit.get(context).userModel!.username,
-                             );
-                           }
-
-                         },
-
-                         buttonText: 'Create Post',
-                         buttonColor: AppColors.primaryColor1
-                     ),
-                   ],
-                 )
 
                 ],
               )

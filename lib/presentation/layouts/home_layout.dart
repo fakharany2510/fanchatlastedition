@@ -36,67 +36,110 @@ class HomeLayout extends StatelessWidget {
             appBar: customAppbar(cubit.screensTitles[cubit.currentIndex],context),
             body: screens[cubit.currentIndex],
 
-            bottomNavigationBar: BottomNavigationBar
-              (
-                selectedIconTheme:IconThemeData(
+            bottomNavigationBar:Container(
+              decoration: BoxDecoration(
+                //border: Border.symmetric(horizontal: BorderSide(width: 1,color: AppColors.navBarActiveIcon)),
+                boxShadow: [
+                  BoxShadow(
                     color: AppColors.navBarActiveIcon,
-                    size: 25
-                ) ,
-                unselectedIconTheme:IconThemeData(
-                  color: AppColors.myGrey,
-                  size:20,
-                ) ,
-
-              unselectedItemColor: AppColors.myGrey,
-              selectedLabelStyle: TextStyle(
-                fontFamily: AppStrings.appFont
+                    offset: Offset(0.0, .1), //(x,y)
+                    blurRadius: 1,
+                  ),
+                ],
               ),
-              unselectedLabelStyle:TextStyle(
-                  fontFamily: AppStrings.appFont
-              ),
-              unselectedFontSize: 10,
-              selectedFontSize: 13,
-              backgroundColor: AppColors.primaryColor1,
-              type: BottomNavigationBarType.fixed,
-               currentIndex: cubit.currentIndex,
-                onTap: (value){
-                  cubit.navigateScreen(value);
-                },
-                elevation: 5,
+              child: BottomNavigationBar
+                (
+                  selectedIconTheme:IconThemeData(
+                      color: AppColors.navBarActiveIcon,
+                      size: 25
+                  ) ,
+                  unselectedIconTheme:IconThemeData(
+                    color: AppColors.myGrey,
+                    size:20,
+                  ) ,
 
-                items: [
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home,color: AppColors.myGrey),
-                      activeIcon:Icon(Icons.home,color: AppColors.navBarActiveIcon),
+                  unselectedItemColor: AppColors.myGrey,
+                  selectedLabelStyle: TextStyle(
+                      fontFamily: AppStrings.appFont
+                  ),
+                  unselectedLabelStyle:TextStyle(
+                      fontFamily: AppStrings.appFont
+                  ),
+                  unselectedFontSize: 10,
+                  selectedFontSize: 13,
+                  backgroundColor: AppColors.primaryColor1.withOpacity(1),
+                  type: BottomNavigationBarType.fixed,
+                  currentIndex: cubit.currentIndex,
+                  onTap: (value){
+                    cubit.navigateScreen(value);
+                  },
+                  elevation: 20,
+
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: ImageIcon(
+                        AssetImage("assets/images/home.png"),
+                        color:AppColors.myGrey,
+                      ),
+                      activeIcon:ImageIcon(
+                        AssetImage("assets/images/home.png"),
+                        color:AppColors.navBarActiveIcon,
+                      ),
                       label: 'Home',
 
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.timer_outlined,color:AppColors.myGrey),
-                      activeIcon:Icon(Icons.timer_outlined,color: AppColors.navBarActiveIcon),
-                      label: 'Matches'
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.people,color: AppColors.myGrey),
-                      activeIcon:Icon(Icons.people,color: AppColors.navBarActiveIcon),
-                      label: 'Fan'
-                  ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.chat,color: AppColors.myGrey),
+                    ),
+                    BottomNavigationBarItem(
+                        icon: ImageIcon(
+                          AssetImage("assets/images/times.png"),
+                          color:AppColors.myGrey,
+                        ),
+                        activeIcon:ImageIcon(
+                          AssetImage("assets/images/times.png"),
+                          color:AppColors.navBarActiveIcon,
+                        ),
+                        label: 'Matches'
+                    ),
+                    BottomNavigationBarItem(
+                        icon:ImageIcon(
+                          AssetImage("assets/images/fanarea1.png"),
+                          color:AppColors.myGrey,
+                        ),
+                        activeIcon:ImageIcon(
+                          AssetImage("assets/images/fanarea1.png"),
+                          color:AppColors.navBarActiveIcon,
+                        ),
+                        label: 'Fan'
+                    ),
+                    BottomNavigationBarItem(
+                      icon: ImageIcon(
+                        AssetImage("assets/images/chat.png"),
+                        color:AppColors.myGrey,
+                      ),
                       label: 'Chat',
-                    activeIcon:Icon(Icons.chat,color: AppColors.navBarActiveIcon),
+                      activeIcon:ImageIcon(
+                        AssetImage("assets/images/chat.png"),
+                        color:AppColors.navBarActiveIcon,
+                      ),
 
-                  ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.menu,color:AppColors.myGrey),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: ImageIcon(
+                        AssetImage("assets/images/profile.png"),
+                        color:AppColors.myGrey,
+                      ),
                       label: 'More',
-                    activeIcon:Icon(Icons.menu,color: AppColors.navBarActiveIcon),
+                      activeIcon:ImageIcon(
+                        AssetImage("assets/images/profile.png"),
+                        color:AppColors.navBarActiveIcon,
+                      ),
 
 
-                  ),
+                    ),
 
-                ]
+                  ]
+              ),
             )
+
 
           );
         },

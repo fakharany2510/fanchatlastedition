@@ -46,11 +46,16 @@ class MyApp extends StatelessWidget {
     }
     return MultiBlocProvider(
         providers:[
-          BlocProvider(create: (context)=>AppCubit()..getUser()..getPosts()..testLikes()..testComments()),
+          BlocProvider(create: (context)=>AppCubit()..getUser()..getPosts()),
+    // ..testLikes()..testComments()
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            navigationBarTheme: NavigationBarThemeData(
+              elevation: 1000,
+
+            ),
             primarySwatch: Colors.blue,
             appBarTheme: AppBarTheme(
               systemOverlayStyle: SystemUiOverlayStyle(
@@ -61,7 +66,7 @@ class MyApp extends StatelessWidget {
           ),
           initialRoute: widget,
           routes: {
-            '/' :(context)=>const SplashScreen(),
+            '/' :(context)=> SplashScreen(),
             'home_layout':(context)=> const HomeLayout(),
             'login':(context)=> LoginScreen(),
             'register':(context)=>RegisterScreen(),

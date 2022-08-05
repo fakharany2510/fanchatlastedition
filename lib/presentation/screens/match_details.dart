@@ -13,195 +13,208 @@ class MatchDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
-        listener: (context,state){
+      listener: (context,state){
 
-        },
+      },
       builder: (context,state){
-          return Scaffold(
-            backgroundColor: AppColors.myWhite,
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Container(
-                  color: AppColors.myWhite,
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        child: Material(
-                            color: Colors.white,
-                            elevation: 5,
-                            child: Column(
-                              children: [
-                                Container(
-                                  alignment: Alignment.center,
-                                  width: 110,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(35),
-                                    border: Border.all(
-                                        width: 2,
-                                        color: AppColors.primaryColor1
-                                    ),
-                                    color: AppColors.primaryColor1
-                                  ),
-                                  child:Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      const SizedBox(height: 5,),
-                                      Text('Today',style: TextStyle(
-                                          color: AppColors.myWhite,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: AppStrings.appFont
-                                      ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      const SizedBox(height: 7,),
-                                      Text('25-7-2022',style: TextStyle(
-                                          color: AppColors.myWhite,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: AppStrings.appFont
-                                      ),),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 5,),
-                                Container(
-                                  height: 1050,
-                                  child: ListView.separated(
-                                      shrinkWrap: true,
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context,index){
-                                        return InkWell(
-                                          onTap: (){
-                                            Navigator.push(context, MaterialPageRoute(builder: (_){
-                                              return SingleMatch();
-                                            }));
-                                          },
-                                          child: Container(
-                                            width: double.infinity,
-                                            child: Column(
+        return Scaffold(
+          backgroundColor: AppColors.myWhite,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Container(
+                color: AppColors.myWhite,
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child: Material(
+                          color: Colors.white,
+                          elevation: 5,
+                          child: Column(
+                            children: [
+                              // Container(
+                              //   alignment: Alignment.center,
+                              //   width: 110,
+                              //   height: 50,
+                              //   decoration: BoxDecoration(
+                              //     borderRadius: BorderRadius.circular(35),
+                              //     border: Border.all(
+                              //         width: 2,
+                              //         color: AppColors.primaryColor1
+                              //     ),
+                              //     color: AppColors.primaryColor1
+                              //   ),
+                              //   child:Column(
+                              //     crossAxisAlignment: CrossAxisAlignment.center,
+                              //     children: [
+                              //       // const SizedBox(height: 5,),
+                              //       // Text('Today',style: TextStyle(
+                              //       //     color: AppColors.myWhite,
+                              //       //     fontSize: 15,
+                              //       //     fontWeight: FontWeight.w500,
+                              //       //     fontFamily: AppStrings.appFont
+                              //       // ),
+                              //       //   textAlign: TextAlign.center,
+                              //       // ),
+                              //       // const SizedBox(height: 7,),
+                              //       // Text('25-7-2022',style: TextStyle(
+                              //       //     color: AppColors.myWhite,
+                              //       //     fontSize: 13,
+                              //       //     fontWeight: FontWeight.w500,
+                              //       //     fontFamily: AppStrings.appFont
+                              //       // ),),
+                              //     ],
+                              //   ),
+                              // ),
+                              const SizedBox(height: 15,),
+                              ListView.separated(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context,index){
+                                    return InkWell(
+                                      onTap: (){
+                                        Navigator.push(context, MaterialPageRoute(builder: (_){
+                                          return const SingleMatch();
+                                        }));
+                                      },
+                                      child: Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                            vertical: 10
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                        ),
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(7),
+                                            color: AppColors.primaryColor1
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(height: 10,),
+                                            Text('FRI 29 JUL 2022',style: TextStyle(
+                                                color: AppColors.myWhite,
+                                                fontSize: 16,
+                                                fontFamily: AppStrings.appFont
+                                            ),),
+                                            const SizedBox(height: 5,),
+                                            Text('GROUP 5',style: TextStyle(
+                                                color: Colors.grey.shade300,
+                                                fontSize: 13,
+                                                fontFamily: AppStrings.appFont
+                                            ),),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                                const SizedBox(height: 10,),
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                Column(
                                                   children: [
-                                                    Row(
-                                                      children: [
-                                                        Text('Egypt',style: TextStyle(
-                                                            color: AppColors.primaryColor1,
-                                                            fontSize: 15,
-                                                            fontWeight: FontWeight.w500,
-                                                            fontFamily: AppStrings.appFont
-                                                        ),),
-                                                        const  SizedBox(width: 5,),
-                                                        CircleAvatar(
-                                                          radius: 20,
-                                                          backgroundImage:  NetworkImage(AppCubit.get(context).groupsImages[index+1]),
-                                                        ),
-                                                      ],
+                                                    CircleAvatar(
+                                                      radius: 25,
+                                                      backgroundImage:  NetworkImage(AppCubit.get(context).groupsImages[index+1]),
                                                     ),
-                                                    const SizedBox(width: 5,),
-                                                    Container(
-                                                      height: 2,
-                                                      width: 8,
-                                                      color: AppColors.primaryColor1,
-                                                    ),
-                                                    const SizedBox(width: 5,),
-                                                    Column(
-                                                      children: [
-                                                        Container(
-                                                          width: 70,
-                                                          height: 35,
-                                                          decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.circular(90),
-                                                              border: Border.all(
-                                                                  color: AppColors.primaryColor1
-                                                              ),
-                                                            color: AppColors.primaryColor1
-                                                          ),
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            children: [
-                                                              SizedBox(height: 5,),
-                                                              Text('Not start',style: TextStyle(
-                                                                  color: AppColors.myWhite,
-                                                                  fontSize: 13,
-                                                                  fontWeight: FontWeight.w500,
-                                                                  fontFamily: AppStrings.appFont
-                                                              ),
-                                                               textAlign: TextAlign.center,
-                                                              ),
-                                                              const SizedBox(height: 5,),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        SizedBox(height: 5,),
-                                                        Text('20:10',style: TextStyle(
-                                                            color: AppColors.primaryColor1,
-                                                            fontSize: 12,
-                                                            fontWeight: FontWeight.w500,
-                                                            fontFamily: AppStrings.appFont
-                                                        ),
-                                                          textAlign: TextAlign.center,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(width: 5,),
-                                                    Container(
-                                                      height: 2,
-                                                      width: 8,
-                                                      color: AppColors.primaryColor1,
-                                                    ),
-                                                    const SizedBox(width: 5,),
-                                                    Row(
-                                                      children: [
+                                                    const  SizedBox(height: 5,),
+                                                    Text('Egypt',style: TextStyle(
+                                                        color: AppColors.myWhite,
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.bold,
+                                                        fontFamily: AppStrings.appFont
+                                                    ),),
+                                                  ],
+                                                ),
 
-                                                         CircleAvatar(
-                                                          radius: 20,
-                                                          backgroundImage:  NetworkImage(AppCubit.get(context).groupsImages[index]),
-                                                        ),
-                                                        const SizedBox(width: 5,),
-                                                        Text('Italy',style: TextStyle(
-                                                            color: AppColors.primaryColor1,
-                                                            fontSize: 15,
-                                                            fontWeight: FontWeight.w500,
-                                                            fontFamily: AppStrings.appFont
-                                                        ),),
-                                                      ],
+                                                const SizedBox(width: 25,),
+                                                Column(
+                                                  children: [
+                                                    Container(
+                                                      width: 120,
+                                                      height: 50,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(5),
+                                                          border: Border.all(
+                                                              color: AppColors.myWhite
+                                                          ),
+                                                          color: AppColors.primaryColor1
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          Text('4',style: TextStyle(
+                                                              color: AppColors.myWhite,
+                                                              fontSize: 25,
+                                                              fontWeight: FontWeight.w500,
+                                                              fontFamily: AppStrings.appFont
+                                                          ),
+                                                            textAlign: TextAlign.center,
+                                                          ),
+                                                          const SizedBox(width: 10,),
+                                                          Text('FT',style: TextStyle(
+                                                              color: AppColors.myWhite,
+                                                              fontSize: 11,
+                                                              fontWeight: FontWeight.w500,
+                                                              fontFamily: AppStrings.appFont
+                                                          ),
+                                                            textAlign: TextAlign.center,
+                                                          ),
+                                                          const SizedBox(width: 10,),
+                                                          Text('3',style: TextStyle(
+                                                              color: AppColors.myWhite,
+                                                              fontSize: 25,
+                                                              fontWeight: FontWeight.w500,
+                                                              fontFamily: AppStrings.appFont
+                                                          ),
+                                                            textAlign: TextAlign.center,
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
+
+                                                  ],
+                                                ),
+
+                                                const SizedBox(width: 25,),
+                                                Column(
+                                                  children: [
+
+                                                    CircleAvatar(
+                                                      radius: 25,
+                                                      backgroundImage:  NetworkImage(AppCubit.get(context).groupsImages[index]),
+                                                    ),
+                                                    const SizedBox(height: 5,),
+                                                    Text('Italy',style: TextStyle(
+                                                        color: AppColors.myWhite,
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.bold,
+                                                        fontFamily: AppStrings.appFont
+                                                    ),),
                                                   ],
                                                 ),
                                               ],
                                             ),
-                                          ),
-                                        );
-                                      },
-                                      separatorBuilder: (context,index){
-                                        return  Container(
-                                          margin: EdgeInsets.fromLTRB(15, 8, 15, 8),
-                                          height: 1,
-                                          color: AppColors.primaryColor1,
-                                          width: 100,
-                                        );
-                                      },
-                                      itemCount:4
-                                  ),
-                                ),
-                              ],
-                            )
-                        ),
-                      )
-                    ],
-                  ),
+                                            SizedBox(height: 20,),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder: (context,index){
+                                    return  const SizedBox(height: 0,);
+                                  },
+                                  itemCount:4
+                              ),
+                            ],
+                          )
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
-          );
+          ),
+        );
       },
     );
   }

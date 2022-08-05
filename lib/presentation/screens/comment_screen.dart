@@ -55,7 +55,7 @@ class CommentScreen extends StatelessWidget {
                     onPressed: (){
                       // AppCubit.get(context).homeComments = [];
                       // AppCubit.get(context).groupComments = [];
-                      AppCubit.get(context).testComments();
+                      //AppCubit.get(context).testComments();
                       Navigator.pop(context);
 
                     },

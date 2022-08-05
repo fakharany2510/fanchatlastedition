@@ -61,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 3,),
-                  Container(height: MediaQuery.of(context).size.height*.005,width: MediaQuery.of(context).size.width,color: AppColors.myGrey),
+                  Container(height: MediaQuery.of(context).size.height*.002,width: MediaQuery.of(context).size.width,color: AppColors.myGrey),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                   child: Column(
@@ -84,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                                Padding(
                                 padding:  EdgeInsets.only(left: 10,top: 0),
-                                child: Text('What\'s on your mind?',
+                                child: Text('What\'s on your mind....?',
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       color: AppColors.myWhite,
@@ -100,80 +100,80 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 3,),
-                      Container(
-                        height: .4,
-                        width: MediaQuery.of(context).size.width,
-                        color: Colors.grey,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: (){
-                                AppCubit.get(context).pickPostImage();
-                              },
-                              child: Container(
-                                height: MediaQuery.of(context).size.height*.03,
-                                width: MediaQuery.of(context).size.width*.2,
-                                child:Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children:  [
-                                    Icon(Icons.camera_alt,color:Colors.green,size: 17),
-                                     SizedBox(width:4),
-                                    Expanded(
-                                      child: Text('Photo',style: TextStyle(
-                                          color: AppColors.myWhite,
-                                          fontSize: 15,
-                                          fontFamily: AppStrings.appFont
-                                      ),),
-                                    )
-                                  ],
-
-                                )
-                              ),
-                            ),
-                            SizedBox(width:MediaQuery.of(context).size.width*.15,),
-                            Container(
-                              color: Colors.grey,
-                              height: 25,
-                              width: .4,
-                            ),
-                            SizedBox(width:MediaQuery.of(context).size.width*.15,),
-                            InkWell(
-                              onTap: (){
-                                AppCubit.get(context).pickPostVideo();
-                                AppCubit.get(context).isVideoButtonTapped==true;
-                              },
-                              child: Container(
-                                height: MediaQuery.of(context).size.height*.03,
-                                width: MediaQuery.of(context).size.width*.2,
-                                child:Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children:  [
-                                    Icon(Icons.video_camera_back,color:Colors.red,size: 17),
-                                    const SizedBox(width:4),
-                                    Expanded(
-                                      child: Text('Video',style: TextStyle(
-                                          color:AppColors.myWhite,
-                                          fontSize: 15,
-                                        fontFamily: AppStrings.appFont
-                                      ),),
-                                    )
-                                  ],
-
-                                )
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
+                      // Container(
+                      //   height: .4,
+                      //   width: MediaQuery.of(context).size.width,
+                      //   color: Colors.grey,
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(vertical: 5),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       InkWell(
+                      //         onTap: (){
+                      //           AppCubit.get(context).pickPostImage();
+                      //         },
+                      //         child: Container(
+                      //           height: MediaQuery.of(context).size.height*.03,
+                      //           width: MediaQuery.of(context).size.width*.2,
+                      //           child:Row(
+                      //             mainAxisAlignment: MainAxisAlignment.center,
+                      //             children:  [
+                      //               Icon(Icons.camera_alt,color:Colors.green,size: 17),
+                      //                SizedBox(width:4),
+                      //               Expanded(
+                      //                 child: Text('Photo',style: TextStyle(
+                      //                     color: AppColors.myWhite,
+                      //                     fontSize: 15,
+                      //                     fontFamily: AppStrings.appFont
+                      //                 ),),
+                      //               )
+                      //             ],
+                      //
+                      //           )
+                      //         ),
+                      //       ),
+                      //       SizedBox(width:MediaQuery.of(context).size.width*.15,),
+                      //       Container(
+                      //         color: Colors.grey,
+                      //         height: 25,
+                      //         width: .4,
+                      //       ),
+                      //       SizedBox(width:MediaQuery.of(context).size.width*.15,),
+                      //       InkWell(
+                      //         onTap: (){
+                      //           AppCubit.get(context).pickPostVideo();
+                      //           AppCubit.get(context).isVideoButtonTapped==true;
+                      //         },
+                      //         child: Container(
+                      //           height: MediaQuery.of(context).size.height*.03,
+                      //           width: MediaQuery.of(context).size.width*.2,
+                      //           child:Row(
+                      //             mainAxisAlignment: MainAxisAlignment.center,
+                      //             children:  [
+                      //               Icon(Icons.video_camera_back,color:Colors.red,size: 17),
+                      //               const SizedBox(width:4),
+                      //               Expanded(
+                      //                 child: Text('Video',style: TextStyle(
+                      //                     color:AppColors.myWhite,
+                      //                     fontSize: 15,
+                      //                   fontFamily: AppStrings.appFont
+                      //                 ),),
+                      //               )
+                      //             ],
+                      //
+                      //           )
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // )
 
                     ],
                   )
                 ),
-                Container(height: MediaQuery.of(context).size.height*.005,width: MediaQuery.of(context).size.width,color:AppColors.myGrey),
+                Container(height: MediaQuery.of(context).size.height*.002,width: MediaQuery.of(context).size.width,color:AppColors.myGrey),
                 const SizedBox(height: 5,),
 
                 const SizedBox(height: 5,),

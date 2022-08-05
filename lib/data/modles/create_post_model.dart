@@ -37,3 +37,38 @@ class BrowisePostModel{
     };
   }
 }
+
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+//
+// class Post {
+//   String? userId;
+//   String? name;
+//   String? image;
+//   String? dateTime;
+//   String? text;
+//   String? postImage;
+//   String? postVideo;
+//
+//   Post({
+//     this.userId,
+//     this.name,
+//     this.image,
+//     this.dateTime,
+//     this.text,
+//     this.postImage,
+//     this.postVideo
+//   });
+//   factory Post.fromFirestore(DocumentSnapshot doc) {
+//     Map data = doc.data()  as Map;
+//     return Post(
+//       userId: data['userId'],
+//       name: data['name'],
+//       image: data['image'],
+//       dateTime: data['dateTime'],
+//       text: data['text'],
+//       postImage: data['postImage'],
+//       postVideo: data['postVideo'],
+//     );
+//   }
+// }
