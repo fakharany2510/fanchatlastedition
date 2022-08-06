@@ -65,9 +65,10 @@ class AppCubit extends Cubit<AppState> {
   ];
 
   List carouselImage=[
-'https://img.freepik.com/free-photo/fizzy-cola-drink-macro-shot_53876-14910.jpg?w=740&t=st=1659277350~exp=1659277950~hmac=45c21685c87c74c08a36b9e06c78941df495a4ac01d887e87a2b34a4bd304320',
-    'https://img.freepik.com/free-photo/front-right-side-blue-sedan-car_114579-4394.jpg?w=740&t=st=1659277380~exp=1659277980~hmac=dadc794df23aeeabeac4b43f3d81303a981d8b15ff549cc720ba8b4d95bbc72c',
- 'https://img.freepik.com/free-photo/beautiful-cold-drink-cola-with-ice-cubes_1150-26255.jpg?w=740&t=st=1659277429~exp=1659278029~hmac=216e0d1c26ca832ba14ace6f0b3d22a1409a30d9218534ebe15e1f503f41a285',
+    'https://mostaql.hsoubcdn.com/uploads/thumbnails/1014251/60c7b6a350d3d/%D8%A7%D9%84%D8%AA%D8%B5%D9%85%D9%8A%D9%85.jpg',
+ 'https://pbs.twimg.com/media/Bp_KtB2CQAAo2FG?format=jpg&name=900x900',
+    'https://economickey.com/wp-content/uploads/2021/12/images-2021-12-09T123459.676.jpeg',
+    'https://images.netdirector.co.uk/gforces-auto/image/upload/w_1349,h_450,q_auto,c_fill,f_auto,fl_lossy/auto-client/07057d0e6193c6b928e53a2ec37e91ef/mg_hs_cover.png'
   ];
 
   List chatImages=[
@@ -374,8 +375,10 @@ class AppCubit extends Cubit<AppState> {
     String? userId,
     String? name,
     String? image,
-    required DateTime? dateTime,
+    required String ? time,
+    required String? dateTime,
     required String? text,
+    required String? timeSpam,
   }){
     emit(BrowiseUploadImagePostLoadingState());
     //كدا انا بكريت instance من ال storage
@@ -389,9 +392,11 @@ class AppCubit extends Cubit<AppState> {
         .putFile(postImage!).then((value){
       value.ref.getDownloadURL().then((value){
         createImagePost(
-          dateTime: dateTime,
-          postImage: value,
-          text: text
+            dateTime: dateTime,
+            postImage: value,
+            text: text,
+            time: time,
+            timeSpam: timeSpam
         );
         getPosts();
         emit(BrowiseUploadImagePostSuccessState());
@@ -406,20 +411,24 @@ class AppCubit extends Cubit<AppState> {
   //////////////////////////////////////////////
 //Create Post
   void createImagePost({
-    required DateTime? dateTime,
+    required String? dateTime,
+    required String? time,
+    required String? timeSpam,
     required String? text,
     String? postImage,
   }){
     emit(BrowiseCreatePostLoadingState());
 
     PostModel model=PostModel(
-      name: userModel!.username,
-      image:userModel!.image,
-      userId:userModel!.uId,
-      dateTime:getTimeDifferenceFromNow(dateTime!),
-      postImage:postImage??'',
-      postVideo: "",
-      text: text
+        name: userModel!.username,
+        image:userModel!.image,
+        userId:userModel!.uId,
+        dateTime:dateTime,
+        time: time,
+        postImage:postImage??'',
+        postVideo: "",
+        timeSmap: timeSpam,
+        text: text
     );
 
     FirebaseFirestore.instance
@@ -440,7 +449,9 @@ class AppCubit extends Cubit<AppState> {
     String? userId,
     String? name,
     String? video,
-    required DateTime? dateTime,
+    required String dateTime,
+    required String time,
+    required String timeSpam,
     required String? text,
   }){
     emit(BrowiseUploadVideoPostLoadingState());
@@ -457,7 +468,9 @@ class AppCubit extends Cubit<AppState> {
         createVideoPost(
           dateTime:dateTime,
           postVideo: value,
-          text: text
+          text: text,
+          time: time,
+          timeSpam:timeSpam,
         );
         getPosts();
         emit(BrowiseUploadVideoPostSuccessState());
@@ -472,20 +485,24 @@ class AppCubit extends Cubit<AppState> {
   ////////////////////////////////////////////////////
 //Create Post
   void createVideoPost({
-    required DateTime? dateTime,
+    required String dateTime,
     required String? text,
+    required String time,
+    required String? timeSpam,
     String? postVideo,
   }){
     emit(BrowiseCreateVideoPostLoadingState());
 
     PostModel model=PostModel(
-        name: userModel!.username,
-        image:userModel!.image,
-        userId:userModel!.uId,
-        dateTime:getTimeDifferenceFromNow(dateTime!),
-        postImage:'',
-        postVideo: postVideo??'',
-      text: text
+      name: userModel!.username,
+      image:userModel!.image,
+      userId:userModel!.uId,
+      dateTime:dateTime,
+      postImage:'',
+      postVideo: postVideo??'',
+      time: time  ,
+      text: text,
+      timeSmap: timeSpam,
     );
 
     FirebaseFirestore.instance
@@ -502,8 +519,10 @@ class AppCubit extends Cubit<AppState> {
   ///////////////////////////////////////////////
   //create text post
   void createTextPost({
-    required DateTime? dateTime,
+    required String? dateTime,
     required String? text,
+    required String? time,
+    required String? timeSpam,
   }){
     emit(BrowiseCreateTextPostLoadingState());
 
@@ -511,10 +530,12 @@ class AppCubit extends Cubit<AppState> {
         name: userModel!.username,
         image:userModel!.image,
         userId:userModel!.uId,
-        dateTime:getTimeDifferenceFromNow(dateTime!),
+        dateTime:dateTime,
         postImage:'',
         postVideo: '',
-        text: text
+        text: text,
+        time: time,
+        timeSmap: timeSpam,
     );
 
     FirebaseFirestore.instance
@@ -533,8 +554,11 @@ class AppCubit extends Cubit<AppState> {
   void uploadText({
     String? userId,
     String? name,
-    required DateTime? dateTime,
+    String? image,
+    required String? dateTime,
+    required String? time,
     required String? text,
+    required String? timeSpam,
   }){
     emit(BrowiseUploadImagePostLoadingState());
     //كدا انا بكريت instance من ال storage
@@ -548,7 +572,9 @@ class AppCubit extends Cubit<AppState> {
         .putString(text!).then((value){
       createImagePost(
           dateTime: dateTime,
-          text: text
+          text: text,
+          time: time,
+          timeSpam: timeSpam
       );
       getPosts();
       emit(BrowiseUploadTextPostSuccessState());
@@ -571,18 +597,12 @@ class AppCubit extends Cubit<AppState> {
     emit(BrowiseGetPostsLoadingState());
     FirebaseFirestore.instance
         .collection('posts')
+        .orderBy('timeSmap',descending: true)
         .get()
         .then((value) {
       value.docs.forEach((element) {
-        element.reference
-            .collection('likes')
-            .get()
-            .then((value) {
-          likes.add(value.docs.length);
-          postsId.add(element.id);
-          posts.add(PostModel.fromFirestore(element));
-          emit(BrowiseGetPostsSuccessState());
-        }).catchError((error){});
+        posts.add(PostModel.fromFirestore(element));
+        emit(BrowiseGetPostsSuccessState());
 
       });
 
@@ -595,7 +615,9 @@ class AppCubit extends Cubit<AppState> {
   }
   /////////////////////////////////////////////////
   //post likes
-  Future likePosts(String postId)async{
+
+
+  void likePosts(String postId,context){
     FirebaseFirestore.instance
         .collection('posts')
         .doc(postId)
@@ -605,6 +627,8 @@ class AppCubit extends Cubit<AppState> {
       'likes':true,
     })
         .then((value){
+      AppCubit.get(context).testLikes();
+
       emit(CreateLikesSuccessState());
     })
         .catchError((error){
@@ -649,6 +673,7 @@ class AppCubit extends Cubit<AppState> {
         .get()
         .then((value) {
       print('Get Comments Success');
+      comments=[];
       value.docs.forEach((element) {
 
         comments.add(CommentModel.fromFire(element.data()));
@@ -675,9 +700,8 @@ class AppCubit extends Cubit<AppState> {
         element.reference
             .collection('likes')
             .snapshots().listen((event) {
-          likes.add(event.docs.length);
           postsId.add(element.id);
-          // posts.add(BrowisePostModel.fromJson(element.data()));
+          likes.add(event.docs.length);
           emit(TestLikesSuccessState());
         });
       });
@@ -698,10 +722,9 @@ class AppCubit extends Cubit<AppState> {
         element.reference
             .collection('comments')
             .snapshots().listen((event) {
-          commentNum.add(event.docs.length);
           postsId.add(element.id);
-          // posts.add(BrowisePostModel.fromJson(element.data()));
-          emit(TestLikesSuccessState());
+          commentNum.add(event.docs.length);
+          emit(TestCommentsSuccessState());
         });
       });
     });

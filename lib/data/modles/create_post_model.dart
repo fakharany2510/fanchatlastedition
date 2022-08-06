@@ -49,6 +49,9 @@ class PostModel {
   String? text;
   String? postImage;
   String? postVideo;
+  String? time;
+  String? timeSmap;
+  // List ?likes;
 
   PostModel({
     this.userId,
@@ -57,7 +60,10 @@ class PostModel {
     this.dateTime,
     this.text,
     this.postImage,
-    this.postVideo
+    this.postVideo,
+    this.time,
+    this.timeSmap,
+    // this.likes
   });
   Map <String , dynamic> toMap(){
     return{
@@ -68,6 +74,10 @@ class PostModel {
       'text':text,
       'postImage':postImage,
       'postVideo':postVideo,
+      'time':time,
+      'timeSmap':timeSmap,
+      // 'likes':likes!.toList(),
+
     };
    }
   factory PostModel.fromFirestore(DocumentSnapshot doc) {
@@ -80,6 +90,9 @@ class PostModel {
       text: data['text'],
       postImage: data['postImage'],
       postVideo: data['postVideo'],
+      time: data['time'],
+      timeSmap: data['timeSmap'],
+      // likes: data['likes'],
     );
   }
 }

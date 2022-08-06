@@ -4,7 +4,7 @@ import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:intl/intl.dart';
 import '../../constants/app_strings.dart';
 
 class AddTextPost extends StatefulWidget {
@@ -21,6 +21,8 @@ class _AddTextPostState extends State<AddTextPost> {
     return BlocConsumer<AppCubit, AppState>(
       listener: (context, state) {
         if (state is BrowiseGetPostsSuccessState) {
+          AppCubit.get(context).testLikes();
+          AppCubit.get(context).testComments();
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => HomeLayout()));
           AppCubit.get(context).postImage = null;
@@ -64,8 +66,13 @@ class _AddTextPostState extends State<AddTextPost> {
                 raduis: 10,
                         function: () {
                           AppCubit.get(context).createTextPost(
-                              dateTime: DateTime.now(), text: postText.text);
+                              text: postText.text,
+                              timeSpam: DateTime.now().toString(),
+                              time: DateFormat.Hm().format(DateTime.now()),
+                              dateTime: DateFormat.yMMMd().format(DateTime.now()),
+                          );
                         },
+
                         buttonText: 'post',
                         buttonColor: AppColors.primaryColor1,
                       ),

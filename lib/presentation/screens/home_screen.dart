@@ -145,7 +145,7 @@ class HomeScreen extends StatelessWidget {
         );
         },
         query: FirebaseFirestore.instance.collection('posts')
-            .orderBy('dateTime', descending: true),
+            .orderBy('timeSmap', descending: true),
         // to fetch real-time data
         isLive: true,
         )

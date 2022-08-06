@@ -4,7 +4,7 @@ import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:intl/intl.dart';
 import '../../constants/app_strings.dart';
 
 class AddNewImage extends StatefulWidget {
@@ -22,6 +22,8 @@ class _AddNewImageState extends State<AddNewImage> {
       listener: (context,state){
         if(state is BrowiseGetPostsSuccessState){
          // Navigator.of(context).popAndPushNamed('home_layout');
+          AppCubit.get(context).testLikes();
+          AppCubit.get(context).testComments();
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
         }
 
@@ -63,19 +65,25 @@ class _AddNewImageState extends State<AddNewImage> {
                     raduis: 10,
                     function: (){
 
+
                       if(AppCubit.get(context).postImage == null){
                         AppCubit.get(context).createImagePost(
-                          dateTime: DateTime.now(),
+                          time: DateFormat.Hm().format(DateTime.now()),
+                          timeSpam: DateTime.now().toString(),
+                          dateTime: DateFormat.yMMMd().format(DateTime.now()),
                           text:postText.text,
                         );
                       }else{
                         AppCubit.get(context).uploadPostImage(
-                          dateTime: DateTime.now(),
+                          dateTime: DateFormat.yMMMd().format(DateTime.now()),
+                          time: DateFormat.Hm().format(DateTime.now()),
+                          timeSpam: DateTime.now().toString(),
                           text:postText.text,
                           image: AppCubit.get(context).userModel!.image,
                           name: AppCubit.get(context).userModel!.username,
                         );
                       }
+                      print(DateFormat.Hms().format(DateTime.now()));
 
                     },
 

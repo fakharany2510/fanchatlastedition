@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            navigationBarTheme: NavigationBarThemeData(
+            navigationBarTheme: const NavigationBarThemeData(
               elevation: 1000,
             ),
             primarySwatch: Colors.blue,

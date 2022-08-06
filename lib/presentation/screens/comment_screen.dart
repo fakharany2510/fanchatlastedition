@@ -55,7 +55,7 @@ class CommentScreen extends StatelessWidget {
                     onPressed: (){
                       // AppCubit.get(context).homeComments = [];
                       // AppCubit.get(context).groupComments = [];
-                      //AppCubit.get(context).testComments();
+                      AppCubit.get(context).testComments();
                       Navigator.pop(context);
 
                     },
@@ -230,6 +230,8 @@ class CommentScreen extends StatelessWidget {
                                 // //   });
                                 // }
                                 AppCubit.get(context).commentHomePost(postId!, commentController.text);
+                                AppCubit.get(context).testLikes();
+
                               },
                               icon: const Icon(
                                 Icons.send_rounded,

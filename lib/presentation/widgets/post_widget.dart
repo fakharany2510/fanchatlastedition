@@ -44,7 +44,7 @@ class _PostWidgetState extends State<PostWidget> {
 
     },
       builder: (context,state){
-       return Card(
+       return  Card(
          elevation: 2,
          shadowColor: Colors.grey[150],
          color: AppColors.primaryColor1,
@@ -87,13 +87,27 @@ class _PostWidgetState extends State<PostWidget> {
                          ),
                        ),
                        const Spacer(),
-                       Text('${widget.post.dateTime}',
-                         overflow: TextOverflow.ellipsis,
-                         style:  TextStyle(
-                             fontSize: 13,
-                             color: AppColors.myWhite,
-                             fontFamily: AppStrings.appFont
-                         ),
+                       Column(
+                         children: [
+                           Text('${widget.post.dateTime}',
+                             overflow: TextOverflow.ellipsis,
+                             style:  TextStyle(
+                                 fontSize: 13,
+                                 color: AppColors.myWhite,
+                                 fontFamily: AppStrings.appFont
+                             ),
+                           ),
+                           SizedBox(height: 5,),
+                           Text('${widget.post.time}',
+                             overflow: TextOverflow.ellipsis,
+                             style:  TextStyle(
+                                 fontSize: 13,
+                                 color: AppColors.myWhite,
+                                 fontFamily: AppStrings.appFont
+                             ),
+                           ),
+
+                         ],
                        ),
                      ],
                    ),
@@ -213,9 +227,7 @@ class _PostWidgetState extends State<PostWidget> {
                              padding:EdgeInsets.zero,
                              constraints: BoxConstraints(),
                              onPressed:(){
-                               AppCubit.get(context).likePosts((AppCubit.get(context).postsId[widget.index!])).then((value) {
-                                AppCubit.get(context).testLikes();
-                               });
+                               AppCubit.get(context).likePosts(AppCubit.get(context).postsId[widget.index!],context);
                              },
                                icon: Icon(Icons.favorite_outline,color: AppColors.myGrey,size: 20),)
                          ],
@@ -233,7 +245,12 @@ class _PostWidgetState extends State<PostWidget> {
                            IconButton(
                              padding:EdgeInsets.zero,
                              constraints: BoxConstraints(),
-                             onPressed:(){},
+                             onPressed:(){
+                               AppCubit.get(context).getComment( AppCubit.get(context).postsId[widget.index!]);
+                               Navigator.push(context, MaterialPageRoute(builder: (_){
+                                 return CommentScreen(postId: AppCubit.get(context).postsId[widget.index!] ,);
+                               }));
+                             },
                                icon: Icon(Icons.mode_comment_outlined,color: AppColors.myGrey,size: 20),)
                          ],
                        ),
