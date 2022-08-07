@@ -9,6 +9,7 @@ import '../screens/comment_screen.dart';
 
 class PostWidget extends StatefulWidget {
   int ?index;
+  int? commentIndex;
   PostWidget({Key? key,this.index}) : super(key: key);
 
   @override
@@ -201,17 +202,22 @@ class _PostWidgetState extends State<PostWidget> {
                         SizedBox(width: 15,),
                         Row(
                           children: [
-                            //  Text('${AppCubit.get(context).commentNum[widget.index!]}',
-                            //  style: TextStyle(
-                            // color: AppColors.myWhite,
-                            // fontSize: 13,
-                            //      fontWeight: FontWeight.w500,
-                            //      fontFamily: AppStrings.appFont
-                            // ),),
+                             Text('${AppCubit.get(context).commentNum.length}',
+                             style: TextStyle(
+                            color: AppColors.myWhite,
+                            fontSize: 13,
+                                 fontWeight: FontWeight.w500,
+                                 fontFamily: AppStrings.appFont
+                            ),),
                             IconButton(
                               padding:EdgeInsets.zero,
                               constraints: BoxConstraints(),
-                              onPressed:(){},
+                              onPressed:(){
+                                AppCubit.get(context).getComment( AppCubit.get(context).postsId[widget.index!]);
+                                Navigator.push(context, MaterialPageRoute(builder: (_){
+                                  return CommentScreen(postId: AppCubit.get(context).postsId[widget.index!] ,);
+                                }));
+                              },
                               icon: Icon(Icons.mode_comment_outlined,color: AppColors.myGrey,size: 20),)
                           ],
                         ),

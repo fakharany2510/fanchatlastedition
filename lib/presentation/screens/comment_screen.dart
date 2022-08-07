@@ -17,19 +17,11 @@ class CommentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
         builder: (context) {
-          // switch (route)
-          // {
-          //   // case 'home' : {
-          //   //   AppCubit.get(context).getHomeComments(postId!);
-          //   //   break;
-          //   // }
-          //   // case 'group' : {
-          //   //   AppCubit.get(context).getGroupComments(postId: postId!);
-          //   //   break;
-          //   // }
-          // }
+          AppCubit.get(context).getComment(postId!);
           return BlocConsumer <AppCubit , AppState> (
-            listener: (context , state) {},
+            listener: (context , state) {
+              // if(state)
+            },
             builder: (context , state) {
               return Scaffold(
                 backgroundColor: AppColors.myWhite,
@@ -70,9 +62,6 @@ class CommentScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Expanded(
-                        // child: ConditionalBuilder(
-                        //   condition:  AppCubit.get(context).homeComments.length != 0 ||  AppCubit.get(context).groupComments != 0,
-                        //   builder: (context ) =>
                         child: ListView.separated(
                           physics: const BouncingScrollPhysics(),
                           itemBuilder: (context , index) {
@@ -111,9 +100,9 @@ class CommentScreen extends StatelessWidget {
                                               Text(
                                                 '${AppCubit.get(context).comments[index].username}',
                                                 style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  color: AppColors.myWhite,
-                                                  height: 1.3,
+                                                    fontSize: 16.0,
+                                                    color: AppColors.myWhite,
+                                                    height: 1.3,
                                                     fontFamily: AppStrings.appFont
                                                 ),
                                               ),
@@ -123,8 +112,8 @@ class CommentScreen extends StatelessWidget {
                                               Text(
                                                 '${AppCubit.get(context).comments[index].comment}' ,
                                                 style:  TextStyle(
-                                                  fontSize: 16.0,
-                                                  color: AppColors.myWhite,
+                                                    fontSize: 16.0,
+                                                    color: AppColors.myWhite,
                                                     fontFamily: AppStrings.appFont
                                                 ),
                                               ),
@@ -230,7 +219,7 @@ class CommentScreen extends StatelessWidget {
                                 // //   });
                                 // }
                                 AppCubit.get(context).commentHomePost(postId!, commentController.text);
-                                AppCubit.get(context).testLikes();
+                                AppCubit.get(context).testComments();
 
                               },
                               icon: const Icon(
@@ -290,9 +279,9 @@ class CommentScreen extends StatelessWidget {
                       Text(
                         '${model.username}',
                         style: const TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w900,
-                          height: 1.3,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w900,
+                            height: 1.3,
                             fontFamily: AppStrings.appFont
                         ),
                       ),
@@ -302,7 +291,7 @@ class CommentScreen extends StatelessWidget {
                       Text(
                         '${model.comment}',
                         style: const TextStyle(
-                          fontSize: 16.0,
+                            fontSize: 16.0,
                             fontFamily: AppStrings.appFont
                         ),
                       ),

@@ -3,7 +3,7 @@ class CommentModel{
   String? userId;
   String? userImage;
   String? comment;
-  // DateTime? date;
+  String? date;
 
 
   CommentModel({
@@ -11,7 +11,7 @@ class CommentModel{
     this.userId,
     this.userImage,
     this.comment,
-    // this.date,
+    this.date,
 
   });
 
@@ -20,20 +20,18 @@ class CommentModel{
     userId = fire['userId'];
     userImage = fire['userImage'];
     comment = fire['comment'];
-    // date = fire['date'];
+    date = fire['date'];
 
   }
 
 
-  Map <String , dynamic> toMap (){
+  Map <String , dynamic> toMap () {
     return {
-      'username' : username ,
-      'userId' : userId ,
-      'userImage': userImage ,
-      'comment': comment ,
-      // 'date': date ,
-
+      'username': username,
+      'userId': userId,
+      'userImage': userImage,
+      'comment': comment,
+      'date': date
     };
   }
-
-}
+  }

@@ -43,8 +43,28 @@ class HomeLayout extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: AppColors.navBarActiveIcon,
-                    offset: Offset(0.0, .1), //(x,y)
-                    blurRadius: 5,
+                    offset: Offset(0, .1), //(x,y)
+                    blurRadius: 2,
+                  ),
+                  BoxShadow(
+                    color: AppColors.navBarActiveIcon,
+                    offset: Offset(0, .3), //(x,y)
+                    blurRadius: 2,
+                  ),
+                  BoxShadow(
+                    color: AppColors.navBarActiveIcon,
+                    offset: Offset(0, .5), //(x,y)
+                    blurRadius: 2,
+                  ),
+                  BoxShadow(
+                    color: AppColors.navBarActiveIcon,
+                    offset: Offset(0, .08), //(x,y)
+                    blurRadius: 2,
+                  ),
+                  BoxShadow(
+                    color: AppColors.navBarActiveIcon,
+                    offset: Offset(0, .01), //(x,y)
+                    blurRadius: 2,
                   ),
                 ],
               ),

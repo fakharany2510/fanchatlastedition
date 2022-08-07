@@ -8,6 +8,7 @@ class BrowisePostModel{
   String? postVideo;
   String? time;
   String? timeSmap;
+
   BrowisePostModel({
     this.userId,
     this.name,

@@ -428,7 +428,7 @@ class AppCubit extends Cubit<AppState> {
         postImage:postImage??'',
         postVideo: "",
         timeSmap: timeSpam,
-        text: text
+        text: text,
     );
 
     FirebaseFirestore.instance
@@ -617,7 +617,7 @@ class AppCubit extends Cubit<AppState> {
   //post likes
 
 
-  void likePosts(String postId,context){
+  void likePosts(String postId){
     FirebaseFirestore.instance
         .collection('posts')
         .doc(postId)
@@ -627,7 +627,7 @@ class AppCubit extends Cubit<AppState> {
       'likes':true,
     })
         .then((value){
-      AppCubit.get(context).testLikes();
+      testLikes();
 
       emit(CreateLikesSuccessState());
     })
@@ -639,14 +639,15 @@ class AppCubit extends Cubit<AppState> {
   /////////////////////////////////////////////////////////
 // Create Comment
   /////////////////////////////////////
-
+List<int> commentIndex=[];
   List <CommentModel> comments=[];
   void commentHomePost(String postId, String comment) {
     CommentModel model = CommentModel(
-      username: userModel!.username,
-      userImage: userModel!.image!,
-      userId: userModel!.uId,
-      comment: comment,
+        username: userModel!.username,
+        userImage: userModel!.image!,
+        userId: userModel!.uId,
+        comment: comment,
+        date: DateTime.now().toString()
     );
     FirebaseFirestore.instance
         .collection('posts')
@@ -656,6 +657,7 @@ class AppCubit extends Cubit<AppState> {
         .then((value) {
       print('Comment Add');
       getComment(postId);
+      commentIndex.length++;
       emit(CreateCommentsSuccessState());
     }).catchError((error) {
       print('Error When set comment in home : ${error.toString()}');
@@ -712,7 +714,7 @@ class AppCubit extends Cubit<AppState> {
   // /////////////////////////
   List<int> commentNum=[];
   void testComments() {
-    // posts=[];
+   // posts=[];
     postsId = [];
     commentNum = [];
     FirebaseFirestore.instance
@@ -722,10 +724,12 @@ class AppCubit extends Cubit<AppState> {
         element.reference
             .collection('comments')
             .snapshots().listen((event) {
-          postsId.add(element.id);
-          commentNum.add(event.docs.length);
-          emit(TestCommentsSuccessState());
-        });
+          event.docs.forEach((element){
+            postsId.add(element.id);
+            commentNum.add(event.docs.length);
+            emit(TestCommentsSuccessState());
+          });
+            });
       });
     });
   }
