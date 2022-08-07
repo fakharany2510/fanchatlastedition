@@ -419,7 +419,7 @@ class AppCubit extends Cubit<AppState> {
   }){
     emit(BrowiseCreatePostLoadingState());
 
-    PostModel model=PostModel(
+    BrowisePostModel model=BrowisePostModel(
         name: userModel!.username,
         image:userModel!.image,
         userId:userModel!.uId,
@@ -444,7 +444,7 @@ class AppCubit extends Cubit<AppState> {
   }
 /////////////////////////////////////////////////
 //upload post video to storage
-  PostModel? postModel;
+  BrowisePostModel? postModel;
   void uploadPostVideo({
     String? userId,
     String? name,
@@ -493,7 +493,7 @@ class AppCubit extends Cubit<AppState> {
   }){
     emit(BrowiseCreateVideoPostLoadingState());
 
-    PostModel model=PostModel(
+    BrowisePostModel model=BrowisePostModel(
       name: userModel!.username,
       image:userModel!.image,
       userId:userModel!.uId,
@@ -526,7 +526,7 @@ class AppCubit extends Cubit<AppState> {
   }){
     emit(BrowiseCreateTextPostLoadingState());
 
-    PostModel model=PostModel(
+    BrowisePostModel model=BrowisePostModel(
         name: userModel!.username,
         image:userModel!.image,
         userId:userModel!.uId,
@@ -586,7 +586,7 @@ class AppCubit extends Cubit<AppState> {
 //////////////////////////////////////////////
   /////////////////////////
   //get Posts
-    List<PostModel> posts=[];
+    List<BrowisePostModel> posts=[];
   List<String> postsId=[];
   List<int> likes=[];
 
@@ -601,7 +601,7 @@ class AppCubit extends Cubit<AppState> {
         .get()
         .then((value) {
       value.docs.forEach((element) {
-        posts.add(PostModel.fromFirestore(element));
+        posts.add(BrowisePostModel.fromJson(element.data()));
         emit(BrowiseGetPostsSuccessState());
 
       });

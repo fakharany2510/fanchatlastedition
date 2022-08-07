@@ -18,8 +18,8 @@ class AddNewVideo extends StatelessWidget {
       listener: (context,state){
         if(state is BrowiseGetPostsSuccessState){
          // Navigator.of(context).popAndPushNamed('home_layout');
-          AppCubit.get(context).testLikes();
-          AppCubit.get(context).testComments();
+         //  AppCubit.get(context).testLikes();
+         //  AppCubit.get(context).testComments();
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
           AppCubit.get(context).videoPlayerController!.dispose();
           AppCubit.get(context).postVideo=null;

@@ -5,7 +5,6 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:paginate_firestore/paginate_firestore.dart';
 
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
@@ -66,7 +65,7 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(height: 3,),
                   Container(height: MediaQuery.of(context).size.height*.002,width: MediaQuery.of(context).size.width,color: AppColors.myGrey),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 0),
                   child: Column(
                     children: [
                       InkWell(
@@ -77,6 +76,7 @@ class HomeScreen extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 5),
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height*.06,
+                          color: AppColors.myGrey,
                           child: Row(
                             children: [
                               CircleAvatar(
@@ -90,7 +90,7 @@ class HomeScreen extends StatelessWidget {
                                 child: Text('What\'s on your mind....?',
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                      color: AppColors.myWhite,
+                                      color: AppColors.primaryColor1,
                                       fontWeight: FontWeight.w400,
                                       fontSize: 17,
                                       fontFamily: AppStrings.appFont
@@ -102,7 +102,7 @@ class HomeScreen extends StatelessWidget {
 
                         ),
                       ),
-                      SizedBox(height: 3,),
+                      SizedBox(height: 0,),
                     ],
                   )
                 ),
@@ -132,23 +132,25 @@ class HomeScreen extends StatelessWidget {
                     return true;
                   },
                     child:cubit.posts.length !=0
-        ? PaginateFirestore(separator: SizedBox(height: 10,),
-        itemBuilderType: PaginateBuilderType.listView,
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(0),//Change types accordingly
-        itemBuilder: ( context, documentSnapshot,index) {
-        return  PostWidget(
-        //invoice: Invoice.fromFirestore(documentSnapshot[index]
-        post: PostModel.fromFirestore(documentSnapshot[index]),
-          index: index,
-        );
-        },
-        query: FirebaseFirestore.instance.collection('posts')
-            .orderBy('timeSmap', descending: true),
-        // to fetch real-time data
-        isLive: true,
-        )
+        ? ListView.separated(
+                        controller: _childScrollController,
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) => Column(
+                          children: [
+                            const SizedBox(height:10,),
+                            PostWidget(index: index),
+                          ],
+                        ),
+                        separatorBuilder: (context,index)=>Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 0),
+                          child: Container(
+                            height: MediaQuery.of(context).size.height*.00030,
+                            width: double.infinity,
+                            color: AppColors.myGrey,
+                          ),
+                        ),
+                        itemCount: AppCubit.get(context).posts.length)
                         :Padding(
                           padding: const EdgeInsets.only(top:170),
                           child: Center(

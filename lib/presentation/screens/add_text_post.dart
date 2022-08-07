@@ -21,8 +21,8 @@ class _AddTextPostState extends State<AddTextPost> {
     return BlocConsumer<AppCubit, AppState>(
       listener: (context, state) {
         if (state is BrowiseGetPostsSuccessState) {
-          AppCubit.get(context).testLikes();
-          AppCubit.get(context).testComments();
+          // AppCubit.get(context).testLikes();
+          // AppCubit.get(context).testComments();
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => HomeLayout()));
           AppCubit.get(context).postImage = null;
@@ -44,7 +44,6 @@ class _AddTextPostState extends State<AddTextPost> {
               icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () {
                 setState(() {
-                  //AppCubit.get(context).postImage='';
                   AppCubit.get(context).postImage = null;
                   print('${AppCubit.get(context).postImage}');
                   Navigator.pop(context);
@@ -52,7 +51,7 @@ class _AddTextPostState extends State<AddTextPost> {
               },
             ),
             actions: [
-              state is BrowiseCreateTextPostLoadingState &&
+              state is BrowiseCreateTextPostLoadingState ||
                       state is BrowiseGetPostsLoadingState
                   ? Center(
                       child: CircularProgressIndicator(),

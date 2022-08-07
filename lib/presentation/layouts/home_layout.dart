@@ -37,13 +37,14 @@ class HomeLayout extends StatelessWidget {
             body: screens[cubit.currentIndex],
 
             bottomNavigationBar:Container(
+
               decoration: BoxDecoration(
                 //border: Border.symmetric(horizontal: BorderSide(width: 1,color: AppColors.navBarActiveIcon)),
                 boxShadow: [
                   BoxShadow(
                     color: AppColors.navBarActiveIcon,
                     offset: Offset(0.0, .1), //(x,y)
-                    blurRadius: 1,
+                    blurRadius: 5,
                   ),
                 ],
               ),

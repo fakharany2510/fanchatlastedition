@@ -144,21 +144,13 @@ customAppbar(String title,context){
     elevation: 0.0,
     actions: [
       IconButton(onPressed: (){}, constraints: BoxConstraints(),
+        padding: EdgeInsets.only(right: 20),
         icon: ImageIcon(
         AssetImage("assets/images/notification.png"),
         color:AppColors.navBarActiveIcon,
 
       ),),
-      SizedBox(width: 3,),
-      Padding(
-        padding: const EdgeInsets.only(right: 3),
-        child: IconButton(onPressed: (){},
-          constraints: BoxConstraints(),
-          icon: ImageIcon(
-          AssetImage("assets/images/lang.png"),
-          color:AppColors.navBarActiveIcon,
-        ),),
-      ),
+
     ],
   );
 }
