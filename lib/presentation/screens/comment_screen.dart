@@ -10,14 +10,14 @@ import '../../constants/app_strings.dart';
 
 class CommentScreen extends StatelessWidget {
   var commentController = TextEditingController();
-  String? postId;
-  CommentScreen({Key? key , this.postId }) : super(key: key);
+  String postId;
+  CommentScreen({Key? key , required this.postId }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Builder(
         builder: (context) {
-          AppCubit.get(context).getComment(postId!);
+          AppCubit.get(context).getComment(postId);
           return BlocConsumer <AppCubit , AppState> (
             listener: (context , state) {
               // if(state)
@@ -47,7 +47,8 @@ class CommentScreen extends StatelessWidget {
                     onPressed: (){
                       // AppCubit.get(context).homeComments = [];
                       // AppCubit.get(context).groupComments = [];
-                      AppCubit.get(context).testComments();
+                      AppCubit.get(context).testComments(postId);
+                      AppCubit.get(context).getPosts();
                       Navigator.pop(context);
 
                     },
@@ -218,9 +219,8 @@ class CommentScreen extends StatelessWidget {
                                 // //     }
                                 // //   });
                                 // }
-                                AppCubit.get(context).commentHomePost(postId!, commentController.text);
-                                AppCubit.get(context).testComments();
-
+                                AppCubit.get(context).commentHomePost(postId, commentController.text);
+                                AppCubit.get(context).testComments(postId);
                               },
                               icon: const Icon(
                                 Icons.send_rounded,

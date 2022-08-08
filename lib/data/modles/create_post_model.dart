@@ -8,6 +8,9 @@ class BrowisePostModel{
   String? postVideo;
   String? time;
   String? timeSmap;
+  int ?likes=0;
+  int ?comments =0;
+  String ?postId;
 
   BrowisePostModel({
     this.userId,
@@ -18,7 +21,10 @@ class BrowisePostModel{
     this.postImage,
     this.postVideo,
     this.time,
-    this.timeSmap
+    this.timeSmap,
+    this.likes,
+    this.comments,
+    this.postId
   });
   BrowisePostModel.fromJson(Map<String , dynamic> json){
     userId=json['userId'];
@@ -30,6 +36,10 @@ class BrowisePostModel{
     postVideo=json['postVideo'];
     time=json['time'];
     timeSmap=json['timeSmap'];
+    likes=json['likes'];
+    comments=json['comments'];
+    postId=json['postId'];
+
   }
 
   Map <String , dynamic> toMap(){
@@ -43,7 +53,9 @@ class BrowisePostModel{
       'postVideo':postVideo,
       'time':time,
       'timeSmap':timeSmap,
-
+      'likes':likes,
+      'comments':comments,
+      'postId':postId,
     };
   }
 }

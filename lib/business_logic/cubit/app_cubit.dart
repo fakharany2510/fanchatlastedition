@@ -98,6 +98,7 @@ class AppCubit extends Cubit<AppState> {
   }
 
 
+  bool ?isLike=false;
 
   bool checkValue=false;
   void checkBox(value){
@@ -396,7 +397,8 @@ class AppCubit extends Cubit<AppState> {
             postImage: value,
             text: text,
             time: time,
-            timeSpam: timeSpam
+            timeSpam: timeSpam,
+
         );
         getPosts();
         emit(BrowiseUploadImagePostSuccessState());
@@ -429,12 +431,25 @@ class AppCubit extends Cubit<AppState> {
         postVideo: "",
         timeSmap: timeSpam,
         text: text,
+        likes: 0,
+        comments:0,
+        postId: AppStrings.postUid,
     );
 
     FirebaseFirestore.instance
         .collection('posts')
         .add(model.toMap())
         .then((value){
+          printMessage(value.id);
+          AppStrings.postUid=value.id;
+          FirebaseFirestore.instance
+              .collection('posts')
+              .doc(AppStrings.postUid)
+               .update({
+                'postId':AppStrings.postUid
+              }).then((value){
+            emit(BrowiseCreatePostSuccessState());
+          });
         //  getPosts();
       emit(BrowiseCreatePostSuccessState());
     })
@@ -503,6 +518,9 @@ class AppCubit extends Cubit<AppState> {
       time: time  ,
       text: text,
       timeSmap: timeSpam,
+      likes: 0,
+      comments:0,
+      postId: AppStrings.postUid
     );
 
     FirebaseFirestore.instance
@@ -510,6 +528,15 @@ class AppCubit extends Cubit<AppState> {
         .add(model.toMap())
         .then((value){
           //getPosts();
+      AppStrings.postUid=value.id;
+      FirebaseFirestore.instance
+          .collection('posts')
+          .doc(AppStrings.postUid)
+          .update({
+        'postId':AppStrings.postUid
+      }).then((value){
+        emit(BrowiseCreateVideoPostSuccessState());
+      });
       emit(BrowiseCreateVideoPostSuccessState());
     })
         .catchError((error){
@@ -536,12 +563,24 @@ class AppCubit extends Cubit<AppState> {
         text: text,
         time: time,
         timeSmap: timeSpam,
+        likes:0,
+        comments:0,
+        postId: AppStrings.postUid
     );
 
     FirebaseFirestore.instance
         .collection('posts')
         .add(model.toMap())
         .then((value){
+      AppStrings.postUid=value.id;
+      FirebaseFirestore.instance
+          .collection('posts')
+          .doc(AppStrings.postUid)
+          .update({
+        'postId':AppStrings.postUid
+      }).then((value){
+        emit(BrowiseCreateTextPostSuccessState());
+      });
       getPosts();
       emit(BrowiseCreateTextPostSuccessState());
     })
@@ -605,7 +644,6 @@ class AppCubit extends Cubit<AppState> {
         emit(BrowiseGetPostsSuccessState());
 
       });
-
     }
     )
         .catchError((error){
@@ -616,8 +654,8 @@ class AppCubit extends Cubit<AppState> {
   /////////////////////////////////////////////////
   //post likes
 
-
-  void likePosts(String postId){
+//
+  void likePosts(String postId,int Likes){
     FirebaseFirestore.instance
         .collection('posts')
         .doc(postId)
@@ -625,11 +663,10 @@ class AppCubit extends Cubit<AppState> {
         .doc(userModel!.uId)
         .set({
       'likes':true,
-    })
-        .then((value){
-      testLikes();
-
+      }).then((value){
+      // testLikes();
       emit(CreateLikesSuccessState());
+      testLikes(postId,Likes);
     })
         .catchError((error){
       emit(CreateLikesErrorState()
@@ -657,7 +694,8 @@ List<int> commentIndex=[];
         .then((value) {
       print('Comment Add');
       getComment(postId);
-      commentIndex.length++;
+      testComments(postId);
+      // commentIndex.length++;
       emit(CreateCommentsSuccessState());
     }).catchError((error) {
       print('Error When set comment in home : ${error.toString()}');
@@ -691,7 +729,7 @@ List<int> commentIndex=[];
 // get likes number
   /////////////////////////////////////
 
-  void testLikes() {
+  void testLikes(postId,int Likes) {
     // posts=[];
     postsId = [];
     likes = [];
@@ -702,7 +740,26 @@ List<int> commentIndex=[];
         element.reference
             .collection('likes')
             .snapshots().listen((event) {
-          postsId.add(element.id);
+              // postsId.add(element.id);
+           if(postId==element.id){
+            Likes = event.docs.length;
+            FirebaseFirestore.instance
+                .collection('posts')
+                .doc(postId)
+                .update({
+              'likes':Likes
+            }).then((value){
+              print(Likes);
+              print(event.docs.length);
+              print('Siiiiiiiiiiiiiiiiiiiiiiii');
+              printMessage('postId is ${postId}');
+              print('Siiiiiiiiiiiiiiiiiiiiiiii');
+              printMessage('elementId is ${element.id}');
+
+              emit(TestLikesSuccessState());
+            });
+
+          }
           likes.add(event.docs.length);
           emit(TestLikesSuccessState());
         });
@@ -710,10 +767,13 @@ List<int> commentIndex=[];
     });
   }
 
-  // //get comments number
-  // /////////////////////////
+
+//
+//   // //get comments number
+//   // /////////////////////////
   List<int> commentNum=[];
-  void testComments() {
+  int ?Comments=0;
+  void testComments(postId) {
    // posts=[];
     postsId = [];
     commentNum = [];
@@ -724,8 +784,36 @@ List<int> commentIndex=[];
         element.reference
             .collection('comments')
             .snapshots().listen((event) {
-          event.docs.forEach((element){
-            postsId.add(element.id);
+          event.docs.forEach((element1){
+            // postsId.add(element.id);
+            print(event.docs.length);
+            print(Comments);
+            print('Siiiiiiiiiiiiiiiiiiiiiiii');
+            printMessage('postId is ${postId}');
+            print('Siiiiiiiiiiiiiiiiiiiiiiii');
+            printMessage('elementId is ${element.id}');
+            if(postId==element.id){
+              print('hhhhhhhhhhhhhhhhhhhh');
+              Comments= event.docs.length;
+              print(Comments);
+              print(event.docs.length);
+              FirebaseFirestore.instance
+                  .collection('posts')
+                  .doc(postId)
+                  .update({
+                'comments':Comments
+              }).then((value){
+                print(Comments);
+                print(event.docs.length);
+                print('Siiiiiiiiiiiiiiiiiiiiiiii');
+                printMessage('postId is ${postId}');
+                print('Siiiiiiiiiiiiiiiiiiiiiiii');
+                printMessage('elementId is ${element.id}');
+
+                emit(TestCommentsSuccessState());
+              });
+
+            }
             commentNum.add(event.docs.length);
             emit(TestCommentsSuccessState());
           });

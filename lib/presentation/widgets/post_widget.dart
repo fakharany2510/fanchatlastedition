@@ -82,13 +82,26 @@ class _PostWidgetState extends State<PostWidget> {
                           ),
                         ),
                         const Spacer(),
-                        Text('${AppCubit.get(context).posts[widget.index!].dateTime}',
-                          overflow: TextOverflow.ellipsis,
-                          style:  TextStyle(
-                              fontSize: 13,
-                              color: AppColors.myWhite,
-                              fontFamily: AppStrings.appFont
-                          ),
+                        Column(
+                          children: [
+                            Text('${AppCubit.get(context).posts[widget.index!].dateTime}',
+                              overflow: TextOverflow.ellipsis,
+                              style:  TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.myWhite,
+                                  fontFamily: AppStrings.appFont
+                              ),
+                            ),
+                            SizedBox(height: 5,),
+                            Text('${AppCubit.get(context).posts[widget.index!].time}',
+                              overflow: TextOverflow.ellipsis,
+                              style:  TextStyle(
+                                  fontSize: 13,
+                                  color: AppColors.myWhite,
+                                  fontFamily: AppStrings.appFont
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -184,7 +197,7 @@ class _PostWidgetState extends State<PostWidget> {
                       children: [
                         Row(
                           children: [
-                            Text('8',
+                            Text('${AppCubit.get(context).posts[widget.index!].likes}',
                               style: TextStyle(
                                   color: AppColors.myWhite,
                                   fontSize: 13,
@@ -195,6 +208,19 @@ class _PostWidgetState extends State<PostWidget> {
                               padding:EdgeInsets.zero,
                               constraints: BoxConstraints(),
                               onPressed:(){
+                                setState(() {
+                                   AppCubit.get(context).likePosts('${AppCubit.get(context).posts[widget.index!].postId}',AppCubit.get(context).posts[widget.index!].likes!);
+
+                                   if(AppCubit.get(context).isLike==false){
+                                     AppCubit.get(context).posts[widget.index!].likes=AppCubit.get(context).posts[widget.index!].likes!+1;
+                                     AppCubit.get(context).isLike=true;
+                                   }
+                                   else{
+                                     AppCubit.get(context).posts[widget.index!].likes=AppCubit.get(context).posts[widget.index!].likes!-1;
+                                     AppCubit.get(context).isLike=false;
+                                   }
+                                });
+                                AppCubit.get(context).likePosts('${AppCubit.get(context).posts[widget.index!].postId}',AppCubit.get(context).posts[widget.index!].likes!);
                               },
                               icon: Icon(Icons.favorite_outline,color: AppColors.myGrey,size: 20),)
                           ],
@@ -202,7 +228,7 @@ class _PostWidgetState extends State<PostWidget> {
                         SizedBox(width: 15,),
                         Row(
                           children: [
-                             Text('${AppCubit.get(context).commentNum.length}',
+                             Text('${AppCubit.get(context).posts[widget.index!].comments}',
                              style: TextStyle(
                             color: AppColors.myWhite,
                             fontSize: 13,
@@ -213,10 +239,10 @@ class _PostWidgetState extends State<PostWidget> {
                               padding:EdgeInsets.zero,
                               constraints: BoxConstraints(),
                               onPressed:(){
-                                AppCubit.get(context).getComment( AppCubit.get(context).postsId[widget.index!]);
-                                Navigator.push(context, MaterialPageRoute(builder: (_){
-                                  return CommentScreen(postId: AppCubit.get(context).postsId[widget.index!] ,);
-                                }));
+                                // AppCubit.get(context).getComment( AppCubit.get(context).postsId[widget.index!]);
+                                // Navigator.push(context, MaterialPageRoute(builder: (_){
+                                //   return CommentScreen(postId: AppCubit.get(context).postsId[widget.index!] ,);
+                                // }));
                               },
                               icon: Icon(Icons.mode_comment_outlined,color: AppColors.myGrey,size: 20),)
                           ],
@@ -235,15 +261,15 @@ class _PostWidgetState extends State<PostWidget> {
                         const SizedBox(width: 7,),
                         InkWell(
                           onTap: (){
-                            AppCubit.get(context).getComment( AppCubit.get(context).postsId[widget.index!]);
+                            AppCubit.get(context).getComment('${AppCubit.get(context).posts[widget.index!].postId}');
                             Navigator.push(context, MaterialPageRoute(builder: (_){
-                              return CommentScreen(postId: AppCubit.get(context).postsId[widget.index!] ,);
+                              return CommentScreen(postId: '${AppCubit.get(context).posts[widget.index!].postId}');
                             }));
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width*.74,
                             height: MediaQuery.of(context).size.height*.04,
-                            padding: EdgeInsets.all(9),
+                            padding: const EdgeInsets.fromLTRB(12, 7, 12, 6),
                             decoration: BoxDecoration(
                                 color: AppColors.myGrey,
                                 borderRadius: BorderRadius.circular(50)
