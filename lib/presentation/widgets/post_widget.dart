@@ -261,6 +261,7 @@ class _PostWidgetState extends State<PostWidget> {
                         const SizedBox(width: 7,),
                         InkWell(
                           onTap: (){
+                            //
                             AppCubit.get(context).getComment('${AppCubit.get(context).posts[widget.index!].postId}');
                             Navigator.push(context, MaterialPageRoute(builder: (_){
                               return CommentScreen(postId: '${AppCubit.get(context).posts[widget.index!].postId}');
