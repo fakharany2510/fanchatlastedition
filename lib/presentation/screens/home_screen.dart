@@ -132,7 +132,7 @@ class HomeScreen extends StatelessWidget {
                     return true;
                   },
                     child:cubit.posts.length !=0
-        ? ListView.separated(
+                      ? ListView.separated(
                         controller: _childScrollController,
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,

@@ -67,3 +67,5 @@ class GetCommentsErrorState extends AppState {}
 //like and comments number
 class TestLikesSuccessState extends AppState {}
 class TestCommentsSuccessState extends AppState {}
+
+class ChangeColorSuccessState extends AppState {}

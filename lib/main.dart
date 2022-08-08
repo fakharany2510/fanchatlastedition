@@ -31,6 +31,7 @@ void main()async {
   AppStrings.uId = CashHelper.getData(key: 'uid');
   printMessage('userId is: ${AppStrings.uId}');
 
+
   Bloc.observer = MyBlocObserver();
   runApp( MyApp());
 }

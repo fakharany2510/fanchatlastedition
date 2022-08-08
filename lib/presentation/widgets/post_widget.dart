@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -121,6 +124,7 @@ class _PostWidgetState extends State<PostWidget> {
                           ),
                         )),
                   ),
+                  SizedBox(height: 5,),
                   (AppCubit.get(context).posts[widget.index!].postImage!="")
                       ?Material(
                     elevation: 1000,
@@ -208,21 +212,52 @@ class _PostWidgetState extends State<PostWidget> {
                               padding:EdgeInsets.zero,
                               constraints: BoxConstraints(),
                               onPressed:(){
-                                setState(() {
-                                   AppCubit.get(context).likePosts('${AppCubit.get(context).posts[widget.index!].postId}',AppCubit.get(context).posts[widget.index!].likes!);
-
-                                   if(AppCubit.get(context).isLike==false){
-                                     AppCubit.get(context).posts[widget.index!].likes=AppCubit.get(context).posts[widget.index!].likes!+1;
-                                     AppCubit.get(context).isLike=true;
-                                   }
-                                   else{
-                                     AppCubit.get(context).posts[widget.index!].likes=AppCubit.get(context).posts[widget.index!].likes!-1;
-                                     AppCubit.get(context).isLike=false;
-                                   }
-                                });
                                 AppCubit.get(context).likePosts('${AppCubit.get(context).posts[widget.index!].postId}',AppCubit.get(context).posts[widget.index!].likes!);
+
+                                if(CashHelper.getData(key: '${AppCubit.get(context).posts[widget.index!].postId}')==null || CashHelper.getData(key: '${AppCubit.get(context).posts[widget.index!].postId}')==false){
+                                  setState(() {
+                                    AppCubit.get(context).posts[widget.index!].likes=AppCubit.get(context).posts[widget.index!].likes!+1;
+                                  });
+                                  AppCubit.get(context).isLike[widget.index!]=true;
+                                  CashHelper.saveData(key: '${AppCubit.get(context).posts[widget.index!].postId}',value:AppCubit.get(context).isLike[widget.index!] );
+                                  setState(() {
+                                    FirebaseFirestore.instance
+                                        .collection('posts')
+                                        .doc('${AppCubit.get(context).posts[widget.index!].postId}')
+                                        .update({
+                                      'likes':AppCubit.get(context).posts[widget.index!].likes
+                                    }).then((value){
+                                      print('Siiiiiiiiiiiiiiiiiiiiiiii');
+
+                                    });
+                                  });
+
+                                }
+                                else{
+                                  setState(() {
+                                    AppCubit.get(context).posts[widget.index!].likes=AppCubit.get(context).posts[widget.index!].likes!-1;
+
+                                  });
+                                  AppCubit.get(context).isLike[widget.index!]=false;
+                                  CashHelper.saveData(key: '${AppCubit.get(context).posts[widget.index!].postId}',value:AppCubit.get(context).isLike[widget.index!] );
+                                  setState(() {
+                                    FirebaseFirestore.instance
+                                        .collection('posts')
+                                        .doc('${AppCubit.get(context).posts[widget.index!].postId}')
+                                        .update({
+                                      'likes':AppCubit.get(context).posts[widget.index!].likes
+                                    }).then((value){
+                                      printMessage('This is right ${AppCubit.get(context).posts[widget.index!].likes}');
+                                      print('Siiiiiiiiiiiiiiiiiiiiiiii');
+
+                                    });
+                                  });
+
+                                }
                               },
-                              icon: Icon(Icons.favorite_outline,color: AppColors.myGrey,size: 20),)
+                              icon: CashHelper.getData(key: '${AppCubit.get(context).posts[widget.index!].postId}')==null ?
+                              Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20):CashHelper.getData(key: '${AppCubit.get(context).posts[widget.index!].postId}') ?Icon(Icons.favorite,color: AppColors.myGrey,size: 20):
+                              Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20)),
                           ],
                         ),
                         SizedBox(width: 15,),
@@ -243,6 +278,10 @@ class _PostWidgetState extends State<PostWidget> {
                                 // Navigator.push(context, MaterialPageRoute(builder: (_){
                                 //   return CommentScreen(postId: AppCubit.get(context).postsId[widget.index!] ,);
                                 // }));
+                                AppCubit.get(context).getComment('${AppCubit.get(context).posts[widget.index!].postId}');
+                                Navigator.push(context, MaterialPageRoute(builder: (_){
+                                  return CommentScreen(postId: '${AppCubit.get(context).posts[widget.index!].postId}');
+                                }));
                               },
                               icon: Icon(Icons.mode_comment_outlined,color: AppColors.myGrey,size: 20),)
                           ],

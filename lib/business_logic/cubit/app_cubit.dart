@@ -98,7 +98,8 @@ class AppCubit extends Cubit<AppState> {
   }
 
 
-  bool ?isLike=false;
+
+  List <bool> isLike = List.generate(30, (index) => false);
 
   bool checkValue=false;
   void checkBox(value){
@@ -710,6 +711,7 @@ List<int> commentIndex=[];
         .collection('posts')
         .doc(postId)
         .collection('comments')
+         .orderBy('date',descending: true)
         .get()
         .then((value) {
       print('Get Comments Success');
@@ -765,6 +767,26 @@ List<int> commentIndex=[];
         });
       });
     });
+  }
+
+
+
+  Color ?iconColor = Colors.grey;
+
+  void changeIconColor(){
+
+    iconColor=Colors.blue;
+    emit(ChangeColorSuccessState());
+
+
+  }
+
+  void returnIconColor(){
+
+    iconColor=Colors.grey;
+    emit(ChangeColorSuccessState());
+
+
   }
 
 

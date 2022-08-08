@@ -8,16 +8,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../constants/app_strings.dart';
 
 
-class CommentScreen extends StatelessWidget {
-  var commentController = TextEditingController();
+class CommentScreen extends StatefulWidget {
   String postId;
   CommentScreen({Key? key , required this.postId }) : super(key: key);
+
+  @override
+  State<CommentScreen> createState() => _CommentScreenState();
+}
+
+class _CommentScreenState extends State<CommentScreen> {
+  var commentController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
     return Builder(
         builder: (context) {
-          AppCubit.get(context).getComment(postId);
+          AppCubit.get(context).getComment(widget.postId);
           return BlocConsumer <AppCubit , AppState> (
             listener: (context , state) {
               // if(state)
@@ -47,8 +54,10 @@ class CommentScreen extends StatelessWidget {
                     onPressed: (){
                       // AppCubit.get(context).homeComments = [];
                       // AppCubit.get(context).groupComments = [];
-                      AppCubit.get(context).testComments(postId);
+                      AppCubit.get(context).testComments(widget.postId);
                       AppCubit.get(context).getPosts();
+                      AppCubit.get(context).returnIconColor();
+
                       Navigator.pop(context);
 
                     },
@@ -183,6 +192,13 @@ class CommentScreen extends StatelessWidget {
                                   color: Colors.grey[200],
                                 ),
                                 child: TextField(
+
+                                   onChanged: (v){
+
+                                     AppCubit.get(context).changeIconColor();
+
+
+                                   },
                                   decoration: const InputDecoration(
                                     hintText: 'Write a comment...',
                                     border: InputBorder.none,
@@ -219,14 +235,19 @@ class CommentScreen extends StatelessWidget {
                                 // //     }
                                 // //   });
                                 // }
-                                AppCubit.get(context).commentHomePost(postId, commentController.text);
-                                AppCubit.get(context).testComments(postId);
+                                AppCubit.get(context).commentHomePost(widget.postId, commentController.text);
+                                AppCubit.get(context).testComments(widget.postId);
+                                commentController.text='';
                               },
-                              icon: const Icon(
+                              icon:  commentController.text=='' ?  Icon(
                                 Icons.send_rounded,
-                                color: Colors.grey,
+                                color: AppCubit.get(context).iconColor,
                                 size: 34.0,
-                              ),
+                              ) :  Icon(
+                                Icons.send_rounded,
+                                color: AppCubit.get(context).iconColor,
+                                size: 34.0,
+                              )
                             ),
                           ],
                         ),
@@ -240,7 +261,6 @@ class CommentScreen extends StatelessWidget {
         }
     );
   }
-
 
   Widget commentItem (CommentModel model)
   {
@@ -305,6 +325,4 @@ class CommentScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }
