@@ -23,162 +23,162 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => LoginCubit(),
       child: BlocConsumer<LoginCubit,LoginState>(
-         listener: (context,state){
-           if(state is UserLoginSuccessState){
-              CashHelper.saveData(
-                  key: 'uid',
-                  value: state.uId,
-              );
-              customToast(title: 'Login Successful', color: AppColors.primaryColor1);
-                Navigator.pushReplacement(context,
+        listener: (context,state){
+          if(state is UserLoginSuccessState){
+            CashHelper.saveData(
+              key: 'uid',
+              value: state.uId,
+            );
+            customToast(title: 'Login Successful', color: AppColors.primaryColor1);
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context)=>HomeLayout())
-                );
+            );
 
-           }
-           if(state is UserLoginErrorState){
-             customToast(title: 'Email or Password isn\'t correct', color: Colors.red);
+          }
+          if(state is UserLoginErrorState){
+            customToast(title: 'Email or Password isn\'t correct', color: Colors.red);
 
-           }
-         },
+          }
+        },
         builder: (context,state){
-           var cubit=LoginCubit.get(context);
-           return Scaffold(
-             backgroundColor: AppColors.primaryColor1,
-             appBar: AppBar(
-               backgroundColor: AppColors.myWhite,
-               toolbarHeight: 0,
-               elevation: 0,
-               systemOverlayStyle:  SystemUiOverlayStyle(
-                 statusBarIconBrightness: Brightness.light,
-                 statusBarColor: AppColors.primaryColor1,
-               ),
-             ),
-             body: Form(
-               key: formKey,
-               child: Padding(
-                 padding: const EdgeInsets.only(top: 60, left: 30, right: 30),
-                 child: SingleChildScrollView(
-                   child: Column(
-                     crossAxisAlignment: CrossAxisAlignment.center,
-                     children:  [
-                       const Padding(
-                         padding: EdgeInsets.symmetric(vertical: 30),
-                         child: Image(image: AssetImage('assets/images/loginlogo.png'),width: 190,height: 190,)
-                       ),
+          var cubit=LoginCubit.get(context);
+          return Scaffold(
+            backgroundColor: AppColors.primaryColor1,
+            appBar: AppBar(
+              backgroundColor: AppColors.myWhite,
+              toolbarHeight: 0,
+              elevation: 0,
+              systemOverlayStyle:  SystemUiOverlayStyle(
+                statusBarIconBrightness: Brightness.light,
+                statusBarColor: AppColors.primaryColor1,
+              ),
+            ),
+            body: Form(
+              key: formKey,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 60, left: 30, right: 30),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children:  [
+                      const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 30),
+                          child: Image(image: AssetImage('assets/images/loginlogo.png'),width: 190,height: 190,)
+                      ),
 
-                       textFormFieldWidget(
-                           context: context,
-                           controller: email,
-                           errorMessage: "please enter your email",
-                           inputType: TextInputType.emailAddress,
-                           labelText:"email",
-                           prefixIcon: Icons.mail_sharp
-                       ),
-                       SizedBox(height: size.height*.03,),
-                       textFormFieldWidget(
-                           context: context,
-                           controller: password,
-                           errorMessage:"please enter your password",
-                           inputType: TextInputType.visiblePassword,
-                           labelText:"password",
-                           prefixIcon: Icons.lock
-                       ),
-                       SizedBox(height: size.height*.03,),
-                       (state is LoginLoadingState)
-                       ?Center(child: CircularProgressIndicator(
-                         color: AppColors.primaryColor1,
-                       ),)
-                       :defaultButton(
-                         textColor: AppColors.primaryColor1,
-                           width: size.width*.9,
-                           height: size.height*.06,
-                           buttonText: 'LOGIN',
-                           buttonColor: AppColors.myGrey,
-                           function: (){
-                              if(formKey.currentState!.validate()){
-                                cubit.userLogin(email: email.text,
-                                    password: password.text);
+                      textFormFieldWidget(
+                          context: context,
+                          controller: email,
+                          errorMessage: "please enter your email",
+                          inputType: TextInputType.emailAddress,
+                          labelText:"email",
+                          prefixIcon: Icon(Icons.mail_sharp,color: AppColors.myGrey,)
+                      ),
+                      SizedBox(height: size.height*.03,),
+                      textFormFieldWidget(
+                          context: context,
+                          controller: password,
+                          errorMessage:"please enter your password",
+                          inputType: TextInputType.visiblePassword,
+                          labelText:"password",
+                          prefixIcon: Icon(Icons.lock,color: AppColors.myGrey)
+                      ),
+                      SizedBox(height: size.height*.03,),
+                      (state is LoginLoadingState)
+                          ?Center(child: CircularProgressIndicator(
+                        color: AppColors.primaryColor1,
+                      ),)
+                          :defaultButton(
+                          textColor: AppColors.primaryColor1,
+                          width: size.width*.9,
+                          height: size.height*.06,
+                          buttonText: 'LOGIN',
+                          buttonColor: AppColors.myGrey,
+                          function: (){
+                            if(formKey.currentState!.validate()){
+                              cubit.userLogin(email: email.text,
+                                  password: password.text);
 
-                              }
-                           }
-                       ),
-                       SizedBox(height: size.height*.03,),
-                       Row(
-                         mainAxisAlignment: MainAxisAlignment.center,
-                         children: [
-                           Container(
-                             height: 1,
-                             width: size.width*.3,
-                             color: Colors.grey.shade400,
-                           ),
-                           const SizedBox(width: 5,),
-                            Text('or',
-                             style: TextStyle(
-                                 fontSize:16,
-                                 color: AppColors.myGrey,
-                               fontFamily: AppStrings.appFont
-                             ),
-                           ),
-                           const SizedBox(width: 5,),
-                           Container(
-                             height: 1,
-                             width: size.width*.3,
-                             color: Colors.grey.shade400,
-                           ),
-                         ],
-                       ),
-                       SizedBox(height: size.height*.03,),
-                       Row(
-                         children: [
-                           defaultSocialMediaButton(
-                               context: context,
-                               function: (){},
-                               size:size,
-                               buttonColor: AppColors.primaryColor1,
-                               buttonText: "Facebook",
-                               imagePath: 'assets/images/face.png'
-                           ),
-                           SizedBox(width: MediaQuery.of(context).size.width*.03,),
-                           defaultSocialMediaButton(
-                               context: context,
-                               function: (){
+                            }
+                          }
+                      ),
+                      SizedBox(height: size.height*.03,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 1,
+                            width: size.width*.3,
+                            color: Colors.grey.shade400,
+                          ),
+                          const SizedBox(width: 5,),
+                          Text('or',
+                            style: TextStyle(
+                                fontSize:16,
+                                color: AppColors.myGrey,
+                                fontFamily: AppStrings.appFont
+                            ),
+                          ),
+                          const SizedBox(width: 5,),
+                          Container(
+                            height: 1,
+                            width: size.width*.3,
+                            color: Colors.grey.shade400,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: size.height*.03,),
+                      Row(
+                        children: [
+                          defaultSocialMediaButton(
+                              context: context,
+                              function: (){},
+                              size:size,
+                              buttonColor: AppColors.primaryColor1,
+                              buttonText: "Facebook",
+                              imagePath: 'assets/images/face.png'
+                          ),
+                          SizedBox(width: MediaQuery.of(context).size.width*.03,),
+                          defaultSocialMediaButton(
+                              context: context,
+                              function: (){
 
-                               },
-                               size:size,
-                               buttonColor: AppColors.primaryColor1,
-                               buttonText: "Google",
-                               imagePath: 'assets/images/google1.png'
-                           ),
-                         ],
-                       ),
-                       SizedBox(height: size.height*.03,),
-                       Row(
-                         mainAxisAlignment: MainAxisAlignment.center,
-                         children: [
-                           Text("Don\'t Have Account ?",style: TextStyle(
-                             fontFamily: AppStrings.appFont,
-                               fontSize: 18,
-                               color: AppColors.myGrey
-                           ),),
-                           TextButton(
-                             onPressed: () {
-                               Navigator.pushNamed(context, 'register');
-                             },
-                             child:  Text("register",style: TextStyle(
-                                 color: AppColors.navBarActiveIcon,
-                                  fontFamily: AppStrings.appFont,
-                                 fontSize: 18
-                             ),
-                             ),
-                           )
-                         ],
-                       ),
-                     ],
-                   ),
-                 ),
-               ),
-             ),
-           );
+                              },
+                              size:size,
+                              buttonColor: AppColors.primaryColor1,
+                              buttonText: "Google",
+                              imagePath: 'assets/images/google1.png'
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: size.height*.03,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Don\'t Have Account ?",style: TextStyle(
+                              fontFamily: AppStrings.appFont,
+                              fontSize: 18,
+                              color: AppColors.myGrey
+                          ),),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, 'register');
+                            },
+                            child:  Text("register",style: TextStyle(
+                                color: AppColors.navBarActiveIcon,
+                                fontFamily: AppStrings.appFont,
+                                fontSize: 18
+                            ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
         },
       ),
     );

@@ -64,8 +64,6 @@ class _AddNewImageState extends State<AddNewImage> {
                     height: size.height*.05,
                     raduis: 10,
                     function: (){
-
-
                       if(AppCubit.get(context).postImage == null){
                         AppCubit.get(context).createImagePost(
                           time: DateFormat.Hm().format(DateTime.now()),

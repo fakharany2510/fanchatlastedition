@@ -46,7 +46,9 @@ class HomeScreen extends StatelessWidget {
                   items: cubit.carouselImage.map((e) {
                     return Image(
                       image: NetworkImage(e),
-                      width: double.infinity,fit: BoxFit.cover,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+
                     );
                   }).toList(),
                   options: CarouselOptions(
@@ -55,11 +57,13 @@ class HomeScreen extends StatelessWidget {
                     enableInfiniteScroll: true,
                     reverse: false,
                     autoPlay: true,
-                    viewportFraction: 1,
+                    viewportFraction: .84,
                     scrollDirection: Axis.horizontal,
                     autoPlayAnimationDuration: const Duration(seconds: 1),
                     autoPlayInterval: const Duration(seconds: 3),
-                    autoPlayCurve: Curves.fastOutSlowIn
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    enlargeCenterPage: true
+
                   ),
                 ),
                 SizedBox(height: 3,),

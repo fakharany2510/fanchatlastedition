@@ -1,3 +1,5 @@
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/utils/utils.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,24 +9,24 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../constants/app_strings.dart';
 
 Widget textFormFieldWidget(
-{
-  context,
- required TextEditingController controller,
- required TextInputType inputType,
- required String labelText,
- required String errorMessage,
- required IconData prefixIcon
-}
+    {
+      context,
+      required TextEditingController controller,
+      required TextInputType inputType,
+      required String labelText,
+      required String errorMessage,
+      required Widget prefixIcon
+    }
     )=>Container(
   // height:MediaQuery.of(context).size.height*.07,
-      child: TextFormField(
+  child: TextFormField(
     style: TextStyle(
-        color:AppColors.myGrey,
+      color:AppColors.myGrey,
       fontFamily: AppStrings.appFont,
-  ),
-  keyboardType: inputType,
-  controller: controller,
-  decoration: InputDecoration(
+    ),
+    keyboardType: inputType,
+    controller: controller,
+    decoration: InputDecoration(
       focusColor: AppColors.myGrey,
       fillColor: Colors.white,
       enabledBorder: OutlineInputBorder(
@@ -40,18 +42,18 @@ Widget textFormFieldWidget(
       ),
       hintText: '$labelText',
       hintStyle: TextStyle(
-      color: AppColors.myGrey,
-      fontFamily: AppStrings.appFont,
-       ),
-      prefixIcon: Icon(prefixIcon,color:AppColors.myGrey),
-  ),
-  validator: (value){
+        color: AppColors.myGrey,
+        fontFamily: AppStrings.appFont,
+      ),
+      prefixIcon: prefixIcon,
+    ),
+    validator: (value){
       if(value!.isEmpty){
         return'${errorMessage}';
       }
-  },
-),
-    );
+    },
+  ),
+);
 
 
 
@@ -176,5 +178,4 @@ customToast(
   );
 
 }
-
 

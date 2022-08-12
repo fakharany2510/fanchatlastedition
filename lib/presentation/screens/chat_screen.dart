@@ -1,105 +1,81 @@
+
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/data/modles/user_model.dart';
+import 'package:fanchat/presentation/screens/messages_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../constants/app_strings.dart';
-
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+class ChatsScreen extends StatelessWidget {
+  const ChatsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit,AppState>(
-        listener: (context,state){
+    return BlocConsumer<AppCubit , AppState>(
+      listener: (context , state){},
+      builder: (context , state){
+        return ConditionalBuilder(
+          condition: AppCubit.get(context).users.length>0,
+          fallback: (context)=>Center(child: CircularProgressIndicator(
+            backgroundColor: AppColors.primaryColor1,
+          )),
+          builder: (context)=>ListView.separated
+            (itemBuilder: (context , index)=> buildChatItem(AppCubit.get(context).users[index] , context),
+              separatorBuilder: (context , index)=>Container(
+                width: double.infinity,
+                height: 1,
+                color: Colors.grey,
+              ),
+              itemCount: AppCubit.get(context).users.length),
 
-        },
-      builder: (context,state){
-          var cubit=AppCubit.get(context);
-          return Scaffold(
-              backgroundColor: AppColors.primaryColor1,
-              body:  Container(
-                height: MediaQuery.of(context).size.height*.9,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: ListView.separated(
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context,index){
-                        return Container(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 30,
-                                  backgroundImage: NetworkImage(cubit.chatImages[index]),
-                                ),
-                                const SizedBox(width: 10,),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
+        );
 
-                                    Text('Ahmed Ali',style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.myWhite,
-                                        fontFamily: AppStrings.appFont
-                                    ),),
-                                    const SizedBox(height: 10,),
-                                    Text('How are you...?!',style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColors.navBarActiveIcon,
-                                        fontFamily: AppStrings.appFont
-                                    ),),
-                                  ],
-                                ),
-                                const Spacer(),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text('04:00',style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.navBarActiveIcon,
-                                        fontFamily: AppStrings.appFont
-                                    ),),
-                                    const SizedBox(height: 10,),
-                                    CircleAvatar(
-                                      radius: 13,
-                                      backgroundColor: AppColors.navBarActiveIcon,
-                                      child: Text('8',style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.myWhite,
-                                          fontFamily: AppStrings.appFont
-                                      ),),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(width: 20,)
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                      separatorBuilder: (context,index){
-                        return Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 0,
-                              vertical: 15
-                          ),
-                          height: .1,
-                          color: AppColors.myGrey,
-                        );
-                      },
-                      itemCount: cubit.chatImages.length
-                  ),
-                ),
-              )
-
-          );
       },
     );
   }
+  Widget buildChatItem(UserModel model , context)=>InkWell(
+    splashColor: AppColors.primaryColor1,
+    onTap: (){
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel: model,)));
+      print('kkkkkkkkkkkkkkkkkkkkkkkkkkk${model.uId}');
+    },
+    child: Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        children: [
+          CircleAvatar(
+            backgroundImage: NetworkImage('${model.image}'),
+            radius: 25,
+          ),
+          const SizedBox(width: 15,),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text('${model.username}',
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        fontFamily: AppStrings.appFont
+                      ),
+                    ),
+
+                  ],
+                ),
+
+              ],
+            ),
+          ),
+
+        ],
+      ),
+    ),
+  );
 }

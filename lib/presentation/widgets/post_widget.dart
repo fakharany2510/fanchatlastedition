@@ -20,12 +20,22 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
-
-
   VideoPlayerController ?videoPlayerController;
   Future <void> ?intilize;
   @override
   void initState() {
+    // AppCubit.get(context).insertTOdatabase(
+    //     postId: AppCubit.get(context).posts[widget.index!].postId!,
+    //     userId: AppCubit.get(context).posts[widget.index!].userId!,
+    //     image: AppCubit.get(context).posts[widget.index!].image!,
+    //     name:  AppCubit.get(context).posts[widget.index!].name!,
+    //     postImage:AppCubit.get(context).posts[widget.index!].postImage!,
+    //     postVideo: AppCubit.get(context).posts[widget.index!].postVideo!,
+    //     postText: AppCubit.get(context).posts[widget.index!].text!,
+    //     time: AppCubit.get(context).posts[widget.index!].time!,
+    //     timeSamp: AppCubit.get(context).posts[widget.index!].timeSmap!
+    // );
+    //////////////////////////////////
     videoPlayerController=VideoPlayerController.network(
         AppCubit.get(context).posts[widget.index!].postVideo!
     );
@@ -289,44 +299,44 @@ class _PostWidgetState extends State<PostWidget> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage('${AppCubit.get(context).posts[widget.index!].image}'),
-                          radius: 18,
-                        ),
-                        const SizedBox(width: 7,),
-                        InkWell(
-                          onTap: (){
-                            //
-                            AppCubit.get(context).getComment('${AppCubit.get(context).posts[widget.index!].postId}');
-                            Navigator.push(context, MaterialPageRoute(builder: (_){
-                              return CommentScreen(postId: '${AppCubit.get(context).posts[widget.index!].postId}');
-                            }));
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width*.74,
-                            height: MediaQuery.of(context).size.height*.04,
-                            padding: const EdgeInsets.fromLTRB(12, 7, 12, 6),
-                            decoration: BoxDecoration(
-                                color: AppColors.myGrey,
-                                borderRadius: BorderRadius.circular(50)
-                            ),
-                            child: Text(
-                              'Write a comment ...',style: TextStyle(
-                                color: AppColors.primaryColor1,
-                                fontSize: 13,
-                                fontFamily: AppStrings.appFont
-                            ),
-                            ),
-                          ),
-                        )
-
-                      ],
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: Row(
+                  //     children: [
+                  //       CircleAvatar(
+                  //         backgroundImage: NetworkImage('${AppCubit.get(context).posts[widget.index!].image}'),
+                  //         radius: 18,
+                  //       ),
+                  //       const SizedBox(width: 7,),
+                  //       InkWell(
+                  //         onTap: (){
+                  //           //
+                  //           AppCubit.get(context).getComment('${AppCubit.get(context).posts[widget.index!].postId}');
+                  //           Navigator.push(context, MaterialPageRoute(builder: (_){
+                  //             return CommentScreen(postId: '${AppCubit.get(context).posts[widget.index!].postId}');
+                  //           }));
+                  //         },
+                  //         child: Container(
+                  //           width: MediaQuery.of(context).size.width*.74,
+                  //           height: MediaQuery.of(context).size.height*.04,
+                  //           padding: const EdgeInsets.fromLTRB(12, 7, 12, 6),
+                  //           decoration: BoxDecoration(
+                  //               color: AppColors.myGrey,
+                  //               borderRadius: BorderRadius.circular(50)
+                  //           ),
+                  //           child: Text(
+                  //             'Write a comment ...',style: TextStyle(
+                  //               color: AppColors.primaryColor1,
+                  //               fontSize: 13,
+                  //               fontFamily: AppStrings.appFont
+                  //           ),
+                  //           ),
+                  //         ),
+                  //       )
+                  //
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),

@@ -13,10 +13,15 @@ class PickPostImageErrorState extends AppState {}
 class CreatePostLoadingState extends AppState {}
 class PickPostVideoSuccessState extends AppState {}
 class PickPostVideoErrorState extends AppState {}
-
+//states for one user
 class GetUserDataSuccessfulState extends AppState {}
 class GetUserDataLoadingState extends AppState {}
 class GetUserDataErrorState extends AppState {}
+//states for all users
+class GetAllUsersDataSuccessfulState extends AppState {}
+class GetAllUsersDataLoadingState extends AppState {}
+class GetAllUsersDataErrorState extends AppState {}
+//posts states
 class BrowiseCreatePostLoadingState extends AppState {}
 class BrowiseCreatePostSuccessState extends AppState {}
 class BrowiseCreatePostErrorState extends AppState {}
@@ -69,3 +74,21 @@ class TestLikesSuccessState extends AppState {}
 class TestCommentsSuccessState extends AppState {}
 
 class ChangeColorSuccessState extends AppState {}
+
+//create DataBase state
+class CreateDatabaseState extends AppState{}
+//get DataBase state
+class GetDatabasState extends AppState{}
+//insert to database states
+class InsertDatabaseSuccessState extends AppState{}
+class InsertDatabaseerrorState extends AppState{}
+
+//logout
+class SignoutSuccessState extends AppState{}
+//messages
+/////// messages states
+class SendMessageSuccessState extends AppState{}
+class SendMessageErrorState extends AppState{}
+class GetMessageSuccessState extends AppState{}
+//change icon
+class ChangeIconSuccessState extends AppState{}

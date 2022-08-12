@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'package:fanchat/business_logic/register/register_cubit.dart';
+import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/constants/app_strings.dart';
@@ -8,15 +9,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:video_player/video_player.dart';
-
 import '../../data/modles/comment_model.dart';
 import '../../data/modles/create_post_model.dart';
-
+import '../../data/modles/message_model.dart';
 part 'app_state.dart';
-
 class AppCubit extends Cubit<AppState> {
   AppCubit() : super(AppInitial());
 
@@ -92,7 +91,7 @@ class AppCubit extends Cubit<AppState> {
 
     currentIndex=index;
     if(currentIndex==3){
-      getUser();
+      getAllUsers();
     }
     emit(NavigateScreenState());
   }
@@ -109,6 +108,25 @@ class AppCubit extends Cubit<AppState> {
   }
 
   UserModel? userModel;
+  List<UserModel> users=[];
+  //get all uers
+  void getAllUsers(){
+    users=[];
+    emit(GetAllUsersDataLoadingState());
+    FirebaseFirestore.instance
+        .collection('users')
+        .get().then((value){
+          value.docs.forEach((element) {
+            if(element.data()['uId'] != AppStrings.uId)
+              users.add(UserModel.formJson(element.data()));
+          });
+          emit(GetAllUsersDataSuccessfulState());
+    }).catchError((error){
+      emit(GetAllUsersDataErrorState());
+      print('error while getting all users ${error.toString()}');
+    });
+  }
+  //get one user
   void getUser() {
     emit(GetUserDataLoadingState());
     FirebaseFirestore.instance
@@ -121,6 +139,7 @@ class AppCubit extends Cubit<AppState> {
           changeUserPhoneController.text='${userModel!.phone}';
           changeUserBioController.text='${userModel!.bio}';
           //getPosts();
+
           emit(GetUserDataSuccessfulState());
     }).catchError((error){
 
@@ -215,10 +234,7 @@ class AppCubit extends Cubit<AppState> {
       print('Error in Upload profileImage ${error.toString()}');
       emit(GetProfileImageErrorState());
     });
-
-
   }
-
 
   String ?coverPath;
   Future uploadUserCover(
@@ -226,11 +242,8 @@ class AppCubit extends Cubit<AppState> {
          String ?name,
          String ?phone,
          String ?bio,
-
       }
       ){
-
-
     emit(GetCoverImageLoadingState());
     return firebase_storage.FirebaseStorage.instance.ref()
         .child('users/${Uri.file(coverImage!.path).pathSegments.last}')
@@ -640,8 +653,10 @@ class AppCubit extends Cubit<AppState> {
         .orderBy('timeSmap',descending: true)
         .get()
         .then((value) {
-      value.docs.forEach((element) {
+      value.docs.forEach((element) async{
         posts.add(BrowisePostModel.fromJson(element.data()));
+        // Delete a record
+       // await database?.rawDelete('DELETE * FROM Posts');
         emit(BrowiseGetPostsSuccessState());
 
       });
@@ -843,6 +858,239 @@ List<int> commentIndex=[];
       });
     });
   }
+  ////////////////////////////////////////////
+                   //sign out
+  ///////////////////////////////////////////
+  Future<void> signOut() async{
+     CashHelper.removeData(key: 'uid').then((value) async {
+      await FirebaseAuth.instance.signOut();
+    });
 
+   emit(SignoutSuccessState());
+  }
+///////////////////////////////////////////////////////////
+  //create posts functions
+//-------------------------------------------------------
+//1-create image post
+//-------------------------------------------------------
+  Database? database;
+  void createDatabase()async
+  {
+    await openDatabase(
+        'fan.db',
+        version: 1,
+        onCreate: (database, version) {
+          print('Database Created');
+          database.execute(
+              'CREATE TABLE Posts (postId INTEGER PRIMARY KEY , userId text ,image text , name TEXT , postImage TEXT , postVideo Text , postText Text, time text , timeSamp text )'
+          ).then((value) {
+            print('Table Created');
+          }).catchError((error) {
+            print('error while creating database${error.toString()}');
+          });
+        },
+        onOpen: (database) {
+          getDatafromdatabase(database);
+        }
+    ).then((value){
+      database =value;
+      emit(CreateDatabaseState());
+    });
+  }
+//------------------------------------------
+  //insert to database
+//------------------------------------------
+  insertTOdatabase({
+    required String postId,
+    required String userId,
+    required String image,
+    required String name,
+     String? postImage,
+     String? postVideo,
+     String? postText,
+    required String time,
+    required String timeSamp,
 
+  })async{
+    sqlposts=[];
+    await database?.transaction((txn) {
+      return txn.rawInsert(
+          'INSERT INTO Posts(postId,userId,name,image,postImage,postVideo,postText,time,timeSamp) VALUES("$postId","$userId" ,"$name","$image","$postImage","$postVideo","$postText","$time","$timeSamp")')
+          .then((value) {
+        print('Task ${value}Inserted successfully');
+        emit(InsertDatabaseSuccessState());
+        getDatafromdatabase(database);
+      }).catchError((error) {
+        print('ERROR INSERT TO DB ${error.toString()}');
+        emit(InsertDatabaseerrorState());
+      });
+    });
+  }
+
+//------------------------------------------
+  //get data from database
+//------------------------------------------
+  List<Map>sqlposts=[];
+  void getDatafromdatabase(database)async{
+    List<Map>sqlposts=[];
+    await database.rawQuery('SELECT * FROM Posts').then((value){
+      value.forEach((element){
+        sqlposts.add(element);
+      });
+      emit(GetDatabasState());
+    });
+  }
+  /////////////////////////////////////////////////////////////////
+  void createImageMessage({
+    required String recevierId,
+    required String dateTime,
+    String? messageImage,
+    String? senderId,
+  }){
+    emit(BrowiseCreatePostLoadingState());
+    MessageModel model=MessageModel(
+      image: messageImage,
+      text: "",
+      dateTime: dateTime,
+      recevierId: recevierId,
+      senderId: AppStrings.uId
+    );
+
+    //Set My Chat
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(AppStrings.uId)
+        .collection('chats')
+        .doc(recevierId)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value){
+      emit(SendMessageSuccessState());
+    })
+        .catchError((error){
+      emit(SendMessageErrorState());
+
+    });
+    //Set Reciever Chat
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(recevierId)
+        .collection('chats')
+        .doc(AppStrings.uId)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value){
+      emit(SendMessageSuccessState());
+    })
+        .catchError((error){
+      emit(SendMessageErrorState());
+    });
+  }
+//////////////////////////////////////////
+  void uploadMessageImage({
+    required String recevierId,
+    required String dateTime,
+    required String text,
+    required String senderId
+  }){
+    emit(BrowiseUploadImagePostLoadingState());
+    //كدا انا بكريت instance من ال storage
+    firebase_storage.FirebaseStorage.instance
+    //كدا بقوله انا فين في الstorage
+        .ref()
+    //كدا بقةله هتحرك ازاي جوا ال storage
+    //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
+        .child('MessageImages/${Uri.file(postImage!.path).pathSegments.last}')
+    //كدا بعمل رفع للصوره
+        .putFile(postImage!).then((value){
+      value.ref.getDownloadURL().then((value){
+        createImageMessage(
+          messageImage: value,
+          recevierId: recevierId,
+          dateTime: dateTime,
+          senderId: AppStrings.uId
+        );
+        getPosts();
+        emit(BrowiseUploadImagePostSuccessState());
+
+      }).catchError((error){
+        emit(BrowiseUploadImagePostErrorState());
+      });
+    }).catchError((error){
+      emit(BrowiseUploadImagePostErrorState());
+    });
+  }
+  ///////////////////////////////////messages////////////////////////////
+//send Messages
+
+  void sendMessage({
+    required String recevierId,
+    required String dateTime,
+    required String text,
+
+  }){
+    MessageModel model =MessageModel(
+      recevierId:recevierId,
+      senderId: AppStrings.uId,
+      dateTime: dateTime,
+      text: text,
+    );
+    //Set My Chat
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(AppStrings.uId)
+        .collection('chats')
+        .doc(recevierId)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value){
+      emit(SendMessageSuccessState());
+    })
+        .catchError((error){
+      emit(SendMessageErrorState());
+
+    });
+    //Set Reciever Chat
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(recevierId)
+        .collection('chats')
+        .doc(AppStrings.uId)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value){
+      emit(SendMessageSuccessState());
+    })
+        .catchError((error){
+      emit(SendMessageErrorState());
+    });
+  }
+  ////////////////////////
+//get messages
+  List<MessageModel> messages=[];
+  void getMessages({
+    required String recevierId,
+  }){
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(AppStrings.uId)
+        .collection('chats')
+        .doc(recevierId)
+        .collection('messages')
+        .orderBy('dateTime')
+        .snapshots()
+        .listen((event) {
+      messages = [];
+      event.docs.forEach((element) {
+        messages.add((MessageModel.fromJson(element.data())));
+      });
+      emit(GetMessageSuccessState());
+    });
+  }
+  bool isWritingMessage=false;
+  void changeIcon(){
+    isWritingMessage!=isWritingMessage;
+    emit(ChangeIconSuccessState());
+  }
 }
+

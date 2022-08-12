@@ -22,7 +22,7 @@ class HomeLayout extends StatelessWidget {
       HomeScreen(pageHeight: MediaQuery.of(context).size.height,pageWidth:MediaQuery.of(context).size.width),
       const MatchDetails(),
       const FanScreen(),
-      const ChatScreen(),
+      const ChatsScreen(),
       const MoreScreen(),
 
     ];

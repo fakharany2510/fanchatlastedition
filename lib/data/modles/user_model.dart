@@ -1,4 +1,3 @@
-
 class UserModel{
 
   String? uId;
@@ -8,6 +7,7 @@ class UserModel{
   String ?bio;
   String ?image;
   String ?cover;
+  String ?countryCode;
 
 
   UserModel({
@@ -17,7 +17,8 @@ class UserModel{
     this.phone,
     this.image,
     this.cover,
-    this.bio
+    this.bio,
+    this.countryCode
 
   });
 
@@ -29,6 +30,8 @@ class UserModel{
     image=json['image'];
     cover=json['cover'];
     bio=json['bio'];
+    countryCode=json['countryCode'];
+
   }
 
   Map <String,dynamic> toMap(){
@@ -40,8 +43,8 @@ class UserModel{
       'image':image,
       'cover':cover,
       'bio':bio,
+      'countryCode':countryCode
     };
   }
 
 }
-
