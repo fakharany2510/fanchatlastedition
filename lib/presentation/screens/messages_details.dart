@@ -1,18 +1,36 @@
 
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/screens/sendimage_message.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:record_mp3/record_mp3.dart';
+import 'package:uuid/uuid.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:voice_message_package/voice_message_package.dart';
 
 import '../../data/modles/message_model.dart';
 import '../../data/modles/user_model.dart';
 
+
+typedef _Fn = void Function();
+Future<String> _getTempPath(String path) async {
+  var tempDir = await getTemporaryDirectory();
+  var tempPath = tempDir.path;
+  return tempPath + '/' + path;
+}
 class ChatDetails extends StatefulWidget {
   UserModel userModel;
-  ChatDetails({required this.userModel});
+  final onSendMessage;
+  ChatDetails({required this.userModel,this.onSendMessage});
 
   @override
   State<ChatDetails> createState() => _ChatDetailsState();
@@ -21,6 +39,12 @@ class ChatDetails extends StatefulWidget {
 class _ChatDetailsState extends State<ChatDetails> {
   var textMessage = TextEditingController();
   bool isWriting = false;
+  String? recordFilePath;
+  String statusText='';
+  int i=0;
+  bool recording=false;
+  bool? isComplete;
+  bool? uploadingRecord = false;
 
   @override
   void initState() {
@@ -45,7 +69,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
                   appBar: AppBar(
                     backgroundColor: AppColors.primaryColor1,
                     elevation: 0,
-                    centerTitle: true,
+                    centerTitle: false,
                     title: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -78,136 +102,162 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
                       ],
                     ),
                   ),
-                  body: SingleChildScrollView(
-                    child: ConditionalBuilder(
-                      builder: (context)=>Stack(
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        children: [
-                          Container(
-                            color: AppColors.primaryColor1,
+                  body: ConditionalBuilder(
+                    builder: (context)=>Column(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height:MediaQuery.of(context).size.height*.83,
+                            color: Colors.white,
+                            padding: EdgeInsets.all(10),
+                            child: ListView.separated(
+                                physics: BouncingScrollPhysics(),
+                                itemBuilder: (context , index)
+                                {
+                                  var message =AppCubit.get(context).messages[index];
+                                  if(widget.userModel.uId == message.senderId)
+                                    //send message
+                                    return builsRecievedMessages(message,context,index);
+                                  //receive message
+                                  return buildMyMessages(message,context,index);
+                                },
+                                separatorBuilder: (context , index)=>const SizedBox(height: 15,),
+                                itemCount: AppCubit.get(context).messages.length),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top:20),
-                            child: Container(
-                              width: double.infinity,
-                              decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(50),topRight: Radius.circular(50))
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 50,left: 10,right: 10),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height:MediaQuery.of(context).size.height*.73,
-                                      child: ListView.separated(
-                                          physics: BouncingScrollPhysics(),
-                                          itemBuilder: (context , index)
-                                          {
-                                            var message =AppCubit.get(context).messages[index];
-                                            if(widget.userModel.uId == message.senderId)
-                                              //send message
-                                              return builsRecievedMessages(message,context);
-                                            //receive message
-                                            return buildMyMessages(message,context);
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width*.74,
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color:AppColors.primaryColor1,
+                                        width: 1
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(left: 8),
+                                      child: TextFormField(
+                                        onChanged: (v){
+                                          setState((){
+                                            isWriting=true;
+                                          });
+                                        },
+                                        keyboardType: TextInputType.multiline,
+                                        maxLines: null,
+                                        controller: textMessage,
+                                        decoration:  InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'Write your message...',
+                                          suffixIcon: Container(
+                                                              width: 20,
+                                                              height: 20,
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(50),
+                                                                  color: Colors.white
+                                                              ),
+                                                              child: Center(
+                                                                child: IconButton(
+                                                                  icon: recording
+                                                                      ? Icon(Icons.pause_outlined, color: Colors.red)
+                                                                      : Icon(
+                                                                    Icons.mic,
+                                                                    color:Colors.grey,
+                                                                  ),
+                                                                  onPressed: () =>{
+                                                                     recording?stopRecord():startRecord(),
+                                                                    AppCubit.get(context).getMessages(recevierId:widget.userModel.uId!)
                                           },
-                                          separatorBuilder: (context , index)=>const SizedBox(height: 15,),
-                                          itemCount: AppCubit.get(context).messages.length),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 20),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            width: MediaQuery.of(context).size.width*.7,
-                                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color:AppColors.primaryColor1,
-                                                  width: 1
-                                              ),
-                                              borderRadius: BorderRadius.circular(20),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(left: 8),
-                                              child: TextFormField(
-                                                onChanged: (v){
-                                                  setState((){
-                                                    isWriting=true;
-                                                  });
-                                                },
-                                                controller: textMessage,
-                                                decoration: const InputDecoration(
-                                                  border: InputBorder.none,
-                                                  hintText: 'Write your message...',
-
-                                                ),
-                                              )
-                                            ),
-                                          ),
-                                          SizedBox(width: 5,),
-                                          Container(
-                                            width: 40,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: AppColors.primaryColor1
-                                            ),
-                                            child: Center(
-                                              child: IconButton(
-                                                onPressed: (){
-                                                  textMessage.text==""
-                                                  ?print('kfmlngkjgnkgjngkjgngkjngkjgng')
-                                                      :AppCubit.get(context).sendMessage(
-                                                      recevierId: widget.userModel.uId!,
-                                                      dateTime: DateTime.now().toString(),
-                                                      text: textMessage.text);
-                                                },
-                                                color: AppColors.primaryColor1,
-
-                                                icon:isWriting
-                                                ?Icon(Icons.send,color: Colors.white,size: 20)
-                                                    :Icon(Icons.mic_rounded,color: Colors.white,size: 20)
-                                              ),
-                                            )
-                                          ),
-                                          SizedBox(width: 5,),
-                                          Container(
-                                              width: 40,
-                                              height: 40,
-                                              decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(50),
-                                                  color: AppColors.primaryColor1
-                                              ),
-                                              child: Center(
-                                                child: IconButton(
-                                                  onPressed: (){
-                                                    AppCubit.get(context).pickPostImage();
-
-                                                  },
-                                                  color: AppColors.primaryColor1,
-                                                  icon: const ImageIcon(
-                                                    AssetImage("assets/images/fanarea.png"),
-                                                    color:Colors.white,
-                                                    size: 20,
-                                                  ),
-                                                ),
-                                              )
-                                          ),
-                                        ],
+                                                                  color:Theme.of(context).primaryColor,
+                                                                ),
+                                                              )
+                                                          ),
+                                        ),
                                       )
-                                    ),
-
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      condition:AppCubit.get(context).messages.length >=0 ,
-                      fallback:(context)=>const Center(child: CircularProgressIndicator()) ,
+                                SizedBox(width: 5,),
+                                Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: AppColors.primaryColor1
+                                    ),
+                                    child: Center(
+                                      child: IconButton(
+                                          onPressed: (){
+                                            textMessage.text==""
+                                                ?print('kfmlngkjgnkgjngkjgngkjngkjgng')
+                                                :AppCubit.get(context).sendMessage(
+                                                recevierId: widget.userModel.uId!,
+                                                dateTime: DateTime.now().toString(),
+                                                text: textMessage.text);
+                                            textMessage.clear();
+                                          },
+                                          color: AppColors.primaryColor1,
+                                          icon: Icon(Icons.send,color: Colors.white,size: 20)
+                                      ),
+                                    )
+                                ),
+                                SizedBox(width: 5,),
+                                Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: AppColors.primaryColor1
+                                    ),
+                                    child: Center(
+                                      child: IconButton(
+                                        onPressed: (){
+                                          AppCubit.get(context).pickPostImage();
+
+                                        },
+                                        color: AppColors.primaryColor1,
+                                        icon: const ImageIcon(
+                                          AssetImage("assets/images/fanarea.png"),
+                                          color:Colors.white,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    )
+                                ),
+                //                 Container(
+                //                     width: 40,
+                //                     height: 40,
+                //                     decoration: BoxDecoration(
+                //                         borderRadius: BorderRadius.circular(50),
+                //                         color: AppColors.primaryColor1
+                //                     ),
+                //                     child: Center(
+                //                       child: IconButton(
+                //                         icon: recording
+                //                             ? Icon(Icons.pause_outlined, color: Colors.red)
+                //                             : Icon(
+                //                           Icons.mic,
+                //                           color:Colors.white,
+                //                         ),
+                //                         onPressed: () =>{
+                //                            recording?stopRecord():startRecord(),
+                //                           AppCubit.get(context).getMessages(recevierId:widget.userModel.uId!)
+                // },
+                //                         color:Theme.of(context).primaryColor,
+                //                       ),
+                //                     )
+                //                 ),
+                              ],
+                            )
+                        ),
+
+                      ],
                     ),
+                    condition:AppCubit.get(context).messages.length >=0 ,
+                    fallback:(context)=>const Center(child: CircularProgressIndicator()) ,
                   ),
                 );
               },
@@ -219,25 +269,10 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
     );
   }
 
-  Widget buildMyMessages(MessageModel model,context)=> Align(
+  Widget buildMyMessages(MessageModel model,context,index)=> Align(
     alignment:AlignmentDirectional.centerEnd,
-    child: (model.text=="")
-        ?Padding(
-          padding: const EdgeInsets.all(0),
-          child: Container(
-            padding: EdgeInsets.all(8),
-            height: MediaQuery.of(context).size.height*.28,
-            width: MediaQuery.of(context).size.height*.35,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(3),
-                image:  DecorationImage(
-                    image: NetworkImage('${model.image}'),
-                    fit: BoxFit.contain
-                )
-            ),
-          ),
-        )
-        :Container(
+    child: (model.text!="")
+    ?Container(
       padding: const EdgeInsets.all(10),
       decoration:  BoxDecoration(
         color: AppColors.primaryColor1,
@@ -256,12 +291,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
         ),
       ),
     )
-  );
-
-  //----------------------------
-  Widget builsRecievedMessages(MessageModel model,context)=>Align(
-    alignment:AlignmentDirectional.centerStart,
-    child: (model.text=="")
+    :(model.image!="")
         ?Padding(
           padding: const EdgeInsets.all(0),
           child: Container(
@@ -269,15 +299,32 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
             height: MediaQuery.of(context).size.height*.28,
             width: MediaQuery.of(context).size.height*.35,
             decoration: BoxDecoration(
+                border: Border.all(color: AppColors.primaryColor1,width: 4),
                 borderRadius: BorderRadius.circular(3),
                 image:  DecorationImage(
                     image: NetworkImage('${model.image}'),
-                    fit: BoxFit.contain
+                    fit: BoxFit.fill
                 )
             ),
           ),
         )
-        :Container(
+        :VoiceMessage(
+      audioSrc: '${AppCubit.get(context).messages[index].voice}',
+      played: true, // To show played badge or not.
+      me: true, // Set message side.
+      meBgColor: AppColors.primaryColor1,
+      mePlayIconColor: AppColors.navBarActiveIcon,
+      onPlay: () {
+
+      }, // Do something when voice played.
+    ),
+  );
+
+  //----------------------------
+  Widget builsRecievedMessages(MessageModel model,context,index)=>Align(
+    alignment:AlignmentDirectional.centerStart,
+    child: (model.text!="")
+    ?Container(
       padding: const EdgeInsets.all(10),
       decoration:  BoxDecoration(
         color: AppColors.myGrey,
@@ -296,5 +343,142 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
         ),
       ),
     )
+        :(model.image != '')
+      ?Padding(
+    padding: const EdgeInsets.all(0),
+    child: Container(
+      padding: EdgeInsets.all(8),
+      height: MediaQuery.of(context).size.height*.28,
+      width: MediaQuery.of(context).size.height*.35,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(3),
+          border: Border.all(color: AppColors.myGrey,width: 4),
+          image:  DecorationImage(
+              image: NetworkImage('${model.image}'),
+              fit: BoxFit.fill
+          )
+      ),
+    ),
+  )
+        :VoiceMessage(
+      audioSrc: '${AppCubit.get(context).messages[index].voice}',
+      played: true, // To show played badge or not.
+      me: false, // Set message side.
+      onPlay: () {}, // Do something when voice played.
+    ),
   );
+
+  //////////////////////////voice functions////////////////////
+  @override
+  void dispose() {
+    super.dispose();
+  }
+  _Fn getRecorderFn() {
+    /* if (!_mRecorderIsInited || !_mPlayer.isStopped) {
+      return () {};
+    }*/
+    return recording ? stopRecord : startRecord;
+  }
+  // 1- chech permission
+  Future<bool> checkPermission() async {
+    if (!await Permission.microphone.isGranted) {
+      PermissionStatus status = await Permission.microphone.request();
+      if (status != PermissionStatus.granted) {
+        return false;
+      }
+    }
+    return true;
+  }
+  // 2- start recors
+  void startRecord() async {
+    bool hasPermission = await checkPermission();
+    if (hasPermission) {
+      statusText = "Recording...";
+      recordFilePath = await getFilePath();
+      setState(() {
+        recording=true;
+      });
+      isComplete = false;
+      RecordMp3.instance.start(recordFilePath!, (type) {
+        statusText = "Record error--->$type";
+        setState(() {
+        });
+      });
+    } else {
+      statusText = "No microphone permission";
+    }
+    setState(() {});
+  }
+  // 3- get file path
+  Future<String> getFilePath() async {
+    Directory storageDirectory = await getApplicationDocumentsDirectory();
+    String sdPath = storageDirectory.path + "/record";
+    var d = Directory(sdPath);
+    if (!d.existsSync()) {
+      d.createSync(recursive: true);
+    }
+    return sdPath + "/test1111_${i++}.mp3";
+  }
+  // 4- stop record
+  stopRecord() async {
+    print("startRecord11");
+    setState(() {
+      recording=false;
+      uploadingRecord=true;
+    });
+    bool s = RecordMp3.instance.stop();
+    if (s) {
+      //statusText = "Record complete";
+      //isComplete = true;
+      setState(() {});
+      if (recordFilePath != null && File(recordFilePath!).existsSync()) {
+        print("stopRecord000");
+        File recordFile = new File(recordFilePath!);
+        uploadRecord(voice: recordFile);
+      }
+      else
+      {
+        print("stopRecord111");
+      }
+    }
+  }
+  // 5- upload record to firebase
+  Future uploadRecord(
+  {
+   String? recevierId,
+   String? dateTime,
+   required File voice,
+   String? senderId,
+}
+
+      ) async {
+    Size size = MediaQuery.of(context).size;
+    print("permission uploadRecord1");
+    var uuid = Uuid().v4();
+    Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('ali/${Uri.file(voice.path).pathSegments.last}');
+    await storageReference.putFile(voice).then((value){
+      AppCubit.get(context).createVoiceMessage(
+        recevierId: widget.userModel.uId!,
+        dateTime: DateTime.now().toString(),
+        voice: voice.path,
+      );
+      print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeeeeeeeeeeeeeeeessssssssss');
+    }).catchError((error){
+      print('nnnnnnnnnnnnnnnnnnnooooooooooooooooooo');
+      print(error.toString());
+
+    });
+    var url = await storageReference.getDownloadURL();
+    print("recording file222");
+    print(url);
+    widget.onSendMessage(url, "voice", size);
+
+    setState(() {
+      uploadingRecord = false;
+    });
+
+  }
+
+
+
 }

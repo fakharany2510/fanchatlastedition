@@ -45,10 +45,18 @@ dependencies:
   country_pickers: ^2.0.0
   intl:
   conditional_builder_null_safety: ^0.0.6
+  email_auth:
+  lottie: ^1.4.1
+  provider:
+
+
 
 
   #Google SignIn
-  google_sign_in: ^5.3.3
+  google_sign_in: ^5.4.1
+  flutter_login_facebook:
+ #FaceBook SignIn
+  flutter_facebook_auth: ^4.4.1
   #Firebase
   firebase_core: ^1.20.0
   firebase_auth: ^3.6.1
@@ -61,6 +69,12 @@ dependencies:
   dio: ^4.0.4
  #sqlFlite
   sqflite: ^2.0.3+1
+  #///////////////////////////////// audioplayers:
+  permission_handler: ^8.3.0
+  record_mp3:
+  path_provider: ^2.0.8
+  uuid: ^3.0.5
+  voice_message_package: ^0.0.74
 
 dev_dependencies:
   flutter_test:

@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context)=>AppCubit()..getUser()..getPosts()..getAllUsers()),
         ],
         child: MaterialApp(
+          title: 'fanchat',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             navigationBarTheme: const NavigationBarThemeData(

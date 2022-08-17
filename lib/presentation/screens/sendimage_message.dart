@@ -22,8 +22,8 @@ class _SendImageState extends State<SendImage> {
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
         if(state is GetMessageSuccessState){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel:widget.userModel,)),);
-
+         // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel:widget.userModel,)),);
+          Navigator.pop(context);
         }
       },
       builder: (context,state){
@@ -62,12 +62,7 @@ class _SendImageState extends State<SendImage> {
                 ],
               )
           ),
-          floatingActionButton: state is BrowiseUploadImagePostLoadingState ||
-              state is BrowiseCreatePostLoadingState ||
-              state is BrowiseGetPostsLoadingState ||
-              state is BrowiseUploadImagePostSuccessState
-             ? CircularProgressIndicator()
-            :FloatingActionButton(
+          floatingActionButton: FloatingActionButton(
         onPressed: (){
         AppCubit.get(context).uploadMessageImage(
         senderId: AppStrings.uId!,

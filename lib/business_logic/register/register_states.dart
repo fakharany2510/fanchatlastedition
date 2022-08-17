@@ -1,7 +1,7 @@
 
 abstract class RegisterState{}
 
-class InitialState extends RegisterState{}
+class RegisterInitialState extends RegisterState{}
 
 class UserRegisterSuccessState extends RegisterState{
   String ?uId;
@@ -11,3 +11,8 @@ class UserRegisterErrorState extends RegisterState{}
 
 class UserDataSuccessState extends RegisterState{}
 class UserDataErrorState extends RegisterState{}
+class SendOtopSuccessState extends RegisterState{}
+class SendOtopErrorState extends RegisterState{}
+class VerifyOtopSuccessState extends RegisterState{}
+class VerifyOtopErrorState extends RegisterState{}
+

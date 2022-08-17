@@ -1010,7 +1010,7 @@ List<int> commentIndex=[];
           dateTime: dateTime,
           senderId: AppStrings.uId
         );
-        getPosts();
+
         emit(BrowiseUploadImagePostSuccessState());
 
       }).catchError((error){
@@ -1083,14 +1083,68 @@ List<int> commentIndex=[];
       messages = [];
       event.docs.forEach((element) {
         messages.add((MessageModel.fromJson(element.data())));
+        print('llllllllllllllllllllllllllllllllllllllllllllllllllllllllll');
+        print(messages[0].voice);
+
+
       });
       emit(GetMessageSuccessState());
+
     });
   }
   bool isWritingMessage=false;
   void changeIcon(){
     isWritingMessage!=isWritingMessage;
     emit(ChangeIconSuccessState());
+  }
+
+  ///////////////////////////////voice message
+  void createVoiceMessage({
+     required String recevierId,
+    required String dateTime,
+   required String voice,
+
+  }){
+
+    MessageModel model=MessageModel(
+        image: "",
+        text: "",
+       dateTime: dateTime,
+        recevierId: recevierId,
+        senderId: AppStrings.uId,
+        voice: voice
+    );
+
+    //Set My Chat
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(AppStrings.uId)
+        .collection('chats')
+        .doc(recevierId)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value){
+      emit(SendMessageSuccessState());
+    })
+        .catchError((error){
+      emit(SendMessageErrorState());
+      print(error.toString());
+    });
+    //Set Reciever Chat
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(recevierId)
+        .collection('chats')
+        .doc(AppStrings.uId)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value){
+      emit(SendMessageSuccessState());
+    })
+        .catchError((error){
+      emit(SendMessageErrorState());
+      print(error.toString());
+    });
   }
 }
 

@@ -5,11 +5,13 @@ import 'package:fanchat/business_logic/register/register_states.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/screens/home_screen.dart';
+import 'package:fanchat/presentation/screens/verfiy_otp.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:country_pickers/country_pickers.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../constants/app_strings.dart';
 import '../layouts/home_layout.dart';
 class RegisterScreen extends StatelessWidget {
@@ -26,23 +28,29 @@ class RegisterScreen extends StatelessWidget {
       create: (BuildContext context) => RegisterCubit(),
       child: BlocConsumer<RegisterCubit,RegisterState>(
         listener: (context,state){
-          if(state is UserRegisterSuccessState){
-            CashHelper.saveData(
-              key: 'uid',
-              value: state.uId,
-            );
 
-            customToast(title: 'Register Successful', color: AppColors.primaryColor1);
-            //AppCubit.get(context).getPosts();
+          if(state is SendOtopSuccessState){
             Navigator.pushReplacement(context,
                 MaterialPageRoute
-                  (builder: (context)=>HomeLayout()));
-
+                  (builder: (context)=>VerfiyOtp()));
           }
-          if(state is UserRegisterErrorState){
-            customToast(title: 'Invalid Data ', color: Colors.red);
-
-          }
+          // if(state is UserRegisterSuccessState){
+          //   CashHelper.saveData(
+          //     key: 'uid',
+          //     value: state.uId,
+          //   );
+          //
+          //   customToast(title: 'Register Successful', color: AppColors.primaryColor1);
+          //   //AppCubit.get(context).getPosts();
+          //   Navigator.pushReplacement(context,
+          //       MaterialPageRoute
+          //         (builder: (context)=>HomeLayout()));
+          //
+          // }
+          // if(state is UserRegisterErrorState){
+          //   customToast(title: 'Invalid Data ', color: Colors.red);
+          //
+          // }
         },
         builder: (context,state){
           var cubit=RegisterCubit.get(context);
@@ -136,6 +144,7 @@ class RegisterScreen extends StatelessWidget {
                           height: size.height*.06,
                           function: (){
                             if(formKey.currentState!.validate()){
+                              RegisterCubit.get(context).sendOtp(email.text);
                               printMessage(CashHelper.getData(key: 'code'));
                               cubit.userRegister(
                                   email: email.text,
@@ -145,6 +154,11 @@ class RegisterScreen extends StatelessWidget {
                                   code: CashHelper.getData(key: 'code')
                               )
                                   .then((value) {
+                                    CashHelper.saveData(key: 'email',value: email.text);
+                                    CashHelper.saveData(key: 'pass',value: password.text);
+                                    CashHelper.saveData(key: 'name',value: name.text);
+                                    CashHelper.saveData(key: 'phone',value: phone.text);
+                                    CashHelper.saveData(key: 'phone',value: phone.text);
                               });
                             }
 
@@ -175,6 +189,7 @@ class RegisterScreen extends StatelessWidget {
                           )
                         ],
                       ),
+
                     ],
                   ),
                 ),
@@ -190,20 +205,19 @@ class RegisterScreen extends StatelessWidget {
 
   }
   Widget _buildDropdownItem(Country country) => Container(
-      width:130,
-      padding: const EdgeInsets.only(left: 15),
-  child: Row(
-  children: <Widget>[
-  CountryPickerUtils.getDefaultFlagImage(country),
-  const SizedBox(
-  width: 15.0,
-  ),
-  Text("+${country.phoneCode}",style: TextStyle(
-  color: AppColors.myGrey,
-  fontFamily: AppStrings.appFont
-  ),),
-  ],
-  ),
+    width:130,
+    padding: const EdgeInsets.only(left: 15),
+    child: Row(
+      children: <Widget>[
+        CountryPickerUtils.getDefaultFlagImage(country),
+        const SizedBox(
+          width: 15.0,
+        ),
+        Text("+${country.phoneCode}",style: TextStyle(
+            color: AppColors.myGrey,
+            fontFamily: AppStrings.appFont
+        ),),
+      ],
+    ),
   );
 }
-

@@ -1,6 +1,6 @@
-import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/login/login_cubit.dart';
 import 'package:fanchat/business_logic/login/login_state.dart';
+import 'package:fanchat/business_logic/register/register_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import '../../business_logic/register/register_states.dart';
 import '../../constants/app_colors.dart';
 import '../widgets/shared_widgets.dart';
 class LoginScreen extends StatelessWidget {
@@ -37,8 +37,53 @@ class LoginScreen extends StatelessWidget {
           }
           if(state is UserLoginErrorState){
             customToast(title: 'Email or Password isn\'t correct', color: Colors.red);
-
           }
+          if(state is GoogleLoginSuccessState){
+            CashHelper.saveData(key:'uid' , value: AppStrings.uId).then((value){
+              Fluttertoast.showToast(
+                msg:"Welcome",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.TOP,
+                timeInSecForIosWeb: 5,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 18.0,
+              );
+              if(AppStrings.uId == null){
+                print('uid is null');
+              }else{
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context)=>HomeLayout()));
+              }
+
+            }).catchError((error){
+              print('error from saving user google id to shared ${error.toString()}');
+            });
+          }
+          //facebook check
+          if(state is FacebookLoginSuccessState){
+            CashHelper.saveData(key:'uid' , value: AppStrings.uId).then((value){
+              Fluttertoast.showToast(
+                msg:"Welcome",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.TOP,
+                timeInSecForIosWeb: 5,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 18.0,
+              );
+              if(AppStrings.uId == null){
+                print('uid is null');
+              }else{
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context)=>HomeLayout()));
+              }
+
+            }).catchError((error){
+              print('error from saving user facebook id to shared ${error.toString()}');
+            });
+          }
+
         },
         builder: (context,state){
           var cubit=LoginCubit.get(context);
@@ -132,7 +177,9 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           defaultSocialMediaButton(
                               context: context,
-                              function: (){},
+                              function: (){
+                                LoginCubit.get(context).signInWithFacebook();
+                              },
                               size:size,
                               buttonColor: AppColors.primaryColor1,
                               buttonText: "Facebook",
@@ -142,7 +189,7 @@ class LoginScreen extends StatelessWidget {
                           defaultSocialMediaButton(
                               context: context,
                               function: (){
-
+                                LoginCubit.get(context).loginWithGoogle();
                               },
                               size:size,
                               buttonColor: AppColors.primaryColor1,
