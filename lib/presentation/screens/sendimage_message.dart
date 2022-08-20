@@ -21,8 +21,11 @@ class _SendImageState extends State<SendImage> {
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
-        if(state is GetMessageSuccessState){
-         // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel:widget.userModel,)),);
+       //  if(state is GetMessageSuccessState){
+       // //  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel:widget.userModel,)),);
+       //    Navigator.pop(context);
+       //  }
+        if(state is BrowiseUploadImagePostSuccessState){
           Navigator.pop(context);
         }
       },
@@ -62,14 +65,16 @@ class _SendImageState extends State<SendImage> {
                 ],
               )
           ),
-          floatingActionButton: FloatingActionButton(
-        onPressed: (){
-        AppCubit.get(context).uploadMessageImage(
-        senderId: AppStrings.uId!,
-        dateTime: DateTime.now().toString(),
-        recevierId:widget.userModel.uId!,
-        text: ""
-        );
+          floatingActionButton: state is BrowiseUploadImagePostLoadingState || state is BrowiseCreatePostLoadingState
+              ?CircularProgressIndicator(color: AppColors.navBarActiveIcon,)
+                :FloatingActionButton(
+            onPressed: (){
+          AppCubit.get(context).uploadMessageImage(
+              senderId: AppStrings.uId!,
+              dateTime: DateTime.now().toString(),
+              recevierId:widget.userModel.uId!,
+              text: ""
+          );
         },
         backgroundColor: AppColors.primaryColor1,
         child: const Icon(
@@ -79,7 +84,7 @@ class _SendImageState extends State<SendImage> {
         )
         ,
         )
-        ,
+
         );
       },
     );

@@ -92,3 +92,4 @@ class SendMessageErrorState extends AppState{}
 class GetMessageSuccessState extends AppState{}
 //change icon
 class ChangeIconSuccessState extends AppState{}
+class StopLoadingState extends AppState{}

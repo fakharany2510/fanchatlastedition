@@ -329,12 +329,19 @@ class AppCubit extends Cubit<AppState> {
 //----
   //Any Image Picker
 // Pick post image
+  double? imageWidth;
+  double? imageHeight;
   File? postImage;
   Future<void> pickPostImage() async {
     final pickedFile  =
     await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       postImage=File(pickedFile.path);
+      var decodedImage = await decodeImageFromList(postImage!.readAsBytesSync());
+      print(decodedImage.width);
+      print(decodedImage.height);
+      imageWidth=double.parse('${decodedImage.width}');
+      imageHeight=double.parse('${decodedImage.height}');
       emit(PickPostImageSuccessState());
     } else {
       print('no postImage selected');
@@ -1098,6 +1105,7 @@ List<int> commentIndex=[];
     emit(ChangeIconSuccessState());
   }
 
+  bool isSend=false;
   ///////////////////////////////voice message
   void createVoiceMessage({
      required String recevierId,
@@ -1105,6 +1113,7 @@ List<int> commentIndex=[];
    required String voice,
 
   }){
+    emit(StopLoadingState());
 
     MessageModel model=MessageModel(
         image: "",
@@ -1114,6 +1123,7 @@ List<int> commentIndex=[];
         senderId: AppStrings.uId,
         voice: voice
     );
+    emit(StopLoadingState());
 
     //Set My Chat
     FirebaseFirestore.instance
@@ -1124,6 +1134,8 @@ List<int> commentIndex=[];
         .collection('messages')
         .add(model.toMap())
         .then((value){
+      emit(StopLoadingState());
+        isSend=false;
       emit(SendMessageSuccessState());
     })
         .catchError((error){

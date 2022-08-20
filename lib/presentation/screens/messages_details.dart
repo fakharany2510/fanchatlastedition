@@ -125,6 +125,69 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
                                 itemCount: AppCubit.get(context).messages.length),
                           ),
                         ),
+                        recording==true?
+                        Container(
+                          width: double.infinity,
+                          height: 100,
+                          decoration: BoxDecoration(
+                              color: AppColors.primaryColor1
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 5,),
+                              Text('${statusText}',style: const TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: AppStrings.appFont,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500
+                              ),),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 20,
+                                    backgroundColor: AppColors.myWhite,
+                                    child:IconButton(
+                                        onPressed: (){
+                                          pauseRecord();
+                                        },
+                                        icon:   RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
+                                          Icons.radio_button_unchecked_rounded,
+                                          color: AppColors.primaryColor1,
+                                          size: 20,
+                                        ):Icon(
+                                          Icons.pause,
+                                          color: AppColors.primaryColor1,
+                                          size: 20,
+                                        )
+                                    ),
+                                  ),
+                                  SizedBox(width: MediaQuery.of(context).size.width*.5,),
+                                  CircleAvatar(
+                                    radius: 20,
+                                    backgroundColor: AppColors.myWhite,
+                                    child:  IconButton(
+                                        onPressed: (){
+                                          setState(() {
+                                            recording=false;
+                                            AppCubit.get(context).isSend=true;
+                                          });
+                                          stopRecord();
+                                          // toogleRecord();
+                                        },
+                                        icon:  Icon(
+                                          Icons.send,
+                                          color: AppColors.primaryColor1,
+                                          size: 20,
+                                        )
+                                    ),
+                                  ),
+
+                                ],
+                              )
+                            ],
+                          ) ,
+                        ):
                         Padding(
                             padding: const EdgeInsets.all(5),
                             child: Row(
@@ -150,40 +213,17 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
                                         keyboardType: TextInputType.multiline,
                                         maxLines: null,
                                         controller: textMessage,
-                                        decoration:  InputDecoration(
+                                        decoration:  const InputDecoration(
                                           border: InputBorder.none,
                                           hintText: 'Write your message...',
-                                          suffixIcon: Container(
-                                                              width: 20,
-                                                              height: 20,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius: BorderRadius.circular(50),
-                                                                  color: Colors.white
-                                                              ),
-                                                              child: Center(
-                                                                child: IconButton(
-                                                                  icon: recording
-                                                                      ? Icon(Icons.pause_outlined, color: Colors.red)
-                                                                      : Icon(
-                                                                    Icons.mic,
-                                                                    color:Colors.grey,
-                                                                  ),
-                                                                  onPressed: () =>{
-                                                                     recording?stopRecord():startRecord(),
-                                                                    AppCubit.get(context).getMessages(recevierId:widget.userModel.uId!)
-                                          },
-                                                                  color:Theme.of(context).primaryColor,
-                                                                ),
-                                                              )
-                                                          ),
                                         ),
                                       )
                                   ),
                                 ),
                                 SizedBox(width: 5,),
                                 Container(
-                                    width: 40,
-                                    height: 40,
+                                    width: 35,
+                                    height: 35,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
                                         color: AppColors.primaryColor1
@@ -192,7 +232,10 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
                                       child: IconButton(
                                           onPressed: (){
                                             textMessage.text==""
-                                                ?print('kfmlngkjgnkgjngkjgngkjngkjgng')
+                                                ?{
+                                              recording?stopRecord():startRecord(),
+                                              AppCubit.get(context).getMessages(recevierId:widget.userModel.uId!)
+                                            }
                                                 :AppCubit.get(context).sendMessage(
                                                 recevierId: widget.userModel.uId!,
                                                 dateTime: DateTime.now().toString(),
@@ -200,14 +243,14 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
                                             textMessage.clear();
                                           },
                                           color: AppColors.primaryColor1,
-                                          icon: Icon(Icons.send,color: Colors.white,size: 20)
+                                          icon: AppCubit.get(context).isSend? CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?Icon(Icons.mic,color: Colors.white,size: 17):Icon(Icons.send,color: Colors.white,size: 17)
                                       ),
                                     )
                                 ),
                                 SizedBox(width: 5,),
                                 Container(
-                                    width: 40,
-                                    height: 40,
+                                    width: 35,
+                                    height: 35,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
                                         color: AppColors.primaryColor1
@@ -222,7 +265,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
                                         icon: const ImageIcon(
                                           AssetImage("assets/images/fanarea.png"),
                                           color:Colors.white,
-                                          size: 20,
+                                          size: 17,
                                         ),
                                       ),
                                     )
@@ -295,15 +338,18 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
         ?Padding(
           padding: const EdgeInsets.all(0),
           child: Container(
+            clipBehavior: Clip.antiAlias,
             padding: EdgeInsets.all(8),
             height: MediaQuery.of(context).size.height*.28,
             width: MediaQuery.of(context).size.height*.35,
+            // width: AppCubit.get(context).imageWidth,
+            // height: AppCubit.get(context).imageHeight,
             decoration: BoxDecoration(
                 border: Border.all(color: AppColors.primaryColor1,width: 4),
                 borderRadius: BorderRadius.circular(3),
                 image:  DecorationImage(
                     image: NetworkImage('${model.image}'),
-                    fit: BoxFit.fill
+                    fit: BoxFit.contain
                 )
             ),
           ),
@@ -479,6 +525,20 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
 
   }
 
-
+  void pauseRecord() {
+    if (RecordMp3.instance.status == RecordStatus.PAUSE) {
+      bool s = RecordMp3.instance.resume();
+      if (s) {
+        statusText = "Recording...";
+        setState(() {});
+      }
+    } else {
+      bool s = RecordMp3.instance.pause();
+      if (s) {
+        statusText = "Recording pause...";
+        setState(() {});
+      }
+    }
+  }
 
 }

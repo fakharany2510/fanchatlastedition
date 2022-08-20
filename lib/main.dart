@@ -10,6 +10,7 @@ import 'package:fanchat/presentation/screens/add_new_video.dart';
 import 'package:fanchat/presentation/screens/add_text_post.dart';
 import 'package:fanchat/presentation/screens/edit_profie_screen.dart';
 import 'package:fanchat/presentation/screens/login_screen.dart';
+import 'package:fanchat/presentation/screens/messages_details.dart';
 import 'package:fanchat/presentation/screens/profile_screen.dart';
 import 'package:fanchat/presentation/screens/register_screen.dart';
 import 'package:fanchat/presentation/screens/splash_screen.dart';
@@ -75,6 +76,7 @@ class MyApp extends StatelessWidget {
             'add_image':(context)=>AddNewImage(),
             'add_video':(context)=>AddNewVideo(),
             'add_text':(context)=>AddTextPost(),
+            'message':(context)=>ChatDetails(userModel: AppCubit.get(context).userModel!,),
 
           },
         ),);
