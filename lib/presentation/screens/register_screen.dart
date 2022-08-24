@@ -32,7 +32,7 @@ class RegisterScreen extends StatelessWidget {
           if(state is SendOtopSuccessState){
             Navigator.pushReplacement(context,
                 MaterialPageRoute
-                  (builder: (context)=>VerfiyOtp()));
+                  (builder: (context)=>VerfiyOtp(email: email.text,)));
           }
           // if(state is UserRegisterSuccessState){
           //   CashHelper.saveData(
@@ -151,7 +151,7 @@ class RegisterScreen extends StatelessWidget {
                                   pass: password.text,
                                   name: name.text,
                                   phone: phone.text,
-                                  code: CashHelper.getData(key: 'code')
+                                  code: CashHelper.getData(key: 'code')??'+20'
                               )
                                   .then((value) {
                                     CashHelper.saveData(key: 'email',value: email.text);

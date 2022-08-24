@@ -25,6 +25,8 @@ Future<String> _getTempPath(String path) async {
   return tempPath + '/' + path;
 }
 class PublicChatScreen extends StatefulWidget {
+
+
   final onSendMessage;
   PublicChatScreen({this.onSendMessage});
 
@@ -41,17 +43,26 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
   bool recording=false;
   bool? isComplete;
   bool? uploadingRecord = false;
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
+
     super.initState();
+    if(scrollController.hasClients){
+      scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+    }
     isWriting = false;
   }
   @override
   Widget build(BuildContext context) {
+
     return ConditionalBuilder(
       builder: (context)=>Builder(
           builder: (context) {
+            if(scrollController.hasClients){
+              scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+            }
             AppCubit.get(context).getPublicChat();
             return BlocConsumer<AppCubit,AppState>(
               listener: (context,state){
@@ -60,6 +71,9 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                 }
               },
               builder: (context,state){
+                if(scrollController.hasClients){
+                  scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+                }
                 return Scaffold(
                   backgroundColor: Colors.white,
                   appBar: AppBar(
@@ -120,6 +134,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                             color: Colors.white,
                             padding: const EdgeInsets.all(10),
                             child: ListView.separated(
+                              controller: scrollController,
                                 physics: const BouncingScrollPhysics(),
                                 itemBuilder: (context , index)
                                 {
@@ -182,6 +197,11 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                             AppCubit.get(context).isSend=true;
                                           });
                                           stopRecord();
+                                          scrollController.animateTo(
+                                            scrollController.position.maxScrollExtent,
+                                            duration: const Duration(milliseconds: 300),
+                                            curve: Curves.easeOut,
+                                          );
                                           // toogleRecord();
                                         },
                                         icon:  Icon(
@@ -226,12 +246,12 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                           border: InputBorder.none,
                                           hintText: 'Write your message...',
                                           suffixIcon: Container(
-                                              width: 20,
-                                              height: 20,
-                                              decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(50),
-                                                  color: Colors.white
-                                              ),
+                                            width: 20,
+                                            height: 20,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(50),
+                                                color: Colors.white
+                                            ),
                                           ),
                                         ),
                                       )
@@ -344,6 +364,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
         ),
         const SizedBox(width: 5,),
         Container(
+          width: MediaQuery.of(context).size.width*.60,
           padding: const EdgeInsets.all(10),
           decoration:  BoxDecoration(
             color: AppColors.myGrey,
@@ -363,6 +384,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                     color: AppColors.primaryColor1,
                     fontFamily: AppStrings.appFont
                 ),
+
               ),
               const SizedBox(height: 5,),
               (model.text!="")
@@ -412,6 +434,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
+          width: MediaQuery.of(context).size.width*.60,
           padding: const EdgeInsets.all(10),
           decoration:  BoxDecoration(
             color: AppColors.primaryColor1,
@@ -612,3 +635,4 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
   }
 
 }
+

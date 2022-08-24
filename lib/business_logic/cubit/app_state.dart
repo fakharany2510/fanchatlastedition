@@ -7,6 +7,8 @@ class AppInitial extends AppState {}
 
 class NavigateScreenState extends AppState {}
 
+class PushEndListState extends AppState {}
+
 class CheckBoxState extends AppState {}
 class PickPostImageSuccessState extends AppState {}
 class PickPostImageErrorState extends AppState {}
@@ -93,6 +95,14 @@ class GetMessageSuccessState extends AppState{}
 //change icon
 class ChangeIconSuccessState extends AppState{}
 class StopLoadingState extends AppState{}
+
+/////// public states
+class SendPublicChatSuccessState extends AppState{}
+class SendPublicChatErrorState extends AppState{}
+class GetPublicChatSuccessState extends AppState{}
+//change icon
+class ChangeIconPublicChatSuccessState extends AppState{}
+
 //fan area
           //image
 class PickFanPostImageSuccessState extends AppState {}
@@ -122,9 +132,3 @@ class BrowiseGetFanPostsLoadingState extends AppState {}
 class BrowiseGetFanPostsSuccessState extends AppState {}
 class BrowiseGetFanPostsErrorState extends AppState {}
 
-/////// public states
-class SendPublicChatSuccessState extends AppState{}
-class SendPublicChatErrorState extends AppState{}
-class GetPublicChatSuccessState extends AppState{}
-//change icon
-class ChangeIconPublicChatSuccessState extends AppState{}

@@ -11,7 +11,9 @@ import 'package:lottie/lottie.dart';
 import '../../business_logic/shared/local/cash_helper.dart';
 
 class VerfiyOtp extends StatefulWidget {
-   VerfiyOtp({Key? key}) : super(key: key);
+   VerfiyOtp({Key? key,this.email}) : super(key: key);
+
+   String ?email;
   TextEditingController otp = TextEditingController();
    var formKey =GlobalKey<FormState>();
 
@@ -28,61 +30,63 @@ class _VerfiyOtpState extends State<VerfiyOtp> {
         builder: (context , state){
           return Scaffold(
             backgroundColor: AppColors.primaryColor1,
-            body: Form(
-              key: widget.formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                //mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 50),
-                    child: Center(
-                      child: Container(
-                        child:  Lottie.asset('assets/images/verify.json'),
-                        width: MediaQuery.of(context).size.width*.7,
-                        height: MediaQuery.of(context).size.height*.4,
+            body: SingleChildScrollView(
+              child: Form(
+                key: widget.formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 50),
+                      child: Center(
+                        child: Container(
+                          child:  Lottie.asset('assets/images/verify.json'),
+                          width: MediaQuery.of(context).size.width*.7,
+                          height: MediaQuery.of(context).size.height*.4,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 10,),
-                  Text('Check Your Mail',
-                    style: TextStyle(
-                        fontFamily: AppStrings.appFont,
-                        color: AppColors.myGrey,
-                        fontWeight:FontWeight.bold,
-                        fontSize: 25
+                    SizedBox(height: 10,),
+                    Text('Check Your Mail',
+                      style: TextStyle(
+                          fontFamily: AppStrings.appFont,
+                          color: AppColors.myGrey,
+                          fontWeight:FontWeight.bold,
+                          fontSize: 25
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 25,),
-                  Container(
-                    width: MediaQuery.of(context).size.width*.9,
-                    child:  textFormFieldWidget(
-                        context: context,
-                        controller:widget.otp ,
-                        errorMessage: "please chech your mail & enter otp",
-                        inputType: TextInputType.name,
-                        labelText:"Enter OTP",
-                        prefixIcon: Icon(Icons.lock_clock_rounded,color: AppColors.myGrey,)
-                    ),
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height*.03,),
-                  defaultButton(
-                      textColor: AppColors.primaryColor1,
-                      buttonText: 'Verify',
-                      buttonColor: AppColors.myGrey,
+                    SizedBox(height: 25,),
+                    Container(
                       width: MediaQuery.of(context).size.width*.9,
-                      height: MediaQuery.of(context).size.height*.06,
-                      function: (){
-                        if(widget.formKey.currentState!.validate()){
-                          RegisterCubit.get(context).verifyOtp(
-                              CashHelper.getData(key: 'email'),
-                              widget.otp.text);
-                        }
+                      child:  textFormFieldWidget(
+                          context: context,
+                          controller:widget.otp ,
+                          errorMessage: "please chech your mail & enter otp",
+                          inputType: TextInputType.name,
+                          labelText:"Enter OTP",
+                          prefixIcon: Icon(Icons.lock_clock_rounded,color: AppColors.myGrey,)
+                      ),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height*.03,),
+                    defaultButton(
+                        textColor: AppColors.primaryColor1,
+                        buttonText: 'Verify',
+                        buttonColor: AppColors.myGrey,
+                        width: MediaQuery.of(context).size.width*.9,
+                        height: MediaQuery.of(context).size.height*.06,
+                        function: (){
+                          if(widget.formKey.currentState!.validate()){
+                            RegisterCubit.get(context).verifyOtp(
+                                widget.email!,
+                                widget.otp.text);
+                          }
 
-                      }
-                  ),
-                ],
+                        }
+                    ),
+                  ],
+                ),
               ),
             ),
           );

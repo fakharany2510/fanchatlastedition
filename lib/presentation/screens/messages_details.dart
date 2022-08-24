@@ -335,24 +335,28 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
       ),
     )
     :(model.image!="")
-        ?Padding(
-          padding: const EdgeInsets.all(0),
+        ? Container(
+      padding: const EdgeInsets.all(5),
+      decoration:  BoxDecoration(
+        color: AppColors.primaryColor1,
+        borderRadius:const  BorderRadius.only(
+          topRight: Radius.circular(10),
+          topLeft: Radius.circular(10),
+          bottomLeft: Radius.circular(10),
+        ),
+      ),
           child: Container(
-            clipBehavior: Clip.antiAlias,
-            padding: EdgeInsets.all(8),
-            height: MediaQuery.of(context).size.height*.28,
-            width: MediaQuery.of(context).size.height*.35,
-            // width: AppCubit.get(context).imageWidth,
-            // height: AppCubit.get(context).imageHeight,
-            decoration: BoxDecoration(
-                border: Border.all(color: AppColors.primaryColor1,width: 4),
-                borderRadius: BorderRadius.circular(3),
-                image:  DecorationImage(
-                    image: NetworkImage('${model.image}'),
-                    fit: BoxFit.contain
-                )
-            ),
-          ),
+      height: MediaQuery.of(context).size.height*.28,
+      width: MediaQuery.of(context).size.width*.55,
+      decoration: BoxDecoration(
+            border: Border.all(color: AppColors.primaryColor1,width: 4),
+            borderRadius: BorderRadius.circular(3),
+            image:  DecorationImage(
+                image: NetworkImage('${model.image}'),
+                fit: BoxFit.fill
+            )
+      ),
+    ),
         )
         :VoiceMessage(
       audioSrc: '${AppCubit.get(context).messages[index].voice}',
@@ -390,22 +394,31 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
       ),
     )
         :(model.image != '')
-      ?Padding(
-    padding: const EdgeInsets.all(0),
-    child: Container(
-      padding: EdgeInsets.all(8),
+        ?Container(
+            padding: const EdgeInsets.all(5),
+            decoration:  BoxDecoration(
+              color: AppColors.myGrey,
+              borderRadius:const  BorderRadius.only(
+                topRight: Radius.circular(10),
+                topLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              ),
+            ),
+          child: Container(
+            // margin: EdgeInsets.all(5),
       height: MediaQuery.of(context).size.height*.28,
-      width: MediaQuery.of(context).size.height*.35,
+      width: MediaQuery.of(context).size.width*.55,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(3),
-          border: Border.all(color: AppColors.myGrey,width: 4),
-          image:  DecorationImage(
-              image: NetworkImage('${model.image}'),
-              fit: BoxFit.fill
-          )
+            borderRadius: BorderRadius.circular(3),
+            border: Border.all(color: AppColors.myGrey,width: 4),
+            image:  DecorationImage(
+                image: NetworkImage('${model.image}'),
+                fit: BoxFit.fill
+            )
       ),
     ),
-  )
+        )
+
         :VoiceMessage(
       audioSrc: '${AppCubit.get(context).messages[index].voice}',
       played: true, // To show played badge or not.
