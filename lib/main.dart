@@ -9,6 +9,7 @@ import 'package:fanchat/presentation/screens/add_new_image.dart';
 import 'package:fanchat/presentation/screens/add_new_video.dart';
 import 'package:fanchat/presentation/screens/add_text_post.dart';
 import 'package:fanchat/presentation/screens/edit_profie_screen.dart';
+import 'package:fanchat/presentation/screens/fan/fan_full_post.dart';
 import 'package:fanchat/presentation/screens/login_screen.dart';
 import 'package:fanchat/presentation/screens/messages_details.dart';
 import 'package:fanchat/presentation/screens/profile_screen.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
     }
     return MultiBlocProvider(
         providers:[
-          BlocProvider(create: (context)=>AppCubit()..getUser()..getPosts()..getAllUsers()),
+          BlocProvider(create: (context)=>AppCubit()..getUser()..getPosts()..getAllUsers()..getFanPosts()),
         ],
         child: MaterialApp(
           title: 'fanchat',
@@ -76,6 +77,7 @@ class MyApp extends StatelessWidget {
             'add_image':(context)=>AddNewImage(),
             'add_video':(context)=>AddNewVideo(),
             'add_text':(context)=>AddTextPost(),
+            'fan_post':(context)=>FanFullPost(),
             'message':(context)=>ChatDetails(userModel: AppCubit.get(context).userModel!,),
 
           },

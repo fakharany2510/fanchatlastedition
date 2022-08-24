@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
+import 'package:fanchat/data/modles/public_chat_model.dart';
+import 'package:fanchat/presentation/screens/public_chat/public_chat_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,6 +34,7 @@ class AppCubit extends Cubit<AppState> {
     'Match Details' ,
     'Fan Area' ,
     'Chat Screen',
+    'public chat',
     'More Screen',
 
   ];
@@ -70,14 +73,6 @@ class AppCubit extends Cubit<AppState> {
     'https://images.netdirector.co.uk/gforces-auto/image/upload/w_1349,h_450,q_auto,c_fill,f_auto,fl_lossy/auto-client/07057d0e6193c6b928e53a2ec37e91ef/mg_hs_cover.png'
   ];
 
-  List chatImages=[
-    'https://img.freepik.com/free-photo/successful-professional-enjoying-work-break_1262-16980.jpg?w=740&t=st=1658702118~exp=1658702718~hmac=a87514a21d49f5fa06f774fbfbe0adad396f68a7c4b24912ddd70c9aeed5eddb',
-    'https://img.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg?w=740&t=st=1658702156~exp=1658702756~hmac=e88a3db16b3bb740df629b5d80f3d6b0cb9cb693cee3663078665059aed3a6cc',
-    'https://img.freepik.com/free-photo/young-handsome-man-listens-music-with-earphones_176420-15616.jpg?w=740&t=st=1658702204~exp=1658702804~hmac=4ad64670966fe210e2226e87405fadf3971f9db7eb7a5136b5e039053e2d365a',
-    'https://img.freepik.com/free-photo/bohemian-man-with-his-arms-crossed_1368-3542.jpg?w=740&t=st=1658702142~exp=1658702742~hmac=26d3c0d7eaadc76fee6a337185a9b9288961ceb2513c8de238d3ad3b81e26ae0',
-  ];
-
-
   List fanImages=[
     'https://img.freepik.com/free-photo/beautiful-tree-middle-field-covered-with-grass-with-tree-line-background_181624-29267.jpg?w=900&t=st=1659045801~exp=1659046401~hmac=504feac168c627bb796b580e3b468ca8d5325a36678dc17621bde464cd5d0772',
     'https://img.freepik.com/free-photo/sahara-desert-sunlight-blue-sky-morocco-africa_181624-19549.jpg?w=996&t=st=1659045804~exp=1659046404~hmac=5c76bce362790fab659ddab0c0a41863fa3f0dc531ac51446c71ae036924a763',
@@ -87,11 +82,19 @@ class AppCubit extends Cubit<AppState> {
     'https://img.freepik.com/free-photo/vertical-shot-people-riding-camels-sand-dune-desert_181624-34974.jpg?w=740&t=st=1659044349~exp=1659044949~hmac=3f0c742eb4e47d6cdf45dc0ce3b37df273351228ddc2ca166458d2e6f2e92ca2'
   ];
   int currentIndex=0;
-  void navigateScreen(int index){
+  void navigateScreen(int index,context){
 
     currentIndex=index;
+    if(currentIndex==4){
+      Navigator.push(context, MaterialPageRoute(builder: (_){
+        return PublicChatScreen();
+      }));
+    }
     if(currentIndex==3){
       getAllUsers();
+    }
+    if(currentIndex==2){
+      getFanPosts();
     }
     emit(NavigateScreenState());
   }
@@ -1158,5 +1161,416 @@ List<int> commentIndex=[];
       print(error.toString());
     });
   }
+
+  //////////////////////////////fanarea///////////////////////////////
+  //pick fan image post
+  File? fanPostImage;
+  Future<void> pickFanPostImage() async {
+    final pickedFile  =
+    await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      fanPostImage=File(pickedFile.path);
+      var decodedImage = await decodeImageFromList(fanPostImage!.readAsBytesSync());
+      print(decodedImage.width);
+      print(decodedImage.height);
+      imageWidth=double.parse('${decodedImage.width}');
+      imageHeight=double.parse('${decodedImage.height}');
+      emit(PickFanPostImageSuccessState());
+    } else {
+      print('no fanPostImage selected');
+      emit(PickFanPostImageErrorState());
+    }
+  }
+                          /////////////////////////////////////
+//pick fan post video
+  File? fanPostVideo;
+
+  void pickFanPostVideo() async {
+    final pickedFile =
+    await picker.pickVideo(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      fanPostVideo = File(pickedFile.path);
+      videoPlayerController = VideoPlayerController.file(fanPostVideo!)
+        ..initialize().then((value) {
+          videoPlayerController!.play();
+          emit(PickFanPostVideoSuccessState());
+        }).catchError((error) {
+          print('error picking  fan video ${error.toString()}');
+          emit(PickFanPostVideoErrorState());
+        });
+    }
+  }
+////////////////////////////////////////
+//Create fan Post
+  void createFanImagePost({
+    required String? dateTime,
+    required String? time,
+    required String? timeSpam,
+    required String? text,
+    String? postImage,
+  }){
+    emit(FanCreatePostLoadingState());
+
+    BrowisePostModel model=BrowisePostModel(
+      name: userModel!.username,
+      image:userModel!.image,
+      userId:userModel!.uId,
+      dateTime:dateTime,
+      time: time,
+      postImage:postImage??'',
+      postVideo: "",
+      timeSmap: timeSpam,
+      text: text,
+      likes: 0,
+      comments:0,
+      postId: AppStrings.postUid,
+    );
+
+    FirebaseFirestore.instance
+        .collection('fan')
+        .add(model.toMap())
+        .then((value){
+      printMessage(value.id);
+      AppStrings.postUid=value.id;
+      FirebaseFirestore.instance
+          .collection('fan')
+          .doc(AppStrings.postUid)
+          .update({
+        'postId':AppStrings.postUid
+      }).then((value){
+        emit(FanCreatePostSuccessState());
+      });
+      //  getPosts();
+      emit(FanCreatePostSuccessState());
+    })
+        .catchError((error){
+      emit(FanCreatePostErrorState());
+    });
+  }
+  ///////////////////////////////////////////
+//upload fan post image
+  void uploadFanPostImage({
+    String? userId,
+    String? name,
+    String? image,
+    required String ? time,
+    required String? dateTime,
+    required String? text,
+    required String? timeSpam,
+  }){
+    emit(FanUploadImagePostLoadingState());
+    //كدا انا بكريت instance من ال storage
+    firebase_storage.FirebaseStorage.instance
+    //كدا بقوله انا فين في الstorage
+        .ref()
+    //كدا بقةله هتحرك ازاي جوا ال storage
+    //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
+        .child('fan/${Uri.file(fanPostImage!.path).pathSegments.last}')
+    //كدا بعمل رفع للصوره
+        .putFile(fanPostImage!).then((value){
+      value.ref.getDownloadURL().then((value){
+        createFanImagePost(
+          dateTime: dateTime,
+          postImage: value,
+          text: text,
+          time: time,
+          timeSpam: timeSpam,
+
+        );
+        getFanPosts();
+        print(fans[1].postImage);
+        emit(FanUploadImagePostSuccessState());
+
+      }).catchError((error){
+        print('error while get fan post ${error.toString()}');
+        emit(FanUploadImagePostErrorState());
+      });
+    }).catchError((error){
+      print('error while get fan post ${error.toString()}');
+      emit(FanUploadImagePostErrorState());
+    });
+  }
+//////////////////////////////////////////////
+  ////////////////////////////////////////////////////
+//Create fan videoPost
+  void createFanVideoPost({
+    required String dateTime,
+    required String? text,
+    required String time,
+    required String? timeSpam,
+    String? postVideo,
+  }){
+    emit(FanCreateVideoPostLoadingState());
+
+    BrowisePostModel model=BrowisePostModel(
+        name: userModel!.username,
+        image:userModel!.image,
+        userId:userModel!.uId,
+        dateTime:dateTime,
+        postImage:'',
+        postVideo: postVideo??'',
+        time: time  ,
+        text: text,
+        timeSmap: timeSpam,
+        likes: 0,
+        comments:0,
+        postId: AppStrings.postUid
+    );
+
+    FirebaseFirestore.instance
+        .collection('fan')
+        .add(model.toMap())
+        .then((value){
+      //getPosts();
+      AppStrings.postUid=value.id;
+      FirebaseFirestore.instance
+          .collection('fan')
+          .doc(AppStrings.postUid)
+          .update({
+        'postId':AppStrings.postUid
+      }).then((value){
+        emit(FanCreateVideoPostSuccessState());
+      });
+      emit(FanCreateVideoPostSuccessState());
+    })
+        .catchError((error){
+      emit(FanCreateVideoPostErrorState());
+    });
+  }
+///////////////////////////////////////////////
+/////////////////////////////////////////////////
+//upload fan post video to storage
+  void uploadFanPostVideo({
+    String? userId,
+    String? name,
+    String? video,
+    required String dateTime,
+    required String time,
+    required String timeSpam,
+    required String? text,
+  }){
+    emit(FanUploadVideoPostLoadingState());
+    //كدا انا بكريت instance من ال storage
+    firebase_storage.FirebaseStorage.instance
+    //كدا بقوله انا فين في الstorage
+        .ref()
+    //كدا بقةله هتحرك ازاي جوا ال storage
+    //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
+        .child('fan/${Uri.file(fanPostVideo!.path).pathSegments.last}')
+    //كدا بعمل رفع للصوره
+        .putFile(fanPostVideo!).then((value){
+      value.ref.getDownloadURL().then((value){
+        createFanVideoPost(
+          dateTime:dateTime,
+          postVideo: value,
+          text: text,
+          time: time,
+          timeSpam:timeSpam,
+        );
+        getFanPosts();
+        emit(FanUploadVideoPostSuccessState());
+
+      }).catchError((error){
+        emit(FanUploadVideoPostErrorState());
+      });
+    }).catchError((error){
+      emit(FanUploadVideoPostErrorState());
+    });
+  }
+////////////////////////////////////////////////////
+//////////////////////////////////////////////
+  /////////////////////////
+  //get Posts
+  List<BrowisePostModel> fans=[];
+  void getFanPosts(){
+    fans=[];
+    postsId=[];
+    likes=[];
+    emit(BrowiseGetFanPostsLoadingState());
+    FirebaseFirestore.instance
+        .collection('fan')
+        .orderBy('timeSmap',descending: true)
+        .get()
+        .then((value) {
+      value.docs.forEach((element) async{
+        fans.add(BrowisePostModel.fromJson(element.data()));
+        // Delete a record
+        // await database?.rawDelete('DELETE * FROM Posts');
+        emit(BrowiseGetFanPostsSuccessState());
+
+      });
+    }
+    )
+        .catchError((error){
+      emit(BrowiseGetFanPostsErrorState());
+      print('error while getting Fan posts ${error.toString()}');
+    });
+  }
+/////////////////////////////////////////////////
+////// Public Chat ////////////////////////////////////////
+
+
+  void createImagePublicChat({
+    required String dateTime,
+    String? messageImage,
+    String? senderId,
+    String? senderName,
+    String? senderImage,
+
+  }){
+    emit(BrowiseCreatePostLoadingState());
+    PublicChatModel model=PublicChatModel(
+      image: messageImage,
+      text: "",
+      dateTime: dateTime,
+      senderId: AppStrings.uId,
+      senderName: senderName,
+      senderImage: senderImage,
+
+    );
+
+    //Set My Chat
+    FirebaseFirestore.instance
+        .collection('publicChat')
+        .add(model.toMap())
+        .then((value){
+
+      print('createImagePublicChat success');
+      emit(SendPublicChatSuccessState());
+    }).catchError((error){
+
+      print('Error is ${error.toString()}');
+      emit(SendPublicChatErrorState());
+
+    });
+  }
+//////////////////////////////////////////
+
+  void uploadPublicChatImage({
+    required String dateTime,
+    required String text,
+    required String senderId,
+    required String senderName,
+    required String senderImage,
+
+  }){
+    emit(BrowiseUploadImagePostLoadingState());
+    //كدا انا بكريت instance من ال storage
+    firebase_storage.FirebaseStorage.instance
+    //كدا بقوله انا فين في الstorage
+        .ref()
+    //كدا بقةله هتحرك ازاي جوا ال storage
+    //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
+        .child('PublicChatImages/${Uri.file(postImage!.path).pathSegments.last}')
+    //كدا بعمل رفع للصوره
+        .putFile(postImage!).then((value){
+      value.ref.getDownloadURL().then((value){
+        createImagePublicChat(
+          messageImage: value,
+          dateTime: dateTime,
+          senderId: AppStrings.uId,
+          senderName: userModel!.username,
+          senderImage: userModel!.image,
+        );
+
+        emit(BrowiseUploadImagePostSuccessState());
+
+      }).catchError((error){
+        emit(BrowiseUploadImagePostErrorState());
+      });
+    }).catchError((error){
+      emit(BrowiseUploadImagePostErrorState());
+    });
+  }
+  ///////////////////////////////////messages////////////////////////////
+//send Messages
+
+  void sendPublicChat({
+    required String dateTime,
+    required String text,
+
+  }){
+    PublicChatModel model =PublicChatModel(
+        senderId: AppStrings.uId,
+        dateTime: dateTime,
+        text: text,
+        senderName:userModel!.username,
+        senderImage: userModel!.image
+    );
+    //Set My Chat
+    FirebaseFirestore.instance
+        .collection('publicChat')
+        .add(model.toMap())
+        .then((value){
+      print(isSend);
+      emit(SendPublicChatSuccessState());
+    })
+        .catchError((error){
+      emit(SendPublicChatErrorState());
+
+    });
+
+  }
+  ////////////////////////
+//get messages
+  List<PublicChatModel> publicChat=[];
+  void getPublicChat(){
+    FirebaseFirestore.instance
+        .collection('publicChat')
+        .orderBy('dateTime')
+        .snapshots()
+        .listen((event) {
+      publicChat = [];
+      event.docs.forEach((element) {
+        publicChat.add((PublicChatModel.fromJson(element.data())));
+        print('llllllllllllllllllllllllllllllllllllllllllllllllllllllllll');
+        print(publicChat[0].voice);
+
+
+      });
+      emit(GetPublicChatSuccessState());
+
+    });
+  }
+
+
+
+  bool isWritingPublicChat=false;
+  void changeIconPublicChat(){
+    isWritingPublicChat!=isWritingPublicChat;
+    emit(ChangeIconPublicChatSuccessState());
+  }
+
+  ///////////////////////////////voice message
+  void createVoicePublicChat({
+    required String dateTime,
+    required String voice,
+
+  }){
+
+    PublicChatModel model=PublicChatModel(
+        image: "",
+        text: "",
+        dateTime: dateTime,
+        senderId: AppStrings.uId,
+        senderImage: userModel!.image,
+        senderName: userModel!.username,
+        voice: voice
+    );
+
+    //Set My Chat
+    FirebaseFirestore.instance
+        .collection('publicChat')
+        .add(model.toMap())
+        .then((value){
+      isSend=false;
+
+      emit(SendPublicChatSuccessState());
+    }).catchError((error){
+      print(error.toString());
+      emit(SendPublicChatErrorState());
+    });
+  }
+  ///////////////////////////////////////////////////////
 }
 

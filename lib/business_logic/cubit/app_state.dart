@@ -93,3 +93,38 @@ class GetMessageSuccessState extends AppState{}
 //change icon
 class ChangeIconSuccessState extends AppState{}
 class StopLoadingState extends AppState{}
+//fan area
+          //image
+class PickFanPostImageSuccessState extends AppState {}
+class PickFanPostImageErrorState extends AppState {}
+         //video
+class PickFanPostVideoSuccessState extends AppState {}
+class PickFanPostVideoErrorState extends AppState {}
+
+//////fan post
+class FanCreatePostLoadingState extends AppState {}
+class FanCreatePostSuccessState extends AppState {}
+class FanCreatePostErrorState extends AppState {}
+
+class FanUploadImagePostLoadingState extends AppState {}
+class FanUploadImagePostSuccessState extends AppState {}
+class FanUploadImagePostErrorState extends AppState {}
+
+class FanCreateVideoPostSuccessState extends AppState {}
+class FanCreateVideoPostErrorState extends AppState {}
+class FanCreateVideoPostLoadingState extends AppState {}
+
+class FanUploadVideoPostLoadingState extends AppState {}
+class FanUploadVideoPostSuccessState extends AppState {}
+class FanUploadVideoPostErrorState extends AppState {}
+
+class BrowiseGetFanPostsLoadingState extends AppState {}
+class BrowiseGetFanPostsSuccessState extends AppState {}
+class BrowiseGetFanPostsErrorState extends AppState {}
+
+/////// public states
+class SendPublicChatSuccessState extends AppState{}
+class SendPublicChatErrorState extends AppState{}
+class GetPublicChatSuccessState extends AppState{}
+//change icon
+class ChangeIconPublicChatSuccessState extends AppState{}

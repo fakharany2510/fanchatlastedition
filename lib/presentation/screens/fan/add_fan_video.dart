@@ -1,39 +1,38 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/screens/fan/fan_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 import 'package:intl/intl.dart';
-import '../../constants/app_strings.dart';
-import '../layouts/home_layout.dart';
+import '../../layouts/home_layout.dart';
 
-class AddNewVideo extends StatelessWidget {
-  //const AddNewVideo({Key? key}) : super(key: key);
+class AddFanVideo extends StatelessWidget {
   @override
-  TextEditingController postText=TextEditingController();
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
-        if(state is BrowiseGetPostsSuccessState){
-         // Navigator.of(context).popAndPushNamed('home_layout');
-         //  AppCubit.get(context).testLikes();
-         //  AppCubit.get(context).testComments();
-         //  AppCubit.get(context).videoPlayerController!.pause();
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
-          // AppCubit.get(context).videoPlayerController!.dispose();
-
-          // AppCubit.get(context).postVideo=null;
-
-        }
+        // if(state is BrowiseGetPostsSuccessState){
+        //  // AppCubit.get(context).videoPlayerController!.dispose();
+        //   AppCubit.get(context).videoPlayerController==null;
+        //   AppCubit.get(context).postVideo=null;
+        // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+        //
+        //
+        //
+        //
+        //
+        // }
       },
       builder: (context,state){
         return Scaffold(
           backgroundColor: AppColors.myWhite,
           appBar:AppBar(
             backgroundColor: AppColors.myWhite,
-            title: Text('Add vew post',style: TextStyle(
+            title: Text('Add Video',style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor1,
@@ -58,34 +57,33 @@ class AddNewVideo extends StatelessWidget {
                 ),
               )
                   :Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: defaultButton(
+                padding: const EdgeInsets.all(8.0),
+                child:(state is FanCreateVideoPostSuccessState)||
+        (state is BrowiseGetPostsSuccessState)||
+        ( state is FanCreateVideoPostSuccessState)?
+                    CircularProgressIndicator(backgroundColor: AppColors.navBarActiveIcon,)
+                :defaultButton(
                     textColor: AppColors.myWhite,
                     width: size.width*.2,
                     height: size.height*.05,
                     raduis: 10,
                     function: (){
-                      if(AppCubit.get(context).postVideo == null){
-                        AppCubit.get(context).createVideoPost(
-                            timeSpam: DateTime.now().toString(),
-
-                            time: DateFormat.Hm().format(DateTime.now()),
-                            dateTime: DateFormat.yMMMd().format(DateTime.now()),
-                            text:postText.text );
+                      if(AppCubit.get(context).fanPostVideo == null){
+                        print('fan video null');
                       }else{
-                        AppCubit.get(context).uploadPostVideo(
+                        AppCubit.get(context).uploadFanPostVideo(
                           timeSpam: DateTime.now().toString(),
                           time: DateFormat.Hm().format(DateTime.now()),
                           dateTime:DateFormat.yMMMd().format(DateTime.now()),
-                          text:postText.text,
+                          text:"",
                           name: AppCubit.get(context).userModel!.username,
                         );
                       }
                     },
-                    buttonText: 'post',
+                    buttonText: 'add',
                     buttonColor: AppColors.primaryColor1
+                )
               ),
-                  ),
             ],
           ),
           body: Padding(
@@ -115,24 +113,13 @@ class AddNewVideo extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10,),
-                  Expanded(
-                    child: TextFormField(
-                      controller: postText,
-                      decoration: const InputDecoration(
-                        hintText: 'Say something about this video.....',
-                        enabledBorder: InputBorder.none,
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 10,),
-                  ( AppCubit.get(context).postVideo!= null && AppCubit.get(context).videoPlayerController!.value.isInitialized)
+                  ( AppCubit.get(context).fanPostVideo!= null && AppCubit.get(context).videoPlayerController!.value.isInitialized)
                       ?Expanded(
-                        child: Container(
-                    height: size.height,
-                    width: size.width,
-                    child: AspectRatio(
+                    child: Container(
+                      height: size.height,
+                      width: size.width,
+                      child: AspectRatio(
                         aspectRatio:AppCubit.get(context).videoPlayerController!.value.aspectRatio,
                         child: AppCubit.get(context).videoPlayerController ==null
                             ?SizedBox(height: 0,)
@@ -140,9 +127,9 @@ class AddNewVideo extends StatelessWidget {
                             AppCubit.get(context).videoPlayerController!
                         ),
 
+                      ),
                     ),
-                  ),
-                      )
+                  )
                       : Expanded(child: Container(
                     child: Center(child: Text('No Video Selected Yet',
                         style: TextStyle(
