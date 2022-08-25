@@ -134,7 +134,7 @@ class _PostWidgetState extends State<PostWidget> {
                           ),
                         )),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 0,),
                   (AppCubit.get(context).posts[widget.index!].postImage!="")
                       ?Material(
                     elevation: 1000,
@@ -203,7 +203,7 @@ class _PostWidgetState extends State<PostWidget> {
                     ],
                   )
                       :SizedBox(width: 0,),
-                  SizedBox(height: 3,),
+                  SizedBox(height: 0,),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -284,10 +284,6 @@ class _PostWidgetState extends State<PostWidget> {
                               padding:EdgeInsets.zero,
                               constraints: BoxConstraints(),
                               onPressed:(){
-                                // AppCubit.get(context).getComment( AppCubit.get(context).postsId[widget.index!]);
-                                // Navigator.push(context, MaterialPageRoute(builder: (_){
-                                //   return CommentScreen(postId: AppCubit.get(context).postsId[widget.index!] ,);
-                                // }));
                                 AppCubit.get(context).getComment('${AppCubit.get(context).posts[widget.index!].postId}');
                                 Navigator.push(context, MaterialPageRoute(builder: (_){
                                   return CommentScreen(postId: '${AppCubit.get(context).posts[widget.index!].postId}');
@@ -299,44 +295,6 @@ class _PostWidgetState extends State<PostWidget> {
                       ],
                     ),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: Row(
-                  //     children: [
-                  //       CircleAvatar(
-                  //         backgroundImage: NetworkImage('${AppCubit.get(context).posts[widget.index!].image}'),
-                  //         radius: 18,
-                  //       ),
-                  //       const SizedBox(width: 7,),
-                  //       InkWell(
-                  //         onTap: (){
-                  //           //
-                  //           AppCubit.get(context).getComment('${AppCubit.get(context).posts[widget.index!].postId}');
-                  //           Navigator.push(context, MaterialPageRoute(builder: (_){
-                  //             return CommentScreen(postId: '${AppCubit.get(context).posts[widget.index!].postId}');
-                  //           }));
-                  //         },
-                  //         child: Container(
-                  //           width: MediaQuery.of(context).size.width*.74,
-                  //           height: MediaQuery.of(context).size.height*.04,
-                  //           padding: const EdgeInsets.fromLTRB(12, 7, 12, 6),
-                  //           decoration: BoxDecoration(
-                  //               color: AppColors.myGrey,
-                  //               borderRadius: BorderRadius.circular(50)
-                  //           ),
-                  //           child: Text(
-                  //             'Write a comment ...',style: TextStyle(
-                  //               color: AppColors.primaryColor1,
-                  //               fontSize: 13,
-                  //               fontFamily: AppStrings.appFont
-                  //           ),
-                  //           ),
-                  //         ),
-                  //       )
-                  //
-                  //     ],
-                  //   ),
-                  // ),
                 ],
               ),
             ),

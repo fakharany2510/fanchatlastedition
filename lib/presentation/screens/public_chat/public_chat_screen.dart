@@ -6,6 +6,7 @@ import 'package:fanchat/data/modles/public_chat_model.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/screens/public_chat/send_image_public_chat.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
@@ -268,6 +269,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                     child: Center(
                                       child: IconButton(
                                           onPressed: (){
+                                            HapticFeedback.vibrate();
                                             textMessage.text==""
                                                 ?{
                                               recording?stopRecord():startRecord(),

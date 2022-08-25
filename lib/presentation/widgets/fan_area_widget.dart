@@ -19,18 +19,6 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
   Future <void> ?intilize;
   @override
   void initState() {
-    // AppCubit.get(context).insertTOdatabase(
-    //     postId: AppCubit.get(context).posts[widget.index!].postId!,
-    //     userId: AppCubit.get(context).posts[widget.index!].userId!,
-    //     image: AppCubit.get(context).posts[widget.index!].image!,
-    //     name:  AppCubit.get(context).posts[widget.index!].name!,
-    //     postImage:AppCubit.get(context).posts[widget.index!].postImage!,
-    //     postVideo: AppCubit.get(context).posts[widget.index!].postVideo!,
-    //     postText: AppCubit.get(context).posts[widget.index!].text!,
-    //     time: AppCubit.get(context).posts[widget.index!].time!,
-    //     timeSamp: AppCubit.get(context).posts[widget.index!].timeSmap!
-    // );
-    //////////////////////////////////
     videoPlayerController=VideoPlayerController.network(
         AppCubit.get(context).fans[widget.index!].postVideo!
     );
@@ -59,7 +47,7 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
                       Image(
                         height: MediaQuery.of(context).size.height*.2,
                         fit: BoxFit.fill,
-                        image: NetworkImage('${AppCubit.get(context).fans[widget.index!].postImage}'),
+                        image: NetworkImage('${AppCubit.get(context).fans[widget.index!].postImage}') as ImageProvider,
                       ),
                       Positioned(
                         top: 0,

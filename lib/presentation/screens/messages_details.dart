@@ -7,6 +7,7 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/screens/sendimage_message.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
@@ -45,10 +46,15 @@ class _ChatDetailsState extends State<ChatDetails> {
   bool recording=false;
   bool? isComplete;
   bool? uploadingRecord = false;
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
+    if(scrollController.hasClients){
+      scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+    }
     super.initState();
+
     isWriting = false;
   }
   @override
@@ -56,6 +62,9 @@ class _ChatDetailsState extends State<ChatDetails> {
     return ConditionalBuilder(
       builder: (context)=>Builder(
           builder: (context) {
+            if(scrollController.hasClients){
+              scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+            }
             AppCubit.get(context).getMessages(recevierId: widget.userModel.uId!);
             return BlocConsumer<AppCubit,AppState>(
               listener: (context,state){
@@ -64,6 +73,9 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
                 }
               },
               builder: (context,state){
+                if(scrollController.hasClients){
+                  scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+                }
                 return Scaffold(
                   backgroundColor: Colors.white,
                   appBar: AppBar(
@@ -111,6 +123,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
                             color: Colors.white,
                             padding: EdgeInsets.all(10),
                             child: ListView.separated(
+                                controller: scrollController,
                                 physics: BouncingScrollPhysics(),
                                 itemBuilder: (context , index)
                                 {
@@ -173,6 +186,11 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
                                             AppCubit.get(context).isSend=true;
                                           });
                                           stopRecord();
+                                          scrollController.animateTo(
+                                            scrollController.position.maxScrollExtent,
+                                            duration: const Duration(milliseconds: 300),
+                                            curve: Curves.easeOut,
+                                          );
                                           // toogleRecord();
                                         },
                                         icon:  Icon(
@@ -231,6 +249,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
                                     child: Center(
                                       child: IconButton(
                                           onPressed: (){
+                                            HapticFeedback.vibrate();
                                             textMessage.text==""
                                                 ?{
                                               recording?stopRecord():startRecord(),

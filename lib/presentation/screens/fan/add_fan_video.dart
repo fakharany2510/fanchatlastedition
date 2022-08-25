@@ -15,17 +15,12 @@ class AddFanVideo extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
-        // if(state is BrowiseGetPostsSuccessState){
-        //  // AppCubit.get(context).videoPlayerController!.dispose();
-        //   AppCubit.get(context).videoPlayerController==null;
-        //   AppCubit.get(context).postVideo=null;
-        // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
-        //
-        //
-        //
-        //
-        //
-        // }
+        if(state is BrowiseGetFanPostsSuccessState){
+         // AppCubit.get(context).videoPlayerController!.dispose();
+          AppCubit.get(context).videoPlayerController==null;
+          AppCubit.get(context).postVideo=null;
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+        }
       },
       builder: (context,state){
         return Scaffold(
@@ -59,8 +54,8 @@ class AddFanVideo extends StatelessWidget {
                   :Padding(
                 padding: const EdgeInsets.all(8.0),
                 child:(state is FanCreateVideoPostSuccessState)||
-        (state is BrowiseGetPostsSuccessState)||
-        ( state is FanCreateVideoPostSuccessState)?
+        (state is FanUploadVideoPostLoadingState)||
+        ( state is FanUploadVideoPostSuccessState)?
                     CircularProgressIndicator(backgroundColor: AppColors.navBarActiveIcon,)
                 :defaultButton(
                     textColor: AppColors.myWhite,

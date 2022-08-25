@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
+import 'package:fanchat/data/modles/fan_model.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
 import 'package:fanchat/presentation/screens/public_chat/public_chat_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -94,7 +95,7 @@ class AppCubit extends Cubit<AppState> {
       getAllUsers();
     }
     if(currentIndex==2){
-      getFanPosts();
+     // getFanPosts();
     }
     emit(NavigateScreenState());
   }
@@ -1167,7 +1168,7 @@ List<int> commentIndex=[];
   File? fanPostImage;
   Future<void> pickFanPostImage() async {
     final pickedFile  =
-    await picker.pickImage(source: ImageSource.gallery);
+      await picker.pickImage(source: ImageSource.gallery , maxHeight: 550,maxWidth: 550,imageQuality:90);
     if (pickedFile != null) {
       fanPostImage=File(pickedFile.path);
       var decodedImage = await decodeImageFromList(fanPostImage!.readAsBytesSync());
@@ -1187,7 +1188,7 @@ List<int> commentIndex=[];
 
   void pickFanPostVideo() async {
     final pickedFile =
-    await picker.pickVideo(source: ImageSource.gallery);
+    await picker.pickVideo(source: ImageSource.gallery,);
     if (pickedFile != null) {
       fanPostVideo = File(pickedFile.path);
       videoPlayerController = VideoPlayerController.file(fanPostVideo!)
@@ -1211,7 +1212,7 @@ List<int> commentIndex=[];
   }){
     emit(FanCreatePostLoadingState());
 
-    BrowisePostModel model=BrowisePostModel(
+    FanModel model=FanModel(
       name: userModel!.username,
       image:userModel!.image,
       userId:userModel!.uId,
@@ -1220,9 +1221,7 @@ List<int> commentIndex=[];
       postImage:postImage??'',
       postVideo: "",
       timeSmap: timeSpam,
-      text: text,
       likes: 0,
-      comments:0,
       postId: AppStrings.postUid,
     );
 
@@ -1302,7 +1301,7 @@ List<int> commentIndex=[];
   }){
     emit(FanCreateVideoPostLoadingState());
 
-    BrowisePostModel model=BrowisePostModel(
+    FanModel model=FanModel(
         name: userModel!.username,
         image:userModel!.image,
         userId:userModel!.uId,
@@ -1310,10 +1309,8 @@ List<int> commentIndex=[];
         postImage:'',
         postVideo: postVideo??'',
         time: time  ,
-        text: text,
         timeSmap: timeSpam,
         likes: 0,
-        comments:0,
         postId: AppStrings.postUid
     );
 
@@ -1381,7 +1378,7 @@ List<int> commentIndex=[];
 //////////////////////////////////////////////
   /////////////////////////
   //get Posts
-  List<BrowisePostModel> fans=[];
+  List<FanModel> fans=[];
   void getFanPosts(){
     fans=[];
     postsId=[];
@@ -1393,7 +1390,7 @@ List<int> commentIndex=[];
         .get()
         .then((value) {
       value.docs.forEach((element) async{
-        fans.add(BrowisePostModel.fromJson(element.data()));
+        fans.add(FanModel.fromJson(element.data()));
         // Delete a record
         // await database?.rawDelete('DELETE * FROM Posts');
         emit(BrowiseGetFanPostsSuccessState());
