@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 import '../../constants/app_strings.dart';
 import '../screens/comment_screen.dart';
+import 'package:cached_video_player/cached_video_player.dart';
 
 class PostWidget extends StatefulWidget {
   int ?index;
@@ -20,34 +22,30 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
-  VideoPlayerController ?videoPlayerController;
-  Future <void> ?intilize;
+  late CachedVideoPlayerController controller;
   @override
   void initState() {
-    // AppCubit.get(context).insertTOdatabase(
-    //     postId: AppCubit.get(context).posts[widget.index!].postId!,
-    //     userId: AppCubit.get(context).posts[widget.index!].userId!,
-    //     image: AppCubit.get(context).posts[widget.index!].image!,
-    //     name:  AppCubit.get(context).posts[widget.index!].name!,
-    //     postImage:AppCubit.get(context).posts[widget.index!].postImage!,
-    //     postVideo: AppCubit.get(context).posts[widget.index!].postVideo!,
-    //     postText: AppCubit.get(context).posts[widget.index!].text!,
-    //     time: AppCubit.get(context).posts[widget.index!].time!,
-    //     timeSamp: AppCubit.get(context).posts[widget.index!].timeSmap!
-    // );
-    //////////////////////////////////
-    videoPlayerController=VideoPlayerController.network(
-        AppCubit.get(context).posts[widget.index!].postVideo!
-    );
-    intilize=videoPlayerController!.initialize();
-    videoPlayerController!.setLooping(true);
-    videoPlayerController!.setVolume(1.0);    super.initState();
+    controller = CachedVideoPlayerController.network(
+        "${AppCubit.get(context).posts[widget.index!].postVideo!}");
+    controller.initialize().then((value) {
+      controller.play();
+      controller.setLooping(true);
+      controller.setVolume(1.0);
+      setState(() {
+        controller.pause();
+      });
+    }).catchError((error){
+      print('error while initializing video ${error.toString()}');
+    });
+
+    super.initState();
   }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(listener: (context,state){
       if(state is NavigateScreenState){
-        videoPlayerController!.pause();
+        controller.pause();
+       // videoPlayerController!.pause();
       }
 
     },
@@ -68,7 +66,7 @@ class _PostWidgetState extends State<PostWidget> {
                     child: Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage('${AppCubit.get(context).posts[widget.index!].image}'),
+                          backgroundImage:NetworkImage('${AppCubit.get(context).posts[widget.index!].image}'),
                           radius: 18,
                         ),
                         const SizedBox(width: 7,),
@@ -141,15 +139,13 @@ class _PostWidgetState extends State<PostWidget> {
                     child: Padding(
                       padding: const EdgeInsets.all(0),
                       child: Container(
-                        padding: EdgeInsets.all(8),
                         height: MediaQuery.of(context).size.height*.25,
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3),
-                            image:  DecorationImage(
-                                image: NetworkImage('${AppCubit.get(context).posts[widget.index!].postImage}'),
-                                fit: BoxFit.cover
-                            )
+                        child:  CachedNetworkImage(
+                          cacheManager: AppCubit.get(context).manager,
+                          imageUrl: "${AppCubit.get(context).posts[widget.index!].postImage}",
+                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ),
@@ -160,43 +156,50 @@ class _PostWidgetState extends State<PostWidget> {
                       Container(
                         height: MediaQuery.of(context).size.height*.25,
                         width: double.infinity,
-                        child: FutureBuilder(
-                          future: intilize,
-                          builder: (context,snapshot){
-                            if(snapshot.connectionState == ConnectionState.done){
-                              return AspectRatio(
-                                aspectRatio: videoPlayerController!.value.aspectRatio,
-                                child: VideoPlayer(videoPlayerController!),
-                              );
-                            }
-                            else{
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                          },
-
-
-
-                        ),
+                        child: controller.value.isInitialized
+                            ? AspectRatio(
+                            aspectRatio: controller.value.aspectRatio,
+                            child: CachedVideoPlayer(controller))
+                            : Center(child: const CircularProgressIndicator())
                       ),
+
+          // FutureBuilder(
+                        //   future: intilize,
+                        //   builder: (context,snapshot){
+                        //     if(snapshot.connectionState == ConnectionState.done){
+                        //       return AspectRatio(
+                        //         aspectRatio: videoPlayerController!.value.aspectRatio,
+                        //         child: VideoPlayer(videoPlayerController!),
+                        //       );
+                        //     }
+                        //     else{
+                        //       return const Center(
+                        //         child: CircularProgressIndicator(),
+                        //       );
+                        //     }
+                        //   },
+                        //
+                        //
+                        //
+                        // ),
+
                       Positioned(
                           top: 10,
                           right: 20,
                           child: InkWell(
                             onTap: (){
                               setState((){
-                                if(videoPlayerController!.value.isPlaying){
-                                  videoPlayerController!.pause();
+                                if(controller.value.isPlaying){
+                                  controller.pause();
                                 }else{
-                                  videoPlayerController!.play();
+                                  controller.play();
                                 }
                               });
                             },
                             child: CircleAvatar(
                               backgroundColor: AppColors.primaryColor1,
                               radius: 20,
-                              child: videoPlayerController!.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
+                              child: controller.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
                             ),
                           )
                       ),

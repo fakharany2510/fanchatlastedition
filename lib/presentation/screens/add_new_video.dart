@@ -1,3 +1,4 @@
+import 'package:cached_video_player/cached_video_player.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
@@ -20,11 +21,9 @@ class AddNewVideo extends StatelessWidget {
          // Navigator.of(context).popAndPushNamed('home_layout');
          //  AppCubit.get(context).testLikes();
          //  AppCubit.get(context).testComments();
-         //  AppCubit.get(context).videoPlayerController!.pause();
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
-          // AppCubit.get(context).videoPlayerController!.dispose();
-
-          // AppCubit.get(context).postVideo=null;
+          AppCubit.get(context).controller!.dispose();
+          AppCubit.get(context).postVideo=null;
 
         }
       },
@@ -127,17 +126,17 @@ class AddNewVideo extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10,),
-                  ( AppCubit.get(context).postVideo!= null && AppCubit.get(context).videoPlayerController!.value.isInitialized)
+                  ( AppCubit.get(context).postVideo!= null && AppCubit.get(context).controller!.value.isInitialized)
                       ?Expanded(
                         child: Container(
                     height: size.height,
                     width: size.width,
                     child: AspectRatio(
-                        aspectRatio:AppCubit.get(context).videoPlayerController!.value.aspectRatio,
-                        child: AppCubit.get(context).videoPlayerController ==null
+                        aspectRatio:AppCubit.get(context).controller!.value.aspectRatio,
+                        child: AppCubit.get(context).controller ==null
                             ?SizedBox(height: 0,)
-                            :VideoPlayer(
-                            AppCubit.get(context).videoPlayerController!
+                            :CachedVideoPlayer(
+                            AppCubit.get(context).controller!
                         ),
 
                     ),

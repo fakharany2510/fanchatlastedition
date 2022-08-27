@@ -5,6 +5,9 @@ import 'package:fanchat/presentation/screens/fan/fan_full_video.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
 
 class FanAreaWidget extends StatefulWidget {
   int? index;
@@ -17,6 +20,7 @@ class FanAreaWidget extends StatefulWidget {
 class _FanAreaWidgetState extends State<FanAreaWidget> {
   VideoPlayerController ?videoPlayerController;
   Future <void> ?intilize;
+
   @override
   void initState() {
     videoPlayerController=VideoPlayerController.network(
@@ -44,11 +48,21 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
                   child: (AppCubit.get(context).fans[widget.index!].postImage!="")
                       ?Stack(
                     children: [
-                      Image(
-                        height: MediaQuery.of(context).size.height*.2,
-                        fit: BoxFit.fill,
-                        image: NetworkImage('${AppCubit.get(context).fans[widget.index!].postImage}') as ImageProvider,
-                      ),
+                      // Image(
+                      //   height: MediaQuery.of(context).size.height*.2,
+                      //   fit: BoxFit.fill,
+                      //   image:
+                      //   NetworkImage('${AppCubit.get(context).fans[widget.index!].postImage}') as ImageProvider,
+                      // ),
+          CachedNetworkImage(
+          cacheManager: AppCubit.get(context).manager,
+          imageUrl: "${AppCubit.get(context).fans[widget.index!].postImage}",
+          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+         // maxHeightDiskCache:75,
+              width: 200,
+              height: MediaQuery.of(context).size.height*.2,
+            fit: BoxFit.fill,
+          ),
                       Positioned(
                         top: 0,
                         right: 0,

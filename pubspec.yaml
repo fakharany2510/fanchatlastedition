@@ -75,6 +75,13 @@ dependencies:
   path_provider: ^2.0.8
   uuid: ^3.0.5
   voice_message_package: ^0.0.74
+  #cache network images & videos:
+  cached_network_image: ^3.2.1
+  flutter_cache_manager: ^3.3.0
+  cached_video_player: ^2.0.3
+
+
+
 
 dev_dependencies:
   flutter_test:

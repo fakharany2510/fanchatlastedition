@@ -160,7 +160,7 @@ class _AddTextPostState extends State<AddTextPost> {
                           ),
                           TextButton(
                               onPressed: () {
-                                AppCubit.get(context).pickPostVideo();
+                                AppCubit.get(context).pickPostVideo2();
                               },
                               child: Row(
                                 children: [

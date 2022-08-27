@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
@@ -86,17 +87,23 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const CircleAvatar(
-                          backgroundImage:  NetworkImage('https://img.freepik.com/free-vector/messages-concept-illustration_114360-583.jpg?w=740&t=st=1661099337~exp=1661099937~hmac=2ae9e37e55c500b6273d2634baf01732ec2c36a9c59eb7e258a47e3c5b84bd34') as ImageProvider,
-                          radius: 22,
-                        ),
+                         Container(
+                           width: 40,
+                           height: 40,
+                           decoration: BoxDecoration(
+                             image: const DecorationImage(
+                               image: AssetImage('assets/images/logocolored.png'),
+                             ),
+                             borderRadius: BorderRadius.circular(2),
+                           ),
+                         ),
                         const SizedBox(width: 15,),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
-                              children: [
-                                const Text('Public Chat',
+                              children: const [
+                                 Text('Public Chat',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,
@@ -308,29 +315,6 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                       ),
                                     )
                                 ),
-                                //                 Container(
-                                //                     width: 40,
-                                //                     height: 40,
-                                //                     decoration: BoxDecoration(
-                                //                         borderRadius: BorderRadius.circular(50),
-                                //                         color: AppColors.primaryColor1
-                                //                     ),
-                                //                     child: Center(
-                                //                       child: IconButton(
-                                //                         icon: recording
-                                //                             ? Icon(Icons.pause_outlined, color: Colors.red)
-                                //                             : Icon(
-                                //                           Icons.mic,
-                                //                           color:Colors.white,
-                                //                         ),
-                                //                         onPressed: () =>{
-                                //                            recording?stopRecord():startRecord(),
-                                //                           AppCubit.get(context).getMessages(recevierId:widget.userModel.uId!)
-                                // },
-                                //                         color:Theme.of(context).primaryColor,
-                                //                       ),
-                                //                     )
-                                //                 ),
                               ],
                             )
                         ),
@@ -405,10 +389,15 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                 decoration: BoxDecoration(
                     border: Border.all(color: AppColors.primaryColor1,width: 4),
                     borderRadius: BorderRadius.circular(3),
-                    image:  DecorationImage(
-                        image: NetworkImage('${model.image}'),
-                        fit: BoxFit.fill
-                    )
+                ),
+                child:CachedNetworkImage(
+                  cacheManager: AppCubit.get(context).manager,
+                  imageUrl: "${model.image}",
+                  placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                  // maxHeightDiskCache:75,
+                  width: 200,
+                  height: MediaQuery.of(context).size.height*.2,
+                  fit: BoxFit.fill,
                 ),
               )
                   :VoiceMessage(
@@ -474,10 +463,15 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(3),
                     border: Border.all(color: AppColors.myGrey,width: 4),
-                    image:  DecorationImage(
-                        image: NetworkImage('${model.image}'),
-                        fit: BoxFit.fill
-                    )
+                ),
+                child: CachedNetworkImage(
+                  cacheManager: AppCubit.get(context).manager,
+                  imageUrl: "${model.image}",
+                  placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                  // maxHeightDiskCache:75,
+                  width: 200,
+                  height: MediaQuery.of(context).size.height*.2,
+                  fit: BoxFit.fill,
                 ),
               )
                   :VoiceMessage(

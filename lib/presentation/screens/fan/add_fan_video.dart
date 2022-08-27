@@ -15,7 +15,7 @@ class AddFanVideo extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
-        if(state is BrowiseGetFanPostsSuccessState){
+        if(state is FanCreatePostSuccessState){
          // AppCubit.get(context).videoPlayerController!.dispose();
           AppCubit.get(context).videoPlayerController==null;
           AppCubit.get(context).postVideo=null;

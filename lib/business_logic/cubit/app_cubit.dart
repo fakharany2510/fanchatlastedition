@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_video_player/cached_video_player.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/data/modles/fan_model.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
@@ -8,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/user_model.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +30,10 @@ class AppCubit extends Cubit<AppState> {
   TextEditingController changeUserBioController= TextEditingController();
   TextEditingController changeUserPhoneController= TextEditingController();
 
-
+//caching manager
+   final manager=CacheManager(Config(
+    'customCacheKey',
+    stalePeriod: Duration(days: 15),maxNrOfCacheObjects: 100,));
   List screensTitles=[
 
     'Home Screen',
@@ -362,23 +367,39 @@ class AppCubit extends Cubit<AppState> {
 ///////////////////////////////////////////////////////
   // Pick post video
   VideoPlayerController? videoPlayerController;
+  CachedVideoPlayerController? controller;
+
 
   File? postVideo;
-
-  void pickPostVideo() async {
+  void pickPostVideo2() async {
     final pickedFile =
     await picker.pickVideo(source: ImageSource.gallery);
     if (pickedFile != null) {
       postVideo = File(pickedFile.path);
-      videoPlayerController = VideoPlayerController.file(postVideo!)
+      controller = CachedVideoPlayerController.file(postVideo!)
         ..initialize().then((value) {
-          videoPlayerController!.play();
+          controller!.play();
           emit(PickPostVideoSuccessState());
         }).catchError((error) {
           print('error picking video ${error.toString()}');
         });
     }
   }
+/////////////////////////////////////////////////////
+//   void pickPostVideo() async {
+//     final pickedFile =
+//     await picker.pickVideo(source: ImageSource.gallery);
+//     if (pickedFile != null) {
+//       postVideo = File(pickedFile.path);
+//       videoPlayerController = VideoPlayerController.file(postVideo!)
+//         ..initialize().then((value) {
+//           videoPlayerController!.play();
+//           emit(PickPostVideoSuccessState());
+//         }).catchError((error) {
+//           print('error picking video ${error.toString()}');
+//         });
+//     }
+//   }
   ////////////////////////////////////////
   //format time
   String getTimeDifferenceFromNow(DateTime dateTime) {
@@ -666,8 +687,6 @@ class AppCubit extends Cubit<AppState> {
         .then((value) {
       value.docs.forEach((element) async{
         posts.add(BrowisePostModel.fromJson(element.data()));
-        // Delete a record
-       // await database?.rawDelete('DELETE * FROM Posts');
         emit(BrowiseGetPostsSuccessState());
 
       });
@@ -1168,7 +1187,7 @@ List<int> commentIndex=[];
   File? fanPostImage;
   Future<void> pickFanPostImage() async {
     final pickedFile  =
-      await picker.pickImage(source: ImageSource.gallery , maxHeight: 550,maxWidth: 550,imageQuality:90);
+      await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       fanPostImage=File(pickedFile.path);
       var decodedImage = await decodeImageFromList(fanPostImage!.readAsBytesSync());
@@ -1182,7 +1201,7 @@ List<int> commentIndex=[];
       emit(PickFanPostImageErrorState());
     }
   }
-                          /////////////////////////////////////
+/////////////////////////////////////
 //pick fan post video
   File? fanPostVideo;
 

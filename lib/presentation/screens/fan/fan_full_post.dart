@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
@@ -33,7 +34,7 @@ class FanFullPost extends StatelessWidget {
                   child: Row(
                     children: [
                       CircleAvatar(
-                        backgroundImage: NetworkImage('${userName}',
+                        backgroundImage: NetworkImage('${userImage}',
                         ),
                         radius: 18,
                       ),
@@ -72,9 +73,11 @@ class FanFullPost extends StatelessWidget {
                 SizedBox(height: 20,),
                 Expanded(
                     child: Container(
-                      child: Image(
-                        image: NetworkImage('${image}',),
-                        fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width,
+                      child:  CachedNetworkImage(
+                          cacheManager: AppCubit.get(context).manager,
+                          imageUrl: "${image}",
+                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
                       ),
                     )
                 )

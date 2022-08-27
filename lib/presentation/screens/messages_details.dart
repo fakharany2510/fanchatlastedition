@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
@@ -367,14 +368,12 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
           child: Container(
       height: MediaQuery.of(context).size.height*.28,
       width: MediaQuery.of(context).size.width*.55,
-      decoration: BoxDecoration(
-            border: Border.all(color: AppColors.primaryColor1,width: 4),
-            borderRadius: BorderRadius.circular(3),
-            image:  DecorationImage(
-                image: NetworkImage('${model.image}'),
-                fit: BoxFit.fill
-            )
-      ),
+     child:  CachedNetworkImage(
+       cacheManager: AppCubit.get(context).manager,
+       imageUrl: "${model.image}",
+       placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+       fit: BoxFit.fill,
+     ),
     ),
         )
         :VoiceMessage(
@@ -427,14 +426,12 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.u
             // margin: EdgeInsets.all(5),
       height: MediaQuery.of(context).size.height*.28,
       width: MediaQuery.of(context).size.width*.55,
-      decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(3),
-            border: Border.all(color: AppColors.myGrey,width: 4),
-            image:  DecorationImage(
-                image: NetworkImage('${model.image}'),
-                fit: BoxFit.fill
-            )
-      ),
+     child: CachedNetworkImage(
+       cacheManager: AppCubit.get(context).manager,
+       imageUrl: "${model.image}",
+       placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+       fit: BoxFit.fill,
+     ),
     ),
         )
 
