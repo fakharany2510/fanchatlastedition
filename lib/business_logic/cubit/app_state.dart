@@ -132,3 +132,9 @@ class BrowiseGetFanPostsLoadingState extends AppState {}
 class BrowiseGetFanPostsSuccessState extends AppState {}
 class BrowiseGetFanPostsErrorState extends AppState {}
 
+/////// Team states
+class SendTeamChatSuccessState extends AppState{}
+class SendTeamChatErrorState extends AppState{}
+class GetTeamChatSuccessState extends AppState{}
+//change icon
+class ChangeIconTeamChatSuccessState extends AppState{}

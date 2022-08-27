@@ -1,8 +1,11 @@
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/country_pickers.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
+import 'package:fanchat/constants/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../constants/app_colors.dart';
 import '../widgets/shared_widgets.dart';
 
@@ -199,6 +202,50 @@ class EditProfileScreen extends StatelessWidget {
                         color: AppColors.myGrey,
                       )),
                 ),
+                SizedBox(height: 10,),
+
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 25),
+                    child: Text("Select Favorite Team :",style: TextStyle(
+                        color: AppColors.myGrey,
+                        fontSize: 16,
+                        fontFamily: AppStrings.appFont
+                    ),),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 0, right: 0, top: 10),
+                  child: Container(
+                    margin: EdgeInsets.symmetric(
+                      horizontal: 15
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: AppColors.myWhite,
+                        width: 1
+                      ),
+                      borderRadius: BorderRadius.circular(20)
+                    ),
+                    child: CountryPickerDropdown(
+                      dropdownColor: AppColors.primaryColor1,
+                      initialValue: 'EG',
+                      itemBuilder: _buildDropdownItem,
+                      priorityList:[
+                        CountryPickerUtils.getCountryByIsoCode('GB'),
+                        CountryPickerUtils.getCountryByIsoCode('CN'),
+                      ],
+                      sortComparator: (Country a, Country b) => a.isoCode.compareTo(b.isoCode),
+                      onValuePicked: (Country country) {
+                        print("${country.name}");
+                        printMessage("+${country.phoneCode}");
+                        CashHelper.saveData(key: 'Team',value:"${country.name}" );
+                      },
+                    ),
+                  ),
+                ),
+
                 const SizedBox(height: 30),
                 state is UpdateUserLoadingState ||
                         state is GetCoverImageSuccessState ||
@@ -228,4 +275,25 @@ class EditProfileScreen extends StatelessWidget {
       },
     );
   }
+  Widget _buildDropdownItem(Country country) => Container(
+    padding:  EdgeInsets.all(10),
+    width: 290,
+    child: Row(
+      children: <Widget>[
+
+        CountryPickerUtils.getDefaultFlagImage(country),
+        const SizedBox(
+          width: 15.0,
+        ),
+        Text("${country.name}",style: TextStyle(
+            color: AppColors.myGrey,
+            fontFamily: AppStrings.appFont
+        ),),
+        const SizedBox(
+          width: 15.0,
+        ),
+      ],
+    ),
+  );
+
 }

@@ -1,6 +1,7 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/screens/login_screen.dart';
+import 'package:fanchat/presentation/screens/team_chat/team_chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -77,6 +78,47 @@ class MoreScreen extends StatelessWidget {
                             ),
                             onTap: (){
                               Navigator.pushNamed(context, 'profile');
+                            },
+                          ),
+                          const SizedBox(height:10),
+                          InkWell(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0,
+                                  horizontal: 10
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 0,
+                                  horizontal: 10
+                              ),
+                              width: size.width,
+                              height: size.height*.05,
+                              decoration: BoxDecoration(
+                                  color: AppColors.myGrey,
+                                  borderRadius: BorderRadius.circular(10)
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.family_restroom_sharp,color: AppColors.primaryColor1,size: 25,),
+                                  const SizedBox(width: 5,),
+                                  Text('Team Chat',style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.primaryColor1,
+                                      fontFamily: AppStrings.appFont
+                                  ),),
+                                  const Spacer(),
+                                  Icon(Icons.arrow_forward_ios_outlined,color: AppColors.primaryColor1,size: 20,),
+                                ],
+                              ),
+                            ),
+                            onTap: (){
+                              AppCubit.get(context).signOut();
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context)=>TeamChatScreen())
+                              );
                             },
                           ),
                           const SizedBox(height:10),

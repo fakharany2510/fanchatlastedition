@@ -1588,5 +1588,174 @@ List<int> commentIndex=[];
     });
   }
   ///////////////////////////////////////////////////////
+
+
+
+////// Team Chat ////////////////////////////////////////
+
+
+  void createImageTeamChat({
+    required String dateTime,
+    String? messageImage,
+    String? senderId,
+    String? senderName,
+    String? senderImage,
+
+  }){
+    emit(BrowiseCreatePostLoadingState());
+    PublicChatModel model=PublicChatModel(
+      image: messageImage,
+      text: "",
+      dateTime: dateTime,
+      senderId: AppStrings.uId,
+      senderName: senderName,
+      senderImage: senderImage,
+
+    );
+
+    //Set My Chat
+    FirebaseFirestore.instance
+        .collection('${CashHelper.getData(key: 'Team')}')
+        .add(model.toMap())
+        .then((value){
+
+      print('createImagePublicChat success');
+      emit(SendTeamChatSuccessState());
+    }).catchError((error){
+
+      print('Error is ${error.toString()}');
+      emit(SendTeamChatErrorState());
+
+    });
+  }
+//////////////////////////////////////////
+
+  void uploadTeamChatImage({
+    required String dateTime,
+    required String text,
+    required String senderId,
+    required String senderName,
+    required String senderImage,
+
+  }){
+    emit(BrowiseUploadImagePostLoadingState());
+    //كدا انا بكريت instance من ال storage
+    firebase_storage.FirebaseStorage.instance
+    //كدا بقوله انا فين في الstorage
+        .ref()
+    //كدا بقةله هتحرك ازاي جوا ال storage
+    //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
+        .child('TeamChatImages/${Uri.file(postImage!.path).pathSegments.last}')
+    //كدا بعمل رفع للصوره
+        .putFile(postImage!).then((value){
+      value.ref.getDownloadURL().then((value){
+        createImageTeamChat(
+          messageImage: value,
+          dateTime: dateTime,
+          senderId: AppStrings.uId,
+          senderName: userModel!.username,
+          senderImage: userModel!.image,
+        );
+
+        emit(BrowiseUploadImagePostSuccessState());
+
+      }).catchError((error){
+        emit(BrowiseUploadImagePostErrorState());
+      });
+    }).catchError((error){
+      emit(BrowiseUploadImagePostErrorState());
+    });
+  }
+  ///////////////////////////////////messages////////////////////////////
+//send Messages
+
+  void sendTeamChat({
+    required String dateTime,
+    required String text,
+
+  }){
+    PublicChatModel model =PublicChatModel(
+        senderId: AppStrings.uId,
+        dateTime: dateTime,
+        text: text,
+        senderName:userModel!.username,
+        senderImage: userModel!.image
+    );
+    //Set My Chat
+    FirebaseFirestore.instance
+        .collection('${CashHelper.getData(key: 'Team')}')
+        .add(model.toMap())
+        .then((value){
+      print(isSend);
+      emit(SendTeamChatSuccessState());
+    })
+        .catchError((error){
+      emit(SendTeamChatErrorState());
+
+    });
+
+  }
+  ////////////////////////
+//get messages
+  List<PublicChatModel> teamChat=[];
+  void getTeamChat(){
+    teamChat=[];
+    FirebaseFirestore.instance
+        .collection('${CashHelper.getData(key: 'Team')}')
+        .orderBy('dateTime')
+        .snapshots()
+        .listen((event) {
+      teamChat = [];
+      event.docs.forEach((element) {
+        teamChat.add((PublicChatModel.fromJson(element.data())));
+        print('llllllllllllllllllllllllllllllllllllllllllllllllllllllllll');
+        print(teamChat[0].voice);
+
+
+      });
+      emit(GetTeamChatSuccessState());
+
+    });
+  }
+
+
+
+  bool isWritingTeamChat=false;
+  void changeIconTeamChat(){
+    isWritingTeamChat!=isWritingTeamChat;
+    emit(ChangeIconTeamChatSuccessState());
+  }
+
+  ///////////////////////////////voice message
+  void createVoiceTeamChat({
+    required String dateTime,
+    required String voice,
+
+  }){
+
+    PublicChatModel model=PublicChatModel(
+        image: "",
+        text: "",
+        dateTime: dateTime,
+        senderId: AppStrings.uId,
+        senderImage: userModel!.image,
+        senderName: userModel!.username,
+        voice: voice
+    );
+
+    //Set My Chat
+    FirebaseFirestore.instance
+        .collection('${CashHelper.getData(key: 'Team')}')
+        .add(model.toMap())
+        .then((value){
+      isSend=false;
+
+      emit(SendTeamChatSuccessState());
+    }).catchError((error){
+      print(error.toString());
+      emit(SendTeamChatErrorState());
+    });
+  }
+///////////////////////////////////////////////////////
 }
 
