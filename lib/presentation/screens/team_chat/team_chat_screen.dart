@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
@@ -6,7 +7,6 @@ import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/screens/profile_screen.dart';
-import 'package:fanchat/presentation/screens/public_chat/send_image_public_chat.dart';
 import 'package:fanchat/presentation/screens/team_chat/send_image_chat_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -21,7 +21,6 @@ import 'package:record_mp3/record_mp3.dart';
 import 'package:uuid/uuid.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:voice_message_package/voice_message_package.dart';
-
 
 
 typedef _Fn = void Function();
@@ -313,29 +312,6 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                       ),
                                     )
                                 ),
-                                //                 Container(
-                                //                     width: 40,
-                                //                     height: 40,
-                                //                     decoration: BoxDecoration(
-                                //                         borderRadius: BorderRadius.circular(50),
-                                //                         color: AppColors.primaryColor1
-                                //                     ),
-                                //                     child: Center(
-                                //                       child: IconButton(
-                                //                         icon: recording
-                                //                             ? Icon(Icons.pause_outlined, color: Colors.red)
-                                //                             : Icon(
-                                //                           Icons.mic,
-                                //                           color:Colors.white,
-                                //                         ),
-                                //                         onPressed: () =>{
-                                //                            recording?stopRecord():startRecord(),
-                                //                           AppCubit.get(context).getMessages(recevierId:widget.userModel.uId!)
-                                // },
-                                //                         color:Theme.of(context).primaryColor,
-                                //                       ),
-                                //                     )
-                                //                 ),
                               ],
                             )
                         ),
@@ -450,10 +426,17 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                 decoration: BoxDecoration(
                     border: Border.all(color: AppColors.primaryColor1,width: 4),
                     borderRadius: BorderRadius.circular(3),
-                    image:  DecorationImage(
-                        image: NetworkImage('${model.image}'),
-                        fit: BoxFit.fill
-                    )
+                ),
+                child: Container(
+                  // margin: EdgeInsets.all(5),
+                  height: MediaQuery.of(context).size.height*.28,
+                  width: MediaQuery.of(context).size.width*.55,
+                  child: CachedNetworkImage(
+                    cacheManager: AppCubit.get(context).manager,
+                    imageUrl: "${model.image}",
+                    placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               )
                   :VoiceMessage(
@@ -519,10 +502,17 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(3),
                     border: Border.all(color: AppColors.myGrey,width: 4),
-                    image:  DecorationImage(
-                        image: NetworkImage('${model.image}'),
-                        fit: BoxFit.fill
-                    )
+                ),
+                child: Container(
+                  // margin: EdgeInsets.all(5),
+                  height: MediaQuery.of(context).size.height*.28,
+                  width: MediaQuery.of(context).size.width*.55,
+                  child: CachedNetworkImage(
+                    cacheManager: AppCubit.get(context).manager,
+                    imageUrl: "${model.image}",
+                    placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               )
                   :VoiceMessage(
