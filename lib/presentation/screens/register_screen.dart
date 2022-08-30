@@ -73,12 +73,8 @@ class RegisterScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children:  [
-                      const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 30),
-                          child:Image(image:AssetImage('assets/images/loginlogo.png'),height: 190,width: 190,)
-                      ),
+                      Image(image: AssetImage('assets/images/testnew.png'),width: 250,height: 250,),
 
-                      SizedBox(height: size.height*.01,),
                       textFormFieldWidget(
                           context: context,
                           controller: name,

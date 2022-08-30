@@ -41,12 +41,7 @@ void main()async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String widget;
-    if(AppStrings.uId !=null){
-      widget = 'home_layout';
-    }else{
-      widget = '/';
-    }
+
     return MultiBlocProvider(
         providers:[
           BlocProvider(create: (context)=>AppCubit()..getUser()..getPosts()..getAllUsers()..getFanPosts()),
@@ -66,7 +61,7 @@ class MyApp extends StatelessWidget {
               )
             )
           ),
-          initialRoute: widget,
+          initialRoute: '/',
           routes: {
             '/' :(context)=> SplashScreen(),
             'home_layout':(context)=> const HomeLayout(),

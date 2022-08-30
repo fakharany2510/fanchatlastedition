@@ -127,12 +127,12 @@ class _FanFullVideoState extends State<FanFullVideo> {
                           ],
                         ),
                       ),
-                      Spacer(),
-                      IconButton(
-                        onPressed: (){},
-                        padding: EdgeInsets.zero,
-                        constraints: BoxConstraints(),
-                        icon:Icon(Icons.favorite_outline,color: AppColors.navBarActiveIcon,size: 20),)
+                      // Spacer(),
+                      // IconButton(
+                      //   onPressed: (){},
+                      //   padding: EdgeInsets.zero,
+                      //   constraints: BoxConstraints(),
+                      //   icon:Icon(Icons.favorite_outline,color: AppColors.navBarActiveIcon,size: 20),)
                     ],
                   ),
                 ),

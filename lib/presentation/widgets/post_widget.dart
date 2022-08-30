@@ -208,7 +208,7 @@ class _PostWidgetState extends State<PostWidget> {
                       :SizedBox(width: 0,),
                   SizedBox(height: 0,),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [

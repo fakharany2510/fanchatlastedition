@@ -42,6 +42,12 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Container(
+                  height: 2,
+                  color: Colors.blue,
+                  width: double.infinity,
+                ),
+                SizedBox(height: 5,),
                 CarouselSlider(
                   items: cubit.carouselImage.map((e) {
                     return Image(

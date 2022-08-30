@@ -68,7 +68,6 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
             if(scrollController.hasClients){
               scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
             }
-            AppCubit.get(context).getTeamChat();
             return BlocConsumer<AppCubit,AppState>(
               listener: (context,state){
                 if(state is PickPostImageSuccessState ){
@@ -250,14 +249,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                         decoration:  InputDecoration(
                                           border: InputBorder.none,
                                           hintText: 'Write your message...',
-                                          suffixIcon: Container(
-                                            width: 20,
-                                            height: 20,
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(50),
-                                                color: Colors.white
-                                            ),
-                                          ),
+
                                         ),
                                       )
                                   ),
@@ -353,18 +345,18 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
               ),
             ),
             SizedBox(height: 20,),
-            defaultButton(
-                width: MediaQuery.of(context).size.width*.8,
-                height: MediaQuery.of(context).size.height*.07,
-                buttonColor: AppColors.primaryColor1,
-                textColor: Colors.white,
-                buttonText: 'Go to Profile Screen',
-                function: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (_){
-                     return ProfileScreen();
-                  }));
-                }
-            )
+            // defaultButton(
+            //     width: MediaQuery.of(context).size.width*.8,
+            //     height: MediaQuery.of(context).size.height*.07,
+            //     buttonColor: AppColors.primaryColor1,
+            //     textColor: Colors.white,
+            //     buttonText: 'Go to Profile Screen',
+            //     function: (){
+            //       Navigator.push(context, MaterialPageRoute(builder: (_){
+            //          return ProfileScreen();
+            //       }));
+            //     }
+            // )
           ],
         ),
       )
@@ -386,72 +378,142 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
 
         ),
         const SizedBox(width: 5,),
-        Container(
-          width: MediaQuery.of(context).size.width*.60,
-          padding: const EdgeInsets.all(10),
-          decoration:  BoxDecoration(
-            color: AppColors.myGrey,
-            borderRadius:const  BorderRadius.only(
-              topRight: Radius.circular(10),
-              topLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10),
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('${model.senderName}',
-                style:  TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 9,
-                    color: AppColors.primaryColor1,
-                    fontFamily: AppStrings.appFont
+        Column(
+          children: [
+            (model.text!="")
+                ?Container(
+              width: MediaQuery.of(context).size.width*.74,
+              padding: const EdgeInsets.all(10),
+              decoration:  BoxDecoration(
+                color: AppColors.myGrey,
+                borderRadius:const  BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
                 ),
-
               ),
-              const SizedBox(height: 5,),
-              (model.text!="")
-                  ?Text('${model.text}',
-                style:  const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                    color: Colors.white,
-                    fontFamily: AppStrings.appFont
-                ),
-              )
-                  :(model.image!="")
-                  ?Container(
-                height: MediaQuery.of(context).size.height*.28,
-                width: MediaQuery.of(context).size.width*.55,
-                decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.primaryColor1,width: 4),
-                    borderRadius: BorderRadius.circular(3),
-                ),
-                child: Container(
-                  // margin: EdgeInsets.all(5),
-                  height: MediaQuery.of(context).size.height*.28,
-                  width: MediaQuery.of(context).size.width*.55,
-                  child: CachedNetworkImage(
-                    cacheManager: AppCubit.get(context).manager,
-                    imageUrl: "${model.image}",
-                    placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                    fit: BoxFit.fill,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${model.senderName}',
+                    style:  TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 9,
+                        color: AppColors.primaryColor1,
+                        fontFamily: AppStrings.appFont
+                    ),
+
                   ),
-                ),
-              )
-                  :VoiceMessage(
-                audioSrc: '${AppCubit.get(context).teamChat[index].voice}',
-                played: true, // To show played badge or not.
-                me: true, // Set message side.
-                contactBgColor:AppColors.primaryColor1 ,
-                contactFgColor: Colors.white,
-                contactPlayIconColor: AppColors.primaryColor1,
-                onPlay: () {
+                  const SizedBox(height: 5,),
+                  Text('${model.text}',
+                    style:  const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontFamily: AppStrings.appFont
+                    ),
+                  )
 
-                }, // Do something when voice played.
+                ],
               ),
-            ],
-          ),
+            ):
+            (model.image!="") ?
+            Container(
+              width: MediaQuery.of(context).size.width*.74,
+              padding: const EdgeInsets.all(10),
+              decoration:  BoxDecoration(
+                color: AppColors.myGrey,
+                borderRadius:const  BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${model.senderName}',
+                    style:  TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 9,
+                        color: AppColors.primaryColor1,
+                        fontFamily: AppStrings.appFont
+                    ),
+
+                  ),
+                  const SizedBox(height: 5,),
+                  Material(
+                    shadowColor: AppColors.myGrey,
+                    elevation: 100,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(3),
+
+                    ),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height*.28,
+                      width: MediaQuery.of(context).size.width*.70,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      decoration: BoxDecoration(
+                        // border: Border.all(color: AppColors.primaryColor1,width: 4),
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      child:CachedNetworkImage(
+                        cacheManager: AppCubit.get(context).manager,
+                        imageUrl: "${model.image}",
+                        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                        // maxHeightDiskCache:75,
+                        width: 200,
+                        height: MediaQuery.of(context).size.height*.2,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  )
+
+                ],
+              ),
+            ):
+            Container(
+              width: MediaQuery.of(context).size.width*.60,
+              padding: const EdgeInsets.all(10),
+              decoration:  BoxDecoration(
+                color: AppColors.myGrey,
+                borderRadius:const  BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${model.senderName}',
+                    style:  TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 9,
+                        color: AppColors.primaryColor1,
+                        fontFamily: AppStrings.appFont
+                    ),
+
+                  ),
+                  const SizedBox(height: 5,),
+                  VoiceMessage(
+                    audioSrc: '${AppCubit.get(context).teamChat[index].voice}',
+                    played: true, // To show played badge or not.
+                    me: true, // Set message side.
+                    contactBgColor:AppColors.myGrey ,
+
+                    contactFgColor: Colors.white,
+                    contactPlayIconColor: AppColors.primaryColor1,
+                    onPlay: () {
+
+                    }, // Do something when voice played.
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ],
     ),
@@ -463,69 +525,134 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Container(
-          width: MediaQuery.of(context).size.width*.60,
-          padding: const EdgeInsets.all(10),
-          decoration:  BoxDecoration(
-            color: AppColors.primaryColor1,
-            borderRadius:const  BorderRadius.only(
-              topRight: Radius.circular(10),
-              topLeft: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('${AppCubit.get(context).userModel!.username}',
-                style:  TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 9,
-                    color: AppColors.myWhite,
-                    fontFamily: AppStrings.appFont
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            (model.text!="")?
+            Container(
+              width: MediaQuery.of(context).size.width*.74,
+              padding: const EdgeInsets.all(10),
+              decoration:  BoxDecoration(
+                color: AppColors.primaryColor1,
+                borderRadius:const  BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
                 ),
               ),
-              const SizedBox(height: 5,),
-              (model.text!="")
-                  ?Text('${model.text}',
-                style:  TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 17,
-                    color: AppColors.myWhite,
-                    fontFamily: AppStrings.appFont
-                ),
-              )
-                  :(model.image != '')
-                  ?Container(
-                height: MediaQuery.of(context).size.height*.28,
-                width: MediaQuery.of(context).size.width*.55,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(3),
-                    border: Border.all(color: AppColors.myGrey,width: 4),
-                ),
-                child: Container(
-                  // margin: EdgeInsets.all(5),
-                  height: MediaQuery.of(context).size.height*.28,
-                  width: MediaQuery.of(context).size.width*.55,
-                  child: CachedNetworkImage(
-                    cacheManager: AppCubit.get(context).manager,
-                    imageUrl: "${model.image}",
-                    placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                    fit: BoxFit.fill,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${AppCubit.get(context).userModel!.username}',
+                    style:  TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 9,
+                        color: AppColors.myWhite,
+                        fontFamily: AppStrings.appFont
+                    ),
                   ),
-                ),
-              )
-                  :VoiceMessage(
-                contactBgColor:AppColors.primaryColor1 ,
-                contactFgColor: Colors.white,
-                contactPlayIconColor: AppColors.primaryColor1,
-                audioSrc: '${AppCubit.get(context).teamChat[index].voice}',
-                played: true, // To show played badge or not.
-                me: false, // Set message side.
-                onPlay: () {}, // Do something when voice played.
+                  const SizedBox(height: 5,),
+                  Text('${model.text}',
+                    style:  TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 17,
+                        color: AppColors.myWhite,
+                        fontFamily: AppStrings.appFont
+                    ),
+                  )
+                ],
               ),
-            ],
-          ),
+            ):(model.image != '') ?
+            Container(
+              width: MediaQuery.of(context).size.width*.74,
+              padding: const EdgeInsets.all(10),
+              decoration:  BoxDecoration(
+                color: AppColors.primaryColor1,
+                borderRadius:const  BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${AppCubit.get(context).userModel!.username}',
+                    style:  TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 9,
+                        color: AppColors.myWhite,
+                        fontFamily: AppStrings.appFont
+                    ),
+                  ),
+                  const SizedBox(height: 5,),
+                  Material(
+                    elevation: 100,
+                    shadowColor: AppColors.myGrey,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(3),
+
+                    ),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height*.28,
+                      width: MediaQuery.of(context).size.width*.70,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(3),
+                        // border: Border.all(color: AppColors.myGrey,width: 4),
+                      ),
+                      child: CachedNetworkImage(
+                        cacheManager: AppCubit.get(context).manager,
+                        imageUrl: "${model.image}",
+                        placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
+                        // maxHeightDiskCache:75,
+                        width: 200,
+                        height: MediaQuery.of(context).size.height*.2,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ):
+            Container(
+              width: MediaQuery.of(context).size.width*.60,
+              padding: const EdgeInsets.all(10),
+              decoration:  BoxDecoration(
+                color: AppColors.primaryColor1,
+                borderRadius:const  BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${AppCubit.get(context).userModel!.username}',
+                    style:  TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 9,
+                        color: AppColors.myWhite,
+                        fontFamily: AppStrings.appFont
+                    ),
+                  ),
+                  const SizedBox(height: 5,),
+                  VoiceMessage(
+                    contactBgColor:AppColors.primaryColor1 ,
+                    contactFgColor: Colors.white,
+                    contactPlayIconColor: AppColors.primaryColor1,
+                    audioSrc: '${AppCubit.get(context).teamChat[index].voice}',
+                    played: true, // To show played badge or not.
+                    me: false, // Set message side.
+                    onPlay: () {}, // Do something when voice played.
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
         const SizedBox(width: 5,),
         CircleAvatar(

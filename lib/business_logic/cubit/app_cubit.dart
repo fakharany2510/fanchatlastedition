@@ -109,6 +109,9 @@ class AppCubit extends Cubit<AppState> {
 
   List <bool> isLike = List.generate(30, (index) => false);
 
+  List <bool> isLikeFan = List.generate(30, (index) => false);
+
+
   bool checkValue=false;
   void checkBox(value){
 
@@ -1757,5 +1760,69 @@ List<int> commentIndex=[];
     });
   }
 ///////////////////////////////////////////////////////
+
+///////////////////////// Fan Likes
+
+  List <int>fanLikes=[];
+  List <String>fanId=[];
+
+  void likeFans(String fanId,int Likes){
+    FirebaseFirestore.instance
+        .collection('fan')
+        .doc(fanId)
+        .collection('likes')
+        .doc(userModel!.uId)
+        .set({
+      'likes':true,
+    }).then((value){
+      emit(CreateFanLikesSuccessState());
+      testFanLikes(fanId,Likes);
+    }).catchError((error){
+
+      emit(CreateFanLikesErrorState()
+      );
+    });
+  }
+
+
+  void testFanLikes(fanId,int Likes) {
+    // posts=[];
+    fanId = [];
+    fanLikes = [];
+    FirebaseFirestore.instance
+        .collection('fan')
+        .snapshots().listen((event) {
+      event.docs.forEach((element) {
+        element.reference
+            .collection('likes')
+            .snapshots().listen((event) {
+          // postsId.add(element.id);
+          if(fanId==element.id){
+            Likes = event.docs.length;
+            FirebaseFirestore.instance
+                .collection('fan')
+                .doc(fanId)
+                .update({
+              'likes':Likes
+            }).then((value){
+              print(Likes);
+              print(event.docs.length);
+              print('Siiiiiiiiiiiiiiiiiiiiiiii');
+              printMessage('postId is ${fanId}');
+              print('Siiiiiiiiiiiiiiiiiiiiiiii');
+              printMessage('elementId is ${element.id}');
+
+              emit(TestLikesSuccessState());
+            });
+
+          }
+          likes.add(event.docs.length);
+          emit(TestFanLikesSuccessState());
+        });
+      });
+    });
+  }
+
+
 }
 

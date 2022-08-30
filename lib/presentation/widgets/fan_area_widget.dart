@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/screens/fan/fan_full_post.dart';
 import 'package:fanchat/presentation/screens/fan/fan_full_video.dart';
+import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
@@ -75,12 +79,66 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
                       Positioned(
                         bottom: 0,
                         right: 0,
-                        child: IconButton(
-                            padding: EdgeInsets.all(4),
-                            constraints: BoxConstraints(),
-                            onPressed: (){
-                            },
-                            icon:Icon(Icons.favorite,color:Colors.red,)
+                        child: Row(
+                          children: [
+                            Text('${AppCubit.get(context).fans[widget.index!].likes}',
+                              style: TextStyle(
+                                  color: AppColors.myWhite,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: AppStrings.appFont
+                              ),),
+                            IconButton(
+                                padding:EdgeInsets.zero,
+                                constraints: BoxConstraints(),
+                                onPressed:(){
+                                  AppCubit.get(context).likePosts('${AppCubit.get(context).fans[widget.index!].postId}',AppCubit.get(context).fans[widget.index!].likes!);
+
+                                  if(CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==null || CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==false){
+                                    setState(() {
+                                      AppCubit.get(context).fans[widget.index!].likes=AppCubit.get(context).fans[widget.index!].likes!+1;
+                                    });
+                                    AppCubit.get(context).isLikeFan[widget.index!]=true;
+                                    CashHelper.saveData(key: '${AppCubit.get(context).fans[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
+                                    setState(() {
+                                      FirebaseFirestore.instance
+                                          .collection('fan')
+                                          .doc('${AppCubit.get(context).fans[widget.index!].postId}')
+                                          .update({
+                                        'likes':AppCubit.get(context).fans[widget.index!].likes
+                                      }).then((value){
+                                        print('Siiiiiiiiiiiiiiiiiiiiiiii');
+
+                                      });
+                                    });
+
+                                  }
+                                  else{
+                                    setState(() {
+                                      AppCubit.get(context).fans[widget.index!].likes=AppCubit.get(context).fans[widget.index!].likes!-1;
+
+                                    });
+                                    AppCubit.get(context).isLikeFan[widget.index!]=false;
+                                    CashHelper.saveData(key: '${AppCubit.get(context).fans[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
+                                    setState(() {
+                                      FirebaseFirestore.instance
+                                          .collection('fan')
+                                          .doc('${AppCubit.get(context).fans[widget.index!].postId}')
+                                          .update({
+                                        'likes':AppCubit.get(context).fans[widget.index!].likes
+                                      }).then((value){
+                                        printMessage('This is right ${AppCubit.get(context).fans[widget.index!].likes}');
+                                        print('Siiiiiiiiiiiiiiiiiiiiiiii');
+
+                                      });
+                                    });
+
+                                  }
+                                },
+                                icon: CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==null ?
+                                Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20):CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}') ?Icon(Icons.favorite,color: Colors.red,size: 20):
+                                Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20)),
+                          ],
                         ),
                       ),
                     ],

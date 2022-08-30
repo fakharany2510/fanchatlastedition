@@ -138,3 +138,9 @@ class SendTeamChatErrorState extends AppState{}
 class GetTeamChatSuccessState extends AppState{}
 //change icon
 class ChangeIconTeamChatSuccessState extends AppState{}
+
+// fan Like
+
+class CreateFanLikesSuccessState extends AppState {}
+class CreateFanLikesErrorState extends AppState {}
+class TestFanLikesSuccessState extends AppState {}
