@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_auth/email_auth.dart';
 import 'package:fanchat/business_logic/register/register_states.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/user_model.dart';
+import 'package:fanchat/presentation/screens/verify_code_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
+import 'package:fanchat/utils/helpers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -111,6 +115,27 @@ void verifyOtp(String email, String otp){
       emit(VerifyOtopErrorState());
     }
 }
+  late UserCredential userCredential;
+  late bool autoVerified;
+  FutureOr<void> onSuccess( ){
+    log(
+      VerifyPhoneNumberScreen.id,
+      msg: autoVerified
+          ? 'OTP was fetched automatically!'
+          : 'OTP was verified manually!',
+    );
 
+    showSnackBar('Phone number verified successfully!');
+    log(
+      VerifyPhoneNumberScreen.id,
+      msg: 'Login Success UID: ${userCredential.user?.uid}',
+    );
+  saveUserInfo(
+      uId:userCredential.user!.uid ,
+      email: userCredential.user!.email!,
+      phone: userCredential.user!.phoneNumber!,
+      name: userCredential.user!.displayName!,
+    );
+  }
 
 }

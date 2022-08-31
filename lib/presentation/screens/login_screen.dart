@@ -101,12 +101,12 @@ class LoginScreen extends StatelessWidget {
             body: Form(
               key: formKey,
               child: Padding(
-                padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
+                padding: const EdgeInsets.only(top: 50, left: 30, right: 30),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children:  [
-                      Image(image: AssetImage('assets/images/testnew.png'),width: 250,height: 250,),
+                      Image(image: AssetImage('assets/images/ncolort.png'),width: 250,height: 250,),
 
                       textFormFieldWidget(
                           context: context,

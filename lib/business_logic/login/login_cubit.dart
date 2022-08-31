@@ -106,33 +106,6 @@ class LoginCubit extends Cubit<LoginState> {
 //////////////////////////////////////////////////////////////
   bool isLoggedIn =false;
   Future<void> signInWithFacebook() async {
-    // emit(FacebookLoginLoadingState());
-    // // Trigger the sign-in flow
-    // final LoginResult loginResult = await FacebookAuth.instance.login(permissions: ['public_profile', 'email']);
-    //
-    // // Create a credential from the access token
-    // final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.userId);
-    //
-    // // Once signed in, return the UserCredential
-    // //return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-    // User? user =(await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential)).user;
-    // saveUserInfo(
-    //     name: user!.displayName!,
-    //     email: user.email!,
-    //     uId:user.uid,
-    //     phone: user.phoneNumber!,
-    //     image: user.photoURL
-    // );
-    // emit(FacebookLoginSuccessState(user.uid));
-    // if(user !=null){
-    //   print('user account from Facebook ------> ${user.email}');
-    //   AppStrings.uId=user.uid;
-    //
-    //   print('${AppStrings.uId}');
-    // }else{
-    //   print('error');
-    //   emit(FacebookLoginErrorState());
-    // }
     emit(FacebookLoginLoadingState());
     await FacebookAuth.instance.logOut();
     //final LoginResult result =

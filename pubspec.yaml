@@ -48,6 +48,9 @@ dependencies:
   email_auth:
   lottie: ^1.4.1
   provider:
+  pinput: ^2.2.11
+  easy_container: ^1.0.4
+  intl_phone_field: ^3.1.0
 
 
 
@@ -63,6 +66,7 @@ dependencies:
   cloud_firestore: ^3.4.2
   firebase_storage: ^10.3.4
   firebase_messaging: ^11.2.5
+  firebase_phone_auth_handler:
  #BLOC
   flutter_bloc: ^7.0.0
   bloc: ^7.0.0

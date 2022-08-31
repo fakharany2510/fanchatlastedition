@@ -1,26 +1,28 @@
 import 'package:country_pickers/country.dart';
-import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+
 import 'package:fanchat/business_logic/register/register_cubit.dart';
 import 'package:fanchat/business_logic/register/register_states.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
-import 'package:fanchat/presentation/screens/home_screen.dart';
-import 'package:fanchat/presentation/screens/verfiy_otp.dart';
+
+import 'package:fanchat/presentation/screens/verify_code_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
+import 'package:fanchat/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:country_pickers/country_pickers.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import '../../constants/app_strings.dart';
 import '../layouts/home_layout.dart';
 class RegisterScreen extends StatelessWidget {
-  RegisterScreen({Key? key}) : super(key: key);
+  //RegisterScreen({Key? key}) : super(key: key);
   var formKey =GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController name = TextEditingController();
   TextEditingController phone = TextEditingController();
+  late String phoneNumber;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -29,11 +31,12 @@ class RegisterScreen extends StatelessWidget {
       child: BlocConsumer<RegisterCubit,RegisterState>(
         listener: (context,state){
 
-          if(state is SendOtopSuccessState){
-            Navigator.pushReplacement(context,
-                MaterialPageRoute
-                  (builder: (context)=>VerfiyOtp(email: email.text,)));
-          }
+          // if(state is SendOtopSuccessState){
+          //   Navigator.pushReplacement(context,
+          //       MaterialPageRoute
+          //         (builder: (context)=>VerfiyOtp(email: email.text,)));
+          //
+          // }
           // if(state is UserRegisterSuccessState){
           //   CashHelper.saveData(
           //     key: 'uid',
@@ -73,7 +76,7 @@ class RegisterScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children:  [
-                      Image(image: AssetImage('assets/images/testnew.png'),width: 250,height: 250,),
+                      Image(image: AssetImage('assets/images/ncolort.png'),width: 250,height: 250,),
 
                       textFormFieldWidget(
                           context: context,
@@ -104,31 +107,61 @@ class RegisterScreen extends StatelessWidget {
                       ),
 
                       SizedBox(height: size.height*.03,),
+                      // Container(
+                      //   child: textFormFieldWidget(
+                      //
+                      //     context: context,
+                      //     controller: phone,
+                      //     errorMessage:"please enter your phone",
+                      //     inputType: TextInputType.phone,
+                      //     labelText:"phone",
+                      //     prefixIcon:  CountryPickerDropdown(
+                      //       dropdownColor: AppColors.primaryColor1,
+                      //       initialValue: 'EG',
+                      //       itemBuilder: _buildDropdownItem,
+                      //       priorityList:[
+                      //         CountryPickerUtils.getCountryByIsoCode('GB'),
+                      //         CountryPickerUtils.getCountryByIsoCode('CN'),
+                      //       ],
+                      //       sortComparator: (Country a, Country b) => a.isoCode.compareTo(b.isoCode),
+                      //       onValuePicked: (Country country) {
+                      //         print("${country.name}");
+                      //         printMessage("+${country.phoneCode}");
+                      //         CashHelper.saveData(key: 'code',value:"+${country.phoneCode}" );
+                      //
+                      //       },
+                      //     ),
+                      //
+                      //   ),
+                      // ),
                       Container(
-                        child: textFormFieldWidget(
-
-                          context: context,
-                          controller: phone,
-                          errorMessage:"please enter your phone",
-                          inputType: TextInputType.phone,
-                          labelText:"phone",
-                          prefixIcon:  CountryPickerDropdown(
-                            dropdownColor: AppColors.primaryColor1,
-                            initialValue: 'EG',
-                            itemBuilder: _buildDropdownItem,
-                            priorityList:[
-                              CountryPickerUtils.getCountryByIsoCode('GB'),
-                              CountryPickerUtils.getCountryByIsoCode('CN'),
-                            ],
-                            sortComparator: (Country a, Country b) => a.isoCode.compareTo(b.isoCode),
-                            onValuePicked: (Country country) {
-                              print("${country.name}");
-                              printMessage("+${country.phoneCode}");
-                              CashHelper.saveData(key: 'code',value:"+${country.phoneCode}" );
-
-                            },
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height*.07,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: AppColors.myGrey,
+                            width: 1
+                          ),
+                          borderRadius: BorderRadius.circular(15)
+                        ),
+                        padding: EdgeInsets.only(left: 10),
+                        child: IntlPhoneField(
+                          dropdownTextStyle: TextStyle(
+                            color: AppColors.myGrey
                           ),
 
+                          autofocus: true,
+                          invalidNumberMessage: 'Invalid Phone Number!',
+                          textAlignVertical: TextAlignVertical.center,
+                          style:  TextStyle(fontSize: 25,color: AppColors.myGrey),
+                          onChanged: (phone) => phoneNumber = phone.completeNumber,
+                          initialCountryCode: 'IN',
+                          flagsButtonPadding: const EdgeInsets.only(right: 10),
+                          showDropdownIcon: false,
+                          keyboardType: TextInputType.phone,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                          ),
                         ),
                       ),
                       SizedBox(height: size.height*.03,),
@@ -139,22 +172,24 @@ class RegisterScreen extends StatelessWidget {
                           width: size.width*.9,
                           height: size.height*.06,
                           function: (){
-                            if(formKey.currentState!.validate()){
+                            if(formKey.currentState!.validate() || isNullOrBlank(phoneNumber) ){
                               RegisterCubit.get(context).sendOtp(email.text);
-                              printMessage(CashHelper.getData(key: 'code'));
                               cubit.userRegister(
                                   email: email.text,
                                   pass: password.text,
                                   name: name.text,
-                                  phone: phone.text,
-                                  code: CashHelper.getData(key: 'code')??'+20'
+                                  phone: phoneNumber,
+                                  //code: CashHelper.getData(key: 'code')??'+20'
                               )
                                   .then((value) {
                                     CashHelper.saveData(key: 'email',value: email.text);
                                     CashHelper.saveData(key: 'pass',value: password.text);
                                     CashHelper.saveData(key: 'name',value: name.text);
-                                    CashHelper.saveData(key: 'phone',value: phone.text);
-                                    CashHelper.saveData(key: 'phone',value: phone.text);
+                                    CashHelper.saveData(key: 'pass',value: password.text);
+                                    CashHelper.saveData(key: 'phone',value: phoneNumber);
+                                    Navigator.push(context,
+                                        MaterialPageRoute
+                                          (builder: (context)=>VerifyPhoneNumberScreen(phoneNumber: phoneNumber,)));
                               });
                             }
 

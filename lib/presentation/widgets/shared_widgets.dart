@@ -31,7 +31,7 @@ Widget textFormFieldWidget(
       fillColor: Colors.white,
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color:AppColors.myGrey),
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(15),
       ),
       border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15)
@@ -135,10 +135,12 @@ customAppbar(String title,context){
     ),
     backgroundColor: AppColors.primaryColor1,
     title:Container(
-      height: MediaQuery.of(context).size.height*02,
-      width: MediaQuery.of(context).size.width*.4,
+      height: MediaQuery.of(context).size.height*1,
+      width: MediaQuery.of(context).size.width*.25,
       child: Image(
-        image: AssetImage('assets/images/appbarnewlogo.png'),
+        image: AssetImage('assets/images/ncolors.png'),
+        height: 100,
+        width: 100,
 
       ),
     ),
