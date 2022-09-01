@@ -116,7 +116,7 @@ class MoreScreen extends StatelessWidget {
                               ),
                             ),
                             onTap: (){
-                              AppCubit.get(context).signOut();
+                              AppCubit.get(context).getTeamChat();
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context)=>TeamChatScreen())
                               );

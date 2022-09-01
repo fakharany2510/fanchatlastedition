@@ -230,7 +230,7 @@ class EditProfileScreen extends StatelessWidget {
                     ),
                     child: CountryPickerDropdown(
                       dropdownColor: AppColors.primaryColor1,
-                      initialValue: 'EG',
+                      initialValue: CashHelper.getData(key: 'isoCode')==null? 'QA':CashHelper.getData(key: 'isoCode'),
                       itemBuilder: _buildDropdownItem,
                       priorityList:[
                         CountryPickerUtils.getCountryByIsoCode('GB'),
@@ -238,8 +238,10 @@ class EditProfileScreen extends StatelessWidget {
                       ],
                       sortComparator: (Country a, Country b) => a.isoCode.compareTo(b.isoCode),
                       onValuePicked: (Country country) {
-                        print("${country.name}");
+                        print("${country.isoCode}");
                         printMessage("+${country.phoneCode}");
+                        CashHelper.saveData(key: 'isoCode',value:"${country.isoCode}" );
+
                         CashHelper.saveData(key: 'Team',value:"${country.name}" );
                       },
                     ),

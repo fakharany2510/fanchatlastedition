@@ -1714,7 +1714,6 @@ List<int> commentIndex=[];
         print('llllllllllllllllllllllllllllllllllllllllllllllllllllllllll');
         print(teamChat[0].voice);
 
-
       });
       emit(GetTeamChatSuccessState());
 
