@@ -8,6 +8,7 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/screens/verify_code_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:fanchat/utils/helpers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -71,7 +72,7 @@ class RegisterScreen extends StatelessWidget {
             body: Form(
               key: formKey,
               child: Padding(
-                padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
+                padding: const EdgeInsets.only(top: 50, left: 30, right: 30),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -86,15 +87,15 @@ class RegisterScreen extends StatelessWidget {
                           labelText:"Name",
                           prefixIcon: Icon(Icons.person,color: AppColors.myGrey,)
                       ),
-                      SizedBox(height: size.height*.03,),
-                      textFormFieldWidget(
-                          context: context,
-                          controller: email,
-                          errorMessage:"please enter your email",
-                          inputType: TextInputType.emailAddress,
-                          labelText:"Email",
-                          prefixIcon: Icon(Icons.mail_sharp ,color: AppColors.myGrey,)
-                      ),
+                      // SizedBox(height: size.height*.03,),
+                      // textFormFieldWidget(
+                      //     context: context,
+                      //     controller: email,
+                      //     errorMessage:"please enter your email",
+                      //     inputType: TextInputType.emailAddress,
+                      //     labelText:"Email",
+                      //     prefixIcon: Icon(Icons.mail_sharp ,color: AppColors.myGrey,)
+                      // ),
 
                       SizedBox(height: size.height*.03,),
                       textFormFieldWidget(
@@ -173,24 +174,21 @@ class RegisterScreen extends StatelessWidget {
                           height: size.height*.06,
                           function: (){
                             if(formKey.currentState!.validate() || isNullOrBlank(phoneNumber) ){
-                              RegisterCubit.get(context).sendOtp(email.text);
-                              cubit.userRegister(
-                                  email: email.text,
-                                  pass: password.text,
-                                  name: name.text,
-                                  phone: phoneNumber,
-                                  //code: CashHelper.getData(key: 'code')??'+20'
-                              )
-                                  .then((value) {
-                                    CashHelper.saveData(key: 'email',value: email.text);
-                                    CashHelper.saveData(key: 'pass',value: password.text);
-                                    CashHelper.saveData(key: 'name',value: name.text);
-                                    CashHelper.saveData(key: 'pass',value: password.text);
-                                    CashHelper.saveData(key: 'phone',value: phoneNumber);
-                                    Navigator.push(context,
-                                        MaterialPageRoute
-                                          (builder: (context)=>VerifyPhoneNumberScreen(phoneNumber: phoneNumber,)));
-                              });
+                              CashHelper.saveData(key: 'name',value: name.text);
+                              CashHelper.saveData(key: 'phone',value: phoneNumber);
+                              Navigator.push(context,
+                                  MaterialPageRoute
+                                    (builder: (context)=>VerifyPhoneNumberScreen(phoneNumber: phoneNumber,)));
+                              // cubit.userRegisterPhone(
+                              //   uid:"${AppStrings.uId}",
+                              //     name: name.text,
+                              //     phone: phoneNumber,
+                              // ).then((value) {
+                              //
+                              //
+                              // });
+                              print('user Name = ${name.text}');
+                              print('user phone = ${phoneNumber}');
                             }
 
                           }

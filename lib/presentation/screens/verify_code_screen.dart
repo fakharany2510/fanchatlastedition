@@ -75,8 +75,15 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
       child: BlocProvider(
         create: (context)=>RegisterCubit(),
         child: BlocConsumer<RegisterCubit , RegisterState>(
-          listener: (context, state){},
+          listener: (context, state){
+            if (state is UserDataSuccessState){
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute
+                    (builder: (context)=>HomeLayout()));
+            }
+          },
           builder: (context, state){
+            print('iam hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
             return FirebasePhoneAuthHandler(
               phoneNumber: widget.phoneNumber,
               signOutOnSuccessfulVerification: false,
@@ -84,9 +91,11 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
               autoRetrievalTimeOutDuration: const Duration(seconds: 60),
               otpExpirationDuration: const Duration(seconds: 60),
               onCodeSent: () {
+                print('iam hereeeeeeeeeeeeeeeeeeeeeeeeee 222222222222');
                 log(VerifyPhoneNumberScreen.id, msg: 'OTP sent!');
               },
               onLoginSuccess: (userCredential, autoVerified , ) async {
+                print('iam hereeeeeeeeeeeeeeeeeeeeeeeeee 33333333333333333');
                 log(
                   VerifyPhoneNumberScreen.id,
                   msg: autoVerified
@@ -100,25 +109,17 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                   msg: 'Login Success UID: ${userCredential.user?.uid}',
                 );
                  AppStrings.uId=userCredential.user!.uid;
-                CashHelper.saveData(key: 'uid' , value:AppStrings.uId );
+                 //RegisterCubit.get(context).userModel!.uId=userCredential.user!.uid;
+               // CashHelper.saveData(key: 'uid' , value:AppStrings.uId );
                 CashHelper.saveData(key: 'uid' , value:userCredential.user!.uid );
-                RegisterCubit.get(context).userRegister(
-                    email: CashHelper.getData(key: 'email'),
-                    pass: CashHelper.getData(key: 'pass'),
-                    name: CashHelper.getData(key: 'name'),
+                print('AppStrings.uId => ${AppStrings.uId}');
+                print('userCredential.user!.uid=> ${userCredential.user!.uid}');
+                 await RegisterCubit.get(context).saveUserInfo(
+                    uId:CashHelper.getData(key: 'uid') ,
                     phone: userCredential.user!.phoneNumber!,
-                );
-                RegisterCubit.get(context).saveUserInfo(
-                  uId:userCredential.user!.uid ,
-                  email:CashHelper.getData(key: 'email'),
-                  phone: userCredential.user!.phoneNumber!,
-                  name: CashHelper.getData(key: 'name'),
-                );
+                    name: CashHelper.getData(key: 'name'),
+                  );
 
-
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute
-                      (builder: (context)=>HomeLayout()));
               },
               onLoginFailed: (authException, stackTrace) {
                 log(
@@ -151,6 +152,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                 showSnackBar('An error occurred!');
               },
               builder: (context, controller) {
+                print('hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
                 return Scaffold(
                   backgroundColor: AppColors.primaryColor1,
                   appBar: AppBar(

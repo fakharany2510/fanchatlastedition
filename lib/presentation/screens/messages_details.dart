@@ -70,7 +70,7 @@ class _ChatDetailsState extends State<ChatDetails> {
             return BlocConsumer<AppCubit,AppState>(
               listener: (context,state){
                 if(state is PickPostImageSuccessState ){
-Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.userModel)));
+               Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.userModel)));
                 }
               },
               builder: (context,state){

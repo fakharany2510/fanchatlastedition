@@ -18,6 +18,7 @@ class MoreScreen extends StatelessWidget {
       },
       builder: (context,state){
         var cubit =AppCubit.get(context);
+        cubit.userModel!.uId=AppStrings.uId;
         return Scaffold(
             backgroundColor: AppColors.primaryColor1,
             body:(cubit.userModel!.uId !=null)

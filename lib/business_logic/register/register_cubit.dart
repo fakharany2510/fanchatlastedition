@@ -10,6 +10,7 @@ import 'package:fanchat/presentation/screens/verify_code_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:fanchat/utils/helpers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -18,32 +19,68 @@ import '../login/login_state.dart';
 class RegisterCubit extends Cubit<RegisterState>{
   RegisterCubit() : super(RegisterInitialState());
   static RegisterCubit get(context) => BlocProvider.of(context);
-  Future userRegister({
-    required String email,
-    required String pass,
-    required String name,
+  UserModel? userModel;
+  // Future userRegister({
+  //   required String email,
+  //   required String pass,
+  //   required String name,
+  //   required String phone,
+  //
+  //
+  // })async {
+  //
+  //   FirebaseAuth.instance.createUserWithEmailAndPassword(
+  //       email: email,
+  //       password: pass
+  //   ).then((value) {
+  //
+  //     printMessage('Register Successful');
+  //
+  //     saveUserInfo(
+  //         name: name,
+  //         email: email,
+  //         uId: value.user!.uid,
+  //         phone: phone,
+  //     );
+  //     AppStrings.uId=value.user!.uid;
+  //     emit(UserRegisterSuccessState(value.user!.uid));
+  //
+  //   }).catchError((error){
+  //     printMessage('Error is user register is ${error.toString()}');
+  //     emit(UserRegisterErrorState());
+  //   });
+  //
+  //
+  //
+  // }
+
+
+
+  Future userRegisterPhone({
+    required String uid,
     required String phone,
-    String? code,
+    required String name,
 
 
   })async {
 
-    FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: pass
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: phone,
+      verificationCompleted: (PhoneAuthCredential credential) {},
+      verificationFailed: (FirebaseAuthException e) {},
+      codeSent: (String verificationId, int? resendToken) {},
+      codeAutoRetrievalTimeout: (String verificationId) {},
     ).then((value) {
 
       printMessage('Register Successful');
 
       saveUserInfo(
           name: name,
-          email: email,
-          uId: value.user!.uid,
+          uId: uid,
           phone: phone,
-          code: code
       );
-      AppStrings.uId=value.user!.uid;
-      emit(UserRegisterSuccessState(value.user!.uid));
+
+      emit(UserRegisterSuccessState(uid));
 
     }).catchError((error){
       printMessage('Error is user register is ${error.toString()}');
@@ -54,27 +91,22 @@ class RegisterCubit extends Cubit<RegisterState>{
 
   }
 
-
   Future saveUserInfo(
       {
         required String name,
-        required String email,
         required String uId,
         required String phone,
         String ?bio,
         String ?image,
         String ?cover,
-        String ?code,
 
 
       })
   async{
     UserModel userModel  =UserModel(
         username: name,
-        email: email,
         phone: phone,
         uId: uId,
-        countryCode: code,
         bio: bio??'Enter your bio',
         image: image??'https://img.freepik.com/free-vector/man-shows-gesture-great-idea_10045-637.jpg?w=740&t=st=1659098857~exp=1659099457~hmac=07d524c7d7ac8cc820597784d5b1733130b117a8945288ae40ad2aaf17018419',
         cover: cover??'https://img.freepik.com/free-vector/football-player-with-ball-stadium-with-france-flags-background-vector-illustration_1284-16438.jpg?w=740&t=st=1659099057~exp=1659099657~hmac=a0bb3dcd21329344cdeb6394401b201a4062c653f424a245c7d32e2358df63e4'
@@ -115,27 +147,27 @@ void verifyOtp(String email, String otp){
       emit(VerifyOtopErrorState());
     }
 }
-  late UserCredential userCredential;
-  late bool autoVerified;
-  FutureOr<void> onSuccess( ){
-    log(
-      VerifyPhoneNumberScreen.id,
-      msg: autoVerified
-          ? 'OTP was fetched automatically!'
-          : 'OTP was verified manually!',
-    );
-
-    showSnackBar('Phone number verified successfully!');
-    log(
-      VerifyPhoneNumberScreen.id,
-      msg: 'Login Success UID: ${userCredential.user?.uid}',
-    );
-  saveUserInfo(
-      uId:userCredential.user!.uid ,
-      email: userCredential.user!.email!,
-      phone: userCredential.user!.phoneNumber!,
-      name: userCredential.user!.displayName!,
-    );
-  }
+  // late UserCredential userCredential;
+  // late bool autoVerified;
+  // FutureOr<void> onSuccess( ){
+  //   log(
+  //     VerifyPhoneNumberScreen.id,
+  //     msg: autoVerified
+  //         ? 'OTP was fetched automatically!'
+  //         : 'OTP was verified manually!',
+  //   );
+  //
+  //   showSnackBar('Phone number verified successfully!');
+  //   log(
+  //     VerifyPhoneNumberScreen.id,
+  //     msg: 'Login Success UID: ${userCredential.user?.uid}',
+  //   );
+  // saveUserInfo(
+  //     uId:userCredential.user!.uid ,
+  //     email: userCredential.user!.email!,
+  //     phone: userCredential.user!.phoneNumber!,
+  //     name: userCredential.user!.displayName!,
+  //   );
+  // }
 
 }
