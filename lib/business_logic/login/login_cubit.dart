@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/login/login_state.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/user_model.dart';
+import 'package:fanchat/presentation/screens/verify_code_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,22 +13,32 @@ import 'package:google_sign_in/google_sign_in.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(InitialState());
 
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+// Wait for the user to complete the reCAPTCHA & for an SMS code to be sent.
+
+
+
+
   static LoginCubit get(context) => BlocProvider.of(context);
    void userLogin({
-    required String email,
-    required String password
+    required String phone,
    })async{
      emit(LoginLoadingState());
-      FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: password
+      FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phone,
+        verificationCompleted: (PhoneAuthCredential credential) {},
+        verificationFailed: (FirebaseAuthException e) {},
+        codeSent: (String verificationId, int? resendToken) {},
+        codeAutoRetrievalTimeout: (String verificationId) {},
       ).then((value) {
             printMessage('Login Successful');
-            printMessage(value.user!.uid);
-            AppStrings.uId=value.user!.uid;
-            emit(UserLoginSuccessState(value.user!.uid));
+            printMessage(VerifyPhoneNumberScreen.id);
+            AppStrings.uId=VerifyPhoneNumberScreen.id;
+            emit(UserLoginSuccessState(VerifyPhoneNumberScreen.id));
          }).catchError((error){
-            print('error while login------------>   ${error}');
+            print('error while login------------>   ${error.toString()}');
             emit(UserLoginErrorState());
          });
 

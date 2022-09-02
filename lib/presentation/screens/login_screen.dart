@@ -138,8 +138,9 @@ class LoginScreen extends StatelessWidget {
                           buttonColor: AppColors.myGrey,
                           function: (){
                             if(formKey.currentState!.validate()){
-                              cubit.userLogin(email: email.text,
-                                  password: password.text);
+                              cubit.userLogin(
+                                  phone: password.text
+                              );
 
                             }
                           }

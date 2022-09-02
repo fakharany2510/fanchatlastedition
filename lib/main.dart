@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
                 )
               )
             ),
-            initialRoute: '/',
+            initialRoute: 'register',
             routes: {
               '/' :(context)=> SplashScreen(),
               'home_layout':(context)=> const HomeLayout(),

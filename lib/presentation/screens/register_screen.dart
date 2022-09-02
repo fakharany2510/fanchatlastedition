@@ -136,6 +136,7 @@ class RegisterScreen extends StatelessWidget {
                       //   ),
                       // ),
                       Container(
+                        padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height*.07,
                         decoration: BoxDecoration(
@@ -145,23 +146,30 @@ class RegisterScreen extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(15)
                         ),
-                        padding: EdgeInsets.only(left: 10),
-                        child: IntlPhoneField(
-                          dropdownTextStyle: TextStyle(
-                            color: AppColors.myGrey
-                          ),
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                          child: IntlPhoneField(
+                            dropdownTextStyle: TextStyle(
+                              color: AppColors.myGrey,
+                              fontSize: 14,
+                              fontFamily: AppStrings.appFont
+                            ),
 
-                          autofocus: true,
-                          invalidNumberMessage: 'Invalid Phone Number!',
-                          textAlignVertical: TextAlignVertical.center,
-                          style:  TextStyle(fontSize: 25,color: AppColors.myGrey),
-                          onChanged: (phone) => phoneNumber = phone.completeNumber,
-                          initialCountryCode: 'IN',
-                          flagsButtonPadding: const EdgeInsets.only(right: 10),
-                          showDropdownIcon: false,
-                          keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
+                            invalidNumberMessage: 'Invalid Phone Number!',
+                            textAlignVertical: TextAlignVertical.center,
+                            style:  TextStyle(
+                                fontSize: 15,
+                                fontFamily: AppStrings.appFont,
+                                color: AppColors.myGrey
+                            ),
+                            onChanged: (phone) => phoneNumber = phone.completeNumber,
+                            initialCountryCode: 'IN',
+                            flagsButtonPadding: const EdgeInsets.only(right: 10),
+                            showDropdownIcon: false,
+                            keyboardType: TextInputType.phone,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                            ),
                           ),
                         ),
                       ),
