@@ -171,31 +171,31 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: size.height*.03,),
-                      Row(
-                        children: [
-                          defaultSocialMediaButton(
-                              context: context,
-                              function: (){
-                                LoginCubit.get(context).signInWithFacebook();
-                              },
-                              size:size,
-                              buttonColor: AppColors.primaryColor1,
-                              buttonText: "Facebook",
-                              imagePath: 'assets/images/face.png'
-                          ),
-                          SizedBox(width: MediaQuery.of(context).size.width*.03,),
-                          defaultSocialMediaButton(
-                              context: context,
-                              function: (){
-                                LoginCubit.get(context).loginWithGoogle();
-                              },
-                              size:size,
-                              buttonColor: AppColors.primaryColor1,
-                              buttonText: "Google",
-                              imagePath: 'assets/images/google1.png'
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     defaultSocialMediaButton(
+                      //         context: context,
+                      //         function: (){
+                      //           LoginCubit.get(context).signInWithFacebook();
+                      //         },
+                      //         size:size,
+                      //         buttonColor: AppColors.primaryColor1,
+                      //         buttonText: "Facebook",
+                      //         imagePath: 'assets/images/face.png'
+                      //     ),
+                      //     SizedBox(width: MediaQuery.of(context).size.width*.03,),
+                      //     defaultSocialMediaButton(
+                      //         context: context,
+                      //         function: (){
+                      //           LoginCubit.get(context).loginWithGoogle();
+                      //         },
+                      //         size:size,
+                      //         buttonColor: AppColors.primaryColor1,
+                      //         buttonText: "Google",
+                      //         imagePath: 'assets/images/google1.png'
+                      //     ),
+                      //   ],
+                      // ),
                       SizedBox(height: size.height*.03,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

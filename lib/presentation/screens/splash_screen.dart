@@ -23,7 +23,7 @@ class SplashScreen extends StatefulWidget {
     if(AppStrings.uId !=null){
       widget = HomeLayout();
     }else{
-      widget = LoginScreen();
+      widget = RegisterScreen();
     }
   }
 

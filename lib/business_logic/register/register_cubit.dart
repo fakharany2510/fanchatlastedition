@@ -12,6 +12,7 @@ import 'package:fanchat/utils/helpers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../login/login_state.dart';
@@ -147,27 +148,73 @@ void verifyOtp(String email, String otp){
       emit(VerifyOtopErrorState());
     }
 }
-  // late UserCredential userCredential;
-  // late bool autoVerified;
-  // FutureOr<void> onSuccess( ){
-  //   log(
-  //     VerifyPhoneNumberScreen.id,
-  //     msg: autoVerified
-  //         ? 'OTP was fetched automatically!'
-  //         : 'OTP was verified manually!',
-  //   );
-  //
-  //   showSnackBar('Phone number verified successfully!');
-  //   log(
-  //     VerifyPhoneNumberScreen.id,
-  //     msg: 'Login Success UID: ${userCredential.user?.uid}',
-  //   );
-  // saveUserInfo(
-  //     uId:userCredential.user!.uid ,
-  //     email: userCredential.user!.email!,
-  //     phone: userCredential.user!.phoneNumber!,
-  //     name: userCredential.user!.displayName!,
-  //   );
-  // }
+  //////////////////////////////////////////////////////////////
+  bool isLoggedIn =false;
+  Future<void> signInWithFacebook() async {
+    emit(FacebookLoginLoadingState());
+    await FacebookAuth.instance.logOut();
+    //final LoginResult result =
+    await FacebookAuth.instance.login(permissions: ['public_profile', 'email']).then((value){
+      FacebookAuth.instance.getUserData().then((userData){
+        isLoggedIn=true;
+        var data=userData;
+        print( data['name'].toString());
+        print( data['email']);
+        print( data['picture']);
+        print( data['id']);
+        print(data.entries);
+        AppStrings.uId=data['id'].toString();
+        saveUserInfo(
+            name:  data['name'].toString(),
+           // email: data['email'].toString(),
+            uId: data['id'].toString(),
+            phone: "",
+            image: data["picture"]["data"]["url"].toString()
+        );
+        emit(FacebookLoginSuccessState(data['id'].toString()));
+      }).catchError((error){
+        emit(FacebookLoginErrorState());
+        print(error.toString());
+      });
+    }).catchError((error){
+      emit(FacebookLoginErrorState());
+      print(error.toString());
+    });
+  }
+//////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////////
+  GoogleSignIn googleSignIn = GoogleSignIn();
+  Future<void> loginWithGoogle()async{
+    emit(GoogleLoginLoadingState());
+    //account
+    GoogleSignInAccount? account =  await googleSignIn.signIn();
+    //authentication
+    GoogleSignInAuthentication authentication = await account!.authentication;
+    //cradential
+    AuthCredential credential = GoogleAuthProvider.credential(idToken: authentication.idToken,accessToken: authentication.accessToken);
+    //user
+    User? user =(await FirebaseAuth.instance.signInWithCredential(credential)).user;
+    AppStrings.uId=user!.uid;
+    saveUserInfo(
+        name: user.displayName!,
+        //email: user.email!,
+        uId: user.uid,
+        phone: "",
+        image: user.photoURL
+    );
+    emit(GoogleLoginSuccessState(user.uid));
+    if(user !=null){
+      print('user account from google ------> ${user.email}');
+      AppStrings.uId=user.uid;
+
+      print('${AppStrings.uId}');
+    }else{
+      print('error');
+      emit(GoogleLoginErrorState());
+    }
+
+  }
+// //////////////////////////////////////////////////////////////
 
 }

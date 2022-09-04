@@ -1,6 +1,7 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/screens/login_screen.dart';
+import 'package:fanchat/presentation/screens/register_screen.dart';
 import 'package:fanchat/presentation/screens/team_chat/team_chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -159,7 +160,7 @@ class MoreScreen extends StatelessWidget {
                             onTap: (){
                               AppCubit.get(context).signOut();
                               Navigator.pushReplacement(context, 
-                              MaterialPageRoute(builder: (context)=>LoginScreen())
+                              MaterialPageRoute(builder: (context)=>RegisterScreen())
                               );
                             },
                           ),

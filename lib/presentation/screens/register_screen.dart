@@ -1,4 +1,6 @@
 import 'package:country_pickers/country.dart';
+import 'package:fanchat/business_logic/login/login_cubit.dart';
+import 'package:fanchat/business_logic/login/login_state.dart';
 
 import 'package:fanchat/business_logic/register/register_cubit.dart';
 import 'package:fanchat/business_logic/register/register_states.dart';
@@ -13,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:country_pickers/country_pickers.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import '../../constants/app_strings.dart';
 import '../layouts/home_layout.dart';
@@ -20,7 +23,6 @@ class RegisterScreen extends StatelessWidget {
   //RegisterScreen({Key? key}) : super(key: key);
   var formKey =GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
   TextEditingController name = TextEditingController();
   TextEditingController phone = TextEditingController();
   late String phoneNumber;
@@ -31,30 +33,65 @@ class RegisterScreen extends StatelessWidget {
       create: (BuildContext context) => RegisterCubit(),
       child: BlocConsumer<RegisterCubit,RegisterState>(
         listener: (context,state){
+          if(state is UserRegisterSuccessState){
+            CashHelper.saveData(
+              key: 'uid',
+              value: state.uId,
+            );
+            customToast(title: 'Login Successful', color: AppColors.primaryColor1);
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context)=>HomeLayout())
+            );
 
-          // if(state is SendOtopSuccessState){
-          //   Navigator.pushReplacement(context,
-          //       MaterialPageRoute
-          //         (builder: (context)=>VerfiyOtp(email: email.text,)));
-          //
-          // }
-          // if(state is UserRegisterSuccessState){
-          //   CashHelper.saveData(
-          //     key: 'uid',
-          //     value: state.uId,
-          //   );
-          //
-          //   customToast(title: 'Register Successful', color: AppColors.primaryColor1);
-          //   //AppCubit.get(context).getPosts();
-          //   Navigator.pushReplacement(context,
-          //       MaterialPageRoute
-          //         (builder: (context)=>HomeLayout()));
-          //
-          // }
-          // if(state is UserRegisterErrorState){
-          //   customToast(title: 'Invalid Data ', color: Colors.red);
-          //
-          // }
+          }
+          if(state is UserRegisterErrorState){
+            customToast(title: 'Email or Password isn\'t correct', color: Colors.red);
+          }
+          if(state is GoogleLoginSuccessState){
+            CashHelper.saveData(key:'uid' , value: AppStrings.uId).then((value){
+              Fluttertoast.showToast(
+                msg:"Welcome",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.TOP,
+                timeInSecForIosWeb: 5,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 18.0,
+              );
+              if(AppStrings.uId == null){
+                print('uid is null');
+              }else{
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context)=>HomeLayout()));
+              }
+
+            }).catchError((error){
+              print('error from saving user google id to shared ${error.toString()}');
+            });
+          }
+          //facebook check
+          if(state is FacebookLoginSuccessState){
+            CashHelper.saveData(key:'uid' , value: AppStrings.uId).then((value){
+              Fluttertoast.showToast(
+                msg:"Welcome",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.TOP,
+                timeInSecForIosWeb: 5,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 18.0,
+              );
+              if(AppStrings.uId == null){
+                print('uid is null');
+              }else{
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context)=>HomeLayout()));
+              }
+
+            }).catchError((error){
+              print('error from saving user facebook id to shared ${error.toString()}');
+            });
+          }
         },
         builder: (context,state){
           var cubit=RegisterCubit.get(context);
@@ -72,7 +109,7 @@ class RegisterScreen extends StatelessWidget {
             body: Form(
               key: formKey,
               child: Padding(
-                padding: const EdgeInsets.only(top: 50, left: 30, right: 30),
+                padding: const EdgeInsets.only(top: 70, left: 30, right: 30),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -97,44 +134,17 @@ class RegisterScreen extends StatelessWidget {
                       //     prefixIcon: Icon(Icons.mail_sharp ,color: AppColors.myGrey,)
                       // ),
 
-                      SizedBox(height: size.height*.03,),
-                      textFormFieldWidget(
-                          context: context,
-                          controller: password,
-                          errorMessage:"please enter your password",
-                          inputType: TextInputType.visiblePassword,
-                          labelText:"password",
-                          prefixIcon: Icon(Icons.lock,color: AppColors.myGrey,)
-                      ),
+                      // SizedBox(height: size.height*.03,),
+                      // textFormFieldWidget(
+                      //     context: context,
+                      //     controller: password,
+                      //     errorMessage:"please enter your password",
+                      //     inputType: TextInputType.visiblePassword,
+                      //     labelText:"password",
+                      //     prefixIcon: Icon(Icons.lock,color: AppColors.myGrey,)
+                      // ),
 
                       SizedBox(height: size.height*.03,),
-                      // Container(
-                      //   child: textFormFieldWidget(
-                      //
-                      //     context: context,
-                      //     controller: phone,
-                      //     errorMessage:"please enter your phone",
-                      //     inputType: TextInputType.phone,
-                      //     labelText:"phone",
-                      //     prefixIcon:  CountryPickerDropdown(
-                      //       dropdownColor: AppColors.primaryColor1,
-                      //       initialValue: 'EG',
-                      //       itemBuilder: _buildDropdownItem,
-                      //       priorityList:[
-                      //         CountryPickerUtils.getCountryByIsoCode('GB'),
-                      //         CountryPickerUtils.getCountryByIsoCode('CN'),
-                      //       ],
-                      //       sortComparator: (Country a, Country b) => a.isoCode.compareTo(b.isoCode),
-                      //       onValuePicked: (Country country) {
-                      //         print("${country.name}");
-                      //         printMessage("+${country.phoneCode}");
-                      //         CashHelper.saveData(key: 'code',value:"+${country.phoneCode}" );
-                      //
-                      //       },
-                      //     ),
-                      //
-                      //   ),
-                      // ),
                       Container(
                         padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
                         width: MediaQuery.of(context).size.width,
@@ -176,7 +186,7 @@ class RegisterScreen extends StatelessWidget {
                       SizedBox(height: size.height*.03,),
                       defaultButton(
                           textColor: AppColors.primaryColor1,
-                          buttonText: 'REGISTER',
+                          buttonText: 'LOGIN',
                           buttonColor: AppColors.myGrey,
                           width: size.width*.9,
                           height: size.height*.06,
@@ -187,14 +197,7 @@ class RegisterScreen extends StatelessWidget {
                               Navigator.push(context,
                                   MaterialPageRoute
                                     (builder: (context)=>VerifyPhoneNumberScreen(phoneNumber: phoneNumber,)));
-                              // cubit.userRegisterPhone(
-                              //   uid:"${AppStrings.uId}",
-                              //     name: name.text,
-                              //     phone: phoneNumber,
-                              // ).then((value) {
-                              //
-                              //
-                              // });
+
                               print('user Name = ${name.text}');
                               print('user phone = ${phoneNumber}');
                             }
@@ -203,29 +206,58 @@ class RegisterScreen extends StatelessWidget {
                       ),
                       SizedBox(height: size.height*.02,),
 
+                      SizedBox(height: size.height*.03,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Have any account?",style: TextStyle(
-                              fontFamily: AppStrings.appFont,
-                              fontSize: 18,
-                              color: AppColors.myGrey
-                          ),),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, 'login');
-
-
-                            },
-                            child:  Text("Login",style: TextStyle(
-                                color: AppColors.navBarActiveIcon,
-                                fontFamily: AppStrings.appFont,
-                                fontSize: 18
+                          Container(
+                            height: 1,
+                            width: size.width*.3,
+                            color: Colors.grey.shade400,
+                          ),
+                          const SizedBox(width: 5,),
+                          Text('or',
+                            style: TextStyle(
+                                fontSize:16,
+                                color: AppColors.myGrey,
+                                fontFamily: AppStrings.appFont
                             ),
-                            ),
-                          )
+                          ),
+                          const SizedBox(width: 5,),
+                          Container(
+                            height: 1,
+                            width: size.width*.3,
+                            color: Colors.grey.shade400,
+                          ),
                         ],
                       ),
+                      SizedBox(height: size.height*.03,),
+                      Row(
+                        children: [
+                          defaultSocialMediaButton(
+                              context: context,
+                              function: (){
+                                RegisterCubit.get(context).signInWithFacebook();
+                              },
+                              size:size,
+                              buttonColor: AppColors.primaryColor1,
+                              buttonText: "Facebook",
+                              imagePath: 'assets/images/face.png'
+                          ),
+                          SizedBox(width: MediaQuery.of(context).size.width*.03,),
+                          defaultSocialMediaButton(
+                              context: context,
+                              function: (){
+                                RegisterCubit.get(context).loginWithGoogle();
+                              },
+                              size:size,
+                              buttonColor: AppColors.primaryColor1,
+                              buttonText: "Google",
+                              imagePath: 'assets/images/google1.png'
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: size.height*.03,),
 
                     ],
                   ),
