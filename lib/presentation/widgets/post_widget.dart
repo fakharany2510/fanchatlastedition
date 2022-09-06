@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -134,22 +135,29 @@ class _PostWidgetState extends State<PostWidget> {
                   ),
                   SizedBox(height: 0,),
                   (AppCubit.get(context).posts[widget.index!].postImage!="")
-                      ?Material(
+                      ?InkWell(
+                        onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (_){
+                              return ShowHomeImage(image: "${AppCubit.get(context).posts[widget.index!].postImage}");
+                            }));
+                        },
+                        child: Material(
                     elevation: 1000,
                     child: Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height*.25,
-                        width: double.infinity,
-                        child:  CachedNetworkImage(
-                          cacheManager: AppCubit.get(context).manager,
-                          imageUrl: "${AppCubit.get(context).posts[widget.index!].postImage}",
-                          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                          fit: BoxFit.fill,
+                        padding: const EdgeInsets.all(0),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height*.25,
+                          width: double.infinity,
+                          child:  CachedNetworkImage(
+                            cacheManager: AppCubit.get(context).manager,
+                            imageUrl: "${AppCubit.get(context).posts[widget.index!].postImage}",
+                            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                            fit: BoxFit.fitWidth,
+                          ),
                         ),
-                      ),
                     ),
-                  )
+                  ),
+                      )
                       : (AppCubit.get(context).posts[widget.index!].postVideo!="")
                       ?Stack(
                     children: [
