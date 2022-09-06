@@ -31,7 +31,7 @@ void main()async {
   );
 
   await CashHelper.init();
-  AppStrings.uId = 'qcVIv6iEVUdPJsO6QDNBQlPsl212';
+  AppStrings.uId = CashHelper.getData(key: 'uid');
   printMessage('userId is: ${AppStrings.uId}');
 
 

@@ -1,15 +1,16 @@
 {
   "project_info": {
     "project_number": "148742212571",
+    "firebase_url": "https://fanchat-7db9e-default-rtdb.firebaseio.com",
     "project_id": "fanchat-7db9e",
     "storage_bucket": "fanchat-7db9e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:148742212571:android:acf0ab30159f68c73275fe",
+        "mobilesdk_app_id": "1:148742212571:android:290183b18385d7a83275fe",
         "android_client_info": {
-          "package_name": "com.example.fanchat"
+          "package_name": "com.fanchat.fanchat"
         }
       },
       "oauth_client": [
@@ -29,6 +30,13 @@
             {
               "client_id": "148742212571-apbgjeq5dq6fr36vg7vl70cl4umidivc.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "148742212571-jm877td9o7mh5e80oos7aukvti1psj5p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fanchat"
+              }
             }
           ]
         }
