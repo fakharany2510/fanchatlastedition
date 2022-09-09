@@ -57,7 +57,7 @@ class _AddNewImageState extends State<AddNewImage> {
                     padding: const EdgeInsets.all(8.0),
                     child: defaultButton(
                     textColor: AppColors.myWhite,
-                    width: size.width*.2,
+                    width: size.width*.19,
                     height: size.height*.05,
                     raduis: 10,
                     function: (){
