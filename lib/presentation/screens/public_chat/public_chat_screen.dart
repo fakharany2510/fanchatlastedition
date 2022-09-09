@@ -6,6 +6,7 @@ import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/screens/public_chat/send_image_public_chat.dart';
+import 'package:fanchat/presentation/screens/user_profile.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -331,15 +332,22 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
     alignment:Alignment.topRight,
     child: Row(
       children: [
-        CircleAvatar(
-          radius: 18,
-          backgroundColor: AppColors.myGrey,
+        GestureDetector(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (_){
+              return UserProfile(userId: model.senderId!, userImage:model.senderImage!, userName: model.senderName!);
+            }));
+          },
           child: CircleAvatar(
-            backgroundImage:  NetworkImage('${model.senderImage}' ),
-            radius: 17,
-            backgroundColor: Colors.blue,
-          ),
+            radius: 18,
+            backgroundColor: AppColors.myGrey,
+            child: CircleAvatar(
+              backgroundImage:  NetworkImage('${model.senderImage}' ),
+              radius: 17,
+              backgroundColor: Colors.blue,
+            ),
 
+          ),
         ),
         const SizedBox(width: 5,),
         Column(

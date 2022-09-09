@@ -4,6 +4,7 @@ import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
+import 'package:fanchat/presentation/screens/user_profile.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'package:cached_video_player/cached_video_player.dart';
 class PostWidget extends StatefulWidget {
   int ?index;
   int? commentIndex;
+
   PostWidget({Key? key,this.index}) : super(key: key);
 
   @override
@@ -64,58 +66,65 @@ class _PostWidgetState extends State<PostWidget> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage:NetworkImage('${AppCubit.get(context).posts[widget.index!].image}'),
-                          radius: 18,
-                        ),
-                        const SizedBox(width: 7,),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text('${AppCubit.get(context).posts[widget.index!].name}',
-                                      overflow: TextOverflow.ellipsis,
-                                      style:  TextStyle(
-                                          color: AppColors.myWhite,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: AppStrings.appFont
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (_){
+                          return UserProfile(userId: '${AppCubit.get(context).posts[widget.index!].userId}', userImage: '${AppCubit.get(context).posts[widget.index!].image}', userName: '${AppCubit.get(context).posts[widget.index!].name}');
+                        }));
+                      },
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage:NetworkImage('${AppCubit.get(context).posts[widget.index!].image}'),
+                            radius: 18,
+                          ),
+                          const SizedBox(width: 7,),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text('${AppCubit.get(context).posts[widget.index!].name}',
+                                        overflow: TextOverflow.ellipsis,
+                                        style:  TextStyle(
+                                            color: AppColors.myWhite,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: AppStrings.appFont
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Spacer(),
+                          Column(
+                            children: [
+                              Text('${AppCubit.get(context).posts[widget.index!].dateTime}',
+                                overflow: TextOverflow.ellipsis,
+                                style:  TextStyle(
+                                    fontSize: 13,
+                                    color: AppColors.myWhite,
+                                    fontFamily: AppStrings.appFont
+                                ),
+                              ),
+                              SizedBox(height: 5,),
+                              Text('${AppCubit.get(context).posts[widget.index!].time}',
+                                overflow: TextOverflow.ellipsis,
+                                style:  TextStyle(
+                                    fontSize: 13,
+                                    color: AppColors.myWhite,
+                                    fontFamily: AppStrings.appFont
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                        const Spacer(),
-                        Column(
-                          children: [
-                            Text('${AppCubit.get(context).posts[widget.index!].dateTime}',
-                              overflow: TextOverflow.ellipsis,
-                              style:  TextStyle(
-                                  fontSize: 13,
-                                  color: AppColors.myWhite,
-                                  fontFamily: AppStrings.appFont
-                              ),
-                            ),
-                            SizedBox(height: 5,),
-                            Text('${AppCubit.get(context).posts[widget.index!].time}',
-                              overflow: TextOverflow.ellipsis,
-                              style:  TextStyle(
-                                  fontSize: 13,
-                                  color: AppColors.myWhite,
-                                  fontFamily: AppStrings.appFont
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height:5),

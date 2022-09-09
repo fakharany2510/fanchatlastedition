@@ -144,3 +144,12 @@ class ChangeIconTeamChatSuccessState extends AppState{}
 class CreateFanLikesSuccessState extends AppState {}
 class CreateFanLikesErrorState extends AppState {}
 class TestFanLikesSuccessState extends AppState {}
+
+// cheering
+
+class CreateCheeringLoadingState extends AppState {}
+class CreateCheeringSuccessState extends AppState {}
+class CreateCheeringErrorState extends AppState {}
+
+class GetCheeringSuccessState extends AppState {}
+class GetCheeringErrorState extends AppState {}

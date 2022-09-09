@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
+import 'package:fanchat/data/modles/cheering_model.dart';
 import 'package:fanchat/data/modles/fan_model.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
 import 'package:fanchat/presentation/screens/public_chat/public_chat_screen.dart';
@@ -1819,6 +1820,62 @@ List<int> commentIndex=[];
           emit(TestFanLikesSuccessState());
         });
       });
+    });
+  }
+
+
+  //Create Cheering
+  void createCheeringPost({
+    required String? time,
+    required String? timeSpam,
+    required String? text,
+
+  }){
+
+    CheeringModel model=CheeringModel(
+       time: time,
+      timeSpam: timeSpam,
+      uId: userModel!.uId,
+      username: userModel!.username,
+      userImage: userModel!.image,
+      text: text
+    );
+
+    emit(CreateCheeringLoadingState());
+
+    FirebaseFirestore.instance
+        .collection('cheering')
+        .add(model.toMap())
+        .then((value){
+          getCheeringPost();
+          print('Upload Cheering message');
+      emit(CreateCheeringSuccessState());
+    })
+        .catchError((error){
+      emit(CreateCheeringErrorState());
+    });
+  }
+
+  List <CheeringModel> cheering=[];
+
+  void getCheeringPost(){
+    cheering=[];
+    FirebaseFirestore.instance
+        .collection('cheering')
+        .get()
+        .then((value){
+
+          value.docs.forEach((element) {
+
+            cheering.add(CheeringModel.formJson(element.data()));
+
+          });
+
+        print('Get Cheering message');
+        emit(GetCheeringSuccessState());
+    })
+        .catchError((error){
+      emit(GetCheeringErrorState());
     });
   }
 

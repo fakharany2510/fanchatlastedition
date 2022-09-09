@@ -118,6 +118,8 @@ class MoreScreen extends StatelessWidget {
                             ),
                             onTap: (){
                               AppCubit.get(context).getTeamChat();
+                              AppCubit.get(context).getCheeringPost();
+
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context)=>TeamChatScreen())
                               );

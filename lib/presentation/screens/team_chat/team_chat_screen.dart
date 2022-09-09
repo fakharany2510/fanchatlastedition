@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
@@ -7,6 +8,7 @@ import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/screens/profile_screen.dart';
+import 'package:fanchat/presentation/screens/team_chat/cheering_screen.dart';
 import 'package:fanchat/presentation/screens/team_chat/send_image_chat_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -49,6 +51,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
   bool? isComplete;
   bool? uploadingRecord = false;
   ScrollController scrollController = ScrollController();
+  int indexCheering=0;
 
   @override
   void initState() {
@@ -58,13 +61,30 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
       scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
     }
     isWriting = false;
+    Timer(const Duration(seconds: 3), () {
+      setState(() {
+        indexCheering+=1;
+      });
+    });
+
   }
+  bool isLast=false;
   @override
   Widget build(BuildContext context) {
 
     return CashHelper.getData(key: 'Team')!=null? ConditionalBuilder(
       builder: (context)=>Builder(
           builder: (context) {
+            Timer(const Duration(seconds: 15), () {
+              setState(() {
+                if(AppCubit.get(context).cheering.length!=indexCheering)
+                  indexCheering+=1;
+
+                if(AppCubit.get(context).cheering.length==indexCheering)
+                  isLast=true;
+
+              });
+            });
             if(scrollController.hasClients){
               scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
             }
@@ -81,6 +101,20 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                 return Scaffold(
                   backgroundColor: Colors.white,
                   appBar: AppBar(
+                    actions: [
+                      IconButton(
+                          onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (_){
+
+                              return CheeringScreen();
+
+                            }));
+                          },
+                          icon: const Icon(
+                            Icons.public
+                          )
+                      )
+                    ],
                     backgroundColor: AppColors.primaryColor1,
                     elevation: 0,
                     titleSpacing: 0.0,
@@ -100,7 +134,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                             Row(
                               children: [
                                 Text('${CashHelper.getData(key: 'Team')}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,
@@ -132,6 +166,65 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                   body: ConditionalBuilder(
                     builder: (context)=>Column(
                       children: [
+                        if(isLast==false)
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 0,
+                              horizontal: 10
+                          ),
+                          width: double.infinity,
+                          color: AppColors.myGrey,
+                          child:  Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+
+                                    CircleAvatar(
+                                      backgroundImage:NetworkImage('${AppCubit.get(context).cheering[indexCheering].userImage}') as ImageProvider,
+                                      radius: 18,
+                                    ),
+                                    const SizedBox(width: 10,),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text('${AppCubit.get(context).cheering[indexCheering].username}',
+                                              style: TextStyle(
+                                                  color: AppColors.primaryColor1,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: AppStrings.appFont
+                                              ),
+                                            ),
+
+                                          ],
+                                        ),
+
+                                      ],
+                                    ),
+
+                                  ],
+                                ),
+                                SizedBox(height: 5,),
+                                Text('${AppCubit.get(context).cheering[indexCheering].text}',
+                                  style: TextStyle(
+                                      color: AppColors.primaryColor1,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: AppStrings.appFont
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+
                         Expanded(
                           child: Container(
                             height:MediaQuery.of(context).size.height*.83,
@@ -162,7 +255,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                           ),
                           child: Column(
                             children: [
-                              SizedBox(height: 5,),
+                              const SizedBox(height: 5,),
                               Text('${statusText}',style: const TextStyle(
                                   color: Colors.white,
                                   fontFamily: AppStrings.appFont,
@@ -246,7 +339,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                         keyboardType: TextInputType.multiline,
                                         maxLines: null,
                                         controller: textMessage,
-                                        decoration:  InputDecoration(
+                                        decoration:  const InputDecoration(
                                           border: InputBorder.none,
                                           hintText: 'Write your message...',
 
@@ -277,7 +370,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                             textMessage.clear();
                                           },
                                           color: AppColors.primaryColor1,
-                                          icon: AppCubit.get(context).isSend? CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?Icon(Icons.mic,color: Colors.white,size: 17):Icon(Icons.send,color: Colors.white,size: 17)
+                                          icon: AppCubit.get(context).isSend? const CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?const Icon(Icons.mic,color: Colors.white,size: 17):const Icon(Icons.send,color: Colors.white,size: 17)
                                       ),
                                     )
                                 ),
@@ -327,13 +420,13 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              margin: EdgeInsets.only(left: 20),
+              margin: const EdgeInsets.only(left: 20),
                 height: MediaQuery.of(context).size.height*.5,
                 child: Lottie.network('https://assets4.lottiefiles.com/packages/lf20_3asbtz5x.json')
             ),
-            SizedBox(height: 15,),
+            const SizedBox(height: 15,),
             Container(
-              margin: EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
               child: Text('Please select favorite team from profile screen first',
                 style:  TextStyle(
                     fontWeight: FontWeight.w500,
@@ -344,7 +437,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                  textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             // defaultButton(
             //     width: MediaQuery.of(context).size.width*.8,
             //     height: MediaQuery.of(context).size.height*.07,
