@@ -1,6 +1,7 @@
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/data/services/notification_helper.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,10 +10,27 @@ import 'package:intl/intl.dart';
 import '../../constants/app_strings.dart';
 import '../layouts/home_layout.dart';
 
-class AddNewVideo extends StatelessWidget {
+class AddNewVideo extends StatefulWidget {
+  @override
+  State<AddNewVideo> createState() => _AddNewVideoState();
+}
+
+class _AddNewVideoState extends State<AddNewVideo> {
   //const AddNewVideo({Key? key}) : super(key: key);
+
+
+  var notifyHelper;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    notifyHelper = NotifyHelper();
+    notifyHelper.initializeNotification();
+    notifyHelper.requestIOSPermissions();
+  }
   @override
   TextEditingController postText=TextEditingController();
+
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit,AppState>(
@@ -70,7 +88,12 @@ class AddNewVideo extends StatelessWidget {
 
                             time: DateFormat.Hm().format(DateTime.now()),
                             dateTime: DateFormat.yMMMd().format(DateTime.now()),
-                            text:postText.text );
+                            text:postText.text
+                        );
+                        notifyHelper.displayNotification(
+                            title:'New Post',
+                            body:'${postText.text}'
+                        );
                       }else{
                         AppCubit.get(context).uploadPostVideo(
                           timeSpam: DateTime.now().toString(),
@@ -78,6 +101,10 @@ class AddNewVideo extends StatelessWidget {
                           dateTime:DateFormat.yMMMd().format(DateTime.now()),
                           text:postText.text,
                           name: AppCubit.get(context).userModel!.username,
+                        );
+                        notifyHelper.displayNotification(
+                            title:'New Post',
+                            body:'${postText.text}'
                         );
                       }
                     },

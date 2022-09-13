@@ -15,7 +15,10 @@ class CheeringScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
         listener: (context,state){
-
+           if(state is CreateCheeringSuccessState){
+             AppCubit.get(context).getCheeringPost();
+             Navigator.pop(context);
+           }
         },
         builder: (context,state){
             return Scaffold(
@@ -102,11 +105,13 @@ class CheeringScreen extends StatelessWidget {
                           textColor: AppColors.myWhite,
                           buttonText: 'Post',
                           function: (){
-                              AppCubit.get(context).createCheeringPost(
+                            AppCubit.get(context).isLast=false;
+                            AppCubit.get(context).createCheeringPost(
                                   time: DateFormat.Hm().format(DateTime.now()),
                                   timeSpam: DateTime.now().toString(),
                                   text: cheeringController.text
                               );
+                            AppCubit.get(context).getCheeringPost();
                           }
                       )
                     ],

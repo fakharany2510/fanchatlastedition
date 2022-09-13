@@ -1,5 +1,6 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/data/services/notification_helper.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,17 @@ class AddTextPost extends StatefulWidget {
 class _AddTextPostState extends State<AddTextPost> {
   @override
   TextEditingController postText = TextEditingController();
+
+
+  var notifyHelper;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    notifyHelper = NotifyHelper();
+    notifyHelper.initializeNotification();
+    notifyHelper.requestIOSPermissions();
+  }
 
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -69,6 +81,10 @@ class _AddTextPostState extends State<AddTextPost> {
                               timeSpam: DateTime.now().toString(),
                               time: DateFormat.Hm().format(DateTime.now()),
                               dateTime: DateFormat.yMMMd().format(DateTime.now()),
+                          );
+                          notifyHelper.displayNotification(
+                              title:'New Post',
+                              body:'${postText.text}'
                           );
                         },
 

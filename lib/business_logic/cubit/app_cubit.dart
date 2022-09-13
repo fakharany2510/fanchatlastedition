@@ -1856,27 +1856,28 @@ List<int> commentIndex=[];
     });
   }
 
+  bool isLast=false;
+
+
   List <CheeringModel> cheering=[];
 
-  void getCheeringPost(){
+  Future <void> getCheeringPost() async{
     cheering=[];
     FirebaseFirestore.instance
         .collection('cheering')
-        .get()
-        .then((value){
+        .orderBy('timeSpam',descending: true)
+        .snapshots().listen((event) {
+                event.docs.forEach((element) {
 
-          value.docs.forEach((element) {
+                  cheering.add(CheeringModel.formJson(element.data()));
+                  print('Get Cheering message');
+                  emit(GetCheeringSuccessState());
+                });
+                print( cheering.first.text);
+                print( isLast);
 
-            cheering.add(CheeringModel.formJson(element.data()));
-
-          });
-
-        print('Get Cheering message');
-        emit(GetCheeringSuccessState());
-    })
-        .catchError((error){
-      emit(GetCheeringErrorState());
     });
+
   }
 
 

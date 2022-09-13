@@ -24,7 +24,6 @@ import 'package:uuid/uuid.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:voice_message_package/voice_message_package.dart';
 
-
 typedef _Fn = void Function();
 Future<String> _getTempPath(String path) async {
   var tempDir = await getTemporaryDirectory();
@@ -61,14 +60,13 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
       scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
     }
     isWriting = false;
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 6), () {
       setState(() {
         indexCheering+=1;
       });
     });
 
   }
-  bool isLast=false;
   @override
   Widget build(BuildContext context) {
 
@@ -77,11 +75,13 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
           builder: (context) {
             Timer(const Duration(seconds: 15), () {
               setState(() {
-                if(AppCubit.get(context).cheering.length!=indexCheering)
-                  indexCheering+=1;
+                // if(AppCubit.get(context).cheering.length!=indexCheering)
+                //   indexCheering+=1;
+                //
+                // if(AppCubit.get(context).cheering.length==indexCheering)
+                //   isLast=true;
+                AppCubit.get(context).isLast=true;
 
-                if(AppCubit.get(context).cheering.length==indexCheering)
-                  isLast=true;
 
               });
             });
@@ -166,7 +166,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                   body: ConditionalBuilder(
                     builder: (context)=>Column(
                       children: [
-                        if(isLast==false)
+                        if(AppCubit.get(context).isLast==false )
                         Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 0,
@@ -184,7 +184,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                   children: [
 
                                     CircleAvatar(
-                                      backgroundImage:NetworkImage('${AppCubit.get(context).cheering[indexCheering].userImage}') as ImageProvider,
+                                      backgroundImage:NetworkImage('${AppCubit.get(context).cheering.first.userImage}') as ImageProvider,
                                       radius: 18,
                                     ),
                                     const SizedBox(width: 10,),
@@ -193,7 +193,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                       children: [
                                         Row(
                                           children: [
-                                            Text('${AppCubit.get(context).cheering[indexCheering].username}',
+                                            Text('${AppCubit.get(context).cheering.first.username}',
                                               style: TextStyle(
                                                   color: AppColors.primaryColor1,
                                                   fontSize: 15,
@@ -211,7 +211,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                   ],
                                 ),
                                 SizedBox(height: 5,),
-                                Text('${AppCubit.get(context).cheering[indexCheering].text}',
+                                Text('${AppCubit.get(context).cheering.first.text}',
                                   style: TextStyle(
                                       color: AppColors.primaryColor1,
                                       fontSize: 16,

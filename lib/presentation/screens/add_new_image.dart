@@ -1,5 +1,6 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/data/services/notification_helper.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,16 @@ class AddNewImage extends StatefulWidget {
 class _AddNewImageState extends State<AddNewImage> {
   @override
   TextEditingController postText=TextEditingController();
+
+  var notifyHelper;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    notifyHelper = NotifyHelper();
+    notifyHelper.initializeNotification();
+    notifyHelper.requestIOSPermissions();
+  }
 
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -68,6 +79,10 @@ class _AddNewImageState extends State<AddNewImage> {
                           dateTime: DateFormat.yMMMd().format(DateTime.now()),
                           text:postText.text,
                         );
+                        notifyHelper.displayNotification(
+                            title:'New Post',
+                            body:'${postText.text}'
+                        );
                       }else{
                         AppCubit.get(context).uploadPostImage(
                           dateTime: DateFormat.yMMMd().format(DateTime.now()),
@@ -76,6 +91,10 @@ class _AddNewImageState extends State<AddNewImage> {
                           text:postText.text,
                           image: AppCubit.get(context).userModel!.image,
                           name: AppCubit.get(context).userModel!.username,
+                        );
+                        notifyHelper.displayNotification(
+                            title:'New Post',
+                            body:'${postText.text}'
                         );
                       }
                       print(DateFormat.Hms().format(DateTime.now()));

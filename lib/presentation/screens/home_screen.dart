@@ -58,12 +58,12 @@ class HomeScreen extends StatelessWidget {
                     );
                   }).toList(),
                   options: CarouselOptions(
-                    height: 180,
+                    height: 150,
                     initialPage: 0,
                     enableInfiniteScroll: true,
                     reverse: false,
                     autoPlay: true,
-                    viewportFraction: .84,
+                    viewportFraction: .95,
                     scrollDirection: Axis.horizontal,
                     autoPlayAnimationDuration: const Duration(seconds: 1),
                     autoPlayInterval: const Duration(seconds: 3),
@@ -73,11 +73,12 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 3,),
-                  Container(height: MediaQuery.of(context).size.height*.002,width: MediaQuery.of(context).size.width,color: AppColors.myGrey),
+                  // Container(height: MediaQuery.of(context).size.height*.002,width: MediaQuery.of(context).size.width,color: AppColors.myGrey),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 0),
                   child: Column(
                     children: [
+                      const SizedBox(height: 3,),
                       InkWell(
                         onTap: (){
                           Navigator.pushNamed(context, 'add_text');
