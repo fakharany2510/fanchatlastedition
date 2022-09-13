@@ -55,6 +55,7 @@ dependencies:
   flutter_local_notifications: ^9.7.0
   flutter_native_timezone: ^2.0.0
   get:
+  custom_clippers: ^1.0.0
 
 
 
