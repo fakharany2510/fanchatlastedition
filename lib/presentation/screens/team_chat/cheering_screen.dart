@@ -106,6 +106,7 @@ class CheeringScreen extends StatelessWidget {
                           buttonText: 'Post',
                           function: (){
                             AppCubit.get(context).isLast=false;
+                            AppCubit.get(context).count=15;
                             AppCubit.get(context).createCheeringPost(
                                   time: DateFormat.Hm().format(DateTime.now()),
                                   timeSpam: DateTime.now().toString(),

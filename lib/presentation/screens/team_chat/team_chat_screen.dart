@@ -54,7 +54,6 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
   ScrollController scrollController = ScrollController();
   int indexCheering=0;
 
-  int count=5;
   @override
   void initState() {
 
@@ -66,7 +65,6 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
     Timer(const Duration(seconds: 1), () {
       setState(() {
         indexCheering+=1;
-        count-=1;
       });
     });
 
@@ -85,9 +83,21 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                 // if(AppCubit.get(context).cheering.length==indexCheering)
                 //   isLast=true;
                 AppCubit.get(context).isLast=true;
-                count-=1;
 
 
+              });
+            });
+            Timer(const Duration(seconds: 1), () {
+              setState(() {
+                // if(AppCubit.get(context).cheering.length!=indexCheering)
+                //   indexCheering+=1;
+                //
+                // if(AppCubit.get(context).cheering.length==indexCheering)
+                //   isLast=true;
+                AppCubit.get(context).count=AppCubit.get(context).count-1;
+                if(AppCubit.get(context).count-1<0){
+                  AppCubit.get(context).count=0;
+                }
               });
             });
             if(scrollController.hasClients){
@@ -160,88 +170,106 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                     builder: (context)=>Column(
                       children: [
                         if(AppCubit.get(context).isLast==false )
-                        Column(
-                          children: [
-                            ClipPath(
-                              clipper: TicketPassClipper(holeRadius: 50),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: AppColors.primaryColor1
-                                  ),
-                                  color: AppColors.primaryColor1,
-
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 5,
-                                    horizontal: 15
-                                ),
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 5,
-                                    horizontal: 5
-                                ),
-                                width:MediaQuery.of(context).size.width*.9 ,
-                                height: MediaQuery.of(context).size.height*.13,
-                                child:  Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-
-                                          CircleAvatar(
-                                            backgroundImage:NetworkImage('${AppCubit.get(context).cheering.first.userImage}') as ImageProvider,
-                                            radius: 18,
-                                          ),
-                                          const SizedBox(width: 10,),
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Text('${AppCubit.get(context).cheering.first.username}',
-                                                    style: TextStyle(
-                                                        color: AppColors.myWhite,
-                                                        fontSize: 15,
-                                                        fontWeight: FontWeight.w500,
-                                                        fontFamily: AppStrings.appFont
-                                                    ),
-                                                  ),
-
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-
-                                        ],
-                                      ),
-                                      SizedBox(height: 10,),
-                                      Text('${AppCubit.get(context).cheering.first.text}',
-                                        style: TextStyle(
-                                            color: AppColors.myWhite,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: AppStrings.appFont
-                                        ),
-                                      ),
-                                      // SizedBox(height: 10,),
-                                      // Text('${count}',
-                                      //   style: TextStyle(
-                                      //       color: AppColors.myWhite,
-                                      //       fontSize: 15,
-                                      //       fontWeight: FontWeight.w500,
-                                      //       fontFamily: AppStrings.appFont
-                                      //   ),
-                                      // ),
-                                    ],
-                                  ),
-                                ),
+                        Container(
+                          height: 130,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: AppColors.primaryColor1
+                            )
+                          ),
+                          margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                          child: Stack(
+                            children: [
+                              Lottie.asset(
+                                  height: 130,
+                                  width: double.infinity,
+                                  'assets/images/cheer.json'
                               ),
+                              ClipPath(
+                                clipper: TicketPassClipper(holeRadius: 50),
+                                child: Container(
+                                  // decoration: BoxDecoration(
+                                  //   border: Border.all(
+                                  //       color: AppColors.primaryColor1
+                                  //   ),
+                                  //   color: AppColors.primaryColor1,
+                                  //
+                                  // ),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 5,
+                                      horizontal: 15
+                                  ),
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 5,
+                                      horizontal: 5
+                                  ),
+                                  width:MediaQuery.of(context).size.width*.9 ,
+                                  height: MediaQuery.of(context).size.height*.16,
+                                  child:  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
 
-                            ),
-                          ],
+                                            CircleAvatar(
+                                              backgroundImage:NetworkImage('${AppCubit.get(context).cheering.first.userImage}') as ImageProvider,
+                                              radius: 18,
+                                            ),
+                                            const SizedBox(width: 10,),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text('${AppCubit.get(context).cheering.first.username}',
+                                                      style: TextStyle(
+                                                          color: AppColors.primaryColor1,
+                                                          fontSize: 15,
+                                                          fontWeight: FontWeight.w500,
+                                                          fontFamily: AppStrings.appFont
+                                                      ),
+                                                    ),
+
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+
+                                          ],
+                                        ),
+                                        SizedBox(height: 10,),
+                                        Text('${AppCubit.get(context).cheering.first.text}',
+                                          style: TextStyle(
+                                              color: AppColors.primaryColor1,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: AppStrings.appFont
+                                          ),
+                                        ),
+                                        SizedBox(height: 10,),
+                                        if(AppCubit.get(context).count!=0 || AppCubit.get(context).count>0)
+                                        Align(
+                                          alignment: Alignment.topRight,
+                                          child: Text('${AppCubit.get(context).count}',
+                                            style: TextStyle(
+                                                color: AppColors.primaryColor1,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: AppStrings.appFont
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+
+                              ),
+                            ],
+                          ),
                         ),
 
                         Expanded(
