@@ -153,3 +153,6 @@ class CreateCheeringErrorState extends AppState {}
 
 class GetCheeringSuccessState extends AppState {}
 class GetCheeringErrorState extends AppState {}
+
+class DeletePostSuccessState extends AppState {}
+class DeletePostErrorState extends AppState {}

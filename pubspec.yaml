@@ -56,7 +56,7 @@ dependencies:
   flutter_native_timezone: ^2.0.0
   get:
   custom_clippers: ^1.0.0
-
+  overlay_support: ^1.2.1
 
 
   #Google SignIn

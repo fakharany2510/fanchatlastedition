@@ -5,6 +5,7 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/firebase_options.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
+import 'package:fanchat/presentation/layouts/test_notification.dart';
 import 'package:fanchat/presentation/screens/add_new_image.dart';
 import 'package:fanchat/presentation/screens/add_new_video.dart';
 import 'package:fanchat/presentation/screens/add_text_post.dart';
@@ -21,6 +22,7 @@ import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 import 'business_logic/bloc/bloc_observer.dart';
 
@@ -31,7 +33,7 @@ void main()async {
   );
 
   await CashHelper.init();
-  AppStrings.uId = 'AxcP12u5shTMazflryni7fy54II3';
+  AppStrings.uId = 'Kv7ZPjRFocM4glICd02LwuAFJqq1';
   printMessage('userId is: ${AppStrings.uId}');
 
 
@@ -48,36 +50,38 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context)=>AppCubit()..getUser()..getPosts()..getAllUsers()..getFanPosts()),
         ],
         child: FirebasePhoneAuthProvider(
-          child: MaterialApp(
-            title: 'fanchat',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              navigationBarTheme: const NavigationBarThemeData(
-                elevation: 1000,
-              ),
-              primarySwatch: Colors.blue,
-              appBarTheme: AppBarTheme(
-                systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarBrightness: Brightness.light,
-                  statusBarColor: AppColors.primaryColor1,
+          child: OverlaySupport(
+            child: MaterialApp(
+              title: 'fanchat',
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                navigationBarTheme: const NavigationBarThemeData(
+                  elevation: 1000,
+                ),
+                primarySwatch: Colors.blue,
+                appBarTheme: AppBarTheme(
+                  systemOverlayStyle: SystemUiOverlayStyle(
+                    statusBarBrightness: Brightness.light,
+                    statusBarColor: AppColors.primaryColor1,
+                  )
                 )
-              )
-            ),
-           // initialRoute: 'register',
-            routes: {
-              '/' :(context)=> SplashScreen(),
-              'home_layout':(context)=> const HomeLayout(),
-              'login':(context)=> LoginScreen(),
-              'register':(context)=>RegisterScreen(),
-              'profile':(context)=> ProfileScreen(),
-              'edit_profile':(context)=>EditProfileScreen(),
-              'add_image':(context)=>AddNewImage(),
-              'add_video':(context)=>AddNewVideo(),
-              'add_text':(context)=>AddTextPost(),
-              'fan_post':(context)=>FanFullPost(),
-              'message':(context)=>ChatDetails(userModel: AppCubit.get(context).userModel!,),
+              ),
+             // initialRoute: 'register',
+              routes: {
+                '/' :(context)=> SplashScreen(),
+                'home_layout':(context)=> const HomeLayout(),
+                'login':(context)=> LoginScreen(),
+                'register':(context)=>RegisterScreen(),
+                'profile':(context)=> ProfileScreen(),
+                'edit_profile':(context)=>EditProfileScreen(),
+                'add_image':(context)=>AddNewImage(),
+                'add_video':(context)=>AddNewVideo(),
+                'add_text':(context)=>AddTextPost(),
+                'fan_post':(context)=>FanFullPost(),
+                'message':(context)=>ChatDetails(userModel: AppCubit.get(context).userModel!,),
 
-            },
+              },
+            ),
           ),
         ),);
   }

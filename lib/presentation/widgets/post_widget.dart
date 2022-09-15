@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/presentation/screens/edit_screen/edit_screen.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:fanchat/presentation/screens/user_profile.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
@@ -112,7 +113,7 @@ class _PostWidgetState extends State<PostWidget> {
                                     fontFamily: AppStrings.appFont
                                 ),
                               ),
-                              SizedBox(height: 5,),
+                              const SizedBox(height: 5,),
                               Text('${AppCubit.get(context).posts[widget.index!].time}',
                                 overflow: TextOverflow.ellipsis,
                                 style:  TextStyle(
@@ -123,6 +124,58 @@ class _PostWidgetState extends State<PostWidget> {
                               ),
                             ],
                           ),
+                          const SizedBox(width: 5,),
+                          PopupMenuButton(
+                              icon: const Icon(
+                                Icons.more_vert_sharp,
+                                color: Colors.white,
+                              ),
+                              itemBuilder: (context) => [
+
+                                PopupMenuItem(
+                                  value: 1,
+                                  child: Text('Edit',
+                                    overflow: TextOverflow.ellipsis,
+                                    style:  TextStyle(
+                                        fontSize: 13,
+                                        color: AppColors.primaryColor1,
+                                        fontFamily: AppStrings.appFont
+                                    ),
+                                  ),
+                                  onTap: (){
+                                    // if(AppCubit.get(context).posts[widget.index!].postImage!=""){
+                                    //   Navigator.push(context, MaterialPageRoute(builder: (_){
+                                    //     return EditPostImageScreen(
+                                    //         userImage: AppCubit.get(context).posts[widget.index!].image!,
+                                    //         userName: AppCubit.get(context).posts[widget.index!].name!,
+                                    //         postImage: AppCubit.get(context).posts[widget.index!].postImage!,
+                                    //         time: AppCubit.get(context).posts[widget.index!].time!,
+                                    //         date: AppCubit.get(context).posts[widget.index!].dateTime!,
+                                    //         index: widget.index!,
+                                    //     );
+                                    //
+                                    //   }));
+                                    // }
+
+                                  },
+                                ),
+                                PopupMenuItem(
+                                  value: 2,
+                                  child: Text('Delete',
+                                    overflow: TextOverflow.ellipsis,
+                                    style:  TextStyle(
+                                        fontSize: 13,
+                                        color: AppColors.primaryColor1,
+                                        fontFamily: AppStrings.appFont
+                                    ),
+                                  ),
+                                  onTap: (){
+                                    AppCubit.get(context).deletePost(postId: '${AppCubit.get(context).posts[widget.index!].postId}');
+                                  },
+                                ),
+                              ]
+                          )
+
                         ],
                       ),
                     ),
@@ -142,7 +195,7 @@ class _PostWidgetState extends State<PostWidget> {
                           ),
                         )),
                   ),
-                  SizedBox(height: 0,),
+                  const SizedBox(height: 0,),
                   (AppCubit.get(context).posts[widget.index!].postImage!="")
                       ?InkWell(
                         onTap: (){
@@ -160,14 +213,14 @@ class _PostWidgetState extends State<PostWidget> {
                           child:  CachedNetworkImage(
                             cacheManager: AppCubit.get(context).manager,
                             imageUrl: "${AppCubit.get(context).posts[widget.index!].postImage}",
-                            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                            placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                             fit: BoxFit.fitWidth,
                           ),
                         ),
                     ),
                   ),
                       )
-                      : (AppCubit.get(context).posts[widget.index!].postVideo!="")
+                      : (AppCubit.get(context).posts[widget.index!].postVideo !="")
                       ?Stack(
                     children: [
                       Container(
@@ -177,7 +230,7 @@ class _PostWidgetState extends State<PostWidget> {
                             ? AspectRatio(
                             aspectRatio: controller.value.aspectRatio,
                             child: CachedVideoPlayer(controller))
-                            : Center(child: const CircularProgressIndicator())
+                            : const Center(child: CircularProgressIndicator())
                       ),
 
           // FutureBuilder(
@@ -222,8 +275,8 @@ class _PostWidgetState extends State<PostWidget> {
                       ),
                     ],
                   )
-                      :SizedBox(width: 0,),
-                  SizedBox(height: 0,),
+                      :const SizedBox(width: 0,),
+                  const SizedBox(height: 0,),
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Row(
@@ -240,7 +293,7 @@ class _PostWidgetState extends State<PostWidget> {
                               ),),
                             IconButton(
                               padding:EdgeInsets.zero,
-                              constraints: BoxConstraints(),
+                              constraints: const BoxConstraints(),
                               onPressed:(){
                                 AppCubit.get(context).likePosts('${AppCubit.get(context).posts[widget.index!].postId}',AppCubit.get(context).posts[widget.index!].likes!);
 
@@ -290,7 +343,7 @@ class _PostWidgetState extends State<PostWidget> {
                               Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20)),
                           ],
                         ),
-                        SizedBox(width: 15,),
+                        const SizedBox(width: 15,),
                         Row(
                           children: [
                              Text('${AppCubit.get(context).posts[widget.index!].comments}',
@@ -302,7 +355,7 @@ class _PostWidgetState extends State<PostWidget> {
                             ),),
                             IconButton(
                               padding:EdgeInsets.zero,
-                              constraints: BoxConstraints(),
+                              constraints: const BoxConstraints(),
                               onPressed:(){
                                 AppCubit.get(context).getComment('${AppCubit.get(context).posts[widget.index!].postId}');
                                 Navigator.push(context, MaterialPageRoute(builder: (_){

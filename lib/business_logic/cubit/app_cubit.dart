@@ -1881,6 +1881,26 @@ List<int> commentIndex=[];
 
   }
 
+  //Create Cheering
+  void deletePost({
+    required String postId
+  }){
+
+    FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postId)
+        .delete()
+        .then((value){
+
+      print('Post Delete');
+      getPosts();
+      emit(DeletePostSuccessState());
+    })
+        .catchError((error){
+      emit(DeletePostErrorState());
+    });
+  }
+
 
 }
 
