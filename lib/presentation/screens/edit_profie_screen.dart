@@ -3,6 +3,8 @@ import 'package:country_pickers/country_pickers.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/screens/edit_profile/edit_cover.dart';
+import 'package:fanchat/presentation/screens/edit_profile/edit_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,7 +64,12 @@ class EditProfileScreen extends StatelessWidget {
                                   radius: 20,
                                   child: IconButton(
                                       onPressed: () {
-                                        cubit.getCoverImage();
+                                        // isEdit=false;
+                                        Navigator.push(context, MaterialPageRoute(builder: (_){
+
+                                          return EditCover(cover: '${cubit.userModel!.cover}',);
+
+                                        }));
                                       },
                                       icon: Icon(
                                         Icons.camera_alt_outlined,
@@ -91,7 +98,11 @@ class EditProfileScreen extends StatelessWidget {
                               radius: 20,
                               child: IconButton(
                                   onPressed: () {
-                                    cubit.getProfileImage();
+                                    Navigator.push(context, MaterialPageRoute(builder: (_){
+
+                                      return EditImage();
+
+                                    }));
                                     print('change personal photo');
                                   },
                                   icon: Icon(
@@ -105,70 +116,70 @@ class EditProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (AppCubit.get(context).profileImage != null ||
-                    AppCubit.get(context).coverImage != null)
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      children: [
-                        if (cubit.profileImage != null)
-                          Expanded(
-                            child: Column(
-                              children: [
-                                defaultButton(
-                                  textColor: AppColors.primaryColor1,
-                                  width: size.width * .6,
-                                  height: size.height * .06,
-                                  fontSize: 14,
-                                  buttonColor: AppColors.myGrey,
-                                  buttonText: 'Upload profile image',
-                                  function: () {
-                                    cubit
-                                        .uploadUserImage(
-                                      name: cubit.changeUserNameController.text,
-                                      phone:
-                                          cubit.changeUserPhoneController.text,
-                                      bio: cubit.changeUserBioController.text,
-                                    )
-                                        .then((value) {
-                                      cubit.getUser();
-                                    });
-                                  },
-                                )
-                              ],
-                            ),
-                          ),
-                        SizedBox(width: 5),
-                        if (cubit.coverImage != null)
-                          Expanded(
-                            child: Column(
-                              children: [
-                                defaultButton(
-                                  textColor: AppColors.primaryColor1,
-                                  width: size.width * .6,
-                                  height: size.height * .06,
-                                  fontSize: 14,
-                                  buttonColor: AppColors.myGrey,
-                                  buttonText: 'Upload cover image',
-                                  function: () {
-                                    cubit
-                                        .uploadUserCover(
-                                      name: cubit.changeUserNameController.text,
-                                      phone:
-                                          cubit.changeUserPhoneController.text,
-                                      bio: cubit.changeUserBioController.text,
-                                    )
-                                        .then((value) {
-                                      cubit.getUser();
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
+                // if (AppCubit.get(context).profileImage != null ||
+                //     AppCubit.get(context).coverImage != null)
+                //   Container(
+                //     margin: const EdgeInsets.symmetric(horizontal: 10),
+                //     child: Row(
+                //       children: [
+                //         if (cubit.profileImage != null)
+                //           Expanded(
+                //             child: Column(
+                //               children: [
+                //                 defaultButton(
+                //                   textColor: AppColors.primaryColor1,
+                //                   width: size.width * .6,
+                //                   height: size.height * .06,
+                //                   fontSize: 14,
+                //                   buttonColor: AppColors.myGrey,
+                //                   buttonText: 'Upload profile image',
+                //                   function: () {
+                //                     // cubit
+                //                     //     .uploadUserImage(
+                //                     //   name: cubit.changeUserNameController.text,
+                //                     //   phone:
+                //                     //       cubit.changeUserPhoneController.text,
+                //                     //   bio: cubit.changeUserBioController.text,
+                //                     // )
+                //                     //     .then((value) {
+                //                     //   cubit.getUser();
+                //                     // });
+                //                   },
+                //                 )
+                //               ],
+                //             ),
+                //           ),
+                //         SizedBox(width: 5),
+                //         if (cubit.coverImage != null)
+                //           Expanded(
+                //             child: Column(
+                //               children: [
+                //                 defaultButton(
+                //                   textColor: AppColors.primaryColor1,
+                //                   width: size.width * .6,
+                //                   height: size.height * .06,
+                //                   fontSize: 14,
+                //                   buttonColor: AppColors.myGrey,
+                //                   buttonText: 'Upload cover image',
+                //                   function: () {
+                //                     // cubit
+                //                     //     .uploadUserCover(
+                //                     //   name: cubit.changeUserNameController.text,
+                //                     //   phone:
+                //                     //       cubit.changeUserPhoneController.text,
+                //                     //   bio: cubit.changeUserBioController.text,
+                //                     // )
+                //                     //     .then((value) {
+                //                     //   cubit.getUser();
+                //                     // });
+                //                   },
+                //                 ),
+                //               ],
+                //             ),
+                //           ),
+                //       ],
+                //     ),
+                //   ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                   child: textFormFieldWidget(
