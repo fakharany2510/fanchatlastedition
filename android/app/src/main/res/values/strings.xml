@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">fanchat</string>
-    <string name="facebook_app_id">515376773726385</string>
-    <string name="fb_login_protocol_scheme">fb515376773726385</string>
-    <string name="facebook_client_token">ce6cb1e545df1925343c23c26f0527c0</string>
+    <string name="app_name">Fan Chat</string>
+    <string name="facebook_app_id">2297930787022266</string>
+    <string name="fb_login_protocol_scheme">fb2297930787022266</string>
+    <string name="facebook_client_token">360e57e8e03c2839a0d86a4774202511</string>
 </resources>
 
 

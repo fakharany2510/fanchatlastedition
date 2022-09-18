@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 import 'package:intl/intl.dart';
-import '../../constants/app_strings.dart';
-import '../layouts/home_layout.dart';
+import '../../../constants/app_strings.dart';
+import '../../layouts/home_layout.dart';
 
 class AddNewVideo extends StatefulWidget {
   @override
@@ -39,7 +39,8 @@ class _AddNewVideoState extends State<AddNewVideo> {
          // Navigator.of(context).popAndPushNamed('home_layout');
          //  AppCubit.get(context).testLikes();
          //  AppCubit.get(context).testComments();
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
           AppCubit.get(context).controller!.dispose();
           AppCubit.get(context).postVideo=null;
 

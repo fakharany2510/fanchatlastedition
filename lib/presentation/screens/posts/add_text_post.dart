@@ -1,12 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/services/notification_helper.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import '../../constants/app_strings.dart';
 
 class AddTextPost extends StatefulWidget {
   @override
@@ -14,17 +16,25 @@ class AddTextPost extends StatefulWidget {
 }
 
 class _AddTextPostState extends State<AddTextPost> {
+
   @override
   TextEditingController postText = TextEditingController();
 
 
   var notifyHelper;
+  bool textFormFielsChanged = false;
   @override
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   void initState() {
-    // TODO: implement initState
     super.initState();
     notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification();
+    _fcm.getToken().then((token) =>{
+      print('token =====> ${token}'),
+    FirebaseFirestore.instance.collection('tokens').add({
+    'token':token,
+    })
+    });
     notifyHelper.requestIOSPermissions();
   }
 
@@ -68,30 +78,36 @@ class _AddTextPostState extends State<AddTextPost> {
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: defaultButton(
-                textColor: AppColors.myWhite,
-                width: size.width*.2,
-                height: size.height*.05,
-                raduis: 10,
-                        function: () {
-                          AppCubit.get(context).createTextPost(
-                              text: postText.text,
-                              timeSpam: DateTime.now().toString(),
-                              time: DateFormat.Hm().format(DateTime.now()),
-                              dateTime: DateFormat.yMMMd().format(DateTime.now()),
-                          );
-                          notifyHelper.displayNotification(
-                              title:'New Post',
-                              body:'${postText.text}'
-                          );
-                        },
+                  : (textFormFielsChanged == false)
+              ?Container(
+                width: 1,
+                height: 1,
+                color: Colors.white,
+              )
+                  :Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: defaultButton(
+                  textColor: AppColors.myWhite,
+                  width: size.width*.2,
+                  height: size.height*.05,
+                  raduis: 10,
+                  function: () {
+                    AppCubit.get(context).createTextPost(
+                      text: postText.text,
+                      timeSpam: DateTime.now().toString(),
+                      time: DateFormat.Hm().format(DateTime.now()),
+                      dateTime: DateFormat.yMMMd().format(DateTime.now()),
+                    );
+                    notifyHelper.displayNotification(
+                        title:'New Post',
+                        body:'${postText.text}'
+                    );
+                  },
 
-                        buttonText: 'post',
-                        buttonColor: AppColors.primaryColor1,
-                      ),
-                  ),
+                  buttonText: 'post',
+                  buttonColor: AppColors.primaryColor1,
+                ),
+              ),
             ],
           ),
           body: SingleChildScrollView(
@@ -124,6 +140,11 @@ class _AddTextPostState extends State<AddTextPost> {
                       height: 10,
                     ),
                     TextFormField(
+                      onChanged: (String s){
+                        setState((){
+                          textFormFielsChanged = true;
+                        });
+                      },
                       controller: postText,
                       decoration: const InputDecoration(
                         hintMaxLines: 1,

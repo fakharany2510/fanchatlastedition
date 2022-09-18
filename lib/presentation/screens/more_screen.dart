@@ -1,6 +1,6 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
-import 'package:fanchat/presentation/screens/login_screen.dart';
+import 'package:fanchat/presentation/paypal/paypal_payment.dart';
 import 'package:fanchat/presentation/screens/register_screen.dart';
 import 'package:fanchat/presentation/screens/team_chat/team_chat_screen.dart';
 import 'package:flutter/material.dart';
@@ -153,7 +153,8 @@ class MoreScreen extends StatelessWidget {
                                       fontWeight: FontWeight.w500,
                                       color: AppColors.primaryColor1,
                                       fontFamily: AppStrings.appFont
-                                  ),),
+                                  ),
+                                  ),
                                   const Spacer(),
                                   Icon(Icons.arrow_forward_ios_outlined,color: AppColors.primaryColor1,size: 20,),
                                 ],
@@ -166,6 +167,50 @@ class MoreScreen extends StatelessWidget {
                               );
                             },
                           ),
+                          // const SizedBox(height:10),
+                          // InkWell(
+                          //   child: Container(
+                          //     padding: const EdgeInsets.symmetric(
+                          //         vertical: 0,
+                          //         horizontal: 10
+                          //     ),
+                          //     margin: const EdgeInsets.symmetric(
+                          //         vertical: 0,
+                          //         horizontal: 10
+                          //     ),
+                          //     width: size.width,
+                          //     height: size.height*.05,
+                          //     decoration: BoxDecoration(
+                          //         color: AppColors.myGrey,
+                          //         borderRadius: BorderRadius.circular(10)
+                          //     ),
+                          //     child: Row(
+                          //       mainAxisAlignment: MainAxisAlignment.start,
+                          //       mainAxisSize: MainAxisSize.min,
+                          //       children: [
+                          //         Icon(Icons.logout,color: AppColors.primaryColor1,size: 25,),
+                          //         const SizedBox(width: 5,),
+                          //         Text('SignOut',style: TextStyle(
+                          //             fontSize: 17,
+                          //             fontWeight: FontWeight.w500,
+                          //             color: AppColors.primaryColor1,
+                          //             fontFamily: AppStrings.appFont
+                          //         ),),
+                          //         const Spacer(),
+                          //         Icon(Icons.arrow_forward_ios_outlined,color: AppColors.primaryColor1,size: 20,),
+                          //       ],
+                          //     ),
+                          //   ),
+                          //   onTap: (){
+                          //     AppCubit.get(context).signOut();
+                          //     Navigator.pushReplacement(context,
+                          //         MaterialPageRoute(builder: (context)=>PaypalPayment(onFinish:(number){
+                          //           print("order id "+number);
+                          //         } ,))
+                          //     );
+                          //   },
+                          // ),
+
                         ],
                       ),
                     ),
@@ -178,7 +223,6 @@ class MoreScreen extends StatelessWidget {
                 color: AppColors.primaryColor1,
               ),
             )
-
         );
       },
     );

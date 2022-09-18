@@ -6,54 +6,18 @@ import 'package:email_auth/email_auth.dart';
 import 'package:fanchat/business_logic/register/register_states.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/user_model.dart';
-import 'package:fanchat/presentation/screens/verify_code_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
-import 'package:fanchat/utils/helpers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../login/login_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState>{
   RegisterCubit() : super(RegisterInitialState());
   static RegisterCubit get(context) => BlocProvider.of(context);
   UserModel? userModel;
-  // Future userRegister({
-  //   required String email,
-  //   required String pass,
-  //   required String name,
-  //   required String phone,
-  //
-  //
-  // })async {
-  //
-  //   FirebaseAuth.instance.createUserWithEmailAndPassword(
-  //       email: email,
-  //       password: pass
-  //   ).then((value) {
-  //
-  //     printMessage('Register Successful');
-  //
-  //     saveUserInfo(
-  //         name: name,
-  //         email: email,
-  //         uId: value.user!.uid,
-  //         phone: phone,
-  //     );
-  //     AppStrings.uId=value.user!.uid;
-  //     emit(UserRegisterSuccessState(value.user!.uid));
-  //
-  //   }).catchError((error){
-  //     printMessage('Error is user register is ${error.toString()}');
-  //     emit(UserRegisterErrorState());
-  //   });
-  //
-  //
-  //
-  // }
+
 
 
 
@@ -152,9 +116,9 @@ void verifyOtp(String email, String otp){
   bool isLoggedIn =false;
   Future<void> signInWithFacebook() async {
     emit(FacebookLoginLoadingState());
-    await FacebookAuth.instance.logOut();
+
     //final LoginResult result =
-    await FacebookAuth.instance.login(permissions: ['public_profile', 'email']).then((value){
+    await FacebookAuth.instance.login(permissions: ['public_profile' , 'email']).then((value){
       FacebookAuth.instance.getUserData().then((userData){
         isLoggedIn=true;
         var data=userData;
@@ -180,8 +144,10 @@ void verifyOtp(String email, String otp){
       emit(FacebookLoginErrorState());
       print(error.toString());
     });
+    await FacebookAuth.instance.logOut();
   }
-//////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////
+
 
   //////////////////////////////////////////////////////////////////////////
   GoogleSignIn googleSignIn = GoogleSignIn();
@@ -215,6 +181,6 @@ void verifyOtp(String email, String otp){
     }
 
   }
-// //////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 }

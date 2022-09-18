@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "148742212571-j7qom1365vj4cspumar1jgdqbjoqpchp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fanchat.fanchat",
+            "certificate_hash": "57eddf61085a8e62b1155d3651b80ede2c949001"
+          }
+        },
+        {
           "client_id": "148742212571-apbgjeq5dq6fr36vg7vl70cl4umidivc.apps.googleusercontent.com",
           "client_type": 3
         }

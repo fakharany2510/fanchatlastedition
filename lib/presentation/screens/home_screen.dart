@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                     enableInfiniteScroll: true,
                     reverse: false,
                     autoPlay: true,
-                    viewportFraction: .95,
+                    viewportFraction: 1,
                     scrollDirection: Axis.horizontal,
                     autoPlayAnimationDuration: const Duration(seconds: 1),
                     autoPlayInterval: const Duration(seconds: 3),

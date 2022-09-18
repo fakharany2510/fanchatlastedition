@@ -54,9 +54,9 @@ dependencies:
   change_app_package_name: ^1.1.0
   flutter_local_notifications: ^9.7.0
   flutter_native_timezone: ^2.0.0
-  get:
   custom_clippers: ^1.0.0
-  overlay_support: ^1.2.1
+  overlay_support: ^2.0.1
+
   url_launcher: ^6.1.5
 
 
@@ -73,6 +73,10 @@ dependencies:
   firebase_storage: ^10.3.4
   firebase_messaging: ^11.2.5
   firebase_phone_auth_handler:
+  webview_flutter: ^3.0.4
+  get:
+  http: ^0.13.5
+  http_auth: ^1.0.1
  #BLOC
   flutter_bloc: ^7.0.0
   bloc: ^7.0.0

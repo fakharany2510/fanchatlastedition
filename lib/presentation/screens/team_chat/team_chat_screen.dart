@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:custom_clippers/Clippers/multiple_points_clipper.dart';
-import 'package:custom_clippers/custom_clippers.dart';
+import 'package:custom_clippers/Clippers/ticket_pass_clipper.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';

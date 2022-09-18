@@ -15,17 +15,86 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:country_pickers/country_pickers.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import '../../constants/app_strings.dart';
 import '../layouts/home_layout.dart';
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   //RegisterScreen({Key? key}) : super(key: key);
+  Map<String,dynamic>? _userData;
+  AccessToken? _accessToken;
+  bool _checking=true;
   var formKey =GlobalKey<FormState>();
+
   TextEditingController email = TextEditingController();
+
   TextEditingController name = TextEditingController();
+
   TextEditingController phone = TextEditingController();
+
   late String phoneNumber;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _checkIfisLoggedIn();
+  }
+
+  _checkIfisLoggedIn() async {
+    final accessToken = await FacebookAuth.instance.accessToken;
+
+    setState(() {
+      _checking = false;
+    });
+
+    if (accessToken != null) {
+      print(accessToken.toJson());
+      final userData = await FacebookAuth.instance.getUserData();
+      _accessToken = accessToken;
+      setState(() {
+        _userData = userData;
+      });
+    } else {
+      _login();
+    }
+  }
+
+  _login() async {
+    final LoginResult result = await FacebookAuth.instance.login();
+
+    if (result.status == LoginStatus.success) {
+      _accessToken = result.accessToken;
+
+      final userData = await FacebookAuth.instance.getUserData();
+      _userData = userData;
+      RegisterCubit.get(context).saveUserInfo(
+          name: _userData!['name'],
+          uId: _userData!['id'],
+          phone: ""
+      );
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeLayout()));
+    } else {
+      print(result.status);
+      print(result.message);
+    }
+    setState(() {
+      _checking = false;
+    });
+  }
+
+  _logout() async {
+    await FacebookAuth.instance.logOut();
+    _accessToken = null;
+    _userData = null;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -237,6 +306,13 @@ class RegisterScreen extends StatelessWidget {
                           defaultSocialMediaButton(
                               context: context,
                               function: (){
+                                // if(_userData ==null){
+                                //
+                                //   _login();
+                                //
+                                // }else{
+                                //   _logout();
+                                // }
                                 RegisterCubit.get(context).signInWithFacebook();
                               },
                               size:size,
@@ -273,6 +349,7 @@ class RegisterScreen extends StatelessWidget {
     );
 
   }
+
   Widget _buildDropdownItem(Country country) => Container(
     width:130,
     padding: const EdgeInsets.only(left: 15),

@@ -17,7 +17,6 @@ class ShowHomeImage extends StatelessWidget {
             imageUrl: "${image}",
             placeholder: (context, url) => Center(child: CircularProgressIndicator()),
             fit: BoxFit.fill,
-            height: 450,
             width: double.infinity,
           ),
         ),
