@@ -156,3 +156,6 @@ class GetCheeringErrorState extends AppState {}
 
 class DeletePostSuccessState extends AppState {}
 class DeletePostErrorState extends AppState {}
+
+class LaunchPayPalSuccessState extends AppState {}
+

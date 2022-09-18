@@ -57,6 +57,8 @@ dependencies:
   get:
   custom_clippers: ^1.0.0
   overlay_support: ^1.2.1
+  url_launcher: ^6.1.5
+
 
 
   #Google SignIn

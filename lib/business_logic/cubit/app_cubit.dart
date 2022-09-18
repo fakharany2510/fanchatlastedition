@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:video_player/video_player.dart';
 import '../../data/modles/comment_model.dart';
 import '../../data/modles/create_post_model.dart';
@@ -1899,6 +1901,14 @@ List<int> commentIndex=[];
         .catchError((error){
       emit(DeletePostErrorState());
     });
+  }
+
+
+  Future <void> toPayPal()async
+  {
+    String url= "https://paypal.me/tamerelsayed73?country.x=QA&locale.x=en_US";
+    await launch(url , forceSafariVC: false);
+    emit(LaunchPayPalSuccessState());
   }
 
 

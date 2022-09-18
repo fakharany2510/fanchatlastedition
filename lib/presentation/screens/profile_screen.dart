@@ -85,16 +85,37 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height:10,),
-                  defaultButton(
-                      textColor: AppColors.primaryColor1,
-                      buttonText: 'Edit Profile',
-                      buttonColor: AppColors.myGrey,
-                      height: size.height*.06,
-                      width: size.width*.9,
-                      function: (){
-                        cubit.getUser();
-                        Navigator.pushNamed(context, 'edit_profile');
-                      }
+
+                  Row(
+                    children: [
+                      const SizedBox(width: 20,),
+                      defaultButton(
+                          textColor: AppColors.primaryColor1,
+                          buttonText: 'Edit Profile',
+                          buttonColor: AppColors.myGrey,
+                          height: size.height*.06,
+                          width: size.width*.68,
+                          function: (){
+                            cubit.getUser();
+                            Navigator.pushNamed(context, 'edit_profile');
+                          }
+                      ),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: (){
+                          cubit.toPayPal();
+                        },
+                        child: const CircleAvatar(
+                          radius: 29,
+                          backgroundColor: Colors.white,
+                          child: CircleAvatar(
+                            radius: 28,
+                            backgroundImage: AssetImage('assets/images/pay.png'),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 15,)
+                    ],
                   ),
                   const SizedBox(height: 15,),
                   GridView.count(
@@ -130,7 +151,7 @@ class ProfileScreen extends StatelessWidget {
                   )
                 ],
               ),
-            ):Center(
+            ):const Center(
               child: CircularProgressIndicator(),
             ),
           );
