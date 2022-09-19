@@ -19,10 +19,12 @@ class _AddTextPostState extends State<AddTextPost> {
 
   @override
   TextEditingController postText = TextEditingController();
+  var formKey =GlobalKey<FormState>();
 
 
   var notifyHelper;
   bool textFormFielsChanged = false;
+  bool isbuttonDisabled = false;
   @override
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   void initState() {
@@ -78,12 +80,19 @@ class _AddTextPostState extends State<AddTextPost> {
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : (textFormFielsChanged == false)
-              ?Container(
-                width: 1,
-                height: 1,
-                color: Colors.white,
-              )
+                  : (textFormFielsChanged == false && postText != " ")
+              ?Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: defaultButton(
+        textColor: AppColors.myWhite,
+        width: size.width*.2,
+        height: size.height*.05,
+        raduis: 10,
+        function: () {},
+        buttonText: 'post',
+        buttonColor: AppColors.primaryColor1.withOpacity(.2),
+        ),
+        )
                   :Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: defaultButton(
@@ -92,16 +101,15 @@ class _AddTextPostState extends State<AddTextPost> {
                   height: size.height*.05,
                   raduis: 10,
                   function: () {
-                    AppCubit.get(context).createTextPost(
-                      text: postText.text,
-                      timeSpam: DateTime.now().toString(),
-                      time: DateFormat.Hm().format(DateTime.now()),
-                      dateTime: DateFormat.yMMMd().format(DateTime.now()),
-                    );
-                    notifyHelper.displayNotification(
-                        title:'New Post',
-                        body:'${postText.text}'
-                    );
+                    if(formKey.currentState!.validate()){
+                      AppCubit.get(context).createTextPost(
+                        text: postText.text,
+                        timeSpam: DateTime.now().toString(),
+                        time: DateFormat.Hm().format(DateTime.now()),
+                        dateTime: DateFormat.yMMMd().format(DateTime.now()),
+                      );
+                    }
+
                   },
 
                   buttonText: 'post',
@@ -139,18 +147,26 @@ class _AddTextPostState extends State<AddTextPost> {
                     const SizedBox(
                       height: 10,
                     ),
-                    TextFormField(
-                      onChanged: (String s){
-                        setState((){
-                          textFormFielsChanged = true;
-                        });
-                      },
-                      controller: postText,
-                      decoration: const InputDecoration(
-                        hintMaxLines: 1,
-                        hintText: 'what is on your mind.....',
-                        border: InputBorder.none,
-                        enabledBorder: InputBorder.none,
+                    Form(
+                      key: formKey,
+                      child: TextFormField(
+                        validator: (value){
+                          if(value!.isEmpty){
+                            return 'please write your post';
+                          }
+                        },
+                        onChanged: (String s){
+                          setState((){
+                            textFormFielsChanged = true;
+                          });
+                        },
+                        controller: postText,
+                        decoration: const InputDecoration(
+                          hintMaxLines: 1,
+                          hintText: 'what is on your mind.....',
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                        ),
                       ),
                     ),
                     SizedBox(

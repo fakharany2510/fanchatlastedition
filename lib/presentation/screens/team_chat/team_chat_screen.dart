@@ -32,8 +32,6 @@ Future<String> _getTempPath(String path) async {
   return tempPath + '/' + path;
 }
 class TeamChatScreen extends StatefulWidget {
-
-
   final onSendMessage;
   TeamChatScreen({this.onSendMessage});
 
@@ -63,7 +61,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
     isWriting = false;
     Timer(const Duration(seconds: 1), () {
       setState(() {
-        indexCheering+=1;
+        indexCheering++;
       });
     });
 
@@ -74,7 +72,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
     return CashHelper.getData(key: 'Team')!=null? ConditionalBuilder(
       builder: (context)=>Builder(
           builder: (context) {
-            Timer(const Duration(seconds: 20), () {
+            Timer(const Duration(seconds: 30), () {
               setState(() {
                 // if(AppCubit.get(context).cheering.length!=indexCheering)
                 //   indexCheering+=1;

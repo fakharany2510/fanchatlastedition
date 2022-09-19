@@ -56,16 +56,17 @@ dependencies:
   flutter_native_timezone: ^2.0.0
   custom_clippers: ^1.0.0
   overlay_support: ^2.0.1
-
   url_launcher: ^6.1.5
+  flutter_paypal: ^0.0.8
+
 
 
 
   #Google SignIn
   google_sign_in: ^5.4.1
   flutter_login_facebook:
- #FaceBook SignIn
-  flutter_facebook_auth: ^4.4.1
+  #FaceBook SignIn
+  flutter_facebook_auth: ^3.5.0
   #Firebase
   firebase_core: ^1.20.0
   firebase_auth: ^3.6.1
@@ -73,7 +74,7 @@ dependencies:
   firebase_storage: ^10.3.4
   firebase_messaging: ^11.2.5
   firebase_phone_auth_handler:
-  webview_flutter: ^3.0.4
+  webview_flutter: ^2.1.1
   get:
   http: ^0.13.5
   http_auth: ^1.0.1

@@ -1871,12 +1871,12 @@ List<int> commentIndex=[];
         .orderBy('timeSpam',descending: true)
         .snapshots().listen((event) {
                 event.docs.forEach((element) {
-
                   cheering.add(CheeringModel.formJson(element.data()));
                   print('Get Cheering message');
                   emit(GetCheeringSuccessState());
                 });
                 print( cheering.first.text);
+                isLast=false;
                 print( isLast);
 
     });
