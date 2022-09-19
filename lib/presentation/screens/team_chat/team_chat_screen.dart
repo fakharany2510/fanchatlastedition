@@ -9,6 +9,7 @@ import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/screens/profile_screen.dart';
+import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:fanchat/presentation/screens/team_chat/cheering_screen.dart';
 import 'package:fanchat/presentation/screens/team_chat/send_image_chat_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
@@ -611,22 +612,27 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                       borderRadius: BorderRadius.circular(3),
 
                     ),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height*.28,
-                      width: MediaQuery.of(context).size.width*.70,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      decoration: BoxDecoration(
-                        // border: Border.all(color: AppColors.primaryColor1,width: 4),
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                      child:CachedNetworkImage(
-                        cacheManager: AppCubit.get(context).manager,
-                        imageUrl: "${model.image}",
-                        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                        // maxHeightDiskCache:75,
-                        width: 200,
-                        height: MediaQuery.of(context).size.height*.2,
-                        fit: BoxFit.cover,
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: model.image)));
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height*.28,
+                        width: MediaQuery.of(context).size.width*.70,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        decoration: BoxDecoration(
+                          // border: Border.all(color: AppColors.primaryColor1,width: 4),
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        child:CachedNetworkImage(
+                          cacheManager: AppCubit.get(context).manager,
+                          imageUrl: "${model.image}",
+                          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                          // maxHeightDiskCache:75,
+                          width: 200,
+                          height: MediaQuery.of(context).size.height*.2,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   )
@@ -755,22 +761,27 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                       borderRadius: BorderRadius.circular(3),
 
                     ),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height*.28,
-                      width: MediaQuery.of(context).size.width*.70,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3),
-                        // border: Border.all(color: AppColors.myGrey,width: 4),
-                      ),
-                      child: CachedNetworkImage(
-                        cacheManager: AppCubit.get(context).manager,
-                        imageUrl: "${model.image}",
-                        placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
-                        // maxHeightDiskCache:75,
-                        width: 200,
-                        height: MediaQuery.of(context).size.height*.2,
-                        fit: BoxFit.fill,
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: model.image)));
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height*.28,
+                        width: MediaQuery.of(context).size.width*.70,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(3),
+                          // border: Border.all(color: AppColors.myGrey,width: 4),
+                        ),
+                        child: CachedNetworkImage(
+                          cacheManager: AppCubit.get(context).manager,
+                          imageUrl: "${model.image}",
+                          placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
+                          // maxHeightDiskCache:75,
+                          width: 200,
+                          height: MediaQuery.of(context).size.height*.2,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                   )

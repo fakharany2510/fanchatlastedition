@@ -7,6 +7,8 @@ class MessageModel{
   String? text;
   String? image;
   String? voice;
+  String? video;
+
 
   MessageModel({
    this.senderId,
@@ -14,7 +16,8 @@ class MessageModel{
     this.dateTime,
     this.text,
     this.image,
-    this.voice
+    this.voice,
+    this.video
   });
   MessageModel.fromJson(Map<String , dynamic> json){
     senderId=json['senderId'];
@@ -23,6 +26,7 @@ class MessageModel{
     text=json['text'];
     image=json['image'];
     voice=json['voice'];
+    video=json['video'];
   }
 
   Map <String , dynamic> toMap(){
@@ -33,6 +37,7 @@ class MessageModel{
       'text':text,
       'image':image,
       'voice':voice,
+      'video':video,
     };
   }
 }

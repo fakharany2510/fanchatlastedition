@@ -159,3 +159,8 @@ class DeletePostErrorState extends AppState {}
 
 class LaunchPayPalSuccessState extends AppState {}
 
+class PickPrivateChatViedoSuccessState extends AppState {}
+class PickPrivateChatViedoErrorState extends AppState {}
+
+class GetCountriesSuccessState extends AppState {}
+class GetCountriesErrorState extends AppState {}

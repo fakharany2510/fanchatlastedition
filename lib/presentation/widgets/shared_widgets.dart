@@ -15,7 +15,8 @@ Widget textFormFieldWidget(
       required TextInputType inputType,
       required String labelText,
       required String errorMessage,
-      required Widget prefixIcon
+      required Widget prefixIcon,
+      Function ?function,
     }
     )=>Container(
   // height:MediaQuery.of(context).size.height*.07,
@@ -26,6 +27,9 @@ Widget textFormFieldWidget(
     ),
     keyboardType: inputType,
     controller: controller,
+    onChanged: (value){
+      function!;
+    },
     decoration: InputDecoration(
       focusColor: AppColors.myGrey,
       fillColor: Colors.white,

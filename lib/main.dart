@@ -5,6 +5,7 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/firebase_options.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
+import 'package:fanchat/presentation/screens/countries_screen.dart';
 import 'package:fanchat/presentation/screens/edit_profie_screen.dart';
 import 'package:fanchat/presentation/screens/fan/fan_full_post.dart';
 import 'package:fanchat/presentation/screens/messages_details.dart';
@@ -33,8 +34,8 @@ void main()async {
   );
 
   await CashHelper.init();
-  //AppStrings.uId = 'Kv7ZPjRFocM4glICd02LwuAFJqq1';
-   AppStrings.uId = CashHelper.getData(key: 'uid');
+  AppStrings.uId = 'Kv7ZPjRFocM4glICd02LwuAFJqq1';
+  //  AppStrings.uId = CashHelper.getData(key: 'uid');
 
   printMessage('userId is: ${AppStrings.uId}');
 
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
         providers:[
-          BlocProvider(create: (context)=>AppCubit()..getUser()..getPosts()..getAllUsers()..getFanPosts()),
+          BlocProvider(create: (context)=>AppCubit()..getUser()..getCountries()..getPosts()..getAllUsers()..getFanPosts()),
         ],
         child: FirebasePhoneAuthProvider(
           child: OverlaySupport(
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget {
               ),
              // initialRoute: 'register',
               routes: {
-                '/' :(context)=> SplashScreen(),
+                '/' :(context)=> CountriesScreen(),
                 'home_layout':(context)=> const HomeLayout(),
                // 'login':(context)=> LoginScreen(),
                 'register':(context)=>RegisterScreen(),

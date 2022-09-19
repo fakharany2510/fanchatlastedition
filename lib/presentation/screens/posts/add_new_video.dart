@@ -86,7 +86,6 @@ class _AddNewVideoState extends State<AddNewVideo> {
                       if(AppCubit.get(context).postVideo == null){
                         AppCubit.get(context).createVideoPost(
                             timeSpam: DateTime.now().toString(),
-
                             time: DateFormat.Hm().format(DateTime.now()),
                             dateTime: DateFormat.yMMMd().format(DateTime.now()),
                             text:postText.text

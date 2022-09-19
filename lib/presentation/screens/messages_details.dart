@@ -2,11 +2,14 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cached_video_player/cached_video_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/screens/send_video_message.dart';
 import 'package:fanchat/presentation/screens/sendimage_message.dart';
+import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,9 +51,11 @@ class _ChatDetailsState extends State<ChatDetails> {
   bool? isComplete;
   bool? uploadingRecord = false;
   ScrollController scrollController = ScrollController();
+  late CachedVideoPlayerController controller;
 
   @override
   void initState() {
+
     if(scrollController.hasClients){
       scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
     }
@@ -72,6 +77,11 @@ class _ChatDetailsState extends State<ChatDetails> {
                 if(state is PickPostImageSuccessState ){
                Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.userModel)));
                 }
+                if(state is PickPrivateChatViedoSuccessState ){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SendVideoMessage(userModel: widget.userModel, )));
+                }
+
+
               },
               builder: (context,state){
                 if(scrollController.hasClients){
@@ -122,13 +132,25 @@ class _ChatDetailsState extends State<ChatDetails> {
                           child: Container(
                             height:MediaQuery.of(context).size.height*.83,
                             color: Colors.white,
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             child: ListView.separated(
                                 controller: scrollController,
-                                physics: BouncingScrollPhysics(),
+                                physics: const BouncingScrollPhysics(),
                                 itemBuilder: (context , index)
                                 {
                                   var message =AppCubit.get(context).messages[index];
+                                  controller = CachedVideoPlayerController.network(
+                                      "${message.video}");
+                                  controller.initialize().then((value) {
+                                    controller.play();
+                                    controller.setLooping(true);
+                                    controller.setVolume(1.0);
+                                    setState(() {
+                                      controller.pause();
+                                    });
+                                  }).catchError((error){
+                                    print('error while initializing video ${error.toString()}');
+                                  });
                                   if(widget.userModel.uId == message.senderId)
                                     //send message
                                     return builsRecievedMessages(message,context,index);
@@ -148,7 +170,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                           ),
                           child: Column(
                             children: [
-                              SizedBox(height: 5,),
+                              const SizedBox(height: 5,),
                               Text('${statusText}',style: const TextStyle(
                                   color: Colors.white,
                                   fontFamily: AppStrings.appFont,
@@ -239,7 +261,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                                       )
                                   ),
                                 ),
-                                SizedBox(width: 5,),
+                                const SizedBox(width: 5,),
                                 Container(
                                     width: 35,
                                     height: 35,
@@ -263,11 +285,11 @@ class _ChatDetailsState extends State<ChatDetails> {
                                             textMessage.clear();
                                           },
                                           color: AppColors.primaryColor1,
-                                          icon: AppCubit.get(context).isSend? CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?Icon(Icons.mic,color: Colors.white,size: 17):Icon(Icons.send,color: Colors.white,size: 17)
+                                          icon: AppCubit.get(context).isSend? const CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?const Icon(Icons.mic,color: Colors.white,size: 17):const Icon(Icons.send,color: Colors.white,size: 17)
                                       ),
                                     )
                                 ),
-                                SizedBox(width: 5,),
+                                const SizedBox(width: 5,),
                                 Container(
                                     width: 35,
                                     height: 35,
@@ -278,7 +300,66 @@ class _ChatDetailsState extends State<ChatDetails> {
                                     child: Center(
                                       child: IconButton(
                                         onPressed: (){
-                                          AppCubit.get(context).pickPostImage();
+                                            Scaffold.of(context).showBottomSheet((context) => Container(
+                                              color: AppColors.primaryColor1,
+
+                                              width: MediaQuery.of(context).size.width,
+                                              height: MediaQuery.of(context).size.height*.12,
+
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: (){
+                                                        AppCubit.get(context).pickPostImage();
+                                                      },
+                                                      child: Row(
+                                                        children: [
+                                                          const SizedBox(width: 10,),
+                                                          Icon(
+                                                              Icons.image,
+                                                              color: AppColors.myWhite,
+                                                          ),
+                                                          const SizedBox(width: 10,),
+                                                          const Text('Image',style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontFamily: AppStrings.appFont,
+                                                              fontSize: 18,
+                                                              fontWeight: FontWeight.w500
+                                                          ),),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 15,),
+                                                    GestureDetector(
+                                                      onTap: (){
+                                                        AppCubit.get(context).pickPostVideo3();
+
+                                                      },
+                                                      child: Row(
+                                                        children: [
+                                                          const SizedBox(width: 10,),
+                                                          Icon(
+                                                            Icons.video_collection,
+                                                            color: AppColors.myWhite,
+                                                          ),
+                                                          const SizedBox(width: 10,),
+                                                          const Text('Video',style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontFamily: AppStrings.appFont,
+                                                              fontSize: 18,
+                                                              fontWeight: FontWeight.w500
+                                                          ),),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+
+                                            ));
 
                                         },
                                         color: AppColors.primaryColor1,
@@ -332,61 +413,127 @@ class _ChatDetailsState extends State<ChatDetails> {
     );
   }
 
-  Widget buildMyMessages(MessageModel model,context,index)=> Align(
-    alignment:AlignmentDirectional.centerEnd,
-    child: (model.text!="")
-    ?Container(
-      padding: const EdgeInsets.all(10),
-      decoration:  BoxDecoration(
-        color: AppColors.primaryColor1,
-        borderRadius:const  BorderRadius.only(
-          topRight: Radius.circular(10),
-          topLeft: Radius.circular(10),
-          bottomLeft: Radius.circular(10),
-        ),
-      ),
-      child: Text('${model.text}',
-        style:  TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 17,
-            color: Colors.white,
-            fontFamily: AppStrings.appFont
-        ),
-      ),
-    )
-    :(model.image!="")
-        ? Container(
-      padding: const EdgeInsets.all(5),
-      decoration:  BoxDecoration(
-        color: AppColors.primaryColor1,
-        borderRadius:const  BorderRadius.only(
-          topRight: Radius.circular(10),
-          topLeft: Radius.circular(10),
-          bottomLeft: Radius.circular(10),
-        ),
-      ),
-          child: Container(
-      height: MediaQuery.of(context).size.height*.28,
-      width: MediaQuery.of(context).size.width*.55,
-     child:  CachedNetworkImage(
-       cacheManager: AppCubit.get(context).manager,
-       imageUrl: "${model.image}",
-       placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-       fit: BoxFit.fill,
-     ),
-    ),
-        )
-        :VoiceMessage(
-      audioSrc: '${AppCubit.get(context).messages[index].voice}',
-      played: true, // To show played badge or not.
-      me: true, // Set message side.
-      meBgColor: AppColors.primaryColor1,
-      mePlayIconColor: AppColors.navBarActiveIcon,
-      onPlay: () {
+  Widget buildMyMessages(MessageModel model,context,index){
 
-      }, // Do something when voice played.
-    ),
-  );
+    return Align(
+
+      alignment:AlignmentDirectional.centerEnd,
+      child: (model.text!="")
+          ?Container(
+        padding: const EdgeInsets.all(10),
+        decoration:  BoxDecoration(
+          color: AppColors.primaryColor1,
+          borderRadius:const  BorderRadius.only(
+            topRight: Radius.circular(10),
+            topLeft: Radius.circular(10),
+            bottomLeft: Radius.circular(10),
+          ),
+        ),
+        child: Text('${model.text}',
+          style:  const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 17,
+              color: Colors.white,
+              fontFamily: AppStrings.appFont
+          ),
+        ),
+      )
+          :(model.image!="")
+          ? GestureDetector(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: model.image)));
+        },
+        child: Container(
+          padding: const EdgeInsets.all(5),
+          decoration:  BoxDecoration(
+            color: AppColors.primaryColor1,
+            borderRadius:const  BorderRadius.only(
+              topRight: Radius.circular(10),
+              topLeft: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+            ),
+          ),
+          child: Container(
+            height: MediaQuery.of(context).size.height*.28,
+            width: MediaQuery.of(context).size.width*.55,
+            child:  CachedNetworkImage(
+              cacheManager: AppCubit.get(context).manager,
+              imageUrl: "${model.image}",
+              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+              fit: BoxFit.fill,
+            ),
+          ),
+        ),
+      ):
+        (model.video != '')
+          ?Stack(
+        children: [
+          Container(
+              height: MediaQuery.of(context).size.height*.25,
+              width: double.infinity,
+              child: controller.value.isInitialized
+                  ? AspectRatio(
+                  aspectRatio: controller.value.aspectRatio,
+                  child: CachedVideoPlayer(controller))
+                  : const Center(child: CircularProgressIndicator())
+          ),
+
+          // FutureBuilder(
+          //   future: intilize,
+          //   builder: (context,snapshot){
+          //     if(snapshot.connectionState == ConnectionState.done){
+          //       return AspectRatio(
+          //         aspectRatio: videoPlayerController!.value.aspectRatio,
+          //         child: VideoPlayer(videoPlayerController!),
+          //       );
+          //     }
+          //     else{
+          //       return const Center(
+          //         child: CircularProgressIndicator(),
+          //       );
+          //     }
+          //   },
+          //
+          //
+          //
+          // ),
+
+          Positioned(
+              top: 10,
+              right: 20,
+              child: InkWell(
+                onTap: (){
+                  setState((){
+                    if(controller.value.isPlaying){
+                      controller.pause();
+                    }else{
+                      controller.play();
+                    }
+                  });
+                },
+                child: CircleAvatar(
+                  backgroundColor: AppColors.primaryColor1,
+                  radius: 20,
+                  child: controller.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
+                ),
+              )
+          ),
+        ],
+      )
+          :VoiceMessage(
+        audioSrc: '${AppCubit.get(context).messages[index].voice}',
+        played: true, // To show played badge or not.
+        me: true, // Set message side.
+        meBgColor: AppColors.primaryColor1,
+        mePlayIconColor: AppColors.navBarActiveIcon,
+        onPlay: () {
+
+        }, // Do something when voice played.
+      ),
+    );
+
+  }
+
 
   //----------------------------
   Widget builsRecievedMessages(MessageModel model,context,index)=>Align(
@@ -412,28 +559,88 @@ class _ChatDetailsState extends State<ChatDetails> {
       ),
     )
         :(model.image != '')
-        ?Container(
-            padding: const EdgeInsets.all(5),
-            decoration:  BoxDecoration(
-              color: AppColors.myGrey,
-              borderRadius:const  BorderRadius.only(
-                topRight: Radius.circular(10),
-                topLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
-              ),
-            ),
+        ?GestureDetector(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: model.image)));
+          },
           child: Container(
-            // margin: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
+              decoration:  BoxDecoration(
+                color: AppColors.myGrey,
+                borderRadius:const  BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+              ),
+            child: Container(
+              // margin: EdgeInsets.all(5),
       height: MediaQuery.of(context).size.height*.28,
       width: MediaQuery.of(context).size.width*.55,
      child: CachedNetworkImage(
        cacheManager: AppCubit.get(context).manager,
        imageUrl: "${model.image}",
-       placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+       placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
        fit: BoxFit.fill,
      ),
     ),
-        )
+          ),
+        ):
+        (model.video != '')
+        ?Stack(
+      children: [
+        Container(
+            height: MediaQuery.of(context).size.height*.25,
+            width: double.infinity,
+            child: controller.value.isInitialized
+                ? AspectRatio(
+                aspectRatio: controller.value.aspectRatio,
+                child: CachedVideoPlayer(controller))
+                : const Center(child: CircularProgressIndicator())
+        ),
+
+        // FutureBuilder(
+        //   future: intilize,
+        //   builder: (context,snapshot){
+        //     if(snapshot.connectionState == ConnectionState.done){
+        //       return AspectRatio(
+        //         aspectRatio: videoPlayerController!.value.aspectRatio,
+        //         child: VideoPlayer(videoPlayerController!),
+        //       );
+        //     }
+        //     else{
+        //       return const Center(
+        //         child: CircularProgressIndicator(),
+        //       );
+        //     }
+        //   },
+        //
+        //
+        //
+        // ),
+
+        Positioned(
+            top: 10,
+            right: 20,
+            child: InkWell(
+              onTap: (){
+                setState((){
+                  if(controller.value.isPlaying){
+                    controller.pause();
+                  }else{
+                    controller.play();
+                  }
+                });
+              },
+              child: CircleAvatar(
+                backgroundColor: AppColors.primaryColor1,
+                radius: 20,
+                child: controller.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
+              ),
+            )
+        ),
+      ],
+    )
 
         :VoiceMessage(
       audioSrc: '${AppCubit.get(context).messages[index].voice}',
@@ -529,7 +736,7 @@ class _ChatDetailsState extends State<ChatDetails> {
       ) async {
     Size size = MediaQuery.of(context).size;
     print("permission uploadRecord1");
-    var uuid = Uuid().v4();
+    var uuid = const Uuid().v4();
     Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('ali/${Uri.file(voice.path).pathSegments.last}');
     await storageReference.putFile(voice).then((value){
       AppCubit.get(context).createVoiceMessage(

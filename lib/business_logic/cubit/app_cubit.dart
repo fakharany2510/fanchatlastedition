@@ -391,6 +391,22 @@ class AppCubit extends Cubit<AppState> {
         });
     }
   }
+
+  File? postVideo3;
+  void pickPostVideo3() async {
+    final pickedFile =
+    await picker.pickVideo(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      postVideo3 = File(pickedFile.path);
+      controller = CachedVideoPlayerController.file(postVideo3!)
+        ..initialize().then((value) {
+          controller!.play();
+          emit(PickPrivateChatViedoSuccessState());
+        }).catchError((error) {
+          print('error picking video ${error.toString()}');
+        });
+    }
+  }
 /////////////////////////////////////////////////////
 //   void pickPostVideo() async {
 //     final pickedFile =
@@ -1909,6 +1925,112 @@ List<int> commentIndex=[];
     String url= "https://paypal.me/tamerelsayed73?country.x=QA&locale.x=en_US";
     await launch(url , forceSafariVC: false);
     emit(LaunchPayPalSuccessState());
+  }
+
+  // BrowisePostModel? postModel;
+  void uploadPrivateVideo({
+    required String recevierId,
+    required String dateTime,
+    required String text,
+    required String senderId
+  }){
+    emit(BrowiseUploadVideoPostLoadingState());
+    //كدا انا بكريت instance من ال storage
+    firebase_storage.FirebaseStorage.instance
+    //كدا بقوله انا فين في الstorage
+        .ref()
+    //كدا بقةله هتحرك ازاي جوا ال storage
+    //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
+        .child('privatechat/${Uri.file(postVideo3!.path).pathSegments.last}')
+    //كدا بعمل رفع للصوره
+        .putFile(postVideo3!).then((value){
+      value.ref.getDownloadURL().then((value){
+        createVideoPrivate(
+            messageViedo: value,
+            recevierId: recevierId,
+            dateTime: dateTime,
+            senderId: AppStrings.uId
+        );
+        getPosts();
+        emit(BrowiseUploadVideoPostSuccessState());
+
+      }).catchError((error){
+        emit(BrowiseUploadVideoPostErrorState());
+      });
+    }).catchError((error){
+      emit(BrowiseUploadVideoPostErrorState());
+    });
+  }
+  ////////////////////////////////////////////////////
+//Create Post
+  void createVideoPrivate({
+    required String recevierId,
+    required String dateTime,
+    String? messageViedo,
+    String? senderId,
+  }){
+    emit(BrowiseCreateVideoPostLoadingState());
+
+    MessageModel model=MessageModel(
+        video:messageViedo,
+        text: "",
+        dateTime: dateTime,
+        recevierId: recevierId,
+        senderId: AppStrings.uId
+    );
+
+    //Set My Chat
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(AppStrings.uId)
+        .collection('chats')
+        .doc(recevierId)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value){
+      emit(SendMessageSuccessState());
+    })
+        .catchError((error){
+      emit(SendMessageErrorState());
+
+    });
+    //Set Reciever Chat
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(recevierId)
+        .collection('chats')
+        .doc(AppStrings.uId)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value){
+      emit(SendMessageSuccessState());
+    })
+        .catchError((error){
+      emit(SendMessageErrorState());
+    });
+  }
+
+  List countries=[];
+
+  void getCountries(){
+
+    FirebaseFirestore.instance
+        .collection('countries')
+        .get().then((value) {
+
+          value.docs.forEach((element) {
+
+            countries.add(element.data());
+
+          });
+          print('///////////////////////////////////////////////////////');
+          print(countries[0]['name']);
+          print('///////////////////////////////////////////////////////');
+          emit(GetCountriesSuccessState());
+    });
+
+    emit(GetCountriesErrorState());
+
   }
 
 

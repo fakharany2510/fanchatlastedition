@@ -57,7 +57,8 @@ dependencies:
   custom_clippers: ^1.0.0
   overlay_support: ^2.0.1
   url_launcher: ^6.1.5
-  flutter_paypal: ^0.0.8
+  flutter_paypal:
+  searchable_listview: ^2.0.1
 
 
 
