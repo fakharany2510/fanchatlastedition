@@ -75,7 +75,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
     return CashHelper.getData(key: 'Team')!=null? ConditionalBuilder(
       builder: (context)=>Builder(
           builder: (context) {
-            Timer(const Duration(seconds: 30), () {
+            Timer(const Duration(seconds: 15), () {
               setState(() {
                 // if(AppCubit.get(context).cheering.length!=indexCheering)
                 //   indexCheering+=1;
