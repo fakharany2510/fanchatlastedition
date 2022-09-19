@@ -60,6 +60,8 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
       scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
     }
     isWriting = false;
+    AppCubit.get(context).getCheeringPost();
+
     Timer(const Duration(seconds: 1), () {
       setState(() {
         indexCheering++;
