@@ -238,12 +238,14 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                           ],
                                         ),
                                         SizedBox(height: 10,),
-                                        Text('${AppCubit.get(context).cheering.first.text}',
-                                          style: TextStyle(
-                                              color: AppColors.primaryColor1,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w700,
-                                              fontFamily: AppStrings.appFont
+                                        Center(
+                                          child: Text('${AppCubit.get(context).cheering.first.text}',
+                                            style: TextStyle(
+                                                color: AppColors.primaryColor1,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w700,
+                                                fontFamily: AppStrings.appFont
+                                            ),
                                           ),
                                         ),
                                         SizedBox(height: 10,),

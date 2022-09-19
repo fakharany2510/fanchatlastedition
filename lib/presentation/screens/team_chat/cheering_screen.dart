@@ -3,6 +3,7 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -58,6 +59,9 @@ class CheeringScreen extends StatelessWidget {
                         ),
                         // height:MediaQuery.of(context).size.height*.07,
                         child: TextFormField(
+                          inputFormatters: [
+                            new LengthLimitingTextInputFormatter(40),
+                          ],
                           style: TextStyle(
                             color:AppColors.primaryColor1,
                             fontFamily: AppStrings.appFont,
