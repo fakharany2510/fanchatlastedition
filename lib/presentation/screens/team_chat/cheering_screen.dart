@@ -1,6 +1,7 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/screens/team_chat/team_chat_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class CheeringScreen extends StatelessWidget {
-  CheeringScreen({Key? key}) : super(key: key);
+  CheeringScreen({Key? key,required this.countryName,required this.countryImage}) : super(key: key);
+  String ?countryName;
+  String ?countryImage;
 
   var cheeringController=TextEditingController();
 
@@ -17,8 +20,11 @@ class CheeringScreen extends StatelessWidget {
     return BlocConsumer<AppCubit,AppState>(
         listener: (context,state){
            if(state is CreateCheeringSuccessState){
-             AppCubit.get(context).getCheeringPost();
-             Navigator.pop(context);
+             AppCubit.get(context).getCheeringPost().then((value) {
+               Navigator.push(context, MaterialPageRoute(builder: (_){
+                 return TeamChatScreen(countryName: countryName!, countryImage: countryImage!);
+               }));
+             });
            }
         },
         builder: (context,state){
@@ -60,7 +66,7 @@ class CheeringScreen extends StatelessWidget {
                         // height:MediaQuery.of(context).size.height*.07,
                         child: TextFormField(
                           inputFormatters: [
-                            new LengthLimitingTextInputFormatter(40),
+                            LengthLimitingTextInputFormatter(40),
                           ],
                           style: TextStyle(
                             color:AppColors.primaryColor1,
@@ -109,14 +115,14 @@ class CheeringScreen extends StatelessWidget {
                           textColor: AppColors.myWhite,
                           buttonText: 'Post',
                           function: (){
-                            AppCubit.get(context).count=15;
+                            AppCubit.get(context).count=17;
                             AppCubit.get(context).createCheeringPost(
                                   time: DateFormat.Hm().format(DateTime.now()),
                                   timeSpam: DateTime.now().toString(),
                                   text: cheeringController.text
                               );
-                            AppCubit.get(context).getCheeringPost();
-                            AppCubit.get(context).isLast=false;
+                            // AppCubit.get(context).getCheeringPost();
+                            // AppCubit.get(context).isLast=false;
 
                           }
                       )

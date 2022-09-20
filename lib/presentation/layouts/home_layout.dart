@@ -20,7 +20,7 @@ class HomeLayout extends StatelessWidget {
     List <Widget> screens=[
 
       HomeScreen(pageHeight: MediaQuery.of(context).size.height,pageWidth:MediaQuery.of(context).size.width),
-      const MatchDetails(),
+      MatchDetails(),
       const FanScreen(),
       const ChatsScreen(),
       PublicChatScreen(),

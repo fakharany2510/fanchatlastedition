@@ -59,7 +59,7 @@ dependencies:
   url_launcher: ^6.1.5
   flutter_paypal:
   searchable_listview: ^2.0.1
-
+  timer_builder: ^2.0.0
 
 
 

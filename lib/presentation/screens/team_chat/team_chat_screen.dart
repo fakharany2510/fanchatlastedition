@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custom_clippers/Clippers/ticket_pass_clipper.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
-import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
+import 'package:timer_builder/timer_builder.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
@@ -66,6 +66,17 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
     isWriting = false;
     AppCubit.get(context).getCheeringPost();
 
+    Timer(const Duration(seconds: 15), () {
+      setState(() {
+        // if(AppCubit.get(context).cheering.length!=indexCheering)
+        //   indexCheering+=1;
+        //
+        // if(AppCubit.get(context).cheering.length==indexCheering)
+        //   isLast=true;
+        print('Hi');
+        AppCubit.get(context).isLast=true;
+      });
+    });
     Timer(const Duration(seconds: 1), () {
       setState(() {
         indexCheering++;
@@ -81,31 +92,20 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
           ? ConditionalBuilder(
         builder: (context)=>Builder(
             builder: (context) {
-              Timer(const Duration(seconds: 15), () {
-                setState(() {
-                  // if(AppCubit.get(context).cheering.length!=indexCheering)
-                  //   indexCheering+=1;
-                  //
-                  // if(AppCubit.get(context).cheering.length==indexCheering)
-                  //   isLast=true;
-                  AppCubit.get(context).isLast=true;
 
-
-                });
-              });
-              Timer(const Duration(seconds: 1), () {
-                setState(() {
-                  // if(AppCubit.get(context).cheering.length!=indexCheering)
-                  //   indexCheering+=1;
-                  //
-                  // if(AppCubit.get(context).cheering.length==indexCheering)
-                  //   isLast=true;
-                  AppCubit.get(context).count=AppCubit.get(context).count-1;
-                  if(AppCubit.get(context).count-1<0){
-                    AppCubit.get(context).count=0;
-                  }
-                });
-              });
+              // Timer(const Duration(seconds: 2), () {
+              //   setState(() {
+              //     // if(AppCubit.get(context).cheering.length!=indexCheering)
+              //     //   indexCheering+=1;
+              //     //
+              //     // if(AppCubit.get(context).cheering.length==indexCheering)
+              //     //   isLast=true;
+              //     AppCubit.get(context).count=AppCubit.get(context).count-1;
+              //     if(AppCubit.get(context).count-1<0){
+              //       AppCubit.get(context).count=0;
+              //     }
+              //   });
+              // });
               if(scrollController.hasClients){
                 scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
               }
@@ -258,18 +258,28 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                               ),
                                             ),
                                             SizedBox(height: 10,),
-                                            if(AppCubit.get(context).count!=0 || AppCubit.get(context).count>0)
-                                              Align(
-                                                alignment: Alignment.topRight,
-                                                child: Text('${AppCubit.get(context).count}',
-                                                  style: TextStyle(
-                                                      color: AppColors.primaryColor1,
-                                                      fontSize: 15,
-                                                      fontWeight: FontWeight.w500,
-                                                      fontFamily: AppStrings.appFont
-                                                  ),
-                                                ),
-                                              ),
+                                            //   Align(
+                                            //     alignment: Alignment.topRight,
+                                            //     child: Text('${AppCubit.get(context).count}',
+                                            //       style: TextStyle(
+                                            //           color: AppColors.primaryColor1,
+                                            //           fontSize: 15,
+                                            //           fontWeight: FontWeight.w500,
+                                            //           fontFamily: AppStrings.appFont
+                                            //       ),
+                                            //     ),
+                                            //   ),
+
+                                        //     if(AppCubit.get(context).count!=0 || AppCubit.get(context).count>0)
+                                        //
+                                        //     TimerBuilder.periodic(Duration(seconds: 1),
+                                        //     builder: (context) {
+                                        //       var testCount=15;
+                                        //       testCount=testCount-1;
+                                        //       AppCubit.get(context).count-=AppCubit.get(context).count;
+                                        //       return Text('${testCount}');
+                                        //     }
+                                        // ),
                                           ],
                                         ),
                                       ),
@@ -307,13 +317,13 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                               alignment: Alignment.topRight,
                               child: FloatingActionButton(
                                 backgroundColor: AppColors.primaryColor1,
-                                child: Icon(
+                                child: const Icon(
                                     Icons.add
                                 ),
                                 onPressed: (){
                                   Navigator.push(context, MaterialPageRoute(builder: (_){
 
-                                    return CheeringScreen();
+                                    return CheeringScreen(countryName: widget.countryName,countryImage: widget.countryImage,);
 
                                   }));
                                 },

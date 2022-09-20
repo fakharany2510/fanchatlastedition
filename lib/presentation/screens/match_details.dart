@@ -1,5 +1,6 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/matech_scedule.dart';
 import 'package:fanchat/presentation/screens/single_match.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,8 +8,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../constants/app_strings.dart';
 
-class MatchDetails extends StatelessWidget {
-  const MatchDetails({Key? key}) : super(key: key);
+class MatchDetails extends StatefulWidget {
+  MatchDetails({Key? key}) : super(key: key);
+
+  @override
+  State<MatchDetails> createState() => _MatchDetailsState();
+}
+
+class _MatchDetailsState extends State<MatchDetails> {
+  List <String>dateMatchs=[
+
+    '20 Nov','21 Nov', '22 Nov', '23 Nov', '24 Nov', '25 Nov', '26 Nov', '27 Nov', '28 Nov', '29 Nov', '30 Nov', '1 Dec', '2 Dec', '3 Dec',
+    '4 Dec', '6 Dec', '7 Dec', '8 Dec', '9 Dec', '10 Dec', '11 Dec', '12 Dec', '13 Dec', '14 Dec', '15 Dec', '16 Dec', '17 Dec', '18 Dec',
+  ];
+
+  List <String>dayMatchs=[
+
+    'Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
+    'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat',
+  ];
+
+  List isDay= List.generate(28, (index) => false);
+
+  String ?dateMatch='22 Nov 2022';
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +56,7 @@ class MatchDetails extends StatelessWidget {
                           color: Colors.white,
                           elevation: 5,
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               // Container(
                               //   alignment: Alignment.center,
@@ -69,7 +92,84 @@ class MatchDetails extends StatelessWidget {
                               //     ],
                               //   ),
                               // ),
-                              const SizedBox(height: 15,),
+
+                              Container(
+                                width: double.infinity,
+                                height: MediaQuery.of(context).size.height*.09,
+                                child: ListView.separated(
+                                    scrollDirection:Axis.horizontal,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context,index){
+                                      return InkWell(
+                                        onTap: (){
+                                          setState(() {
+                                            isDay= List.generate(28, (index) => false);
+                                            isDay[index]=!isDay[index];
+                                          });
+                                          if(dateMatchs[index]=='20 Nov'){
+                                            setState(() {
+                                              dateMatch='Sun 20 Nov 2022';
+                                              MatchScaduele.realTeamMatchesRight=MatchScaduele.teamMatches21Right;
+                                              MatchScaduele.realImagesMatchesRight=MatchScaduele.imageMatches21Right;
+                                              MatchScaduele.realTeamMatchesLeft=MatchScaduele.teamMatches21Left;
+                                              MatchScaduele.realImagesMatchesLeft=MatchScaduele.imageMatches21Left;
+                                            });
+                                          }
+                                          else if (dateMatchs[index]=='21 Nov'){
+                                            setState(() {
+                                              dateMatch='Mon 21 Nov 2022';
+                                              MatchScaduele.realTeamMatchesRight=MatchScaduele.teamMatches22Right;
+                                              MatchScaduele.realImagesMatchesRight=MatchScaduele.imageMatches22Right;
+                                              MatchScaduele.realTeamMatchesLeft=MatchScaduele.teamMatches22Left;
+                                              MatchScaduele.realImagesMatchesLeft=MatchScaduele.imageMatches22Left;
+                                            });
+                                          }
+                                          // Navigator.push(context, MaterialPageRoute(builder: (_){
+                                          //   return const SingleMatch();
+                                          // }));
+                                        },
+                                        child: Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 2,
+                                              vertical: 10
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 25,
+                                          ),
+
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(15),
+                                              color: isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              const SizedBox(height: 10,),
+                                              Text(dateMatchs[index],style: TextStyle(
+                                                  color: isDay[index]==true?AppColors.myWhite:AppColors.primaryColor1,
+                                                  fontSize: 16,
+                                                  fontFamily: AppStrings.appFont
+                                              ),),
+                                              // const SizedBox(height: 25,),
+                                              // Text(dayMatchs[index],style: TextStyle(
+                                              //     color: Colors.grey.shade300,
+                                              //     fontSize: 13,
+                                              //     fontFamily: AppStrings.appFont
+                                              // ),),
+                                              const SizedBox(height: 5,),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    separatorBuilder: (context,index){
+                                      return  const SizedBox(width: 0,);
+                                    },
+                                    itemCount:dateMatchs.length
+                                ),
+                              ),
+
+                              const SizedBox(height: 0,),
                               ListView.separated(
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
@@ -96,17 +196,17 @@ class MatchDetails extends StatelessWidget {
                                         child: Column(
                                           children: [
                                             const SizedBox(height: 10,),
-                                            Text('FRI 29 JUL 2022',style: TextStyle(
+                                            Text(dateMatch!,style: TextStyle(
                                                 color: AppColors.myWhite,
                                                 fontSize: 16,
                                                 fontFamily: AppStrings.appFont
                                             ),),
                                             const SizedBox(height: 5,),
-                                            Text('GROUP 5',style: TextStyle(
-                                                color: Colors.grey.shade300,
-                                                fontSize: 13,
-                                                fontFamily: AppStrings.appFont
-                                            ),),
+                                            // Text('GROUP 5',style: TextStyle(
+                                            //     color: Colors.grey.shade300,
+                                            //     fontSize: 13,
+                                            //     fontFamily: AppStrings.appFont
+                                            // ),),
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
@@ -114,12 +214,12 @@ class MatchDetails extends StatelessWidget {
                                                   children: [
                                                     CircleAvatar(
                                                       radius: 25,
-                                                      backgroundImage:  NetworkImage(AppCubit.get(context).groupsImages[index+1]),
+                                                      backgroundImage:  NetworkImage(MatchScaduele.realImagesMatchesRight[index]),
                                                     ),
                                                     const  SizedBox(height: 5,),
-                                                    Text('Egypt',style: TextStyle(
+                                                    Text(MatchScaduele.realTeamMatchesRight[index],style: TextStyle(
                                                         color: AppColors.myWhite,
-                                                        fontSize: 15,
+                                                        fontSize: 13,
                                                         fontWeight: FontWeight.bold,
                                                         fontFamily: AppStrings.appFont
                                                     ),),
@@ -142,32 +242,32 @@ class MatchDetails extends StatelessWidget {
                                                       child: Row(
                                                         mainAxisAlignment: MainAxisAlignment.center,
                                                         children: [
-                                                          Text('4',style: TextStyle(
+                                                          // Text('4',style: TextStyle(
+                                                          //     color: AppColors.myWhite,
+                                                          //     fontSize: 25,
+                                                          //     fontWeight: FontWeight.w500,
+                                                          //     fontFamily: AppStrings.appFont
+                                                          // ),
+                                                          //   textAlign: TextAlign.center,
+                                                          // ),
+                                                          const SizedBox(width: 10,),
+                                                          Text('Not Start',style: TextStyle(
                                                               color: AppColors.myWhite,
-                                                              fontSize: 25,
+                                                              fontSize: 17,
                                                               fontWeight: FontWeight.w500,
                                                               fontFamily: AppStrings.appFont
                                                           ),
                                                             textAlign: TextAlign.center,
                                                           ),
                                                           const SizedBox(width: 10,),
-                                                          Text('FT',style: TextStyle(
-                                                              color: AppColors.myWhite,
-                                                              fontSize: 11,
-                                                              fontWeight: FontWeight.w500,
-                                                              fontFamily: AppStrings.appFont
-                                                          ),
-                                                            textAlign: TextAlign.center,
-                                                          ),
-                                                          const SizedBox(width: 10,),
-                                                          Text('3',style: TextStyle(
-                                                              color: AppColors.myWhite,
-                                                              fontSize: 25,
-                                                              fontWeight: FontWeight.w500,
-                                                              fontFamily: AppStrings.appFont
-                                                          ),
-                                                            textAlign: TextAlign.center,
-                                                          ),
+                                                          // Text('3',style: TextStyle(
+                                                          //     color: AppColors.myWhite,
+                                                          //     fontSize: 25,
+                                                          //     fontWeight: FontWeight.w500,
+                                                          //     fontFamily: AppStrings.appFont
+                                                          // ),
+                                                          //   textAlign: TextAlign.center,
+                                                          // ),
                                                         ],
                                                       ),
                                                     ),
@@ -181,12 +281,12 @@ class MatchDetails extends StatelessWidget {
 
                                                     CircleAvatar(
                                                       radius: 25,
-                                                      backgroundImage:  NetworkImage(AppCubit.get(context).groupsImages[index]),
+                                                      backgroundImage:  NetworkImage(MatchScaduele.realImagesMatchesLeft[index]),
                                                     ),
                                                     const SizedBox(height: 5,),
-                                                    Text('Italy',style: TextStyle(
+                                                    Text(MatchScaduele.realTeamMatchesLeft[index],style: TextStyle(
                                                         color: AppColors.myWhite,
-                                                        fontSize: 15,
+                                                        fontSize: 13,
                                                         fontWeight: FontWeight.bold,
                                                         fontFamily: AppStrings.appFont
                                                     ),),
@@ -203,7 +303,7 @@ class MatchDetails extends StatelessWidget {
                                   separatorBuilder: (context,index){
                                     return  const SizedBox(height: 0,);
                                   },
-                                  itemCount:4
+                                  itemCount:MatchScaduele.realTeamMatchesLeft.length
                               ),
                             ],
                           )
