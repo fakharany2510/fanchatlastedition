@@ -1,5 +1,6 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
-import 'package:fanchat/presentation/screens/pay.dart';
+import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
+import 'package:fanchat/presentation/paypal/pay20.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -105,7 +106,7 @@ class ProfileScreen extends StatelessWidget {
                       GestureDetector(
                         onTap: (){
                          // cubit.toPayPal();
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>paypal1()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>ChoosePayPackage()));
                         },
                         child: const CircleAvatar(
                           radius: 29,

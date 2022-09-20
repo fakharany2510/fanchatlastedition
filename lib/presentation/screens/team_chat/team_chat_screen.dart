@@ -18,6 +18,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:intl_phone_field/countries.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -34,7 +35,9 @@ Future<String> _getTempPath(String path) async {
 }
 class TeamChatScreen extends StatefulWidget {
   final onSendMessage;
-  TeamChatScreen({this.onSendMessage});
+  String countryName;
+  String countryImage;
+  TeamChatScreen({this.onSendMessage,required this.countryName,required this.countryImage});
 
   @override
   State<TeamChatScreen> createState() => _TeamChatScreenState();
@@ -54,7 +57,8 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
 
   @override
   void initState() {
-
+    AppCubit.get(context).getTeamChat(widget.countryName);
+    AppCubit.get(context).getCheeringPost();
     super.initState();
     if(scrollController.hasClients){
       scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
@@ -72,460 +76,465 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
   @override
   Widget build(BuildContext context) {
 
-    return CashHelper.getData(key: 'Team')!=null? ConditionalBuilder(
-      builder: (context)=>Builder(
-          builder: (context) {
-            Timer(const Duration(seconds: 15), () {
-              setState(() {
-                // if(AppCubit.get(context).cheering.length!=indexCheering)
-                //   indexCheering+=1;
-                //
-                // if(AppCubit.get(context).cheering.length==indexCheering)
-                //   isLast=true;
-                AppCubit.get(context).isLast=true;
+    return BlocConsumer<AppCubit,AppState>(builder: (context,state){
+      return widget.countryName != null
+          ? ConditionalBuilder(
+        builder: (context)=>Builder(
+            builder: (context) {
+              Timer(const Duration(seconds: 15), () {
+                setState(() {
+                  // if(AppCubit.get(context).cheering.length!=indexCheering)
+                  //   indexCheering+=1;
+                  //
+                  // if(AppCubit.get(context).cheering.length==indexCheering)
+                  //   isLast=true;
+                  AppCubit.get(context).isLast=true;
 
 
+                });
               });
-            });
-            Timer(const Duration(seconds: 1), () {
-              setState(() {
-                // if(AppCubit.get(context).cheering.length!=indexCheering)
-                //   indexCheering+=1;
-                //
-                // if(AppCubit.get(context).cheering.length==indexCheering)
-                //   isLast=true;
-                AppCubit.get(context).count=AppCubit.get(context).count-1;
-                if(AppCubit.get(context).count-1<0){
-                  AppCubit.get(context).count=0;
-                }
+              Timer(const Duration(seconds: 1), () {
+                setState(() {
+                  // if(AppCubit.get(context).cheering.length!=indexCheering)
+                  //   indexCheering+=1;
+                  //
+                  // if(AppCubit.get(context).cheering.length==indexCheering)
+                  //   isLast=true;
+                  AppCubit.get(context).count=AppCubit.get(context).count-1;
+                  if(AppCubit.get(context).count-1<0){
+                    AppCubit.get(context).count=0;
+                  }
+                });
               });
-            });
-            if(scrollController.hasClients){
-              scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
-            }
-            return BlocConsumer<AppCubit,AppState>(
-              listener: (context,state){
-                if(state is PickPostImageSuccessState ){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImageTeamChat()));
-                }
-              },
-              builder: (context,state){
-                if(scrollController.hasClients){
-                  scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
-                }
-                return Scaffold(
-                  backgroundColor: Colors.white,
-                  appBar: AppBar(
-                    actions: [
-                    ],
-                    backgroundColor: AppColors.primaryColor1,
-                    elevation: 0,
-                    titleSpacing: 0.0,
-                    centerTitle: false,
-                    title: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const CircleAvatar(
-                          backgroundImage:  NetworkImage('https://img.freepik.com/free-vector/messages-concept-illustration_114360-583.jpg?w=740&t=st=1661099337~exp=1661099937~hmac=2ae9e37e55c500b6273d2634baf01732ec2c36a9c59eb7e258a47e3c5b84bd34') as ImageProvider,
-                          radius: 22,
-                        ),
-                        const SizedBox(width: 15,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text('${CashHelper.getData(key: 'Team')}',
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: AppStrings.appFont
-                                  ),
-                                ),
-
-                              ],
-                            ),
-
-                          ],
-                        ),
-
+              if(scrollController.hasClients){
+                scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+              }
+              return BlocConsumer<AppCubit,AppState>(
+                listener: (context,state){
+                  if(state is PickPostImageSuccessState ){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImageTeamChat(countryName: widget.countryName,)));
+                  }
+                },
+                builder: (context,state){
+                  if(scrollController.hasClients){
+                    scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+                  }
+                  return Scaffold(
+                    backgroundColor: Colors.white,
+                    appBar: AppBar(
+                      actions: [
                       ],
-                    ),
-                    leading: IconButton(
-                      onPressed: (){
-                        AppCubit.get(context).currentIndex=0;
-                        Navigator.push(context, MaterialPageRoute(builder: (_){
-                          return const HomeLayout();
-                        }));
-                      },
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: AppColors.myWhite,
-                      ),
-                    ),
-                  ),
-                  body: ConditionalBuilder(
-                    builder: (context)=>Column(
-                      children: [
-                        if(AppCubit.get(context).isLast==false )
-                        Container(
-                          height: 130,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.primaryColor1
-                            )
+                      backgroundColor: AppColors.primaryColor1,
+                      elevation: 0,
+                      titleSpacing: 0.0,
+                      centerTitle: false,
+                      title: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CircleAvatar(
+                            backgroundImage:  NetworkImage('${widget.countryImage}'),
+                            radius: 22,
                           ),
-                          margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                          child: Stack(
+                          const SizedBox(width: 15,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Lottie.asset(
-                                  height: 130,
-                                  width: double.infinity,
-                                  'assets/images/cheer.json'
-                              ),
-                              ClipPath(
-                                clipper: TicketPassClipper(holeRadius: 50),
-                                child: Container(
-                                  // decoration: BoxDecoration(
-                                  //   border: Border.all(
-                                  //       color: AppColors.primaryColor1
-                                  //   ),
-                                  //   color: AppColors.primaryColor1,
-                                  //
-                                  // ),
-
-
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 5,
-                                      horizontal: 15
-                                  ),
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 5,
-                                      horizontal: 5
-                                  ),
-                                  width:MediaQuery.of(context).size.width*.9 ,
-                                  height: MediaQuery.of(context).size.height*.16,
-                                  child:  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-
-                                            CircleAvatar(
-                                              backgroundImage:NetworkImage('${AppCubit.get(context).cheering.first.userImage}') as ImageProvider,
-                                              radius: 18,
-                                            ),
-                                            const SizedBox(width: 10,),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Text('${AppCubit.get(context).cheering.first.username}',
-                                                      style: TextStyle(
-                                                          color: AppColors.primaryColor1,
-                                                          fontSize: 15,
-                                                          fontWeight: FontWeight.w500,
-                                                          fontFamily: AppStrings.appFont
-                                                      ),
-                                                    ),
-
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-
-                                          ],
-                                        ),
-                                        SizedBox(height: 10,),
-                                        Center(
-                                          child: Text('${AppCubit.get(context).cheering.first.text}',
-                                            style: TextStyle(
-                                                color: AppColors.primaryColor1,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w700,
-                                                fontFamily: AppStrings.appFont
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 10,),
-                                        if(AppCubit.get(context).count!=0 || AppCubit.get(context).count>0)
-                                        Align(
-                                          alignment: Alignment.topRight,
-                                          child: Text('${AppCubit.get(context).count}',
-                                            style: TextStyle(
-                                                color: AppColors.primaryColor1,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w500,
-                                                fontFamily: AppStrings.appFont
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        Expanded(
-                          child: Container(
-                            height:MediaQuery.of(context).size.height*.83,
-                            color: Colors.white,
-                            padding: const EdgeInsets.all(10),
-                            child: ListView.separated(
-                                controller: scrollController,
-                                physics: const BouncingScrollPhysics(),
-                                itemBuilder: (context , index)
-                                {
-                                  var teamChat =AppCubit.get(context).teamChat[index];
-                                  if(AppCubit.get(context).userModel!.uId == teamChat.senderId)
-                                    //send message
-                                    return builsRecievedMessages(teamChat,context,index);
-                                  //receive message
-                                  return buildMyMessages(teamChat,context,index);
-                                },
-                                separatorBuilder: (context , index)=>const SizedBox(height: 15,),
-                                itemCount: AppCubit.get(context).teamChat.length),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 15, 10),
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: FloatingActionButton(
-                              backgroundColor: AppColors.primaryColor1,
-                              child: Icon(
-                                  Icons.add
-                              ),
-                              onPressed: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (_){
-
-                                  return CheeringScreen();
-
-                                }));
-                              },
-
-                            ),
-                          ),
-                        ),
-                        recording==true?
-                        Container(
-                          width: double.infinity,
-                          height: 100,
-                          decoration: BoxDecoration(
-                              color: AppColors.primaryColor1
-                          ),
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 5,),
-                              Text('${statusText}',style: const TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: AppStrings.appFont,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500
-                              ),),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  CircleAvatar(
-                                    radius: 20,
-                                    backgroundColor: AppColors.myWhite,
-                                    child:IconButton(
-                                        onPressed: (){
-                                          pauseRecord();
-                                        },
-                                        icon:   RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
-                                          Icons.radio_button_unchecked_rounded,
-                                          color: AppColors.primaryColor1,
-                                          size: 20,
-                                        ):Icon(
-                                          Icons.pause,
-                                          color: AppColors.primaryColor1,
-                                          size: 20,
-                                        )
-                                    ),
-                                  ),
-                                  SizedBox(width: MediaQuery.of(context).size.width*.5,),
-                                  CircleAvatar(
-                                    radius: 20,
-                                    backgroundColor: AppColors.myWhite,
-                                    child:  IconButton(
-                                        onPressed: (){
-                                          setState(() {
-                                            recording=false;
-                                            AppCubit.get(context).isSend=true;
-                                          });
-                                          stopRecord();
-                                          scrollController.animateTo(
-                                            scrollController.position.maxScrollExtent,
-                                            duration: const Duration(milliseconds: 300),
-                                            curve: Curves.easeOut,
-                                          );
-                                          // toogleRecord();
-                                        },
-                                        icon:  Icon(
-                                          Icons.send,
-                                          color: AppColors.primaryColor1,
-                                          size: 20,
-                                        )
+                                  Text('${widget.countryName}',
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: AppStrings.appFont
                                     ),
                                   ),
 
                                 ],
-                              )
-                            ],
-                          ) ,
-                        ):
-                        Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width*.74,
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color:AppColors.primaryColor1,
-                                        width: 1
-                                    ),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Padding(
-                                      padding: const EdgeInsets.only(left: 8),
-                                      child: TextFormField(
-                                        onChanged: (v){
-                                          setState((){
-                                            isWriting=true;
-                                          });
-                                        },
-                                        keyboardType: TextInputType.multiline,
-                                        maxLines: null,
-                                        controller: textMessage,
-                                        decoration:  const InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'Write your message...',
+                              ),
 
+                            ],
+                          ),
+
+                        ],
+                      ),
+                      leading: IconButton(
+                        onPressed: (){
+                          AppCubit.get(context).currentIndex=0;
+                          Navigator.push(context, MaterialPageRoute(builder: (_){
+                            return const HomeLayout();
+                          }));
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          color: AppColors.myWhite,
+                        ),
+                      ),
+                    ),
+                    body: ConditionalBuilder(
+                      builder: (context)=>Column(
+                        children: [
+                          if(AppCubit.get(context).isLast==false )
+                            Container(
+                              height: 130,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: AppColors.primaryColor1
+                                  )
+                              ),
+                              margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                              child: Stack(
+                                children: [
+                                  Lottie.asset(
+                                      height: 130,
+                                      width: double.infinity,
+                                      'assets/images/cheer.json'
+                                  ),
+                                  ClipPath(
+                                    clipper: TicketPassClipper(holeRadius: 50),
+                                    child: Container(
+                                      // decoration: BoxDecoration(
+                                      //   border: Border.all(
+                                      //       color: AppColors.primaryColor1
+                                      //   ),
+                                      //   color: AppColors.primaryColor1,
+                                      //
+                                      // ),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5,
+                                          horizontal: 15
+                                      ),
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 5,
+                                          horizontal: 5
+                                      ),
+                                      width:MediaQuery.of(context).size.width*.9 ,
+                                      height: MediaQuery.of(context).size.height*.16,
+                                      child:  Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+
+                                                CircleAvatar(
+                                                  backgroundImage:NetworkImage('${AppCubit.get(context).cheering.first.userImage}') as ImageProvider,
+                                                  radius: 18,
+                                                ),
+                                                const SizedBox(width: 10,),
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text('${AppCubit.get(context).cheering.first.username}',
+                                                          style: TextStyle(
+                                                              color: AppColors.primaryColor1,
+                                                              fontSize: 15,
+                                                              fontWeight: FontWeight.w500,
+                                                              fontFamily: AppStrings.appFont
+                                                          ),
+                                                        ),
+
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+
+                                              ],
+                                            ),
+                                            SizedBox(height: 10,),
+                                            Center(
+                                              child: Text('${AppCubit.get(context).cheering.first.text}',
+                                                style: TextStyle(
+                                                    color: AppColors.primaryColor1,
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontFamily: AppStrings.appFont
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: 10,),
+                                            if(AppCubit.get(context).count!=0 || AppCubit.get(context).count>0)
+                                              Align(
+                                                alignment: Alignment.topRight,
+                                                child: Text('${AppCubit.get(context).count}',
+                                                  style: TextStyle(
+                                                      color: AppColors.primaryColor1,
+                                                      fontSize: 15,
+                                                      fontWeight: FontWeight.w500,
+                                                      fontFamily: AppStrings.appFont
+                                                  ),
+                                                ),
+                                              ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                          Expanded(
+                            child: Container(
+                              height:MediaQuery.of(context).size.height*.83,
+                              color: Colors.white,
+                              padding: const EdgeInsets.all(10),
+                              child: ListView.separated(
+                                  controller: scrollController,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemBuilder: (context , index)
+                                  {
+                                    var teamChat =AppCubit.get(context).teamChat[index];
+                                    if(AppCubit.get(context).userModel!.uId == teamChat.senderId)
+                                      //send message
+                                      return builsRecievedMessages(teamChat,context,index);
+                                    //receive message
+                                    return buildMyMessages(teamChat,context,index);
+                                  },
+                                  separatorBuilder: (context , index)=>const SizedBox(height: 15,),
+                                  itemCount: AppCubit.get(context).teamChat.length),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 15, 10),
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: FloatingActionButton(
+                                backgroundColor: AppColors.primaryColor1,
+                                child: Icon(
+                                    Icons.add
+                                ),
+                                onPressed: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (_){
+
+                                    return CheeringScreen();
+
+                                  }));
+                                },
+
+                              ),
+                            ),
+                          ),
+                          recording==true?
+                          Container(
+                            width: double.infinity,
+                            height: 100,
+                            decoration: BoxDecoration(
+                                color: AppColors.primaryColor1
+                            ),
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 5,),
+                                Text('${statusText}',style: const TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: AppStrings.appFont,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500
+                                ),),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 20,
+                                      backgroundColor: AppColors.myWhite,
+                                      child:IconButton(
+                                          onPressed: (){
+                                            pauseRecord();
+                                          },
+                                          icon:   RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
+                                            Icons.radio_button_unchecked_rounded,
+                                            color: AppColors.primaryColor1,
+                                            size: 20,
+                                          ):Icon(
+                                            Icons.pause,
+                                            color: AppColors.primaryColor1,
+                                            size: 20,
+                                          )
+                                      ),
+                                    ),
+                                    SizedBox(width: MediaQuery.of(context).size.width*.5,),
+                                    CircleAvatar(
+                                      radius: 20,
+                                      backgroundColor: AppColors.myWhite,
+                                      child:  IconButton(
+                                          onPressed: (){
+                                            setState(() {
+                                              recording=false;
+                                              AppCubit.get(context).isSend=true;
+                                            });
+                                            stopRecord();
+                                            scrollController.animateTo(
+                                              scrollController.position.maxScrollExtent,
+                                              duration: const Duration(milliseconds: 300),
+                                              curve: Curves.easeOut,
+                                            );
+                                            // toogleRecord();
+                                          },
+                                          icon:  Icon(
+                                            Icons.send,
+                                            color: AppColors.primaryColor1,
+                                            size: 20,
+                                          )
+                                      ),
+                                    ),
+
+                                  ],
+                                )
+                              ],
+                            ) ,
+                          ):
+                          Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width*.74,
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color:AppColors.primaryColor1,
+                                          width: 1
+                                      ),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Padding(
+                                        padding: const EdgeInsets.only(left: 8),
+                                        child: TextFormField(
+                                          onChanged: (v){
+                                            setState((){
+                                              isWriting=true;
+                                            });
+                                          },
+                                          keyboardType: TextInputType.multiline,
+                                          maxLines: null,
+                                          controller: textMessage,
+                                          decoration:  const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: 'Write your message...',
+
+                                          ),
+                                        )
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5,),
+                                  Container(
+                                      width:35,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50),
+                                          color: AppColors.primaryColor1
+                                      ),
+                                      child: Center(
+                                        child: IconButton(
+                                            onPressed: (){
+                                              HapticFeedback.vibrate();
+                                              textMessage.text==""
+                                                  ?{
+                                                recording?stopRecord():startRecord(),
+                                                AppCubit.get(context).getTeamChat(widget.countryName)
+                                              }
+                                                  :AppCubit.get(context).sendTeamChat(
+                                                  countryName: widget.countryName,
+                                                  dateTime: DateTime.now().toString(),
+                                                  text: textMessage.text);
+                                              textMessage.clear();
+                                            },
+                                            color: AppColors.primaryColor1,
+                                            icon: AppCubit.get(context).isSend? const CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?const Icon(Icons.mic,color: Colors.white,size: 17):const Icon(Icons.send,color: Colors.white,size: 17)
                                         ),
                                       )
                                   ),
-                                ),
-                                const SizedBox(width: 5,),
-                                Container(
-                                    width:35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: AppColors.primaryColor1
-                                    ),
-                                    child: Center(
-                                      child: IconButton(
+                                  const SizedBox(width: 5,),
+                                  Container(
+                                      width: 35,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(50),
+                                          color: AppColors.primaryColor1
+                                      ),
+                                      child: Center(
+                                        child: IconButton(
                                           onPressed: (){
-                                            HapticFeedback.vibrate();
-                                            textMessage.text==""
-                                                ?{
-                                              recording?stopRecord():startRecord(),
-                                              AppCubit.get(context).getTeamChat()
-                                            }
-                                                :AppCubit.get(context).sendTeamChat(
-                                                dateTime: DateTime.now().toString(),
-                                                text: textMessage.text);
-                                            textMessage.clear();
+                                            AppCubit.get(context).pickPostImage();
+
                                           },
                                           color: AppColors.primaryColor1,
-                                          icon: AppCubit.get(context).isSend? const CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?const Icon(Icons.mic,color: Colors.white,size: 17):const Icon(Icons.send,color: Colors.white,size: 17)
-                                      ),
-                                    )
-                                ),
-                                const SizedBox(width: 5,),
-                                Container(
-                                    width: 35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: AppColors.primaryColor1
-                                    ),
-                                    child: Center(
-                                      child: IconButton(
-                                        onPressed: (){
-                                          AppCubit.get(context).pickPostImage();
-
-                                        },
-                                        color: AppColors.primaryColor1,
-                                        icon: const ImageIcon(
-                                          AssetImage("assets/images/fanarea.png"),
-                                          color:Colors.white,
-                                          size: 15,
+                                          icon: const ImageIcon(
+                                            AssetImage("assets/images/fanarea.png"),
+                                            color:Colors.white,
+                                            size: 15,
+                                          ),
                                         ),
-                                      ),
-                                    )
-                                ),
-                              ],
-                            )
-                        ),
+                                      )
+                                  ),
+                                ],
+                              )
+                          ),
 
-                      ],
+                        ],
+                      ),
+                      condition:AppCubit.get(context).teamChat.length >=0 ,
+                      fallback:(context)=>const Center(child: CircularProgressIndicator()) ,
                     ),
-                    condition:AppCubit.get(context).teamChat.length >=0 ,
-                    fallback:(context)=>const Center(child: CircularProgressIndicator()) ,
-                  ),
 
-                );
-              },
-            );
-          }
-      ),
-      condition: AppCubit.get(context).userModel !=null,
-      fallback: (context)=>const Center(child: CircularProgressIndicator()),
-    ):Scaffold(
-      appBar: customAppbar('Team Chat', context),
-      body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(left: 20),
-                height: MediaQuery.of(context).size.height*.5,
-                child: Lottie.network('https://assets4.lottiefiles.com/packages/lf20_3asbtz5x.json')
-            ),
-            const SizedBox(height: 15,),
-            Container(
-              margin: const EdgeInsets.all(10),
-              child: Text('Please select favorite team from profile screen first',
-                style:  TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 19,
-                    color: AppColors.primaryColor1,
-                    fontFamily: AppStrings.appFont
-                ),
-                 textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: 20,),
-            // defaultButton(
-            //     width: MediaQuery.of(context).size.width*.8,
-            //     height: MediaQuery.of(context).size.height*.07,
-            //     buttonColor: AppColors.primaryColor1,
-            //     textColor: Colors.white,
-            //     buttonText: 'Go to Profile Screen',
-            //     function: (){
-            //       Navigator.push(context, MaterialPageRoute(builder: (_){
-            //          return ProfileScreen();
-            //       }));
-            //     }
-            // )
-          ],
+                  );
+                },
+              );
+            }
         ),
+        condition: AppCubit.get(context).userModel !=null,
+        fallback: (context)=>const Center(child: CircularProgressIndicator()),
       )
-    );
+          :Scaffold(
+          appBar: customAppbar('Team Chat', context),
+          body: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                    margin: const EdgeInsets.only(left: 20),
+                    height: MediaQuery.of(context).size.height*.5,
+                    child: Lottie.network('https://assets4.lottiefiles.com/packages/lf20_3asbtz5x.json')
+                ),
+                const SizedBox(height: 15,),
+                Container(
+                  margin: const EdgeInsets.all(10),
+                  child: Text('Please select favorite team from profile screen first',
+                    style:  TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 19,
+                        color: AppColors.primaryColor1,
+                        fontFamily: AppStrings.appFont
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 20,),
+                // defaultButton(
+                //     width: MediaQuery.of(context).size.width*.8,
+                //     height: MediaQuery.of(context).size.height*.07,
+                //     buttonColor: AppColors.primaryColor1,
+                //     textColor: Colors.white,
+                //     buttonText: 'Go to Profile Screen',
+                //     function: (){
+                //       Navigator.push(context, MaterialPageRoute(builder: (_){
+                //          return ProfileScreen();
+                //       }));
+                //     }
+                // )
+              ],
+            ),
+          )
+      );
+    }, listener: (context,state){
+
+    });
   }
 
   Widget buildMyMessages(PublicChatModel model,context,index)=> Align(
@@ -937,6 +946,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
     Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('teamChat/${Uri.file(voice.path).pathSegments.last}');
     await storageReference.putFile(voice).then((value){
       AppCubit.get(context).createVoiceTeamChat(
+        countryName: widget.countryName,
         dateTime: DateTime.now().toString(),
         voice: voice.path,
       );

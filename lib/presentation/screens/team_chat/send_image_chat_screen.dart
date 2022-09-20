@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 class SendImageTeamChat extends StatefulWidget {
+  String countryName;
+  SendImageTeamChat({required this.countryName});
   @override
   State<SendImageTeamChat> createState() => _SendImageTeamChatState();
 }
@@ -67,7 +69,9 @@ class _SendImageTeamChatState extends State<SendImageTeamChat> {
                 :FloatingActionButton(
               onPressed: (){
 
-                AppCubit.get(context).uploadTeamChatImage(dateTime:  DateTime.now().toString(), text: "", senderId:  AppStrings.uId!, senderName: '${AppCubit.get(context).userModel!.username}', senderImage: '${AppCubit.get(context).userModel!.image}');
+                AppCubit.get(context).uploadTeamChatImage(
+                    countryName:widget.countryName ,
+                    dateTime:  DateTime.now().toString(), text: "", senderId:  AppStrings.uId!, senderName: '${AppCubit.get(context).userModel!.username}', senderImage: '${AppCubit.get(context).userModel!.image}');
 
 
               },

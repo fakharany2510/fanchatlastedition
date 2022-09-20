@@ -1,8 +1,7 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
-import 'package:fanchat/presentation/paypal/paypal_payment.dart';
+import 'package:fanchat/presentation/screens/countries_screen.dart';
 import 'package:fanchat/presentation/screens/register_screen.dart';
-import 'package:fanchat/presentation/screens/team_chat/team_chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -117,11 +116,11 @@ class MoreScreen extends StatelessWidget {
                               ),
                             ),
                             onTap: (){
-                              AppCubit.get(context).getTeamChat();
-                              AppCubit.get(context).getCheeringPost();
+
+
 
                               Navigator.push(context,
-                                  MaterialPageRoute(builder: (context)=>TeamChatScreen())
+                                  MaterialPageRoute(builder: (context)=>CountriesScreen())
                               );
                             },
                           ),

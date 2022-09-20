@@ -1618,6 +1618,7 @@ List<int> commentIndex=[];
 
   void createImageTeamChat({
     required String dateTime,
+     String? countryName,
     String? messageImage,
     String? senderId,
     String? senderName,
@@ -1637,7 +1638,7 @@ List<int> commentIndex=[];
 
     //Set My Chat
     FirebaseFirestore.instance
-        .collection('${CashHelper.getData(key: 'Team')}')
+        .collection('${countryName}')
         .add(model.toMap())
         .then((value){
 
@@ -1658,6 +1659,7 @@ List<int> commentIndex=[];
     required String senderId,
     required String senderName,
     required String senderImage,
+    required String countryName,
 
   }){
     emit(BrowiseUploadImagePostLoadingState());
@@ -1677,6 +1679,7 @@ List<int> commentIndex=[];
           senderId: AppStrings.uId,
           senderName: userModel!.username,
           senderImage: userModel!.image,
+          countryName: countryName
         );
 
         emit(BrowiseUploadImagePostSuccessState());
@@ -1694,6 +1697,7 @@ List<int> commentIndex=[];
   void sendTeamChat({
     required String dateTime,
     required String text,
+    required String countryName,
 
   }){
     PublicChatModel model =PublicChatModel(
@@ -1705,7 +1709,7 @@ List<int> commentIndex=[];
     );
     //Set My Chat
     FirebaseFirestore.instance
-        .collection('${CashHelper.getData(key: 'Team')}')
+        .collection('${countryName}')
         .add(model.toMap())
         .then((value){
       print(isSend);
@@ -1720,10 +1724,10 @@ List<int> commentIndex=[];
   ////////////////////////
 //get messages
   List<PublicChatModel> teamChat=[];
-  void getTeamChat(){
+  void getTeamChat(String countryName){
     teamChat=[];
     FirebaseFirestore.instance
-        .collection('${CashHelper.getData(key: 'Team')}')
+        .collection('${countryName}')
         .orderBy('dateTime')
         .snapshots()
         .listen((event) {
@@ -1751,6 +1755,7 @@ List<int> commentIndex=[];
   void createVoiceTeamChat({
     required String dateTime,
     required String voice,
+    required String countryName,
 
   }){
 
@@ -1766,7 +1771,7 @@ List<int> commentIndex=[];
 
     //Set My Chat
     FirebaseFirestore.instance
-        .collection('${CashHelper.getData(key: 'Team')}')
+        .collection('${countryName}')
         .add(model.toMap())
         .then((value){
       isSend=false;
