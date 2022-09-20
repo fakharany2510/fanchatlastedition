@@ -195,6 +195,8 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                   //   color: AppColors.primaryColor1,
                                   //
                                   // ),
+
+
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 5,
                                       horizontal: 15
