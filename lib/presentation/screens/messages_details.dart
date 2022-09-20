@@ -55,7 +55,18 @@ class _ChatDetailsState extends State<ChatDetails> {
 
   @override
   void initState() {
-
+    controller = CachedVideoPlayerController.network(
+       'https://firebasestorage.googleapis.com/v0/b/fanchat-7db9e.appspot.com/o/privatechat%2Fimage_picker4734177635856049259.mp4?alt=media&token=c61a5764-104f-4ec3-b203-d93d8369e720');
+    controller.initialize().then((value) {
+      controller.play();
+      controller.setLooping(true);
+      controller.setVolume(1.0);
+      setState(() {
+        controller.pause();
+      });
+    }).catchError((error){
+      print('error while initializing video ${error.toString()}');
+    });
     if(scrollController.hasClients){
       scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
     }
@@ -80,8 +91,6 @@ class _ChatDetailsState extends State<ChatDetails> {
                 if(state is PickPrivateChatViedoSuccessState ){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>SendVideoMessage(userModel: widget.userModel, )));
                 }
-
-
               },
               builder: (context,state){
                 if(scrollController.hasClients){
@@ -139,18 +148,18 @@ class _ChatDetailsState extends State<ChatDetails> {
                                 itemBuilder: (context , index)
                                 {
                                   var message =AppCubit.get(context).messages[index];
-                                  controller = CachedVideoPlayerController.network(
-                                      "${message.video}");
-                                  controller.initialize().then((value) {
-                                    controller.play();
-                                    controller.setLooping(true);
-                                    controller.setVolume(1.0);
-                                    setState(() {
-                                      controller.pause();
-                                    });
-                                  }).catchError((error){
-                                    print('error while initializing video ${error.toString()}');
-                                  });
+                                  // controller = CachedVideoPlayerController.network(
+                                  //     "${message.video}");
+                                  // controller.initialize().then((value) {
+                                  //   controller.play();
+                                  //   controller.setLooping(true);
+                                  //   controller.setVolume(1.0);
+                                  //   setState(() {
+                                  //     controller.pause();
+                                  //   });
+                                  // }).catchError((error){
+                                  //   print('error while initializing video ${error.toString()}');
+                                  // });
                                   if(widget.userModel.uId == message.senderId)
                                     //send message
                                     return builsRecievedMessages(message,context,index);
@@ -187,7 +196,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                                         onPressed: (){
                                           pauseRecord();
                                         },
-                                        icon:   RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
+                                        icon: RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
                                           Icons.radio_button_unchecked_rounded,
                                           color: AppColors.primaryColor1,
                                           size: 20,
@@ -422,7 +431,7 @@ class _ChatDetailsState extends State<ChatDetails> {
           ?Container(
         padding: const EdgeInsets.all(10),
         decoration:  BoxDecoration(
-          color: AppColors.primaryColor1,
+          color: AppColors.primaryColor2,
           borderRadius:const  BorderRadius.only(
             topRight: Radius.circular(10),
             topLeft: Radius.circular(10),
@@ -438,7 +447,7 @@ class _ChatDetailsState extends State<ChatDetails> {
           ),
         ),
       )
-          :(model.image!="")
+          :(model.image !="")
           ? GestureDetector(
         onTap: (){
           Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: model.image)));
@@ -464,13 +473,21 @@ class _ChatDetailsState extends State<ChatDetails> {
             ),
           ),
         ),
-      ):
-        (model.video != '')
+      )
+          :
+        (model.video != "")
           ?Stack(
         children: [
           Container(
+              decoration:  BoxDecoration(
+                borderRadius:const  BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                ),
+              ),
               height: MediaQuery.of(context).size.height*.25,
-              width: double.infinity,
+              width: MediaQuery.of(context).size.width*.55,
               child: controller.value.isInitialized
                   ? AspectRatio(
                   aspectRatio: controller.value.aspectRatio,
@@ -519,8 +536,8 @@ class _ChatDetailsState extends State<ChatDetails> {
               )
           ),
         ],
-      )
-          :VoiceMessage(
+      ):
+          VoiceMessage(
         audioSrc: '${AppCubit.get(context).messages[index].voice}',
         played: true, // To show played badge or not.
         me: true, // Set message side.
@@ -586,12 +603,12 @@ class _ChatDetailsState extends State<ChatDetails> {
     ),
           ),
         ):
-        (model.video != '')
+        (model.video != "")
         ?Stack(
       children: [
         Container(
             height: MediaQuery.of(context).size.height*.25,
-            width: double.infinity,
+            width:MediaQuery.of(context).size.width*.55,
             child: controller.value.isInitialized
                 ? AspectRatio(
                 aspectRatio: controller.value.aspectRatio,

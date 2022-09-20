@@ -104,7 +104,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                           //   //AppCubit.get(context).getTeamChat(data['name']);
                           //
                           // });
-
+                          AppCubit.get(context).isLast=true;
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>
                               TeamChatScreen(countryName:data['name'],countryImage: data['image'],)
                           ));
