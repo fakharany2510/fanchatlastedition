@@ -124,6 +124,12 @@ class _MatchDetailsState extends State<MatchDetails> {
                                               MatchScaduele.realImagesMatchesLeft=MatchScaduele.imageMatches22Left;
                                             });
                                           }
+                                          else{
+                                            MatchScaduele.realTeamMatchesRight=[];
+                                            MatchScaduele.realImagesMatchesRight=[];
+                                            MatchScaduele.realTeamMatchesLeft=[];
+                                            MatchScaduele.realImagesMatchesLeft=[];
+                                          }
                                           // Navigator.push(context, MaterialPageRoute(builder: (_){
                                           //   return const SingleMatch();
                                           // }));

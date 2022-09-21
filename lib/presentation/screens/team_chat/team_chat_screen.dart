@@ -58,13 +58,13 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
   @override
   void initState() {
     AppCubit.get(context).getTeamChat(widget.countryName);
-    AppCubit.get(context).getCheeringPost();
+    // AppCubit.get(context).getCheeringPost();
     super.initState();
     if(scrollController.hasClients){
       scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
     }
     isWriting = false;
-    AppCubit.get(context).getCheeringPost();
+    // AppCubit.get(context).getCheeringPost();
 
     Timer(const Duration(seconds: 15), () {
       setState(() {
@@ -175,8 +175,8 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                     body: ConditionalBuilder(
                       builder: (context)=>Column(
                         children: [
-                          if(AppCubit.get(context).isLast==false )
-                            Container(
+                          AppCubit.get(context).isLast==false ?
+                          Container(
                               height: 130,
                               decoration: BoxDecoration(
                                   border: Border.all(
@@ -270,16 +270,16 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                             //     ),
                                             //   ),
 
-                                        //     if(AppCubit.get(context).count!=0 || AppCubit.get(context).count>0)
-                                        //
-                                        //     TimerBuilder.periodic(Duration(seconds: 1),
-                                        //     builder: (context) {
-                                        //       var testCount=15;
-                                        //       testCount=testCount-1;
-                                        //       AppCubit.get(context).count-=AppCubit.get(context).count;
-                                        //       return Text('${testCount}');
-                                        //     }
-                                        // ),
+                                            //     if(AppCubit.get(context).count!=0 || AppCubit.get(context).count>0)
+                                            //
+                                            //     TimerBuilder.periodic(Duration(seconds: 1),
+                                            //     builder: (context) {
+                                            //       var testCount=15;
+                                            //       testCount=testCount-1;
+                                            //       AppCubit.get(context).count-=AppCubit.get(context).count;
+                                            //       return Text('${testCount}');
+                                            //     }
+                                            // ),
                                           ],
                                         ),
                                       ),
@@ -288,8 +288,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                   ),
                                 ],
                               ),
-                            ),
-
+                            ):Container(),
                           Expanded(
                             child: Container(
                               height:MediaQuery.of(context).size.height*.83,
