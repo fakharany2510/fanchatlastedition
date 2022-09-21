@@ -94,7 +94,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                            height: 40,
                            decoration: BoxDecoration(
                              image: const DecorationImage(
-                               image: AssetImage('assets/images/logocolored.png'),
+                               image: AssetImage('assets/images/ncolors.png'),
                              ),
                              borderRadius: BorderRadius.circular(2),
                            ),

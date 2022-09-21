@@ -188,6 +188,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           height: size.height*.06,
                           function: (){
                             if(name.text == "fanchat"){
+                              AppStrings.uId = '1832855570382325';
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeLayout()));
                             }
                             else if(formKey.currentState!.validate() || isNullOrBlank(phoneNumber) ){

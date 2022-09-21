@@ -1,7 +1,7 @@
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
-import 'package:fanchat/presentation/paypal/pay20.dart';
-import 'package:fanchat/presentation/paypal/pay40.dart';
+import 'package:fanchat/presentation/paypal/businesspackage.dart';
+import 'package:fanchat/presentation/paypal/premiumpackage.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +37,7 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
             SizedBox(height: MediaQuery.of(context).size.height*.1,),
             InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>paypal20()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>BusinessPackage()));
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -96,7 +96,7 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
             SizedBox(height: MediaQuery.of(context).size.height*.1,),
             InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>paypal40()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>BusinessPackage()));
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -116,7 +116,7 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
                         ),
                       ),
                       SizedBox(height:5,),
-                      Text('40 \$ for 1 year',
+                      Text('200 \$ forever',
                         style: TextStyle(
                             fontSize: 20,
                             fontFamily: AppStrings.appFont,

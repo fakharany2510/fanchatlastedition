@@ -165,9 +165,13 @@ class HomeScreen extends StatelessWidget {
                         :Padding(
                           padding: const EdgeInsets.only(top:170),
                           child: Center(
-                      child: CircularProgressIndicator(
-                          color: AppColors.myGrey,
+                      child: Text('No Posts Added Yet',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: AppColors.navBarActiveIcon,
+
                       ),
+                      )
                     ),
                         ),
                 ),
