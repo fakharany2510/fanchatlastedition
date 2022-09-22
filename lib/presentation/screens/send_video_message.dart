@@ -60,7 +60,7 @@ class SendVideoMessage extends StatelessWidget {
                   ],
                 )
             ),
-            floatingActionButton: state is BrowiseUploadImagePostLoadingState || state is BrowiseCreatePostLoadingState
+            floatingActionButton: state is BrowiseUploadVideoPostLoadingState || state is BrowiseCreateVideoPostLoadingState
                 ?CircularProgressIndicator(color: AppColors.navBarActiveIcon,)
                 :FloatingActionButton(
               onPressed: (){

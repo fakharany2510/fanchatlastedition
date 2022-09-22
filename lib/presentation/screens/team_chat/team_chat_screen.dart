@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:custom_clippers/Clippers/ticket_pass_clipper.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:timer_builder/timer_builder.dart';
@@ -66,17 +67,16 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
     isWriting = false;
     // AppCubit.get(context).getCheeringPost();
 
-    Timer(const Duration(seconds: 15), () {
-      setState(() {
-        // if(AppCubit.get(context).cheering.length!=indexCheering)
-        //   indexCheering+=1;
-        //
-        // if(AppCubit.get(context).cheering.length==indexCheering)
-        //   isLast=true;
-        print('Hi');
-        AppCubit.get(context).isLast=true;
-      });
-    });
+    // Timer(const Duration(seconds: 15), () {
+    //   setState(() {
+    //     // if(AppCubit.get(context).cheering.length!=indexCheering)
+    //     //   indexCheering+=1;
+    //     //
+    //     // if(AppCubit.get(context).cheering.length==indexCheering)
+    //     //   isLast=true;
+    //     print('Hi');
+    //   });
+    // });
     Timer(const Duration(seconds: 1), () {
       setState(() {
         indexCheering++;
@@ -133,7 +133,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           CircleAvatar(
-                            backgroundImage:  NetworkImage('${widget.countryImage}'),
+                            backgroundImage:  NetworkImage(widget.countryImage),
                             radius: 22,
                           ),
                           const SizedBox(width: 15,),
@@ -142,7 +142,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                             children: [
                               Row(
                                 children: [
-                                  Text('${widget.countryName}',
+                                  Text(widget.countryName,
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 16,
@@ -177,7 +177,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                         children: [
                           AppCubit.get(context).isLast==false ?
                           Container(
-                              height: 130,
+                              height: MediaQuery.of(context).size.height*.28,
                               decoration: BoxDecoration(
                                   border: Border.all(
                                       color: AppColors.primaryColor1
@@ -187,7 +187,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                               child: Stack(
                                 children: [
                                   Lottie.asset(
-                                      height: 130,
+                                      height:  MediaQuery.of(context).size.height*.28,
                                       width: double.infinity,
                                       'assets/images/cheer.json'
                                   ),
@@ -210,7 +210,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                           horizontal: 5
                                       ),
                                       width:MediaQuery.of(context).size.width*.9 ,
-                                      height: MediaQuery.of(context).size.height*.16,
+                                      height: MediaQuery.of(context).size.height*.28,
                                       child:  Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: Column(
@@ -246,30 +246,27 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
 
                                               ],
                                             ),
-                                            SizedBox(height: 10,),
-                                            Center(
-                                              child: Text('${AppCubit.get(context).cheering.first.text}',
-                                                style: TextStyle(
-                                                    color: AppColors.primaryColor1,
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w700,
-                                                    fontFamily: AppStrings.appFont
-                                                ),
+                                            const SizedBox(height: 10,),
+                                            Text('${AppCubit.get(context).cheering.first.text}',
+                                              style: TextStyle(
+                                                  color: AppColors.primaryColor1,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: AppStrings.appFont
                                               ),
                                             ),
-                                            SizedBox(height: 10,),
-                                            //   Align(
-                                            //     alignment: Alignment.topRight,
-                                            //     child: Text('${AppCubit.get(context).count}',
-                                            //       style: TextStyle(
-                                            //           color: AppColors.primaryColor1,
-                                            //           fontSize: 15,
-                                            //           fontWeight: FontWeight.w500,
-                                            //           fontFamily: AppStrings.appFont
-                                            //       ),
-                                            //     ),
-                                            //   ),
-
+                                            const SizedBox(height: 10,),
+                                              // Align(
+                                              //   alignment: Alignment.topRight,
+                                              //   child: Text('${AppCubit.get(context).timerCheering}',
+                                              //     style: TextStyle(
+                                              //         color: AppColors.primaryColor1,
+                                              //         fontSize: 14,
+                                              //         fontWeight: FontWeight.w500,
+                                              //         fontFamily: AppStrings.appFont
+                                              //     ),
+                                              //   ),
+                                              // ),
                                             //     if(AppCubit.get(context).count!=0 || AppCubit.get(context).count>0)
                                             //
                                             //     TimerBuilder.periodic(Duration(seconds: 1),
@@ -280,6 +277,49 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                             //       return Text('${testCount}');
                                             //     }
                                             // ),
+                                            Align(
+                                              alignment: Alignment.bottomRight,
+                                              child: CircularCountDownTimer(
+                                                  duration: 16,
+                                                  initialDuration: 0,
+                                                  controller: CountDownController(),
+                                                  width: MediaQuery.of(context).size.width*.12,
+                                                  height: MediaQuery.of(context).size.height*.06,
+                                                  ringColor: Colors.grey[300]!,
+                                                  ringGradient: null,
+                                                  fillColor: AppColors.myGrey,
+                                                  fillGradient: null,
+                                                  backgroundColor: AppColors.primaryColor1,
+                                                  backgroundGradient: null,
+                                                  strokeWidth: 20.0,
+                                                  strokeCap: StrokeCap.round,
+                                                  textStyle: const TextStyle(
+                                                      fontSize: 33.0,
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.bold
+                                                  ),
+                                                  textFormat: CountdownTextFormat.S,
+                                                  isReverse: false,
+                                                  isReverseAnimation: false,
+                                                  isTimerTextShown: true,
+                                                  autoStart: true,
+                                                  onStart: () {
+                                                    debugPrint('Countdown Started');
+                                                  },
+                                                  onComplete: () {
+                                                    debugPrint('Countdown Ended');
+                                                     setState(() {
+
+                                                       AppCubit.get(context).isLast=true;
+
+                                                     });
+                                                  },
+                                                  onChange: (String timeStamp) {
+                                                    debugPrint('Countdown Changed $timeStamp');
+                                                  },
+                                              ),
+                                            ),
+
                                           ],
                                         ),
                                       ),
@@ -316,8 +356,10 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                               alignment: Alignment.topRight,
                               child: FloatingActionButton(
                                 backgroundColor: AppColors.primaryColor1,
-                                child: const Icon(
-                                    Icons.add
+                                child: const Image(
+                                  height:40 ,
+                                  width: 40,
+                                  image: AssetImage('assets/images/cheeringIcon.png')
                                 ),
                                 onPressed: (){
                                   Navigator.push(context, MaterialPageRoute(builder: (_){
@@ -340,7 +382,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                             child: Column(
                               children: [
                                 const SizedBox(height: 5,),
-                                Text('${statusText}',style: const TextStyle(
+                                Text(statusText,style: const TextStyle(
                                     color: Colors.white,
                                     fontFamily: AppStrings.appFont,
                                     fontSize: 18,

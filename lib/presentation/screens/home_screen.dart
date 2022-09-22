@@ -90,7 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: (){
                           setState((){
                             controller.pause();
-
                           });
                           Navigator.pushNamed(context, 'add_text');
                         },

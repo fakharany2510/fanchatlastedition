@@ -66,13 +66,13 @@ class CheeringScreen extends StatelessWidget {
                         // height:MediaQuery.of(context).size.height*.07,
                         child: TextFormField(
                           inputFormatters: [
-                            LengthLimitingTextInputFormatter(40),
+                            LengthLimitingTextInputFormatter(70),
                           ],
                           style: TextStyle(
                             color:AppColors.primaryColor1,
                             fontFamily: AppStrings.appFont,
                           ),
-                          maxLines: 7,
+                          maxLines: 5,
                           keyboardType: TextInputType.text,
                           controller: cheeringController,
                           decoration: InputDecoration(

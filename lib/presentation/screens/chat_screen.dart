@@ -15,7 +15,9 @@ class ChatsScreen extends StatelessWidget {
   const ChatsScreen({Key? key}) : super(key: key);
 
   @override
+
   Widget build(BuildContext context) {
+
     return BlocConsumer<AppCubit , AppState>(
       listener: (context , state){},
       builder: (context , state){
@@ -41,10 +43,11 @@ class ChatsScreen extends StatelessWidget {
       },
     );
   }
+
   Widget buildChatItem(UserModel model , context)=>InkWell(
     splashColor: AppColors.primaryColor1,
     onTap: (){
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel: model,)));
+      Navigator.push(context, MaterialPageRoute(maintainState: true, builder: (context)=>ChatDetails(userModel: model,)));
       print('kkkkkkkkkkkkkkkkkkkkkkkkkkk${model.uId}');
     },
     child: Padding(

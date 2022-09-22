@@ -8,6 +8,7 @@ import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 
 import 'package:fanchat/presentation/screens/verify_code_screen.dart';
+import 'package:fanchat/presentation/widgets/post_widget.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:fanchat/utils/helpers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,6 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Map<String,dynamic>? _userData;
   AccessToken? _accessToken;
   bool _checking=true;
+
   var formKey =GlobalKey<FormState>();
 
   TextEditingController email = TextEditingController();
@@ -40,7 +42,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   late String phoneNumber;
   @override
+ void initState() {
 
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

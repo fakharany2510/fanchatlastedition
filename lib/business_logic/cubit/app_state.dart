@@ -164,3 +164,5 @@ class PickPrivateChatViedoErrorState extends AppState {}
 
 class GetCountriesSuccessState extends AppState {}
 class GetCountriesErrorState extends AppState {}
+
+class GetTimerSuccessState extends AppState {}

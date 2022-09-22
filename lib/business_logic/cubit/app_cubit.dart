@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
@@ -36,7 +37,7 @@ class AppCubit extends Cubit<AppState> {
 //caching manager
    final manager=CacheManager(Config(
     'customCacheKey',
-    stalePeriod: Duration(days: 15),maxNrOfCacheObjects: 100,));
+    stalePeriod: const Duration(days: 15),maxNrOfCacheObjects: 100,));
   List screensTitles=[
 
     'Home Screen',
@@ -400,7 +401,7 @@ class AppCubit extends Cubit<AppState> {
       postVideo3 = File(pickedFile.path);
       controller = CachedVideoPlayerController.file(postVideo3!)
         ..initialize().then((value) {
-          controller!.play();
+          controller!.pause();
           emit(PickPrivateChatViedoSuccessState());
         }).catchError((error) {
           print('error picking video ${error.toString()}');
@@ -2035,6 +2036,27 @@ List<int> commentIndex=[];
 
     emit(GetCountriesErrorState());
 
+  }
+
+  int ?timerCheering;
+
+
+  void periodic(){
+
+    Timer.periodic(
+
+      const Duration(seconds: 1),
+      (Timer time){
+        print("time ${time.tick}");
+         timerCheering=time.tick;
+        if(time.tick==5){
+          time.cancel();
+          print("Timer Cancelled");
+        }
+      }
+
+    );
+    emit(GetTimerSuccessState());
   }
 
 

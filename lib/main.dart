@@ -22,9 +22,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:overlay_support/overlay_support.dart';
-
-
-
 import 'business_logic/bloc/bloc_observer.dart';
 
 void main()async {
@@ -34,8 +31,8 @@ void main()async {
   );
 
   await CashHelper.init();
-  //AppStrings.uId = '1832855570382325';
-   AppStrings.uId = CashHelper.getData(key: 'uid');
+  AppStrings.uId = '1832855570382325';
+  //  AppStrings.uId = CashHelper.getData(key: 'uid');
 
   printMessage('userId is: ${AppStrings.uId}');
 
@@ -50,7 +47,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
         providers:[
-          BlocProvider(create: (context)=>AppCubit()..getUser()..getCountries()..getPosts()..getAllUsers()..getFanPosts()),
+          BlocProvider(create: (context)=>AppCubit()..getUser()..getCountries()..getPosts()..getAllUsers()..getFanPosts()..periodic()),
         ],
         child: FirebasePhoneAuthProvider(
           child: OverlaySupport(
