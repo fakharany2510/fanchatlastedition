@@ -1,6 +1,7 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/screens/countries_screen.dart';
 import 'package:fanchat/presentation/screens/public_chat/public_chat_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class HomeLayout extends StatelessWidget {
       HomeScreen(pageHeight: MediaQuery.of(context).size.height,pageWidth:MediaQuery.of(context).size.width),
       MatchDetails(),
       const FanScreen(),
-      const ChatsScreen(),
+      const CountriesScreen(),
       PublicChatScreen(),
       const MoreScreen(),
 
@@ -135,10 +136,10 @@ class HomeLayout extends StatelessWidget {
                     ),
                     BottomNavigationBarItem(
                       icon: ImageIcon(
-                        const AssetImage("assets/images/chat.png"),
+                        const AssetImage("assets/images/team.png"),
                         color:AppColors.myGrey,
                       ),
-                      label: 'Chat',
+                      label: 'Team Chat',
                       activeIcon:ImageIcon(
                         const AssetImage("assets/images/chat.png"),
                         color:AppColors.navBarActiveIcon,

@@ -1,5 +1,6 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/presentation/screens/chat_screen.dart';
 import 'package:fanchat/presentation/screens/countries_screen.dart';
 import 'package:fanchat/presentation/screens/register_screen.dart';
 import 'package:flutter/material.dart';
@@ -102,9 +103,13 @@ class MoreScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icon(Icons.family_restroom_sharp,color: AppColors.primaryColor1,size: 25,),
+                                  ImageIcon(
+                                    const AssetImage("assets/images/chat.png"),
+                                    color:Colors.black,
+                                    size: 25,
+                                  ),
                                   const SizedBox(width: 5,),
-                                  Text('Team Chat',style: TextStyle(
+                                  Text('Private Chat',style: TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.w500,
                                       color: AppColors.primaryColor1,
@@ -120,7 +125,7 @@ class MoreScreen extends StatelessWidget {
 
 
                               Navigator.push(context,
-                                  MaterialPageRoute(builder: (context)=>CountriesScreen())
+                                  MaterialPageRoute(builder: (context)=>ChatsScreen())
                               );
                             },
                           ),

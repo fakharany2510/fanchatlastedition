@@ -7,6 +7,7 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/user_model.dart';
 import 'package:fanchat/presentation/screens/messages_details.dart';
+import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
@@ -18,20 +19,23 @@ class ChatsScreen extends StatelessWidget {
     return BlocConsumer<AppCubit , AppState>(
       listener: (context , state){},
       builder: (context , state){
-        return ConditionalBuilder(
-          condition: AppCubit.get(context).users.length>0,
-          fallback: (context)=>Center(child: CircularProgressIndicator(
-            backgroundColor: AppColors.primaryColor1,
-          )),
-          builder: (context)=>ListView.separated
-            (itemBuilder: (context , index)=> buildChatItem(AppCubit.get(context).users[index] , context),
-              separatorBuilder: (context , index)=>Container(
-                width: double.infinity,
-                height: 1,
-                color: Colors.grey,
-              ),
-              itemCount: AppCubit.get(context).users.length),
+        return Scaffold(
+          appBar:customAppbar('s', context) ,
+          body: ConditionalBuilder(
+            condition: AppCubit.get(context).users.length>0,
+            fallback: (context)=>Center(child: CircularProgressIndicator(
+              backgroundColor: AppColors.primaryColor1,
+            )),
+            builder: (context)=>ListView.separated
+              (itemBuilder: (context , index)=> buildChatItem(AppCubit.get(context).users[index] , context),
+                separatorBuilder: (context , index)=>Container(
+                  width: double.infinity,
+                  height: 1,
+                  color: Colors.grey,
+                ),
+                itemCount: AppCubit.get(context).users.length),
 
+          ),
         );
 
       },
