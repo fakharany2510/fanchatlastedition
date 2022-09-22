@@ -11,13 +11,20 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import '../../data/modles/create_post_model.dart';
 import '../widgets/post_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
     HomeScreen(
       {Key? key, required this.pageHeight, required this.pageWidth})
       : super(key: key);
   final double? pageHeight;
   final double? pageWidth;
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
    ScrollController _childScrollController = ScrollController();
+
    ScrollController _parentScrollController = ScrollController();
 
   @override
@@ -47,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                   color: Colors.blue,
                   width: double.infinity,
                 ),
-                SizedBox(height: 5,),
+                const SizedBox(height: 5,),
                 CarouselSlider(
                   items: cubit.carouselImage.map((e) {
                     return Image(
@@ -72,7 +79,7 @@ class HomeScreen extends StatelessWidget {
 
                   ),
                 ),
-                SizedBox(height: 3,),
+                const SizedBox(height: 3,),
                   // Container(height: MediaQuery.of(context).size.height*.002,width: MediaQuery.of(context).size.width,color: AppColors.myGrey),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 0),
@@ -81,10 +88,14 @@ class HomeScreen extends StatelessWidget {
                       const SizedBox(height: 3,),
                       InkWell(
                         onTap: (){
+                          setState((){
+                            controller.pause();
+
+                          });
                           Navigator.pushNamed(context, 'add_text');
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height*.06,
                           color: AppColors.myGrey,
@@ -97,7 +108,7 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                                Padding(
-                                padding:  EdgeInsets.only(left: 10,top: 0),
+                                padding:  const EdgeInsets.only(left: 10,top: 0),
                                 child: Text('What\'s on your mind....?',
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -113,7 +124,7 @@ class HomeScreen extends StatelessWidget {
 
                         ),
                       ),
-                      SizedBox(height: 0,),
+                      const SizedBox(height: 0,),
                     ],
                   )
                 ),
@@ -129,14 +140,14 @@ class HomeScreen extends StatelessWidget {
                         debugPrint('Reached the bottom');
                         _parentScrollController.animateTo(
                             _parentScrollController.position.maxScrollExtent,
-                            duration: Duration(seconds: 1),
+                            duration: const Duration(seconds: 1),
                             curve: Curves.easeIn);
                       } else if (notification.metrics.pixels ==
                           notification.metrics.minScrollExtent) {
                         debugPrint('Reached the top');
                         _parentScrollController.animateTo(
                             _parentScrollController.position.minScrollExtent,
-                            duration: Duration(seconds: 1),
+                            duration: const Duration(seconds: 1),
                             curve: Curves.easeIn);
                       }
                     }
@@ -145,7 +156,7 @@ class HomeScreen extends StatelessWidget {
                     child:cubit.posts.length !=0
                       ? ListView.separated(
                         controller: _childScrollController,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (context, index) => Column(
                           children: [

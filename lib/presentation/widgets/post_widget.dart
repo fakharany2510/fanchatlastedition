@@ -14,6 +14,7 @@ import 'package:video_player/video_player.dart';
 import '../../constants/app_strings.dart';
 import '../screens/comment_screen.dart';
 import 'package:cached_video_player/cached_video_player.dart';
+late CachedVideoPlayerController controller;
 
 class PostWidget extends StatefulWidget {
   int ?index;
@@ -26,7 +27,6 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
-  late CachedVideoPlayerController controller;
   @override
   void initState() {
     controller = CachedVideoPlayerController.network(

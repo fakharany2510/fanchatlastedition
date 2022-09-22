@@ -2,18 +2,22 @@
 class MatchScaduele{
 
   static List realTeamMatchesRight=[
+    'Qatar',
 
   ];
 
   static List realImagesMatchesRight=[
+    'https://cdn.mosoah.com/wp-content/uploads/2019/08/01114334/5a463a4895a597bd4c8b45c6-e1564649119698-825x510.jpg',
 
   ];
 
   static List realTeamMatchesLeft=[
+    'Ecuador'
 
   ];
 
   static List realImagesMatchesLeft=[
+    'https://img.freepik.com/free-vector/ecuadorian-flag-pattern-vector_53876-168165.jpg?w=996&t=st=1663600605~exp=1663601205~hmac=f7f393aafdd53349668d1d1b0a5f535ebb75913bc0ab0be85f1004225b563c4a'
 
   ];
   static List teamMatches21Right =[

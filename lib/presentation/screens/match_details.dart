@@ -136,26 +136,48 @@ class _MatchDetailsState extends State<MatchDetails> {
                                         },
                                         child: Container(
                                           margin: const EdgeInsets.symmetric(
-                                              horizontal: 2,
+                                              horizontal: 10,
                                               vertical: 10
                                           ),
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 25,
+                                          padding: const EdgeInsets.only(
+                                             right: 10
                                           ),
 
                                           decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(15),
-                                              color: isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey
+                                              // color: isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey
                                           ),
-                                          child: Column(
+                                          child: Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              const SizedBox(height: 10,),
-                                              Text(dateMatchs[index],style: TextStyle(
-                                                  color: isDay[index]==true?AppColors.myWhite:AppColors.primaryColor1,
-                                                  fontSize: 16,
-                                                  fontFamily: AppStrings.appFont
-                                              ),),
+                                              // Container(
+                                              //   width: 1,
+                                              //   height: 25,
+                                              //   color: AppColors.myGrey,
+                                              // ),
+                                              // SizedBox(width: 10,),
+                                              Column(
+                                                children: [
+                                                  Text(dayMatchs[index],style: TextStyle(
+                                                      color: isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey,
+                                                      fontSize: 10,
+                                                      fontFamily: AppStrings.appFont
+                                                  ),),
+                                                  const SizedBox(height: 10,),
+                                                  Text(dateMatchs[index],style: TextStyle(
+                                                      color: isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey,
+                                                      fontSize: 16,
+                                                      fontFamily: AppStrings.appFont
+                                                  ),),
+                                                ],
+                                              ),
+                                               const SizedBox(width: 15,),
+                                              Container(
+                                                width: 1,
+                                                height: 25,
+                                                color: AppColors.myGrey,
+                                              ),
+                                              // SizedBox(width: 10,),
                                               // const SizedBox(height: 25,),
                                               // Text(dayMatchs[index],style: TextStyle(
                                               //     color: Colors.grey.shade300,
@@ -300,7 +322,7 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 20,),
+                                            const SizedBox(height: 20,),
                                           ],
                                         ),
                                       ),
