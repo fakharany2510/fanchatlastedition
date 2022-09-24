@@ -34,6 +34,7 @@ Future<String> _getTempPath(String path) async {
 }
 class ChatDetails extends StatefulWidget {
   UserModel userModel;
+
   final onSendMessage;
   ChatDetails({required this.userModel,this.onSendMessage});
 

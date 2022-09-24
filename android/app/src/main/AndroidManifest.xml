@@ -11,7 +11,7 @@
     <application
        android:usesCleartextTraffic="true"
        tools:replace="android:label"
-        android:label="fanchat"
+        android:label="Fanchat"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -1,5 +1,4 @@
 class UserModel{
-
   String? uId;
   String ?username;
   String ?email;
@@ -8,6 +7,7 @@ class UserModel{
   String ?image;
   String ?cover;
   String ?countryCode;
+  bool ?accountActive ;
 
 
   UserModel({
@@ -18,7 +18,8 @@ class UserModel{
     this.image,
     this.cover,
     this.bio,
-    this.countryCode
+    this.countryCode,
+    this.accountActive
 
   });
 
@@ -31,6 +32,7 @@ class UserModel{
     cover=json['cover'];
     bio=json['bio'];
     countryCode=json['countryCode'];
+    accountActive=json['accountActive'];
 
   }
 
@@ -43,7 +45,8 @@ class UserModel{
       'image':image,
       'cover':cover,
       'bio':bio,
-      'countryCode':countryCode
+      'countryCode':countryCode,
+      'accountActive':accountActive,
     };
   }
 

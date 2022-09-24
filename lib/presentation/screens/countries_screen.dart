@@ -43,19 +43,22 @@ class _CountriesScreenState extends State<CountriesScreen> {
           appBar: AppBar(
             elevation: 0,
               backgroundColor: AppColors.primaryColor1,
-              title: Card(
-                elevation: 0,
-
-                child: TextField(
-                  decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search), hintText: 'Search Your Favourite Team...'),
-                  onChanged: (val) {
-                    setState(() {
-                      name = val;
-                    });
-                  },
+              title: Center(
+                child: Card(
+                  elevation: 0,
+                  child: TextField(
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search), hintText: 'Search Your Favourite Team...'),
+                    onChanged: (val) {
+                      setState(() {
+                        name = val;
+                      });
+                    },
+                  ),
                 ),
-              )),
+              ),
+          leading:Icon(Icons.account_circle_sharp,color: AppColors.primaryColor1),
+          ),
           body: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection('countries').snapshots(),
             builder: (context, snapshots) {
@@ -120,7 +123,6 @@ class _CountriesScreenState extends State<CountriesScreen> {
                                 fontFamily: AppStrings.appFont,
                                 fontWeight: FontWeight.bold),
                           ),
-
                           leading: CircleAvatar(
                             backgroundImage: NetworkImage(data['image']),
                           ),

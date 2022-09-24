@@ -89,7 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       InkWell(
                         onTap: (){
                           setState((){
-                            controller.pause();
+                            if(AppCubit.get(context).postModel !=null)
+                           controller.pause();
                           });
                           Navigator.pushNamed(context, 'add_text');
                         },

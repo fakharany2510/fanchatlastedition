@@ -355,7 +355,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                             child: Align(
                               alignment: Alignment.topRight,
                               child: FloatingActionButton(
-                                backgroundColor: AppColors.primaryColor1,
+                                backgroundColor: AppColors.myWhite,
                                 child: const Image(
                                   height:40 ,
                                   width: 40,

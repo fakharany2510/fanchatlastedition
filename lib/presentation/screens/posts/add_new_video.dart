@@ -45,13 +45,15 @@ class _AddNewVideoState extends State<AddNewVideo> {
           AppCubit.get(context).postVideo=null;
 
         }
+        if(state is PickPostVideoSuccessState){AppCubit.get(context).controller!.pause();}
+       // if(state is BrowiseCreateVideoPostSuccessState){AppCubit.get(context).controller!.pause();}
       },
       builder: (context,state){
         return Scaffold(
           backgroundColor: AppColors.myWhite,
           appBar:AppBar(
             backgroundColor: AppColors.myWhite,
-            title: Text('Add vew post',style: TextStyle(
+            title: Text('Add New post',style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor1,
@@ -95,6 +97,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
                             body:'${postText.text}'
                         );
                       }else{
+                        AppCubit.get(context).controller!.pause();
                         AppCubit.get(context).uploadPostVideo(
                           timeSpam: DateTime.now().toString(),
                           time: DateFormat.Hm().format(DateTime.now()),
@@ -164,8 +167,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
                             ?SizedBox(height: 0,)
                             :CachedVideoPlayer(
                             AppCubit.get(context).controller!
-                        ),
-
+                    ),
                     ),
                   ),
                       )

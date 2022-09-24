@@ -31,8 +31,8 @@ void main()async {
   );
 
   await CashHelper.init();
-  AppStrings.uId = '1832855570382325';
-  //  AppStrings.uId = CashHelper.getData(key: 'uid');
+  //AppStrings.uId = '1832855570382325';
+  AppStrings.uId = CashHelper.getData(key: 'uid');
 
   printMessage('userId is: ${AppStrings.uId}');
 
@@ -43,7 +43,7 @@ void main()async {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
 
     return MultiBlocProvider(
         providers:[
@@ -79,7 +79,6 @@ class MyApp extends StatelessWidget {
                 'add_text':(context)=>AddTextPost(),
                 'fan_post':(context)=>FanFullPost(),
                 'message':(context)=>ChatDetails(userModel: AppCubit.get(context).userModel!,),
-
               },
             ),
           ),

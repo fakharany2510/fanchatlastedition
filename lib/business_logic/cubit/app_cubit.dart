@@ -143,9 +143,10 @@ class AppCubit extends Cubit<AppState> {
     });
   }
   //get one user
-  void getUser() {
+
+  Future<void> getUser() async {
     emit(GetUserDataLoadingState());
-    FirebaseFirestore.instance
+   await  FirebaseFirestore.instance
         .collection('users')
         .doc(AppStrings.uId)
         .get().then((value) {
@@ -162,7 +163,6 @@ class AppCubit extends Cubit<AppState> {
       printMessage('Error in get user is ${error.toString()}');
           emit(GetUserDataErrorState());
     });
-
 
   }
 
@@ -385,7 +385,7 @@ class AppCubit extends Cubit<AppState> {
       postVideo = File(pickedFile.path);
       controller = CachedVideoPlayerController.file(postVideo!)
         ..initialize().then((value) {
-          controller!.play();
+          controller!.pause();
           emit(PickPostVideoSuccessState());
         }).catchError((error) {
           print('error picking video ${error.toString()}');

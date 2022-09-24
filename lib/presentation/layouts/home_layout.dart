@@ -1,6 +1,7 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/screens/countries_screen.dart';
 import 'package:fanchat/presentation/screens/public_chat/public_chat_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
@@ -13,10 +14,35 @@ import '../screens/home_screen.dart';
 import '../screens/match_details.dart';
 import '../screens/more_screen.dart';
 
-class HomeLayout extends StatelessWidget {
+class HomeLayout extends StatefulWidget {
   const HomeLayout({Key? key}) : super(key: key);
 
   @override
+  State<HomeLayout> createState() => _HomeLayoutState();
+}
+
+class _HomeLayoutState extends State<HomeLayout> {
+  @override
+  void initState(){
+    super.initState();
+    AppCubit.get(context).getUser().then((value){
+      print('llllljjjjjjjjjjjjjjjjjjjjjjjj${AppCubit.get(context).userModel!.accountActive }');
+      Future.delayed(const Duration(days: 7),(){
+        if( AppCubit.get(context).userModel!.accountActive == false){
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChoosePayPackage()));
+          print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+        }else{
+          print('payed');
+
+        }
+      });
+    }).catchError((error){
+      print('error');
+    });
+
+
+
+  }
   Widget build(BuildContext context) {
     List <Widget> screens=[
 
@@ -29,6 +55,7 @@ class HomeLayout extends StatelessWidget {
 
 
     ];
+
     return BlocConsumer<AppCubit,AppState>(
         listener: (context,state){
 

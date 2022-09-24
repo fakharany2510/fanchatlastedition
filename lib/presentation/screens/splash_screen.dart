@@ -1,4 +1,5 @@
 import 'package:cached_video_player/cached_video_player.dart';
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/constants/app_strings.dart';
@@ -19,8 +20,10 @@ import 'package:flutter/material.dart';
 class SplashScreen extends StatefulWidget {
    SplashScreen({Key? key}) : super(key: key);
   Widget ?widget;
-  void selectScreen(){
+  void selectScreen(context){
     if(AppStrings.uId !=null){
+      AppCubit.get(context).getUser();
+      AppCubit.get(context).getAllUsers();
       widget = HomeLayout();
     }else{
       widget = RegisterScreen();
@@ -37,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
   late VideoPlayerController controller;
   @override
   void initState() {
-    widget.selectScreen();
+    widget.selectScreen(context);
     controller = VideoPlayerController.asset(
       "assets/images/fanVideo.mp4")
     ..initialize().then((value) {
@@ -46,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
        });
     });
     Future.delayed(const Duration(seconds: 3),(){
-      widget.selectScreen();
+      widget.selectScreen(context);
 
       return Navigator.pushReplacement(context, MaterialPageRoute(builder: (_){
 

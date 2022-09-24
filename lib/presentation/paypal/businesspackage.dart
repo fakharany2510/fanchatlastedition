@@ -48,6 +48,9 @@
 //   }
 // }
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
 
@@ -124,6 +127,17 @@ class _BusinessPackageState extends State<BusinessPackage> {
                             note: "Contact us for any questions on your order.",
                             onSuccess: (Map params) async {
                               print("onSuccess: $params");
+                              setState((){
+                                FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
+                                    .update({
+                                  'accountActive':true,
+                                }).then((value){
+                                  print('success to update aaccountStates');
+                                }).catchError((error){
+                                  print('success to update aaccountStates${error.toString()}');
+                                });
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeLayout()));
+                              });
                             },
                             onError: (error) {
                               print("onError: $error");
