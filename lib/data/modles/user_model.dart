@@ -7,6 +7,10 @@ class UserModel{
   String ?image;
   String ?cover;
   String ?countryCode;
+  String ?youtubeLink;
+  String ?facebookLink;
+  String ?twitterLink;
+  String ?instagramLink;
   bool ?accountActive ;
 
 
@@ -19,6 +23,10 @@ class UserModel{
     this.cover,
     this.bio,
     this.countryCode,
+    this.facebookLink,
+    this.instagramLink,
+    this.twitterLink,
+    this.youtubeLink,
     this.accountActive
 
   });
@@ -33,6 +41,10 @@ class UserModel{
     bio=json['bio'];
     countryCode=json['countryCode'];
     accountActive=json['accountActive'];
+    youtubeLink=json['youtubeLink'];
+    twitterLink=json['twitterLink'];
+    facebookLink=json['facebookLink'];
+    instagramLink=json['instagramLink'];
 
   }
 
@@ -47,6 +59,10 @@ class UserModel{
       'bio':bio,
       'countryCode':countryCode,
       'accountActive':accountActive,
+      'facebookLink':facebookLink,
+      'youtubeLink':youtubeLink,
+      'twitterLink':twitterLink,
+      'instagramLink':instagramLink,
     };
   }
 

@@ -166,3 +166,9 @@ class GetCountriesSuccessState extends AppState {}
 class GetCountriesErrorState extends AppState {}
 
 class GetTimerSuccessState extends AppState {}
+
+class LaunchYoutubeSuccessState extends AppState {}
+class LaunchTwitterSuccessState extends AppState {}
+class LaunchFacebookSuccessState extends AppState {}
+class LaunchInstagramSuccessState extends AppState {}
+

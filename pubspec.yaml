@@ -82,8 +82,8 @@ dependencies:
   http: ^0.13.5
   http_auth: ^1.0.1
  #BLOC
-  flutter_bloc: ^7.0.0
-  bloc: ^7.0.0
+  flutter_bloc:
+  bloc:
   dio: ^4.0.4
  #sqlFlite
   sqflite: ^2.0.3+1

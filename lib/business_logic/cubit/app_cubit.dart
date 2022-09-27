@@ -33,6 +33,10 @@ class AppCubit extends Cubit<AppState> {
   TextEditingController changeUserNameController= TextEditingController();
   TextEditingController changeUserBioController= TextEditingController();
   TextEditingController changeUserPhoneController= TextEditingController();
+  TextEditingController changeYoutubeLinkController= TextEditingController();
+  TextEditingController changeFacebookLinkController= TextEditingController();
+  TextEditingController changeTwitterLinkController= TextEditingController();
+  TextEditingController changeInstagramLinkController= TextEditingController();
 
 //caching manager
    final manager=CacheManager(Config(
@@ -155,6 +159,11 @@ class AppCubit extends Cubit<AppState> {
           changeUserNameController.text='${userModel!.username}';
           changeUserPhoneController.text='${userModel!.phone}';
           changeUserBioController.text='${userModel!.bio}';
+          changeYoutubeLinkController.text='${userModel!.youtubeLink}';
+          changeInstagramLinkController.text='${userModel!.instagramLink}';
+          changeTwitterLinkController.text='${userModel!.twitterLink}';
+          changeFacebookLinkController.text='${userModel!.facebookLink}';
+
           //getPosts();
 
           emit(GetUserDataSuccessfulState());
@@ -221,7 +230,10 @@ class AppCubit extends Cubit<AppState> {
         String ?name,
         String ?phone,
         String ?bio,
-
+        String ?youtubeLink,
+        String ?facebookLink,
+        String ?instagramLink,
+        String ?twitterLink,
       }
       ){
 
@@ -234,8 +246,15 @@ class AppCubit extends Cubit<AppState> {
 
         printMessage('Upload Success');
         profilePath = value;
-        updateProfile(name: name, phone: phone, bio: bio,image: profilePath);
-
+        updateProfile(name: name,
+            phone: phone,
+            bio: bio,
+            cover: coverPath,
+            facebookLink: facebookLink,
+            instagramLink: instagramLink,
+            twitterLink: twitterLink,
+            youtubeLink: youtubeLink
+        );
         emit(GetProfileImageSuccessState());
 
       }).catchError((error){
@@ -258,6 +277,11 @@ class AppCubit extends Cubit<AppState> {
          String ?name,
          String ?phone,
          String ?bio,
+         String ?youtubeLink,
+         String ?facebookLink,
+         String ?instagramLink,
+         String ?twitterLink,
+
       }
       ){
     emit(GetCoverImageLoadingState());
@@ -269,7 +293,15 @@ class AppCubit extends Cubit<AppState> {
 
         printMessage('Upload Success');
         coverPath = value;
-        updateProfile(name: name, phone: phone, bio: bio,cover: coverPath);
+        updateProfile(name: name,
+            phone: phone,
+            bio: bio,
+            cover: coverPath,
+            facebookLink: facebookLink,
+            instagramLink: instagramLink,
+            twitterLink: twitterLink,
+            youtubeLink: youtubeLink
+        );
         emit(GetCoverImageSuccessState());
 
       }).catchError((error){
@@ -296,7 +328,10 @@ class AppCubit extends Cubit<AppState> {
       required String ?name,
       required String ?phone,
       required String ?bio,
-
+      required String ?youtubeLink,
+      required String ?instagramLink,
+      required String ?twitterLink,
+      required String ?facebookLink,
    })async{
 
     UserModel model= UserModel(
@@ -306,13 +341,16 @@ class AppCubit extends Cubit<AppState> {
       image: image?? userModel!.image,
       cover: cover?? userModel!.cover,
       phone: phone,
+      youtubeLink: youtubeLink,
+      facebookLink: facebookLink,
+      twitterLink: twitterLink,
+      instagramLink: instagramLink,
 
     );
     emit(UpdateUserLoadingState());
     FirebaseFirestore.instance.
     collection('users').
     doc(AppStrings.uId).update(model.toMap()).then((value) {
-
 
       emit(UpdateUserSuccessState());
     }).catchError((error){
@@ -1904,6 +1942,15 @@ List<int> commentIndex=[];
 
   }
 
+  Future <void> deleteCheeringPost() async{
+    var collection = FirebaseFirestore.instance.collection('cheering');
+    var snapshots = await collection.get();
+    for (var doc in snapshots.docs) {
+      await doc.reference.delete();
+    }
+  }
+
+
   //Create Cheering
   void deletePost({
     required String postId
@@ -2059,6 +2106,43 @@ List<int> commentIndex=[];
     emit(GetTimerSuccessState());
   }
 
+  Future <void> toYoutube({
+    required String youtubeLink,
+   })async
+  {
+    String url= youtubeLink;
+    await launch(url , forceSafariVC: false);
+    emit(LaunchYoutubeSuccessState());
+  }
+
+
+  Future <void> toTwitter({
+    required String twitterLink,
+  })async
+  {
+    String url= twitterLink;
+    await launch(url , forceSafariVC: false);
+    emit(LaunchTwitterSuccessState());
+  }
+
+
+  Future <void> toFacebook({
+    required String facebookLink,
+  })async
+  {
+    String url= facebookLink;
+    await launch(url , forceSafariVC: false);
+    emit(LaunchFacebookSuccessState());
+  }
+
+  Future <void> toInstagram({
+    required String instagramLink,
+  })async
+  {
+    String url= instagramLink;
+    await launch(url , forceSafariVC: false);
+    emit(LaunchInstagramSuccessState());
+  }
 
 }
 

@@ -87,6 +87,75 @@ class ProfileScreen extends StatelessWidget {
                         fontFamily: AppStrings.appFont
                     ),
                   ),
+                  const SizedBox(height: 15,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:  [
+                      GestureDetector(
+                        onTap: (){
+                          cubit.toFacebook(facebookLink: cubit.changeFacebookLinkController.text);
+                        },
+                        child: const CircleAvatar(
+                          radius: 20,
+                          backgroundColor: Colors.white,
+                          child: Image(
+                            height: 35,
+                            width: 35,
+                            image: AssetImage('assets/images/facebook.png'),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10,),
+                      GestureDetector(
+                        onTap: (){
+                          cubit.toInstagram(instagramLink: cubit.changeInstagramLinkController.text);
+                        },
+                        child: const CircleAvatar(
+                          radius: 20,
+                          backgroundColor: Colors.white,
+                          child: Image(
+                            height: 30,
+                            width: 30,
+                            image: AssetImage('assets/images/instagram.png'),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10,),
+                      GestureDetector(
+                        onTap: (){
+                          cubit.toTwitter(twitterLink: cubit.changeTwitterLinkController.text);
+
+                        },
+                        child: const CircleAvatar(
+                          radius: 20,
+                          backgroundColor: Colors.white,
+                          child: Image(
+                            height: 35,
+                            width: 35,
+                            image: AssetImage('assets/images/twitter.png'),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10,),
+                      GestureDetector(
+                        onTap: (){
+                          cubit.toYoutube(youtubeLink: cubit.changeYoutubeLinkController.text);
+
+                        },
+                        child: const CircleAvatar(
+                          radius: 20,
+                          backgroundColor: Colors.white,
+                          child: Image(
+                            height: 35,
+                            width: 35,
+                            image: AssetImage('assets/images/youtube.png'),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10,),
+                    ],
+                  ),
+
                   const SizedBox(height:10,),
 
                   Row(
@@ -107,7 +176,7 @@ class ProfileScreen extends StatelessWidget {
                       GestureDetector(
                         onTap: (){
                          // cubit.toPayPal();
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>ChoosePaymentMethod()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const ChoosePaymentMethod()));
                         },
                         child: const CircleAvatar(
                           radius: 29,
@@ -152,7 +221,7 @@ class ProfileScreen extends StatelessWidget {
                         )
                       ],
                     )),
-                  )
+                  ),
                 ],
               ),
             ):const Center(

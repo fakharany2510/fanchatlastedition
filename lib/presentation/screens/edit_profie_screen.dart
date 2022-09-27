@@ -213,12 +213,64 @@ class EditProfileScreen extends StatelessWidget {
                         color: AppColors.myGrey,
                       )),
                 ),
-                SizedBox(height: 10,),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                  child: textFormFieldWidget(
+                      context: context,
+                      controller: cubit.changeYoutubeLinkController,
+                      errorMessage: "please enter your youtube link",
+                      inputType: TextInputType.text,
+                      labelText: "Enter Youtube Link",
+                      prefixIcon: Icon(
+                        Icons.info,
+                        color: AppColors.myGrey,
+                      )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                  child: textFormFieldWidget(
+                      context: context,
+                      controller: cubit.changeFacebookLinkController,
+                      errorMessage: "please enter your facebook link",
+                      inputType: TextInputType.text,
+                      labelText: "Enter Facebook Link",
+                      prefixIcon: Icon(
+                        Icons.info,
+                        color: AppColors.myGrey,
+                      )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                  child: textFormFieldWidget(
+                      context: context,
+                      controller: cubit.changeTwitterLinkController,
+                      errorMessage: "please enter your twitter link",
+                      inputType: TextInputType.text,
+                      labelText: "Enter Twitter Link",
+                      prefixIcon: Icon(
+                        Icons.info,
+                        color: AppColors.myGrey,
+                      )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                  child: textFormFieldWidget(
+                      context: context,
+                      controller: cubit.changeInstagramLinkController,
+                      errorMessage: "please enter your instagram link",
+                      inputType: TextInputType.text,
+                      labelText: "Enter Instagram Link",
+                      prefixIcon: Icon(
+                        Icons.info,
+                        color: AppColors.myGrey,
+                      )),
+                ),
+                const SizedBox(height: 10,),
 
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: EdgeInsets.only(left: 25),
+                    padding: const EdgeInsets.only(left: 25),
                     child: Text("Select Favorite Team :",style: TextStyle(
                         color: AppColors.myGrey,
                         fontSize: 16,
@@ -229,7 +281,7 @@ class EditProfileScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 0, right: 0, top: 10),
                   child: Container(
-                    margin: EdgeInsets.symmetric(
+                    margin: const EdgeInsets.symmetric(
                       horizontal: 15
                     ),
                     decoration: BoxDecoration(
@@ -271,16 +323,22 @@ class EditProfileScreen extends StatelessWidget {
                         height: size.height * .06,
                         width: size.width * .9,
                         function: () {
+
                           cubit.updateProfile(
                             image: cubit.profilePath,
                             cover: cubit.coverPath,
                             name: cubit.changeUserNameController.text,
                             phone: cubit.changeUserPhoneController.text,
                             bio: cubit.changeUserBioController.text,
+                            youtubeLink: cubit.changeYoutubeLinkController.text,
+                            facebookLink: cubit.changeFacebookLinkController.text,
+                            instagramLink:cubit.changeTwitterLinkController.text,
+                            twitterLink:cubit.changeInstagramLinkController.text,
                           );
                           printMessage(cubit.changeUserNameController.text);
                           // Navigator.pushNamed(context, 'edit_profile');
                         }),
+                const SizedBox(height: 30),
               ],
             ),
           ),

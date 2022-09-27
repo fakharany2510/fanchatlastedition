@@ -125,6 +125,7 @@ class _PostWidgetState extends State<PostWidget> {
                             ],
                           ),
                           const SizedBox(width: 5,),
+                          if(AppCubit.get(context).userModel!.uId==AppCubit.get(context).posts[widget.index!].userId)
                           PopupMenuButton(
                               icon: const Icon(
                                 Icons.more_vert_sharp,
@@ -159,6 +160,7 @@ class _PostWidgetState extends State<PostWidget> {
 
                                   },
                                 ),
+
                                 PopupMenuItem(
                                   value: 2,
                                   child: Text('Delete',

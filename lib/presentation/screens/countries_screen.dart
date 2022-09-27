@@ -63,7 +63,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
             stream: FirebaseFirestore.instance.collection('countries').snapshots(),
             builder: (context, snapshots) {
               return (snapshots.connectionState == ConnectionState.waiting)
-                  ? Center(
+                  ? const Center(
                 child: CircularProgressIndicator(),
               )
                   : ListView.builder(
@@ -75,6 +75,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                     if (name.isEmpty) {
                       return InkWell(
                         onTap: (){
+                          AppCubit.get(context).deleteCheeringPost().then((value) {});
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>
                               TeamChatScreen(countryName:data['name'],countryImage: data['image'],)
                           ));
@@ -84,7 +85,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                             data['name'],
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontFamily: AppStrings.appFont,
                                 fontSize: 16,
