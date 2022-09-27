@@ -1,14 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-
-import '../../data/modles/create_post_model.dart';
 import '../widgets/post_widget.dart';
 
 class HomeScreen extends StatefulWidget {

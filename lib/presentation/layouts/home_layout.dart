@@ -1,6 +1,7 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/paypal/choosepaymentmethod.dart';
 import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/screens/countries_screen.dart';
 import 'package:fanchat/presentation/screens/public_chat/public_chat_screen.dart';
@@ -29,7 +30,7 @@ class _HomeLayoutState extends State<HomeLayout> {
       print('llllljjjjjjjjjjjjjjjjjjjjjjjj${AppCubit.get(context).userModel!.accountActive }');
       Future.delayed(const Duration(days: 7),(){
         if( AppCubit.get(context).userModel!.accountActive == false){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChoosePayPackage()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChoosePaymentMethod()));
           print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
         }else{
           print('payed');

@@ -16,121 +16,119 @@ class ChoosePayPackage extends StatefulWidget {
 }
 
 class _ChoosePayPackageState extends State<ChoosePayPackage> {
+  int _value=0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor1,
       appBar: customAppbar('Profile',context),
       body: Padding(
-        padding: EdgeInsets.only(top: 30,left: 10,right: 10),
+        padding: EdgeInsets.only(bottom: 15,left: 10,top: 25),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Please Choose Your Package',
-                style: TextStyle(
-                  fontSize: 25,
-                  fontFamily: AppStrings.appFont,
-                  color: AppColors.myGrey
-                ),
-                ),
-              ],
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height*.1,),
-            InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>BusinessPackage()));
-              },
+            Padding(
+              padding: const EdgeInsets.only(left: 15,bottom: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children:  [
-                  const Image(image: AssetImage('assets/images/premium.webp'),
-                    height: 100,
-                    width: 100,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Please select your package',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: AppStrings.appFont,
+                    color: AppColors.myGrey
                   ),
-                  SizedBox(width: 20,),
-                  Column(
-                    children: [
-                      Text('Premium Package',
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontFamily: AppStrings.appFont,
-                            color: AppColors.myWhite
-                        ),
-                      ),
-                      SizedBox(height:5,),
-                      Text('20 \$ for 1 year',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: AppStrings.appFont,
-                            color: AppColors.myGrey
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height*.1,),
+            SizedBox(height: 20,),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width*.4,
-                  height: 1,
-                  color: Colors.grey,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children:  [
+                Radio(value: 1, groupValue: _value, onChanged: (value){
+                  setState((){
+                    _value=1;
+                  });
+                }),
+                const Image(image: AssetImage('assets/images/premium.webp'),
+                  height: 50,
+                  width: 50,
                 ),
-                SizedBox(width: 3,),
-                Text("or",
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 18
-                ),
-                ),
-                SizedBox(width: 3,),
-                Container(
-                  width: MediaQuery.of(context).size.width*.4,
-                  height: 1,
-                  color: Colors.grey,
+                SizedBox(width: 20,),
+                Column(
+                  children: [
+                    Text('Premium Package',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: AppStrings.appFont,
+                          color: AppColors.myWhite
+                      ),
+                    ),
+                    SizedBox(height:5,),
+                    Text('20 \$ for 1 year',
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: AppStrings.appFont,
+                          color: AppColors.myGrey
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            SizedBox(height: MediaQuery.of(context).size.height*.1,),
-            InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>BusinessPackage()));
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children:  [
-                  const Image(image: AssetImage('assets/images/business.png'),
-                    height: 100,
-                    width: 100,
-                  ),
-                  SizedBox(width: 20,),
-                  Column(
-                    children: [
-                      Text('Business Package',
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontFamily: AppStrings.appFont,
-                            color: AppColors.myWhite
-                        ),
+            SizedBox(height: 20,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children:  [
+                Radio(value: 2, groupValue: _value, onChanged: (value){
+                  setState((){
+                    _value=2;
+                  });
+                }),
+                const Image(image: AssetImage('assets/images/business.png'),
+                  height: 50,
+                  width: 50,
+                ),
+                SizedBox(width: 20,),
+                Column(
+                  children: [
+                    Text('Advertising Package',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: AppStrings.appFont,
+                          color: AppColors.myWhite
                       ),
-                      SizedBox(height:5,),
-                      Text('200 \$ forever',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: AppStrings.appFont,
-                            color: AppColors.myGrey
-                        ),
+                    ),
+                    SizedBox(height:5,),
+                    Text('200 \$ forever',
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: AppStrings.appFont,
+                          color: AppColors.myGrey
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
+            Spacer(),
+            Center(
+
+              child: defaultButton(width: MediaQuery.of(context).size.width*.7,
+                  height: MediaQuery.of(context).size.height*.05,
+                  buttonColor: AppColors.myGrey,
+                  textColor:AppColors.primaryColor1,
+                  buttonText: 'Pay',
+                  function: (){
+                    if(_value==1){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PremiumPackage()));
+                    }
+                    if(_value==2){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>BusinessPackage()));
+                    }
+                  }),
+            )
           ],
         ),
       ),
