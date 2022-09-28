@@ -119,6 +119,10 @@ class _AddTextPostState extends State<AddTextPost> {
 
                   },
 
+
+
+
+
                   buttonText: 'post',
                   buttonColor: AppColors.primaryColor1,
                 ),
