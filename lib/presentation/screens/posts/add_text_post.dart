@@ -4,6 +4,7 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/services/notification_helper.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
+import 'package:fanchat/presentation/notifications/functions/send_notification.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -31,12 +32,12 @@ class _AddTextPostState extends State<AddTextPost> {
     super.initState();
     notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification();
-    _fcm.getToken().then((token) =>{
-      print('token =====> ${token}'),
-    FirebaseFirestore.instance.collection('tokens').add({
-    'token':token,
-    })
-    });
+    // _fcm.getToken().then((token) =>{
+    //   print('token =====> ${token}'),
+    // FirebaseFirestore.instance.collection('tokens').add({
+    // 'token':token,
+    // })
+    // });
     notifyHelper.requestIOSPermissions();
   }
 
@@ -107,6 +108,12 @@ class _AddTextPostState extends State<AddTextPost> {
                         timeSpam: DateTime.now().toString(),
                         time: DateFormat.Hm().format(DateTime.now()),
                         dateTime: DateFormat.yMMMd().format(DateTime.now()),
+                      );
+                      callFcmApiSendPushNotifications(
+                        title: 'New Post Added',
+                        description:postText.text,
+                        imageUrl: "",
+                      //  token:AppCubit.get(context).userToken
                       );
                     }
 

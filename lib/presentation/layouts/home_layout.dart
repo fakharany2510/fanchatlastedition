@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
@@ -6,6 +7,7 @@ import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/screens/countries_screen.dart';
 import 'package:fanchat/presentation/screens/public_chat/public_chat_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,6 +28,12 @@ class _HomeLayoutState extends State<HomeLayout> {
   @override
   void initState(){
     super.initState();
+    print("==================================token================================");
+    FirebaseMessaging.instance.getToken().then((token){
+      AppCubit.get(context).saveToken(token!);
+      print(token);
+      print("==================================token================================");
+    });
     AppCubit.get(context).getUser().then((value){
       print('llllljjjjjjjjjjjjjjjjjjjjjjjj${AppCubit.get(context).userModel!.accountActive }');
       Future.delayed(const Duration(days: 7),(){

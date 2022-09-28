@@ -65,7 +65,7 @@ class DefaultFirebaseOptions {
     projectId: 'fanchat-7db9e',
     databaseURL: 'https://fanchat-7db9e-default-rtdb.firebaseio.com',
     storageBucket: 'fanchat-7db9e.appspot.com',
-    androidClientId: '148742212571-h3rkgs2o79jg2aft34ehefp05arcl3i4.apps.googleusercontent.com',
+    androidClientId: '148742212571-714ba1ekn48sildohaul97m0imjkarpv.apps.googleusercontent.com',
     iosClientId: '148742212571-jm877td9o7mh5e80oos7aukvti1psj5p.apps.googleusercontent.com',
     iosBundleId: 'com.example.fanchat',
   );

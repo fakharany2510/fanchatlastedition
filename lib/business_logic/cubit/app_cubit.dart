@@ -2307,5 +2307,22 @@ List<int> commentIndex=[];
 
   }
 
+  void saveToken(String token){
+    FirebaseFirestore.instance.collection('tokens').add(
+        {"token":token}
+    ).then((value){
+      emit(SaveTokenSuccessState());
+    });
+
+  }
+List<String> userToken=[];
+  void getToken(){
+    FirebaseFirestore.instance.collection('tokens').get().then((value){
+      value.docs.forEach((element) {
+        userToken.add(element.toString());
+        emit(getTokenSuccessState());
+      });
+    });
+  }
 }
 
