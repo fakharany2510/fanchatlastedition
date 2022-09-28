@@ -172,7 +172,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                       ],
                     ),
                   ):
-                  (AppCubit.get(context).messages[widget.index!].video != null)
+                  (AppCubit.get(context).teamChat[widget.index!].video != null)
                       ?Container(
                     width: MediaQuery.of(context).size.width*.74,
                     padding: const EdgeInsets.all(10),
