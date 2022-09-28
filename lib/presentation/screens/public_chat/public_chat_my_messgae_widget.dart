@@ -172,7 +172,7 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                       ],
                     ),
                   ):
-                  (AppCubit.get(context).messages[widget.index!].video != null)
+                  (AppCubit.get(context).publicChat[widget.index!].video != null)
                       ?Container(
                     width: MediaQuery.of(context).size.width*.74,
                         padding: const EdgeInsets.all(10),
