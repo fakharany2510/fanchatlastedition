@@ -2315,14 +2315,6 @@ List<int> commentIndex=[];
     });
 
   }
-List<String> userToken=[];
-  void getToken(){
-    FirebaseFirestore.instance.collection('tokens').get().then((value){
-      value.docs.forEach((element) {
-        userToken.add(element.toString());
-        emit(getTokenSuccessState());
-      });
-    });
-  }
+
 }
 
