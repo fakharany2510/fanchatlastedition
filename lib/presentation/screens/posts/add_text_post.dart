@@ -116,7 +116,6 @@ class _AddTextPostState extends State<AddTextPost> {
                       //  token:AppCubit.get(context).userToken
                       );
                     }
-
                   },
 
 
