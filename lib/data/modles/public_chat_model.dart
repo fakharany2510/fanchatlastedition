@@ -8,6 +8,7 @@ class PublicChatModel{
   String? text;
   String? image;
   String? voice;
+  String? video;
 
   PublicChatModel({
     this.senderId,
@@ -16,7 +17,8 @@ class PublicChatModel{
     this.dateTime,
     this.text,
     this.image,
-    this.voice
+    this.voice,
+    this.video,
   });
   PublicChatModel.fromJson(Map<String , dynamic> json){
     senderId=json['senderId'];
@@ -26,6 +28,7 @@ class PublicChatModel{
     text=json['text'];
     image=json['image'];
     voice=json['voice'];
+    video=json['video'];
   }
 
   Map <String , dynamic> toMap(){
@@ -36,7 +39,8 @@ class PublicChatModel{
       'image':image,
       'voice':voice,
       'senderImage':senderImage,
-      'senderName':senderName
+      'senderName':senderName,
+      'video':video,
     };
   }
 }

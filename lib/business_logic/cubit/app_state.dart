@@ -172,3 +172,31 @@ class LaunchTwitterSuccessState extends AppState {}
 class LaunchFacebookSuccessState extends AppState {}
 class LaunchInstagramSuccessState extends AppState {}
 
+
+// ------------ Public Chat Video
+
+
+class PickPublicChatVideoSuccessState extends AppState {}
+
+class CreateVideoPublicChatSuccessState extends AppState {}
+class CreateVideoPublicChatErrorState extends AppState {}
+class CreateVideoPublicChatLoadingState extends AppState {}
+
+class UploadVideoPublicChatLoadingState extends AppState {}
+class UploadVideoPublicChatSuccessState extends AppState {}
+class UploadVideoPublicChatErrorState extends AppState {}
+
+// ------------ Team Chat Video
+
+
+class PickTeamChatVideoSuccessState extends AppState {}
+
+class CreateVideoTeamChatSuccessState extends AppState {}
+class CreateVideoTeamChatErrorState extends AppState {}
+class CreateVideoTeamChatLoadingState extends AppState {}
+
+class UploadVideoTeamChatLoadingState extends AppState {}
+class UploadVideoTeamChatSuccessState extends AppState {}
+class UploadVideoTeamChatErrorState extends AppState {}
+
+

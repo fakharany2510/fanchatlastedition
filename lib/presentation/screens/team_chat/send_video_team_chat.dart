@@ -6,10 +6,10 @@ import 'package:fanchat/data/modles/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SendVideoMessage extends StatelessWidget {
-  UserModel userModel;
+class SendVideoTeamChat extends StatelessWidget {
+  String? countryName;
 
-  SendVideoMessage({Key? key,required this.userModel}) : super(key: key);
+  SendVideoTeamChat({Key? key,this.countryName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class SendVideoMessage extends StatelessWidget {
         // //  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel:widget.userModel,)),);
         //    Navigator.pop(context);
         //  }
-        if(state is BrowiseUploadVideoPostSuccessState){
+        if(state is UploadVideoTeamChatSuccessState){
           Navigator.pop(context);
         }
       },
@@ -31,7 +31,7 @@ class SendVideoMessage extends StatelessWidget {
                 padding:  EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    (AppCubit.get(context).postVideo3!= null )
+                    (AppCubit.get(context).postVideo5!= null )
                         ?Expanded(
                       child: Container(
                         height: size.height,
@@ -60,7 +60,7 @@ class SendVideoMessage extends StatelessWidget {
                   ],
                 )
             ),
-            floatingActionButton: state is BrowiseUploadVideoPostLoadingState || state is BrowiseCreateVideoPostLoadingState
+            floatingActionButton: state is UploadVideoTeamChatLoadingState || state is CreateVideoTeamChatLoadingState
                 ?FloatingActionButton(
               onPressed: (){
                 // AppCubit.get(context).uploadPrivateVideo(
@@ -76,11 +76,11 @@ class SendVideoMessage extends StatelessWidget {
             )
                 :FloatingActionButton(
               onPressed: (){
-                AppCubit.get(context).uploadPrivateVideo(
+                AppCubit.get(context).uploadTeamChatVideo(
                     senderId: AppStrings.uId!,
                     dateTime: DateTime.now().toString(),
-                    recevierId:userModel.uId!,
-                    text: ""
+                    text: "",
+                    countryName: countryName
                 );
               },
               backgroundColor: AppColors.primaryColor1,

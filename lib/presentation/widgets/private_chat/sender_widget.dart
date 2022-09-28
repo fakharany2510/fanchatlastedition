@@ -25,7 +25,7 @@ class _SenderMessageWidgetState extends State<SenderMessageWidget> {
   @override
   void initState() {
     senderController = CachedVideoPlayerController.network(
-        "${AppCubit.get(context).messages[widget.index!].video!}");
+        "${AppCubit.get(context).messages[widget.index!].video}");
     senderController.initialize().then((value) {
       senderController.play();
       senderController.setLooping(true);
@@ -35,7 +35,8 @@ class _SenderMessageWidgetState extends State<SenderMessageWidget> {
       });
     }).catchError((error){
       print('error while initializing video ${error.toString()}');
-    });    super.initState();
+    });
+    super.initState();
   }
 
   @override

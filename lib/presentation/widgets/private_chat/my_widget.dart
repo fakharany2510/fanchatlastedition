@@ -20,18 +20,18 @@ class MyMessageWidget extends StatefulWidget {
 
 class _MyMessageWidgetState extends State<MyMessageWidget> {
 
-  late CachedVideoPlayerController myController;
+  late CachedVideoPlayerController mymessageController;
 
   @override
   void initState() {
-    myController = CachedVideoPlayerController.network(
-        "${AppCubit.get(context).messages[widget.index!].video!}");
-    myController.initialize().then((value) {
-      myController.play();
-      myController.setLooping(true);
-      myController.setVolume(1.0);
+    mymessageController = CachedVideoPlayerController.network(
+        "${AppCubit.get(context).messages[widget.index!].video}");
+    mymessageController.initialize().then((value) {
+      mymessageController.play();
+      mymessageController.setLooping(true);
+      mymessageController.setVolume(1.0);
       setState(() {
-        myController.pause();
+        mymessageController.pause();
       });
     }).catchError((error){
       print('error while initializing video ${error.toString()}');
@@ -52,7 +52,7 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
                 ?Container(
               padding: const EdgeInsets.all(10),
               decoration:  BoxDecoration(
-                color: AppColors.primaryColor2,
+                color: AppColors.primaryColor1,
                 borderRadius:const  BorderRadius.only(
                   topRight: Radius.circular(10),
                   topLeft: Radius.circular(10),
@@ -109,10 +109,10 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
                     ),
                     height: MediaQuery.of(context).size.height*.25,
                     width: MediaQuery.of(context).size.width*.55,
-                    child: myController.value.isInitialized
+                    child: mymessageController.value.isInitialized
                         ? AspectRatio(
-                        aspectRatio: myController.value.aspectRatio,
-                        child: CachedVideoPlayer(myController))
+                        aspectRatio: mymessageController.value.aspectRatio,
+                        child: CachedVideoPlayer(mymessageController))
                         : const Center(child: CircularProgressIndicator())
                 ),
 
@@ -142,17 +142,17 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
                     child: InkWell(
                       onTap: (){
                         setState((){
-                          if(myController.value.isPlaying){
-                            myController.pause();
+                          if(mymessageController.value.isPlaying){
+                            mymessageController.pause();
                           }else{
-                            myController.play();
+                            mymessageController.play();
                           }
                         });
                       },
                       child: CircleAvatar(
                         backgroundColor: AppColors.primaryColor1,
                         radius: 20,
-                        child: myController.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
+                        child: mymessageController.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
                       ),
                     )
                 ),

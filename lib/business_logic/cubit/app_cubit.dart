@@ -2144,5 +2144,168 @@ List<int> commentIndex=[];
     emit(LaunchInstagramSuccessState());
   }
 
+
+  //--------------------------------- Public Chat Video
+
+  File? postVideo4;
+  void pickPostVideo4() async {
+    final pickedFile =
+    await picker.pickVideo(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      postVideo4 = File(pickedFile.path);
+      controller = CachedVideoPlayerController.file(postVideo4!)
+        ..initialize().then((value) {
+          controller!.pause();
+          emit(PickPrivateChatViedoSuccessState());
+        }).catchError((error) {
+          print('error picking video ${error.toString()}');
+        });
+    }
+  }
+
+  void uploadPublicChatVideo({
+    required String dateTime,
+    required String text,
+    required String senderId
+  }){
+    emit(UploadVideoPublicChatLoadingState());
+    //كدا انا بكريت instance من ال storage
+    firebase_storage.FirebaseStorage.instance
+    //كدا بقوله انا فين في الstorage
+        .ref()
+    //كدا بقةله هتحرك ازاي جوا ال storage
+    //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
+        .child('publicchat/${Uri.file(postVideo4!.path).pathSegments.last}')
+    //كدا بعمل رفع للصوره
+        .putFile(postVideo4!).then((value){
+      value.ref.getDownloadURL().then((value){
+        createVideoPublicChat(
+            messageViedo: value,
+            dateTime: dateTime,
+            senderId: AppStrings.uId
+        );
+        getPosts();
+        emit(UploadVideoPublicChatSuccessState());
+
+      }).catchError((error){
+        emit(UploadVideoPublicChatErrorState());
+      });
+    }).catchError((error){
+      emit(UploadVideoPublicChatErrorState());
+    });
+  }
+  ////////////////////////////////////////////////////
+//Create Post
+  void createVideoPublicChat({
+    required String dateTime,
+    String? messageViedo,
+    String? senderId,
+  }){
+    emit(CreateVideoPublicChatLoadingState());
+
+    PublicChatModel model= PublicChatModel(
+        video:messageViedo,
+        text: "",
+        dateTime: dateTime,
+        senderId: AppStrings.uId
+    );
+
+    //Set My Chat
+    FirebaseFirestore.instance
+        .collection('publicChat')
+        .add(model.toMap())
+        .then((value){
+      emit(CreateVideoPublicChatSuccessState());
+    })
+        .catchError((error){
+      emit(CreateVideoPublicChatErrorState());
+
+    });
+
+  }
+
+
+  //--------------------------------- Public Chat Video
+
+  File? postVideo5;
+  void pickPostVideo5() async {
+    final pickedFile =
+    await picker.pickVideo(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      postVideo5 = File(pickedFile.path);
+      controller = CachedVideoPlayerController.file(postVideo5!)
+        ..initialize().then((value) {
+          controller!.pause();
+          emit(PickTeamChatVideoSuccessState());
+        }).catchError((error) {
+          print('error picking video ${error.toString()}');
+        });
+    }
+  }
+
+  void uploadTeamChatVideo({
+    required String dateTime,
+    required String text,
+    required String senderId,
+    String ?countryName,
+  }){
+    emit(UploadVideoTeamChatLoadingState());
+    //كدا انا بكريت instance من ال storage
+    firebase_storage.FirebaseStorage.instance
+    //كدا بقوله انا فين في الstorage
+        .ref()
+    //كدا بقةله هتحرك ازاي جوا ال storage
+    //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
+        .child('teamchat/${Uri.file(postVideo5!.path).pathSegments.last}')
+    //كدا بعمل رفع للصوره
+        .putFile(postVideo5!).then((value){
+      value.ref.getDownloadURL().then((value){
+        createVideoTeamChat(
+            messageViedo: value,
+            dateTime: dateTime,
+            senderId: AppStrings.uId,
+            countryName: countryName
+        );
+        getPosts();
+        emit(UploadVideoTeamChatSuccessState());
+
+      }).catchError((error){
+        emit(UploadVideoTeamChatErrorState());
+      });
+    }).catchError((error){
+      emit(UploadVideoTeamChatErrorState());
+    });
+  }
+  ////////////////////////////////////////////////////
+//Create Post
+  void createVideoTeamChat({
+    required String dateTime,
+    String? messageViedo,
+    String? senderId,
+    String ? countryName,
+  }){
+    emit(CreateVideoTeamChatLoadingState());
+
+    PublicChatModel model= PublicChatModel(
+        video:messageViedo,
+        text: "",
+        dateTime: dateTime,
+        senderId: AppStrings.uId
+    );
+
+    //Set My Chat
+    FirebaseFirestore.instance
+        .collection('${countryName}')
+        .add(model.toMap())
+        .then((value){
+      emit(CreateVideoTeamChatSuccessState());
+    })
+        .catchError((error){
+      emit(CreateVideoTeamChatErrorState());
+
+    });
+
+  }
+
 }
 

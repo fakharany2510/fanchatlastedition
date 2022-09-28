@@ -31,8 +31,8 @@ void main()async {
   );
 
   await CashHelper.init();
-  // AppStrings.uId = '1832855570382325';
-  AppStrings.uId = CashHelper.getData(key: 'uid');
+  AppStrings.uId = '1832855570382325';
+  // AppStrings.uId = CashHelper.getData(key: 'uid');
 
   printMessage('userId is: ${AppStrings.uId}');
 
@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
                 'home_layout':(context)=> const HomeLayout(),
                // 'login':(context)=> LoginScreen(),
                 'register':(context)=>RegisterScreen(),
-                'profile':(context)=> ProfileScreen(),
+                'profile':(context)=> const ProfileScreen(),
                 'edit_profile':(context)=>EditProfileScreen(),
                 'add_image':(context)=>AddNewImage(),
                 'add_video':(context)=>AddNewVideo(),

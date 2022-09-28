@@ -5,7 +5,9 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
+import 'package:fanchat/presentation/screens/public_chat/public_chat_message_widget.dart';
 import 'package:fanchat/presentation/screens/public_chat/send_image_public_chat.dart';
+import 'package:fanchat/presentation/screens/public_chat/send_video_public_chat.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:fanchat/presentation/screens/user_profile.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -19,6 +21,8 @@ import 'package:record_mp3/record_mp3.dart';
 import 'package:uuid/uuid.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:voice_message_package/voice_message_package.dart';
+
+import 'public_chat_my_messgae_widget.dart';
 
 
 
@@ -72,6 +76,10 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
               listener: (context,state){
                 if(state is PickPostImageSuccessState ){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImagePublicChat()));
+                }
+
+                if(state is PickPrivateChatViedoSuccessState ){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SendVideoPublicChat()));
                 }
               },
               builder: (context,state){
@@ -151,9 +159,9 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                   var publicChat =AppCubit.get(context).publicChat[index];
                                   if(AppCubit.get(context).userModel!.uId == publicChat.senderId)
                                     //send message
-                                    return builsRecievedMessages(publicChat,context,index);
+                                    return SenderPublicChatWidget(index: index);
                                   //receive message
-                                  return buildMyMessages(publicChat,context,index);
+                                  return MyMessagePublicChatWidget(index: index,);
                                 },
                                 separatorBuilder: (context , index)=>const SizedBox(height: 15,),
                                 itemCount: AppCubit.get(context).publicChat.length),
@@ -298,7 +306,66 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                     child: Center(
                                       child: IconButton(
                                         onPressed: (){
-                                          AppCubit.get(context).pickPostImage();
+                                          Scaffold.of(context).showBottomSheet((context) => Container(
+                                            color: AppColors.primaryColor1,
+
+                                            width: MediaQuery.of(context).size.width,
+                                            height: MediaQuery.of(context).size.height*.12,
+
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: (){
+                                                      AppCubit.get(context).pickPostImage();
+                                                    },
+                                                    child: Row(
+                                                      children: [
+                                                        const SizedBox(width: 10,),
+                                                        Icon(
+                                                          Icons.image,
+                                                          color: AppColors.myWhite,
+                                                        ),
+                                                        const SizedBox(width: 10,),
+                                                        const Text('Image',style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontFamily: AppStrings.appFont,
+                                                            fontSize: 18,
+                                                            fontWeight: FontWeight.w500
+                                                        ),),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 15,),
+                                                  GestureDetector(
+                                                    onTap: (){
+                                                      AppCubit.get(context).pickPostVideo4();
+
+                                                    },
+                                                    child: Row(
+                                                      children: [
+                                                        const SizedBox(width: 10,),
+                                                        Icon(
+                                                          Icons.video_collection,
+                                                          color: AppColors.myWhite,
+                                                        ),
+                                                        const SizedBox(width: 10,),
+                                                        const Text('Video',style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontFamily: AppStrings.appFont,
+                                                            fontSize: 18,
+                                                            fontWeight: FontWeight.w500
+                                                        ),),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+
+                                          ));
 
                                         },
                                         color: AppColors.primaryColor1,

@@ -4,6 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:custom_clippers/Clippers/ticket_pass_clipper.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/presentation/screens/team_chat/send_video_team_chat.dart';
+import 'package:fanchat/presentation/screens/team_chat/team_chat_message_widget.dart';
+import 'package:fanchat/presentation/screens/team_chat/team_chat_my_message_widget.dart';
 import 'package:timer_builder/timer_builder.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
@@ -113,6 +116,9 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                 listener: (context,state){
                   if(state is PickPostImageSuccessState ){
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImageTeamChat(countryName: widget.countryName,)));
+                  }
+                  if(state is PickTeamChatVideoSuccessState ){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SendVideoTeamChat(countryName: widget.countryName,)));
                   }
                 },
                 builder: (context,state){
@@ -342,9 +348,9 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                     var teamChat =AppCubit.get(context).teamChat[index];
                                     if(AppCubit.get(context).userModel!.uId == teamChat.senderId)
                                       //send message
-                                      return builsRecievedMessages(teamChat,context,index);
+                                      return SenderTeamChatWidget(index: index);
                                     //receive message
-                                    return buildMyMessages(teamChat,context,index);
+                                    return MyMessageTeamChatWidget(index: index,);
                                   },
                                   separatorBuilder: (context , index)=>const SizedBox(height: 15,),
                                   itemCount: AppCubit.get(context).teamChat.length),
@@ -512,7 +518,66 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                       child: Center(
                                         child: IconButton(
                                           onPressed: (){
-                                            AppCubit.get(context).pickPostImage();
+                                            Scaffold.of(context).showBottomSheet((context) => Container(
+                                              color: AppColors.primaryColor1,
+
+                                              width: MediaQuery.of(context).size.width,
+                                              height: MediaQuery.of(context).size.height*.12,
+
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: (){
+                                                        AppCubit.get(context).pickPostImage();
+                                                      },
+                                                      child: Row(
+                                                        children: [
+                                                          const SizedBox(width: 10,),
+                                                          Icon(
+                                                            Icons.image,
+                                                            color: AppColors.myWhite,
+                                                          ),
+                                                          const SizedBox(width: 10,),
+                                                          const Text('Image',style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontFamily: AppStrings.appFont,
+                                                              fontSize: 18,
+                                                              fontWeight: FontWeight.w500
+                                                          ),),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 15,),
+                                                    GestureDetector(
+                                                      onTap: (){
+                                                        AppCubit.get(context).pickPostVideo5();
+
+                                                      },
+                                                      child: Row(
+                                                        children: [
+                                                          const SizedBox(width: 10,),
+                                                          Icon(
+                                                            Icons.video_collection,
+                                                            color: AppColors.myWhite,
+                                                          ),
+                                                          const SizedBox(width: 10,),
+                                                          const Text('Video',style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontFamily: AppStrings.appFont,
+                                                              fontSize: 18,
+                                                              fontWeight: FontWeight.w500
+                                                          ),),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+
+                                            ));
 
                                           },
                                           color: AppColors.primaryColor1,

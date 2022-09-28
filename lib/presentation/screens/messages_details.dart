@@ -9,6 +9,8 @@ import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/screens/send_video_message.dart';
 import 'package:fanchat/presentation/screens/sendimage_message.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
+import 'package:fanchat/presentation/widgets/private_chat/my_widget.dart';
+import 'package:fanchat/presentation/widgets/private_chat/sender_widget.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +25,7 @@ import 'package:voice_message_package/voice_message_package.dart';
 
 import '../../data/modles/message_model.dart';
 import '../../data/modles/user_model.dart';
- CachedVideoPlayerController? controllerPrivate;
+ // CachedVideoPlayerController? controllerPrivate;
 
 
 typedef _Fn = void Function();
@@ -55,22 +57,22 @@ class _ChatDetailsState extends State<ChatDetails> {
 
   @override
   void initState() {
-    controllerPrivate = CachedVideoPlayerController.network(
-        'https://firebasestorage.googleapis.com/v0/b/fanchat-7db9e.appspot.com/o/privatechat%2Fimage_picker4734177635856049259.mp4?alt=media&token=c61a5764-104f-4ec3-b203-d93d8369e720');
-     controllerPrivate!.initialize().then((value) {
-      controllerPrivate!.play();
-      controllerPrivate!.setLooping(true);
-      controllerPrivate!.setVolume(1.0);
-      setState(() {
-        controllerPrivate!.pause();
-      });
-    }).catchError((error){
-      print('error while initializing video ${error.toString()}');
-    });
-    if(scrollController.hasClients){
-      scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
-    }
-    super.initState();
+    // controllerPrivate = CachedVideoPlayerController.network(
+    //     'https://firebasestorage.googleapis.com/v0/b/fanchat-7db9e.appspot.com/o/privatechat%2Fimage_picker4734177635856049259.mp4?alt=media&token=c61a5764-104f-4ec3-b203-d93d8369e720');
+    //  controllerPrivate!.initialize().then((value) {
+    //   controllerPrivate!.play();
+    //   controllerPrivate!.setLooping(true);
+    //   controllerPrivate!.setVolume(1.0);
+    //   setState(() {
+    //     controllerPrivate!.pause();
+    //   });
+    // }).catchError((error){
+    //   print('error while initializing video ${error.toString()}');
+    // });
+    // if(scrollController.hasClients){
+    //   scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+    // }
+    // super.initState();
 
     isWriting = false;
   }
@@ -106,8 +108,8 @@ class _ChatDetailsState extends State<ChatDetails> {
                     centerTitle: false,
                     leading: IconButton(
                       onPressed: (){
-                         controllerPrivate!.pause();
-                         Navigator.pop(context);
+                         // controllerPrivate!.pause();
+                         // Navigator.pop(context);
                       },
                       icon: Icon(
                         Icons.arrow_back_ios_outlined,
@@ -160,23 +162,11 @@ class _ChatDetailsState extends State<ChatDetails> {
                                 itemBuilder: (context , index)
                                 {
                                   var message =AppCubit.get(context).messages[index];
-                                  // controller = CachedVideoPlayerController.network(
-                                  //     "${message.video}");
-                                  // controller.initialize().then((value) {
-                                  //   controller.play();
-                                  //   controller.setLooping(true);
-                                  //   controller.setVolume(1.0);
-                                  //   setState(() {
-                                  //     controller.pause();
-                                  //   });
-                                  // }).catchError((error){
-                                  //   print('error while initializing video ${error.toString()}');
-                                  // });
                                   if(widget.userModel.uId == message.senderId)
                                     //send message
-                                    return builsRecievedMessages(message,context,index);
+                                    return SenderMessageWidget(index: index,);
                                   //receive message
-                                  return buildMyMessages(message,context,index);
+                                    return MyMessageWidget(index: index,);
                                 },
                                 separatorBuilder: (context , index)=>const SizedBox(height: 15,),
                                 itemCount: AppCubit.get(context).messages.length),
@@ -434,250 +424,250 @@ class _ChatDetailsState extends State<ChatDetails> {
     );
   }
 
-  Widget buildMyMessages(MessageModel model,context,index){
-
-    return Align(
-
-      alignment:AlignmentDirectional.centerEnd,
-      child: (model.text!="")
-          ?Container(
-        padding: const EdgeInsets.all(10),
-        decoration:  BoxDecoration(
-          color: AppColors.primaryColor1,
-          borderRadius:const  BorderRadius.only(
-            topRight: Radius.circular(10),
-            topLeft: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-          ),
-        ),
-        child: Text('${model.text}',
-          style:  const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 17,
-              color: Colors.white,
-              fontFamily: AppStrings.appFont
-          ),
-        ),
-      )
-          :(model.image !=null)
-          ? GestureDetector(
-        onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: model.image)));
-        },
-        child: Container(
-          padding: const EdgeInsets.all(5),
-          decoration:  BoxDecoration(
-            color: AppColors.primaryColor1,
-            borderRadius:const  BorderRadius.only(
-              topRight: Radius.circular(10),
-              topLeft: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
-            ),
-          ),
-          child: Container(
-            height: MediaQuery.of(context).size.height*.28,
-            width: MediaQuery.of(context).size.width*.55,
-            child:  CachedNetworkImage(
-              cacheManager: AppCubit.get(context).manager,
-              imageUrl: "${model.image}",
-              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-              fit: BoxFit.fill,
-            ),
-          ),
-        ),
-      )
-          :
-      (model.video != null)
-          ?Stack(
-        children: [
-          Container(
-              decoration:  const BoxDecoration(
-                borderRadius:BorderRadius.only(
-                  topRight: Radius.circular(10),
-                  topLeft: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                ),
-              ),
-              height: MediaQuery.of(context).size.height*.25,
-              width: MediaQuery.of(context).size.width*.55,
-              child: controllerPrivate!.value.isInitialized
-                  ? AspectRatio(
-                  aspectRatio: controllerPrivate!.value.aspectRatio,
-                  child: CachedVideoPlayer(controllerPrivate!))
-                  : const Center(child: CircularProgressIndicator())
-          ),
-
-          // FutureBuilder(
-          //   future: intilize,
-          //   builder: (context,snapshot){
-          //     if(snapshot.connectionState == ConnectionState.done){
-          //       return AspectRatio(
-          //         aspectRatio: videoPlayerController!.value.aspectRatio,
-          //         child: VideoPlayer(videoPlayerController!),
-          //       );
-          //     }
-          //     else{
-          //       return const Center(
-          //         child: CircularProgressIndicator(),
-          //       );
-          //     }
-          //   },
-          //
-          //
-          //
-          // ),
-
-          Positioned(
-              top: 10,
-              right: 20,
-              child: InkWell(
-                onTap: (){
-                  setState((){
-                    if(controllerPrivate!.value.isPlaying){
-                      controllerPrivate!.pause();
-                    }else{
-                      controllerPrivate!.play();
-                    }
-                  });
-                },
-                child: CircleAvatar(
-                  backgroundColor: AppColors.primaryColor1,
-                  radius: 20,
-                  child: controllerPrivate!.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
-                ),
-              )
-          ),
-        ],
-      ):
-      VoiceMessage(
-        audioSrc: '${AppCubit.get(context).messages[index].voice}',
-        played: true, // To show played badge or not.
-        me: true, // Set message side.
-        meBgColor: AppColors.primaryColor1,
-        mePlayIconColor: AppColors.navBarActiveIcon,
-        onPlay: () {
-
-        }, // Do something when voice played.
-      ),
-    );
-
-  }
+  // Widget buildMyMessages(MessageModel model,context,index){
+  //
+  //   return Align(
+  //
+  //     alignment:AlignmentDirectional.centerEnd,
+  //     child: (model.text!="")
+  //         ?Container(
+  //       padding: const EdgeInsets.all(10),
+  //       decoration:  BoxDecoration(
+  //         color: AppColors.primaryColor1,
+  //         borderRadius:const  BorderRadius.only(
+  //           topRight: Radius.circular(10),
+  //           topLeft: Radius.circular(10),
+  //           bottomLeft: Radius.circular(10),
+  //         ),
+  //       ),
+  //       child: Text('${model.text}',
+  //         style:  const TextStyle(
+  //             fontWeight: FontWeight.w500,
+  //             fontSize: 17,
+  //             color: Colors.white,
+  //             fontFamily: AppStrings.appFont
+  //         ),
+  //       ),
+  //     )
+  //         :(model.image !=null)
+  //         ? GestureDetector(
+  //       onTap: (){
+  //         Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: model.image)));
+  //       },
+  //       child: Container(
+  //         padding: const EdgeInsets.all(5),
+  //         decoration:  BoxDecoration(
+  //           color: AppColors.primaryColor1,
+  //           borderRadius:const  BorderRadius.only(
+  //             topRight: Radius.circular(10),
+  //             topLeft: Radius.circular(10),
+  //             bottomLeft: Radius.circular(10),
+  //           ),
+  //         ),
+  //         child: Container(
+  //           height: MediaQuery.of(context).size.height*.28,
+  //           width: MediaQuery.of(context).size.width*.55,
+  //           child:  CachedNetworkImage(
+  //             cacheManager: AppCubit.get(context).manager,
+  //             imageUrl: "${model.image}",
+  //             placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+  //             fit: BoxFit.fill,
+  //           ),
+  //         ),
+  //       ),
+  //     )
+  //         :
+  //     (model.video != null)
+  //         ?Stack(
+  //       children: [
+  //         Container(
+  //             decoration:  const BoxDecoration(
+  //               borderRadius:BorderRadius.only(
+  //                 topRight: Radius.circular(10),
+  //                 topLeft: Radius.circular(10),
+  //                 bottomLeft: Radius.circular(10),
+  //               ),
+  //             ),
+  //             height: MediaQuery.of(context).size.height*.25,
+  //             width: MediaQuery.of(context).size.width*.55,
+  //             child: controllerPrivate!.value.isInitialized
+  //                 ? AspectRatio(
+  //                 aspectRatio: controllerPrivate!.value.aspectRatio,
+  //                 child: CachedVideoPlayer(controllerPrivate!))
+  //                 : const Center(child: CircularProgressIndicator())
+  //         ),
+  //
+  //         // FutureBuilder(
+  //         //   future: intilize,
+  //         //   builder: (context,snapshot){
+  //         //     if(snapshot.connectionState == ConnectionState.done){
+  //         //       return AspectRatio(
+  //         //         aspectRatio: videoPlayerController!.value.aspectRatio,
+  //         //         child: VideoPlayer(videoPlayerController!),
+  //         //       );
+  //         //     }
+  //         //     else{
+  //         //       return const Center(
+  //         //         child: CircularProgressIndicator(),
+  //         //       );
+  //         //     }
+  //         //   },
+  //         //
+  //         //
+  //         //
+  //         // ),
+  //
+  //         Positioned(
+  //             top: 10,
+  //             right: 20,
+  //             child: InkWell(
+  //               onTap: (){
+  //                 setState((){
+  //                   if(controllerPrivate!.value.isPlaying){
+  //                     controllerPrivate!.pause();
+  //                   }else{
+  //                     controllerPrivate!.play();
+  //                   }
+  //                 });
+  //               },
+  //               child: CircleAvatar(
+  //                 backgroundColor: AppColors.primaryColor1,
+  //                 radius: 20,
+  //                 child: controllerPrivate!.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
+  //               ),
+  //             )
+  //         ),
+  //       ],
+  //     ):
+  //     VoiceMessage(
+  //       audioSrc: '${AppCubit.get(context).messages[index].voice}',
+  //       played: true, // To show played badge or not.
+  //       me: true, // Set message side.
+  //       meBgColor: AppColors.primaryColor1,
+  //       mePlayIconColor: AppColors.navBarActiveIcon,
+  //       onPlay: () {
+  //
+  //       }, // Do something when voice played.
+  //     ),
+  //   );
+  //
+  // }
 
 
   //----------------------------
-  Widget builsRecievedMessages(MessageModel model,context,index)=>Align(
-    alignment:AlignmentDirectional.centerStart,
-    child: (model.text!="")
-        ?Container(
-      padding: const EdgeInsets.all(10),
-      decoration:  BoxDecoration(
-        color: AppColors.myGrey,
-        borderRadius:const  BorderRadius.only(
-          topRight: Radius.circular(10),
-          topLeft: Radius.circular(10),
-          bottomRight: Radius.circular(10),
-        ),
-      ),
-      child: Text('${model.text}',
-        style:  TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 17,
-            color: AppColors.primaryColor1,
-            fontFamily: AppStrings.appFont
-        ),
-      ),
-    )
-        :(model.image != null)
-        ?GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: model.image)));
-      },
-      child: Container(
-        padding: const EdgeInsets.all(5),
-        decoration:  BoxDecoration(
-          color: AppColors.myGrey,
-          borderRadius:const  BorderRadius.only(
-            topRight: Radius.circular(10),
-            topLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10),
-          ),
-        ),
-        child: Container(
-          // margin: EdgeInsets.all(5),
-          height: MediaQuery.of(context).size.height*.28,
-          width: MediaQuery.of(context).size.width*.55,
-          child: CachedNetworkImage(
-            cacheManager: AppCubit.get(context).manager,
-            imageUrl: "${model.image}",
-            placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-            fit: BoxFit.fill,
-          ),
-        ),
-      ),
-    ):
-    (model.video != null)
-        ?Stack(
-      children: [
-        Container(
-            height: MediaQuery.of(context).size.height*.25,
-            width:MediaQuery.of(context).size.width*.55,
-            child: controllerPrivate!.value.isInitialized
-                ? AspectRatio(
-                aspectRatio: controllerPrivate!.value.aspectRatio,
-                child: CachedVideoPlayer(controllerPrivate!))
-                : const Center(child: CircularProgressIndicator())
-        ),
-
-        // FutureBuilder(
-        //   future: intilize,
-        //   builder: (context,snapshot){
-        //     if(snapshot.connectionState == ConnectionState.done){
-        //       return AspectRatio(
-        //         aspectRatio: videoPlayerController!.value.aspectRatio,
-        //         child: VideoPlayer(videoPlayerController!),
-        //       );
-        //     }
-        //     else{
-        //       return const Center(
-        //         child: CircularProgressIndicator(),
-        //       );
-        //     }
-        //   },
-        //
-        //
-        //
-        // ),
-
-        Positioned(
-            top: 10,
-            right: 20,
-            child: InkWell(
-              onTap: (){
-                setState((){
-                  if(controllerPrivate!.value.isPlaying){
-                    controllerPrivate!.pause();
-                  }else{
-                    controllerPrivate!.play();
-                  }
-                });
-              },
-              child: CircleAvatar(
-                backgroundColor: AppColors.primaryColor1,
-                radius: 20,
-                child: controllerPrivate!.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
-              ),
-            )
-        ),
-      ],
-    )
-
-        :VoiceMessage(
-      audioSrc: '${AppCubit.get(context).messages[index].voice}',
-      played: true, // To show played badge or not.
-      me: false, // Set message side.
-      onPlay: () {}, // Do something when voice played.
-    ),
-  );
+  // Widget builsRecievedMessages(MessageModel model,context,index)=>Align(
+  //   alignment:AlignmentDirectional.centerStart,
+  //   child: (model.text!="")
+  //       ?Container(
+  //     padding: const EdgeInsets.all(10),
+  //     decoration:  BoxDecoration(
+  //       color: AppColors.myGrey,
+  //       borderRadius:const  BorderRadius.only(
+  //         topRight: Radius.circular(10),
+  //         topLeft: Radius.circular(10),
+  //         bottomRight: Radius.circular(10),
+  //       ),
+  //     ),
+  //     child: Text('${model.text}',
+  //       style:  TextStyle(
+  //           fontWeight: FontWeight.w500,
+  //           fontSize: 17,
+  //           color: AppColors.primaryColor1,
+  //           fontFamily: AppStrings.appFont
+  //       ),
+  //     ),
+  //   )
+  //       :(model.image != null)
+  //       ?GestureDetector(
+  //     onTap: (){
+  //       Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: model.image)));
+  //     },
+  //     child: Container(
+  //       padding: const EdgeInsets.all(5),
+  //       decoration:  BoxDecoration(
+  //         color: AppColors.myGrey,
+  //         borderRadius:const  BorderRadius.only(
+  //           topRight: Radius.circular(10),
+  //           topLeft: Radius.circular(10),
+  //           bottomRight: Radius.circular(10),
+  //         ),
+  //       ),
+  //       child: Container(
+  //         // margin: EdgeInsets.all(5),
+  //         height: MediaQuery.of(context).size.height*.28,
+  //         width: MediaQuery.of(context).size.width*.55,
+  //         child: CachedNetworkImage(
+  //           cacheManager: AppCubit.get(context).manager,
+  //           imageUrl: "${model.image}",
+  //           placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+  //           fit: BoxFit.fill,
+  //         ),
+  //       ),
+  //     ),
+  //   ):
+  //   (model.video != null)
+  //       ?Stack(
+  //     children: [
+  //       Container(
+  //           height: MediaQuery.of(context).size.height*.25,
+  //           width:MediaQuery.of(context).size.width*.55,
+  //           child: controllerPrivate!.value.isInitialized
+  //               ? AspectRatio(
+  //               aspectRatio: controllerPrivate!.value.aspectRatio,
+  //               child: CachedVideoPlayer(controllerPrivate!))
+  //               : const Center(child: CircularProgressIndicator())
+  //       ),
+  //
+  //       // FutureBuilder(
+  //       //   future: intilize,
+  //       //   builder: (context,snapshot){
+  //       //     if(snapshot.connectionState == ConnectionState.done){
+  //       //       return AspectRatio(
+  //       //         aspectRatio: videoPlayerController!.value.aspectRatio,
+  //       //         child: VideoPlayer(videoPlayerController!),
+  //       //       );
+  //       //     }
+  //       //     else{
+  //       //       return const Center(
+  //       //         child: CircularProgressIndicator(),
+  //       //       );
+  //       //     }
+  //       //   },
+  //       //
+  //       //
+  //       //
+  //       // ),
+  //
+  //       Positioned(
+  //           top: 10,
+  //           right: 20,
+  //           child: InkWell(
+  //             onTap: (){
+  //               setState((){
+  //                 if(controllerPrivate!.value.isPlaying){
+  //                   controllerPrivate!.pause();
+  //                 }else{
+  //                   controllerPrivate!.play();
+  //                 }
+  //               });
+  //             },
+  //             child: CircleAvatar(
+  //               backgroundColor: AppColors.primaryColor1,
+  //               radius: 20,
+  //               child: controllerPrivate!.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
+  //             ),
+  //           )
+  //       ),
+  //     ],
+  //   )
+  //
+  //       :VoiceMessage(
+  //     audioSrc: '${AppCubit.get(context).messages[index].voice}',
+  //     played: true, // To show played badge or not.
+  //     me: false, // Set message side.
+  //     onPlay: () {}, // Do something when voice played.
+  //   ),
+  // );
 
   //////////////////////////voice functions////////////////////
   @override
