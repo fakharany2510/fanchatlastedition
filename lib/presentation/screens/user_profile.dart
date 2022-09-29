@@ -11,10 +11,13 @@ class UserProfile extends StatelessWidget {
   String userId;
   String userImage;
   String userName;
+
+
   UserProfile({Key? key,
     required this.userId,
     required this.userImage,
-    required this.userName
+    required this.userName,
+
   }) : super(key: key);
 
   @override
@@ -110,6 +113,73 @@ class UserProfile extends StatelessWidget {
                 ),
 
                 const SizedBox(height:10,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:  [
+                    GestureDetector(
+                      onTap: (){
+                        cubit.toFacebook(facebookLink: cubit.profileFace);
+                      },
+                      child: const CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.white,
+                        child: Image(
+                          height: 35,
+                          width: 35,
+                          image: AssetImage('assets/images/facebook.png'),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10,),
+                    GestureDetector(
+                      onTap: (){
+                        cubit.toInstagram(instagramLink:cubit.profileInstagram);
+                      },
+                      child: const CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.white,
+                        child: Image(
+                          height: 30,
+                          width: 30,
+                          image: AssetImage('assets/images/instagram.png'),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10,),
+                    GestureDetector(
+                      onTap: (){
+                        cubit.toTwitter(twitterLink: cubit.profileTwitter);
+
+                      },
+                      child: const CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.white,
+                        child: Image(
+                          height: 35,
+                          width: 35,
+                          image: AssetImage('assets/images/twitter.png'),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10,),
+                    GestureDetector(
+                      onTap: (){
+                        cubit.toYoutube(youtubeLink: cubit.profileYoutube);
+
+                      },
+                      child: const CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.white,
+                        child: Image(
+                          height: 35,
+                          width: 35,
+                          image: AssetImage('assets/images/youtube.png'),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10,),
+                  ],
+                ),
 
                 const SizedBox(height: 15,),
                 GridView.count(

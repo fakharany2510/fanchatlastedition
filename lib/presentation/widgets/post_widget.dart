@@ -69,9 +69,20 @@ class _PostWidgetState extends State<PostWidget> {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: GestureDetector(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (_){
-                          return UserProfile(userId: '${AppCubit.get(context).posts[widget.index!].userId}', userImage: '${AppCubit.get(context).posts[widget.index!].image}', userName: '${AppCubit.get(context).posts[widget.index!].name}');
-                        }));
+                        AppCubit.get(context).profileId = '${AppCubit.get(context).posts[widget.index!].userId}';
+                        AppCubit.get(context).getAllUsers().then((value) {
+
+                          Navigator.push(context, MaterialPageRoute(builder: (_){
+
+                            return UserProfile(
+                              userId: '${AppCubit.get(context).posts[widget.index!].userId}',
+                              userImage: '${AppCubit.get(context).posts[widget.index!].image}',
+                              userName: '${AppCubit.get(context).posts[widget.index!].name}',
+
+                            );
+                          }));
+
+                        });
                       },
                       child: Row(
                         children: [

@@ -130,7 +130,12 @@ class AppCubit extends Cubit<AppState> {
   UserModel? userModel;
   List<UserModel> users=[];
   //get all uers
-  void getAllUsers(){
+  String profileId='';
+  String profileFace='';
+  String profileTwitter='';
+  String profileInstagram='';
+  String profileYoutube='';
+  Future<void> getAllUsers()async{
     users=[];
     emit(GetAllUsersDataLoadingState());
     FirebaseFirestore.instance
@@ -139,8 +144,19 @@ class AppCubit extends Cubit<AppState> {
           value.docs.forEach((element) {
             if(element.data()['uId'] != AppStrings.uId)
               users.add(UserModel.formJson(element.data()));
+
+            if(profileId== element.data()['uId'] ){
+
+                profileFace=element.data()['facebookLink'];
+                profileTwitter=element.data()['twitterLink'];
+                profileYoutube=element.data()['youtubeLink'];
+                profileInstagram=element.data()['instagramLink'];
+
+            }
           });
-          emit(GetAllUsersDataSuccessfulState());
+
+
+            emit(GetAllUsersDataSuccessfulState());
     }).catchError((error){
       emit(GetAllUsersDataErrorState());
       print('error while getting all users ${error.toString()}');

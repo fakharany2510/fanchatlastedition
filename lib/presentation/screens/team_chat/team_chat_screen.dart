@@ -64,9 +64,9 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
     AppCubit.get(context).getTeamChat(widget.countryName);
     // AppCubit.get(context).getCheeringPost();
     super.initState();
-    if(scrollController.hasClients){
-      scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
-    }
+    // if(scrollController.hasClients){
+    //   scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+    // }
     isWriting = false;
     // AppCubit.get(context).getCheeringPost();
 
@@ -125,6 +125,8 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                   if(scrollController.hasClients){
                     scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
                   }
+                  AppCubit.get(context).getCheeringPost();
+
                   return Scaffold(
                     backgroundColor: Colors.white,
                     appBar: AppBar(
