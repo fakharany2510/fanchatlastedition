@@ -64,7 +64,7 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
           placeholder: (context, url) => Center(child: CircularProgressIndicator()),
          // maxHeightDiskCache:75,
               width: 200,
-              height: MediaQuery.of(context).size.height*.2,
+              height: MediaQuery.of(context).size.height*.18,
             fit: BoxFit.fill,
           ),
                       Positioned(
@@ -146,7 +146,7 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
                       :Stack(
                     children: [
                       Container(
-                        height: MediaQuery.of(context).size.height*.2,
+                        height: MediaQuery.of(context).size.height*.18,
                         width: double.infinity,
                         child: FutureBuilder(
                           future: intilize,

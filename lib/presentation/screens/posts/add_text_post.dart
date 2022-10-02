@@ -81,8 +81,37 @@ class _AddTextPostState extends State<AddTextPost> {
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : (textFormFielsChanged == false && postText != " ")
+                  : (textFormFielsChanged == true && postText.text != "")
               ?Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: defaultButton(
+        textColor: AppColors.myWhite,
+        width: size.width*.2,
+        height: size.height*.05,
+        raduis: 10,
+        function: () {
+        if(formKey.currentState!.validate()){
+        AppCubit.get(context).createTextPost(
+        text: postText.text,
+        timeSpam: DateTime.now().toString(),
+        time: DateFormat.Hm().format(DateTime.now()),
+        dateTime: DateFormat.yMMMd().format(DateTime.now()),
+        );
+        callFcmApiSendPushNotifications(
+        title: 'New Post Added',
+        description:postText.text,
+        imageUrl: "",
+        //  token:AppCubit.get(context).userToken
+        );
+        }
+        },
+
+
+        buttonText: 'post',
+        buttonColor: AppColors.primaryColor1,
+        ),
+        )
+              :Padding(
         padding: const EdgeInsets.all(8.0),
         child: defaultButton(
         textColor: AppColors.myWhite,
@@ -94,35 +123,6 @@ class _AddTextPostState extends State<AddTextPost> {
         buttonColor: AppColors.primaryColor1.withOpacity(.2),
         ),
         )
-                  :Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: defaultButton(
-                  textColor: AppColors.myWhite,
-                  width: size.width*.2,
-                  height: size.height*.05,
-                  raduis: 10,
-                  function: () {
-                    if(formKey.currentState!.validate()){
-                      AppCubit.get(context).createTextPost(
-                        text: postText.text,
-                        timeSpam: DateTime.now().toString(),
-                        time: DateFormat.Hm().format(DateTime.now()),
-                        dateTime: DateFormat.yMMMd().format(DateTime.now()),
-                      );
-                      callFcmApiSendPushNotifications(
-                        title: 'New Post Added',
-                        description:postText.text,
-                        imageUrl: "",
-                      //  token:AppCubit.get(context).userToken
-                      );
-                    }
-                  },
-
-
-                  buttonText: 'post',
-                  buttonColor: AppColors.primaryColor1,
-                ),
-              ),
             ],
           ),
           body: SingleChildScrollView(

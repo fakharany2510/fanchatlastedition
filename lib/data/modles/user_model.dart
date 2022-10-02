@@ -12,6 +12,8 @@ class UserModel{
   String ?twitterLink;
   String ?instagramLink;
   bool ?accountActive ;
+  bool ?advertise ;
+  bool ?business ;
 
 
   UserModel({
@@ -27,7 +29,9 @@ class UserModel{
     this.instagramLink,
     this.twitterLink,
     this.youtubeLink,
-    this.accountActive
+    this.accountActive,
+    this.advertise,
+    this.business,
 
   });
 
@@ -41,6 +45,8 @@ class UserModel{
     bio=json['bio'];
     countryCode=json['countryCode'];
     accountActive=json['accountActive'];
+    accountActive=json['advertise'];
+    accountActive=json['business'];
     youtubeLink=json['youtubeLink'];
     twitterLink=json['twitterLink'];
     facebookLink=json['facebookLink'];
@@ -59,6 +65,8 @@ class UserModel{
       'bio':bio,
       'countryCode':countryCode,
       'accountActive':accountActive,
+      'advertise':advertise,
+      'business':business,
       'facebookLink':facebookLink,
       'youtubeLink':youtubeLink,
       'twitterLink':twitterLink,
