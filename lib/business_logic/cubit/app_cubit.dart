@@ -133,8 +133,6 @@ class AppCubit extends Cubit<AppState> {
   String profileId='';
   String profileFace='';
   String profileTwitter='';
-
-
   String profileInstagram='';
   String profileYoutube='';
   Future<void> getAllUsers()async{
@@ -1796,7 +1794,6 @@ List<int> commentIndex=[];
 
       });
       emit(GetTeamChatSuccessState());
-
     });
   }
 
@@ -1927,7 +1924,7 @@ List<int> commentIndex=[];
         .collection('cheering')
         .add(model.toMap())
         .then((value){
-          getCheeringPost();
+          // getCheeringPost();
           print('Upload Cheering message');
       emit(CreateCheeringSuccessState());
     })
@@ -1966,6 +1963,8 @@ List<int> commentIndex=[];
     for (var doc in snapshots.docs) {
       await doc.reference.delete();
     }
+    emit(DeletePostSuccessState());
+
   }
 
 

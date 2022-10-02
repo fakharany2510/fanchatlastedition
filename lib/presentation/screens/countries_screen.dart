@@ -75,10 +75,13 @@ class _CountriesScreenState extends State<CountriesScreen> {
                     if (name.isEmpty) {
                       return InkWell(
                         onTap: (){
-                          AppCubit.get(context).deleteCheeringPost().then((value) {});
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                              TeamChatScreen(countryName:data['name'],countryImage: data['image'],)
-                          ));
+                          AppCubit.get(context).deleteCheeringPost().then((value) {
+                            AppCubit.get(context).isLast=true;
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                TeamChatScreen(countryName:data['name'],countryImage: data['image'],)
+                            ));
+                          });
+
                         },
                         child: ListTile(
                           title: Text(

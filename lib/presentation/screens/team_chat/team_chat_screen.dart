@@ -62,24 +62,12 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
   @override
   void initState() {
     AppCubit.get(context).getTeamChat(widget.countryName);
-    // AppCubit.get(context).getCheeringPost();
     super.initState();
     // if(scrollController.hasClients){
     //   scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
     // }
     isWriting = false;
-    // AppCubit.get(context).getCheeringPost();
 
-    // Timer(const Duration(seconds: 15), () {
-    //   setState(() {
-    //     // if(AppCubit.get(context).cheering.length!=indexCheering)
-    //     //   indexCheering+=1;
-    //     //
-    //     // if(AppCubit.get(context).cheering.length==indexCheering)
-    //     //   isLast=true;
-    //     print('Hi');
-    //   });
-    // });
     Timer(const Duration(seconds: 1), () {
       setState(() {
         indexCheering++;
@@ -95,20 +83,6 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
           ? ConditionalBuilder(
         builder: (context)=>Builder(
             builder: (context) {
-
-              // Timer(const Duration(seconds: 2), () {
-              //   setState(() {
-              //     // if(AppCubit.get(context).cheering.length!=indexCheering)
-              //     //   indexCheering+=1;
-              //     //
-              //     // if(AppCubit.get(context).cheering.length==indexCheering)
-              //     //   isLast=true;
-              //     AppCubit.get(context).count=AppCubit.get(context).count-1;
-              //     if(AppCubit.get(context).count-1<0){
-              //       AppCubit.get(context).count=0;
-              //     }
-              //   });
-              // });
               if(scrollController.hasClients){
                 scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
               }
@@ -125,13 +99,10 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                   if(scrollController.hasClients){
                     scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
                   }
-                  AppCubit.get(context).getCheeringPost();
 
                   return Scaffold(
                     backgroundColor: Colors.white,
                     appBar: AppBar(
-                      actions: [
-                      ],
                       backgroundColor: AppColors.primaryColor1,
                       elevation: 0,
                       titleSpacing: 0.0,
@@ -185,7 +156,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                         children: [
                           AppCubit.get(context).isLast==false ?
                           Container(
-                              height: MediaQuery.of(context).size.height*.28,
+                              height: MediaQuery.of(context).size.height*.22,
                               decoration: BoxDecoration(
                                   border: Border.all(
                                       color: AppColors.primaryColor1
@@ -195,145 +166,135 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                               child: Stack(
                                 children: [
                                   Lottie.asset(
-                                      height:  MediaQuery.of(context).size.height*.28,
+                                      height:  MediaQuery.of(context).size.height*.18,
                                       width: double.infinity,
                                       'assets/images/cheer.json'
                                   ),
-                                  ClipPath(
-                                    clipper: TicketPassClipper(holeRadius: 50),
-                                    child: Container(
-                                      // decoration: BoxDecoration(
-                                      //   border: Border.all(
-                                      //       color: AppColors.primaryColor1
-                                      //   ),
-                                      //   color: AppColors.primaryColor1,
-                                      //
-                                      // ),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5,
-                                          horizontal: 15
-                                      ),
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 5,
-                                          horizontal: 5
-                                      ),
-                                      width:MediaQuery.of(context).size.width*.9 ,
-                                      height: MediaQuery.of(context).size.height*.28,
-                                      child:  Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5,
+                                        horizontal: 15
+                                    ),
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 5,
+                                        horizontal: 5
+                                    ),
+                                    width:MediaQuery.of(context).size.width*.9 ,
+                                    height: MediaQuery.of(context).size.height*.18,
+                                    child:  Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
 
-                                                CircleAvatar(
-                                                  backgroundImage:NetworkImage('${AppCubit.get(context).cheering.first.userImage}') as ImageProvider,
-                                                  radius: 18,
-                                                ),
-                                                const SizedBox(width: 10,),
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Text('${AppCubit.get(context).cheering.first.username}',
-                                                          style: TextStyle(
-                                                              color: AppColors.primaryColor1,
-                                                              fontSize: 15,
-                                                              fontWeight: FontWeight.w500,
-                                                              fontFamily: AppStrings.appFont
-                                                          ),
+                                              CircleAvatar(
+                                                backgroundImage:NetworkImage('${AppCubit.get(context).cheering.first.userImage}'),
+                                                radius: 18,
+                                              ),
+                                              const SizedBox(width: 10,),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text('${AppCubit.get(context).cheering.first.username}',
+                                                        style: TextStyle(
+                                                            color: AppColors.primaryColor1,
+                                                            fontSize: 15,
+                                                            fontWeight: FontWeight.w500,
+                                                            fontFamily: AppStrings.appFont
                                                         ),
+                                                      ),
 
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-
-                                              ],
-                                            ),
-                                            const SizedBox(height: 10,),
-                                            Text('${AppCubit.get(context).cheering.first.text}',
-                                              style: TextStyle(
-                                                  color: AppColors.primaryColor1,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontFamily: AppStrings.appFont
-                                              ),
-                                            ),
-                                            const SizedBox(height: 10,),
-                                              // Align(
-                                              //   alignment: Alignment.topRight,
-                                              //   child: Text('${AppCubit.get(context).timerCheering}',
-                                              //     style: TextStyle(
-                                              //         color: AppColors.primaryColor1,
-                                              //         fontSize: 14,
-                                              //         fontWeight: FontWeight.w500,
-                                              //         fontFamily: AppStrings.appFont
-                                              //     ),
-                                              //   ),
-                                              // ),
-                                            //     if(AppCubit.get(context).count!=0 || AppCubit.get(context).count>0)
-                                            //
-                                            //     TimerBuilder.periodic(Duration(seconds: 1),
-                                            //     builder: (context) {
-                                            //       var testCount=15;
-                                            //       testCount=testCount-1;
-                                            //       AppCubit.get(context).count-=AppCubit.get(context).count;
-                                            //       return Text('${testCount}');
-                                            //     }
-                                            // ),
-                                            Align(
-                                              alignment: Alignment.bottomRight,
-                                              child: CircularCountDownTimer(
-                                                  duration: 16,
-                                                  initialDuration: 0,
-                                                  controller: CountDownController(),
-                                                  width: MediaQuery.of(context).size.width*.12,
-                                                  height: MediaQuery.of(context).size.height*.06,
-                                                  ringColor: Colors.grey[300]!,
-                                                  ringGradient: null,
-                                                  fillColor: AppColors.myGrey,
-                                                  fillGradient: null,
-                                                  backgroundColor: AppColors.primaryColor1,
-                                                  backgroundGradient: null,
-                                                  strokeWidth: 20.0,
-                                                  strokeCap: StrokeCap.round,
-                                                  textStyle: const TextStyle(
-                                                      fontSize: 33.0,
-                                                      color: Colors.white,
-                                                      fontWeight: FontWeight.bold
+                                                    ],
                                                   ),
-                                                  textFormat: CountdownTextFormat.S,
-                                                  isReverse: false,
-                                                  isReverseAnimation: false,
-                                                  isTimerTextShown: true,
-                                                  autoStart: true,
-                                                  onStart: () {
-                                                    debugPrint('Countdown Started');
-                                                  },
-                                                  onComplete: () {
-                                                    debugPrint('Countdown Ended');
-                                                     setState(() {
-
-                                                       AppCubit.get(context).isLast=true;
-
-                                                     });
-                                                  },
-                                                  onChange: (String timeStamp) {
-                                                    debugPrint('Countdown Changed $timeStamp');
-                                                  },
+                                                ],
                                               ),
-                                            ),
 
-                                          ],
-                                        ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 10,),
+                                          Text('${AppCubit.get(context).cheering.first.text}',
+                                            style: TextStyle(
+                                                color: AppColors.primaryColor1,
+                                                fontSize: 22,
+                                                fontWeight: FontWeight.w500,
+                                                fontFamily: AppStrings.appFont
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10,),
+                                            // Align(
+                                            //   alignment: Alignment.topRight,
+                                            //   child: Text('${AppCubit.get(context).timerCheering}',
+                                            //     style: TextStyle(
+                                            //         color: AppColors.primaryColor1,
+                                            //         fontSize: 14,
+                                            //         fontWeight: FontWeight.w500,
+                                            //         fontFamily: AppStrings.appFont
+                                            //     ),
+                                            //   ),
+                                            // ),
+                                          //     if(AppCubit.get(context).count!=0 || AppCubit.get(context).count>0)
+                                          //
+                                          //     TimerBuilder.periodic(Duration(seconds: 1),
+                                          //     builder: (context) {
+                                          //       var testCount=15;
+                                          //       testCount=testCount-1;
+                                          //       AppCubit.get(context).count-=AppCubit.get(context).count;
+                                          //       return Text('${testCount}');
+                                          //     }
+                                          // ),
+                                        ],
                                       ),
                                     ),
-
                                   ),
+                                  Positioned(
+                                    bottom: 25,
+                                    right: 25,
+                                    child: CircularCountDownTimer(
+                                      duration: 15,
+                                      initialDuration: 0,
+                                      controller: CountDownController(),
+                                      width: MediaQuery.of(context).size.width*.12,
+                                      height: MediaQuery.of(context).size.height*.06,
+                                      ringColor: Colors.grey[300]!,
+                                      ringGradient: null,
+                                      fillColor: AppColors.myGrey,
+                                      fillGradient: null,
+                                      backgroundColor: AppColors.primaryColor1,
+                                      backgroundGradient: null,
+                                      strokeWidth: 20.0,
+                                      strokeCap: StrokeCap.round,
+                                      textStyle: const TextStyle(
+                                          fontSize: 33.0,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                      textFormat: CountdownTextFormat.S,
+                                      isReverse: true,
+                                      isReverseAnimation: true,
+                                      isTimerTextShown: true,
+                                      autoStart: true,
+                                      onStart: () {
+                                        debugPrint('Countdown Started');
+                                      },
+                                      onComplete: () {
+                                        debugPrint('Countdown Ended');
+                                        setState(() {
+
+                                          AppCubit.get(context).isLast=true;
+
+                                        });
+                                      },
+                                      onChange: (String timeStamp) {
+                                        debugPrint('Countdown Changed $timeStamp');
+                                      },
+                                    ),
+                                  ),
+
                                 ],
                               ),
                             ):Container(),

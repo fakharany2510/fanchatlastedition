@@ -73,8 +73,9 @@ class CheeringScreen extends StatelessWidget {
                           style: TextStyle(
                             color:AppColors.primaryColor1,
                             fontFamily: AppStrings.appFont,
+                            fontSize: 17
                           ),
-                          maxLines: 5,
+                          maxLines: 3,
                           keyboardType: TextInputType.text,
                           controller: cheeringController,
                           decoration: InputDecoration(
