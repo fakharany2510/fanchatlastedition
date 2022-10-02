@@ -133,6 +133,8 @@ class AppCubit extends Cubit<AppState> {
   String profileId='';
   String profileFace='';
   String profileTwitter='';
+
+
   String profileInstagram='';
   String profileYoutube='';
   Future<void> getAllUsers()async{
