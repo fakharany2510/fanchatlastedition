@@ -1,26 +1,39 @@
 class AdvertisingModel{
 
-
-  String ?advertisingImage;
   String ?advertisingLink;
+  String? dateTime;
+  String? postImage;
+  String? postVideo;
+  String? time;
+  String? timeSmap;
 
   AdvertisingModel({
 
-    this.advertisingImage,
     this.advertisingLink,
-
+    this.dateTime,
+    this.postImage,
+    this.postVideo,
+    this.time,
+    this.timeSmap,
   });
 
   AdvertisingModel.formJson( Map <String , dynamic> json ){
-    advertisingImage = json['advertisingImage'];
     advertisingLink = json['advertisingLink'];
-
+    dateTime=json['dateTime'];
+    postImage=json['postImage'];
+    postVideo=json['postVideo'];
+    time=json['time'];
+    timeSmap=json['timeSmap'];
   }
 
   Map <String,dynamic> toMap(){
     return{
-      'advertisingImage':advertisingImage,
       'advertisingLink':advertisingLink,
+      'dateTime':dateTime,
+      'postImage':postImage,
+      'postVideo':postVideo,
+      'time':time,
+      'timeSmap':timeSmap,
     };
   }
 

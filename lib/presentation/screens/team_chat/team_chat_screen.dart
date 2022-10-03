@@ -2,11 +2,12 @@ import 'dart:async';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:custom_clippers/Clippers/ticket_pass_clipper.dart';
+
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/presentation/screens/team_chat/send_video_team_chat.dart';
 import 'package:fanchat/presentation/screens/team_chat/team_chat_message_widget.dart';
 import 'package:fanchat/presentation/screens/team_chat/team_chat_my_message_widget.dart';
+import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
@@ -51,6 +52,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
   var textMessage = TextEditingController();
   bool isWriting = false;
   String? recordFilePath;
+  var cheeringController=TextEditingController();
   String statusText='';
   int i=0;
   bool recording=false;
@@ -82,6 +84,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
       return widget.countryName != null
           ? ConditionalBuilder(
         builder: (context)=>Builder(
+
             builder: (context) {
               if(scrollController.hasClients){
                 scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
@@ -331,11 +334,106 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                   image: AssetImage('assets/images/cheeringIcon.png')
                                 ),
                                 onPressed: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (_){
+                                  showDialog(
+                                      context: context,
+                                      builder: (context){
+                                         return AlertDialog(
+                                           title: Text('Write Uniform Cheering',style: TextStyle(
+                                              color: AppColors.primaryColor1,
+                                             fontSize: 17,
+                                               fontFamily: AppStrings.appFont
 
-                                    return CheeringScreen(countryName: widget.countryName,countryImage: widget.countryImage,);
+                                           ),
+                                           textAlign: TextAlign.center,
+                                           ),
 
-                                  }));
+                                           content: Container(
+                                             height: 200,
+                                             child: Column(
+                                               children: [
+                                                 SizedBox(height: 10,),
+                                                 Container(
+                                                   margin: const EdgeInsets.symmetric(
+                                                       horizontal: 0
+                                                   ),
+                                                   // height:MediaQuery.of(context).size.height*.07,
+                                                   child: TextFormField(
+                                                     inputFormatters: [
+                                                       LengthLimitingTextInputFormatter(70),
+                                                     ],
+                                                     style: TextStyle(
+                                                         color:AppColors.primaryColor1,
+                                                         fontFamily: AppStrings.appFont,
+                                                         fontSize: 17
+                                                     ),
+                                                     maxLines: 4,
+                                                     keyboardType: TextInputType.text,
+                                                     controller: cheeringController,
+                                                     decoration: InputDecoration(
+
+                                                       focusColor: AppColors.myGrey,
+                                                       fillColor: Colors.white,
+                                                       enabledBorder: OutlineInputBorder(
+                                                         borderSide: BorderSide(color:AppColors.primaryColor1),
+                                                         borderRadius: BorderRadius.circular(5),
+                                                       ),
+                                                       border: OutlineInputBorder(
+                                                           borderRadius: BorderRadius.circular(5)
+                                                       ),
+                                                       focusedBorder: OutlineInputBorder(
+                                                         borderSide: BorderSide(color:AppColors.primaryColor1),
+                                                         borderRadius: BorderRadius.circular(15),
+                                                       ),
+                                                       // hintText: '$labelText',
+                                                       // hintStyle: TextStyle(
+                                                       //   color: AppColors.myGrey,
+                                                       //   fontFamily: AppStrings.appFont,
+                                                       // ),
+                                                     ),
+                                                     validator: (value){
+                                                       if(value!.isEmpty){
+                                                         return 'Write uniform cheering';
+                                                       }
+                                                     },
+                                                   ),
+                                                 ),
+                                                 SizedBox(height: 20,),
+                                                 state is CreateCheeringLoadingState?
+                                                 CircularProgressIndicator(
+                                                   color: AppColors.primaryColor1,
+                                                 ):
+                                                 defaultButton(
+                                                     width: MediaQuery.of(context).size.width*.8,
+                                                     height: MediaQuery.of(context).size.height*.07,
+                                                     buttonColor: AppColors.primaryColor1,
+                                                     textColor: AppColors.myWhite,
+                                                     buttonText: 'Post',
+                                                     function: (){
+                                                       AppCubit.get(context).count=17;
+                                                       AppCubit.get(context).createCheeringPost(
+                                                           time: DateFormat.Hm().format(DateTime.now()),
+                                                           timeSpam: DateTime.now().toString(),
+                                                           text: cheeringController.text
+                                                       ).then((value) {
+                                                         Navigator.pop(context);
+                                                       });
+
+                                                       // AppCubit.get(context).getCheeringPost();
+                                                       // AppCubit.get(context).isLast=false;
+
+                                                     }
+                                                 )
+                                               ],
+                                             ),
+                                           ),
+                                         );
+                                      }
+                                  );
+                                  // Navigator.push(context, MaterialPageRoute(builder: (_){
+                                  //
+                                  //   return CheeringScreen(countryName: widget.countryName,countryImage: widget.countryImage,);
+                                  //
+                                  // }));
                                 },
 
                               ),

@@ -1,3 +1,5 @@
+import 'package:fanchat/business_logic/advertising_cubit/advertising_cubit.dart';
+import 'package:fanchat/business_logic/advertising_cubit/advertising_state.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
@@ -7,31 +9,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
-class FanFullVideo extends StatefulWidget {
-  FanFullVideo({Key? key,this.video,this.userImage,this.userName}) : super(key: key);
-  String ?userImage;
-  String ?userName;
+class AdvertisingFullVideo extends StatefulWidget {
+  AdvertisingFullVideo({Key? key,this.video,this.videoLink}) : super(key: key);
+
   String ?video;
+  String ?videoLink;
   @override
-  State<FanFullVideo> createState() => _FanFullVideoState();
+  State<AdvertisingFullVideo> createState() => _AdvertisingFullVideoState();
 }
 
-class _FanFullVideoState extends State<FanFullVideo> {
+class _AdvertisingFullVideoState extends State<AdvertisingFullVideo> {
   VideoPlayerController ?videoPlayerController;
   Future <void> ?intilize;
   @override
   void initState() {
-    // AppCubit.get(context).insertTOdatabase(
-    //     postId: AppCubit.get(context).posts[widget.index!].postId!,
-    //     userId: AppCubit.get(context).posts[widget.index!].userId!,
-    //     image: AppCubit.get(context).posts[widget.index!].image!,
-    //     name:  AppCubit.get(context).posts[widget.index!].name!,
-    //     postImage:AppCubit.get(context).posts[widget.index!].postImage!,
-    //     postVideo: AppCubit.get(context).posts[widget.index!].postVideo!,
-    //     postText: AppCubit.get(context).posts[widget.index!].text!,
-    //     time: AppCubit.get(context).posts[widget.index!].time!,
-    //     timeSamp: AppCubit.get(context).posts[widget.index!].timeSmap!
-    // );
+
     //////////////////////////////////
     videoPlayerController=VideoPlayerController.network(
         widget.video!
@@ -42,7 +34,7 @@ class _FanFullVideoState extends State<FanFullVideo> {
   }
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit , AppState>(
+    return BlocConsumer<AdvertisingCubit , AdvertisingState>(
       listener: (context,state){
 
       },
@@ -87,7 +79,7 @@ class _FanFullVideoState extends State<FanFullVideo> {
 
               },
               icon: Icon(
-                Icons.arrow_back_ios
+                  Icons.arrow_back_ios
               ),
             ),
           ),
@@ -95,47 +87,6 @@ class _FanFullVideoState extends State<FanFullVideo> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundImage: NetworkImage('${widget.userImage}',
-                        ),
-                        radius: 18,
-                      ),
-                      const SizedBox(width: 7,),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text('${widget.userName}',
-                                    overflow: TextOverflow.ellipsis,
-                                    style:  TextStyle(
-                                        color: AppColors.primaryColor1,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily: AppStrings.appFont
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      // Spacer(),
-                      // IconButton(
-                      //   onPressed: (){},
-                      //   padding: EdgeInsets.zero,
-                      //   constraints: BoxConstraints(),
-                      //   icon:Icon(Icons.favorite_outline,color: AppColors.navBarActiveIcon,size: 20),)
-                    ],
-                  ),
-                ),
                 SizedBox(height: 20,),
 
                 Container(
@@ -179,9 +130,7 @@ class _FanFullVideoState extends State<FanFullVideo> {
                                 }
                               });
                             },
-                            child: videoPlayerController!.value.isPlaying?
-                            CircleAvatar(radius: 15, child: Icon(
-                              Icons.pause,color: AppColors.myWhite,size: 15,)): CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: AppColors.myWhite,size: 15,)),
+                            child: videoPlayerController!.value.isPlaying?  CircleAvatar(radius: 15, child: Icon(Icons.pause,color: AppColors.primaryColor1,size: 15,)): CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: AppColors.primaryColor1,size: 15,)),
                           )
                       ),
                     ],

@@ -5,6 +5,7 @@ import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/add_ads/add_ads.dart';
 import 'package:fanchat/presentation/paypal/choosepaymentmethod.dart';
 import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
+import 'package:fanchat/presentation/screens/advertising/advertising_screen.dart';
 import 'package:fanchat/presentation/screens/countries_screen.dart';
 import 'package:fanchat/presentation/screens/public_chat/public_chat_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
@@ -60,7 +61,7 @@ class _HomeLayoutState extends State<HomeLayout> {
       const FanScreen(),
       const CountriesScreen(),
       PublicChatScreen(),
-       AddAdvertuser(),
+       AdvertisingScreen(),
 
 
     ];
@@ -199,7 +200,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                        const AssetImage("assets/images/ad-icon.png"),
                         color:AppColors.myGrey,
                       ),
-                      label: 'Add',
+                      label: 'Ads',
                       activeIcon:ImageIcon(
                         const AssetImage("assets/images/ad-icon.png"),
                         color:AppColors.navBarActiveIcon,

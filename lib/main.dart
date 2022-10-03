@@ -1,10 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:fanchat/business_logic/advertising_cubit/advertising_cubit.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/firebase_options.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
+import 'package:fanchat/presentation/screens/advertising/advertising_screen.dart';
 import 'package:fanchat/presentation/screens/edit_profie_screen.dart';
 import 'package:fanchat/presentation/screens/fan/fan_full_post.dart';
 import 'package:fanchat/presentation/screens/messages_details.dart';
@@ -68,7 +70,8 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
         providers:[
-          BlocProvider(create: (context)=>AppCubit()..getUser()..getCountries()..getPosts()..getAllUsers()..getFanPosts()..periodic()..getAdvertisings()),
+          BlocProvider(create: (context)=>AppCubit()..getUser()..getCountries()..getPosts()..getAllUsers()..getFanPosts()..periodic()),
+          BlocProvider(create: (context)=>AdvertisingCubit()..getAdvertisingPosts()),
         ],
         child: FirebasePhoneAuthProvider(
           child: OverlaySupport(

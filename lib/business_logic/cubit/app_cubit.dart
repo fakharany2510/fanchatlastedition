@@ -1387,7 +1387,6 @@ List<int> commentIndex=[];
     });
   }
 //////////////////////////////////////////////
-  ////////////////////////////////////////////////////
 //Create fan videoPost
   void createFanVideoPost({
     required String dateTime,
@@ -1432,7 +1431,6 @@ List<int> commentIndex=[];
     });
   }
 ///////////////////////////////////////////////
-/////////////////////////////////////////////////
 //upload fan post video to storage
   void uploadFanPostVideo({
     String? userId,
@@ -1472,8 +1470,7 @@ List<int> commentIndex=[];
     });
   }
 ////////////////////////////////////////////////////
-//////////////////////////////////////////////
-  /////////////////////////
+
   //get Posts
   List<FanModel> fans=[];
   void getFanPosts(){
@@ -1500,7 +1497,6 @@ List<int> commentIndex=[];
       print('error while getting Fan posts ${error.toString()}');
     });
   }
-/////////////////////////////////////////////////
 ////// Public Chat ////////////////////////////////////////
 
 
@@ -1903,12 +1899,12 @@ List<int> commentIndex=[];
 
 
   //Create Cheering
-  void createCheeringPost({
+  Future<void> createCheeringPost({
     required String? time,
     required String? timeSpam,
     required String? text,
 
-  }){
+  })async{
 
     CheeringModel model=CheeringModel(
        time: time,
@@ -1925,7 +1921,7 @@ List<int> commentIndex=[];
         .collection('cheering')
         .add(model.toMap())
         .then((value){
-          // getCheeringPost();
+          getCheeringPost();
           print('Upload Cheering message');
       emit(CreateCheeringSuccessState());
     })
@@ -2351,104 +2347,104 @@ List<int> commentIndex=[];
     }
   }
 
-  var advertisingLink = TextEditingController();
-
-  Future<void> createAdvertisingImage({
-
-    String ?image,
-    String ?link,
-
-   })async{
-    AdvertisingModel advertisingModel =AdvertisingModel(
-      advertisingImage: image,
-      advertisingLink: link,
-    );
-
-    FirebaseFirestore.instance.collection('advertising').add(advertisingModel.toMap()).then((value) {
-
-      print('Create Advertising');
-      getAdvertisings();
-      emit(CreateAdvertisingImageSuccessState());
-    }).catchError((error){
-
-      print('Error in createAdvertisingImage is ${error.toString()}');
-      emit(CreateAdvertisingImageErrorState());
-
-    });
-
-
-  }
-  Future uploadAdvertising({
-
-    required String advertisingLink,
-
-  }){
-
-    emit(UploadAdvertisingImageLoadingState());
-    return firebase_storage.FirebaseStorage.instance.ref()
-        .child('advertisingImage/${Uri.file(uploadAdvertisingImage!.path).pathSegments.last}')
-        .putFile(uploadAdvertisingImage!).then((value) {
-
-      value.ref.getDownloadURL().then((value) {
-
-        debugPrint('uploadAdvertisingImage Success');
-        createAdvertisingImage(
-            image: value,
-            link: advertisingLink,
-        );
-        uploadAdvertisingImage=null;
-        advertisingLink='';
-        emit(UploadAdvertisingImageSuccessState());
-
-      }).catchError((error){
-
-        debugPrint('Error in UploadAdvertisingImage ${error.toString()}');
-        emit(UploadAdvertisingImageErrorState());
-
-      });
-
-    }).catchError((error){
-
-      debugPrint('Error in Upload NationalId ${error.toString()}');
-      emit(UploadAdvertisingImageErrorState());
-    });
-
-
-  }
-
-  List <AdvertisingModel> advertisingModel=[];
-
-  Future<void>  getAdvertisings()
-  async{
-    advertisingModel=[];
-    FirebaseFirestore.instance.collection('advertising').get().then((value) {
-
-      print('siiiiiiiiiiiiiiiiiiiiiiiiiiii');
-
-      for (var element in value.docs) {
-
-        advertisingModel.add(AdvertisingModel.formJson(element.data()));
-
-      }
-      print('siiiiiiiiiiiiiiiiiiiiiiiiiiii');
-
-      emit(GetAdvertisingImageSuccessState());
-
-    }).catchError((error){
-
-      print('Error is ${error.toString()}');
-      emit(GetAdvertisingImageErrorState());
-
-    });
-  }
-
-  Future <void> toAdvertisingLink({
-    required String advertisingLink,
-  })async
-  {
-    String url= advertisingLink;
-    await launch(url , forceSafariVC: false);
-    emit(LaunchAdvertisingImageSuccessState());
-  }
+  // var advertisingLink = TextEditingController();
+  //
+  // Future<void> createAdvertisingImage({
+  //
+  //   String ?image,
+  //   String ?link,
+  //
+  //  })async{
+  //   AdvertisingModel advertisingModel =AdvertisingModel(
+  //     advertisingImage: image,
+  //     advertisingLink: link,
+  //   );
+  //
+  //   FirebaseFirestore.instance.collection('advertising').add(advertisingModel.toMap()).then((value) {
+  //
+  //     print('Create Advertising');
+  //     getAdvertisings();
+  //     emit(CreateAdvertisingImageSuccessState());
+  //   }).catchError((error){
+  //
+  //     print('Error in createAdvertisingImage is ${error.toString()}');
+  //     emit(CreateAdvertisingImageErrorState());
+  //
+  //   });
+  //
+  //
+  // }
+  // Future uploadAdvertising({
+  //
+  //   required String advertisingLink,
+  //
+  // }){
+  //
+  //   emit(UploadAdvertisingImageLoadingState());
+  //   return firebase_storage.FirebaseStorage.instance.ref()
+  //       .child('advertisingImage/${Uri.file(uploadAdvertisingImage!.path).pathSegments.last}')
+  //       .putFile(uploadAdvertisingImage!).then((value) {
+  //
+  //     value.ref.getDownloadURL().then((value) {
+  //
+  //       debugPrint('uploadAdvertisingImage Success');
+  //       createAdvertisingImage(
+  //           image: value,
+  //           link: advertisingLink,
+  //       );
+  //       uploadAdvertisingImage=null;
+  //       advertisingLink='';
+  //       emit(UploadAdvertisingImageSuccessState());
+  //
+  //     }).catchError((error){
+  //
+  //       debugPrint('Error in UploadAdvertisingImage ${error.toString()}');
+  //       emit(UploadAdvertisingImageErrorState());
+  //
+  //     });
+  //
+  //   }).catchError((error){
+  //
+  //     debugPrint('Error in Upload NationalId ${error.toString()}');
+  //     emit(UploadAdvertisingImageErrorState());
+  //   });
+  //
+  //
+  // }
+  //
+  // List <AdvertisingModel> advertisingModel=[];
+  //
+  // Future<void>  getAdvertisings()
+  // async{
+  //   advertisingModel=[];
+  //   FirebaseFirestore.instance.collection('advertising').get().then((value) {
+  //
+  //     print('siiiiiiiiiiiiiiiiiiiiiiiiiiii');
+  //
+  //     for (var element in value.docs) {
+  //
+  //       advertisingModel.add(AdvertisingModel.formJson(element.data()));
+  //
+  //     }
+  //     print('siiiiiiiiiiiiiiiiiiiiiiiiiiii');
+  //
+  //     emit(GetAdvertisingImageSuccessState());
+  //
+  //   }).catchError((error){
+  //
+  //     print('Error is ${error.toString()}');
+  //     emit(GetAdvertisingImageErrorState());
+  //
+  //   });
+  // }
+  //
+  // Future <void> toAdvertisingLink({
+  //   required String advertisingLink,
+  // })async
+  // {
+  //   String url= advertisingLink;
+  //   await launch(url , forceSafariVC: false);
+  //   emit(LaunchAdvertisingImageSuccessState());
+  // }
 }
 

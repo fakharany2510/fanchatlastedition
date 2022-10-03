@@ -15,10 +15,12 @@ class AddFanVideo extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
-        if(state is FanCreatePostSuccessState){
+        if(state is FanCreateVideoPostSuccessState){
          // AppCubit.get(context).videoPlayerController!.dispose();
           AppCubit.get(context).videoPlayerController==null;
           AppCubit.get(context).postVideo=null;
+          AppCubit.get(context).currentIndex=2;
+
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
         }
       },
@@ -135,7 +137,6 @@ class AddFanVideo extends StatelessWidget {
                         )
                     )),
                   )),
-                  Spacer(),
 
 
                 ],
