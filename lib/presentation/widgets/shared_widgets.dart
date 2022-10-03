@@ -1,6 +1,7 @@
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/utils/utils.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/presentation/screens/more_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -138,6 +139,19 @@ customAppbar(String title,context){
         color: AppColors.myWhite
     ),
     backgroundColor: AppColors.primaryColor1,
+    leading: IconButton(
+      onPressed: (){
+             Navigator.push(context, MaterialPageRoute(builder: (_){
+                return MoreScreen();
+             }));
+      },
+      icon: const Image(
+        color: Colors.white,
+        height: 25,
+        width: 25,
+        image: AssetImage('assets/images/more_screen.png'),
+      ),
+    ),
     title:Container(
       height: MediaQuery.of(context).size.height*1,
       width: MediaQuery.of(context).size.width*.25,

@@ -202,3 +202,18 @@ class UploadVideoTeamChatSuccessState extends AppState {}
 class UploadVideoTeamChatErrorState extends AppState {}
 
 
+class PickAdvertisingImageSuccessState extends AppState {}
+
+
+class UploadAdvertisingImageLoadingState extends AppState {}
+class UploadAdvertisingImageSuccessState extends AppState {}
+class UploadAdvertisingImageErrorState extends AppState {}
+
+class CreateAdvertisingImageLoadingState extends AppState {}
+class CreateAdvertisingImageSuccessState extends AppState {}
+class CreateAdvertisingImageErrorState extends AppState {}
+
+class GetAdvertisingImageLoadingState extends AppState {}
+class GetAdvertisingImageSuccessState extends AppState {}
+class GetAdvertisingImageErrorState extends AppState {}
+class LaunchAdvertisingImageSuccessState extends AppState {}

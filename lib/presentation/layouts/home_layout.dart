@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/add_ads/add_ads.dart';
 import 'package:fanchat/presentation/paypal/choosepaymentmethod.dart';
 import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/screens/countries_screen.dart';
@@ -39,7 +40,6 @@ class _HomeLayoutState extends State<HomeLayout> {
       Future.delayed(const Duration(days: 7),(){
         if( AppCubit.get(context).userModel!.accountActive == false){
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChoosePaymentMethod()));
-          print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
         }else{
           print('payed');
 
@@ -60,7 +60,7 @@ class _HomeLayoutState extends State<HomeLayout> {
       const FanScreen(),
       const CountriesScreen(),
       PublicChatScreen(),
-      const MoreScreen(),
+       AddAdvertuser(),
 
 
     ];
@@ -196,12 +196,12 @@ class _HomeLayoutState extends State<HomeLayout> {
                     ),
                     BottomNavigationBarItem(
                       icon: ImageIcon(
-                       const AssetImage("assets/images/profile.png"),
+                       const AssetImage("assets/images/ad-icon.png"),
                         color:AppColors.myGrey,
                       ),
-                      label: 'More',
+                      label: 'Add',
                       activeIcon:ImageIcon(
-                        const AssetImage("assets/images/profile.png"),
+                        const AssetImage("assets/images/ad-icon.png"),
                         color:AppColors.navBarActiveIcon,
                       ),
 

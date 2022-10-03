@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
+import 'package:fanchat/data/modles/advertising_model.dart';
 import 'package:fanchat/data/modles/cheering_model.dart';
 import 'package:fanchat/data/modles/fan_model.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
@@ -2333,5 +2334,121 @@ List<int> commentIndex=[];
 
   }
 
+  // add advertising --------------------------------------
+
+  File? uploadAdvertisingImage ;
+  var pickerAdvertising = ImagePicker();
+
+  Future <void> getAdvertisingImage() async {
+    final pickedFile = await pickerAdvertising.pickImage(
+      source: ImageSource.gallery,
+    );
+    if (pickedFile != null) {
+      uploadAdvertisingImage = File(pickedFile.path);
+      emit(PickAdvertisingImageSuccessState());
+    } else {
+      print('No Image selected.');
+    }
+  }
+
+  var advertisingLink = TextEditingController();
+
+  Future<void> createAdvertisingImage({
+
+    String ?image,
+    String ?link,
+
+   })async{
+    AdvertisingModel advertisingModel =AdvertisingModel(
+      advertisingImage: image,
+      advertisingLink: link,
+    );
+
+    FirebaseFirestore.instance.collection('advertising').add(advertisingModel.toMap()).then((value) {
+
+      print('Create Advertising');
+      getAdvertisings();
+      emit(CreateAdvertisingImageSuccessState());
+    }).catchError((error){
+
+      print('Error in createAdvertisingImage is ${error.toString()}');
+      emit(CreateAdvertisingImageErrorState());
+
+    });
+
+
+  }
+  Future uploadAdvertising({
+
+    required String advertisingLink,
+
+  }){
+
+    emit(UploadAdvertisingImageLoadingState());
+    return firebase_storage.FirebaseStorage.instance.ref()
+        .child('advertisingImage/${Uri.file(uploadAdvertisingImage!.path).pathSegments.last}')
+        .putFile(uploadAdvertisingImage!).then((value) {
+
+      value.ref.getDownloadURL().then((value) {
+
+        debugPrint('uploadAdvertisingImage Success');
+        createAdvertisingImage(
+            image: value,
+            link: advertisingLink,
+        );
+        uploadAdvertisingImage=null;
+        advertisingLink='';
+        emit(UploadAdvertisingImageSuccessState());
+
+      }).catchError((error){
+
+        debugPrint('Error in UploadAdvertisingImage ${error.toString()}');
+        emit(UploadAdvertisingImageErrorState());
+
+      });
+
+    }).catchError((error){
+
+      debugPrint('Error in Upload NationalId ${error.toString()}');
+      emit(UploadAdvertisingImageErrorState());
+    });
+
+
+  }
+
+  List <AdvertisingModel> advertisingModel=[];
+
+  Future<void>  getAdvertisings()
+  async{
+    advertisingModel=[];
+    FirebaseFirestore.instance.collection('advertising').get().then((value) {
+
+      print('siiiiiiiiiiiiiiiiiiiiiiiiiiii');
+
+      for (var element in value.docs) {
+
+        advertisingModel.add(AdvertisingModel.formJson(element.data()));
+
+      }
+      print('siiiiiiiiiiiiiiiiiiiiiiiiiiii');
+
+      emit(GetAdvertisingImageSuccessState());
+
+    }).catchError((error){
+
+      print('Error is ${error.toString()}');
+      emit(GetAdvertisingImageErrorState());
+
+    });
+  }
+
+  Future <void> toAdvertisingLink({
+    required String advertisingLink,
+  })async
+  {
+    String url= advertisingLink;
+    await launch(url , forceSafariVC: false);
+    emit(LaunchAdvertisingImageSuccessState());
+  }
 }
 

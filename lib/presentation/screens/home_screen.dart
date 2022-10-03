@@ -50,13 +50,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: double.infinity,
                 ),
                 const SizedBox(height: 5,),
+                if(cubit.advertisingModel.isNotEmpty)
                 CarouselSlider(
-                  items: cubit.carouselImage.map((e) {
-                    return Image(
-                      image: NetworkImage(e),
-                      width: double.infinity,
-                      fit: BoxFit.cover,
+                  items: cubit.advertisingModel.map((e) {
+                    return GestureDetector(
+                      onTap: (){
+                        cubit.toAdvertisingLink(
+                            advertisingLink: e.advertisingLink!
+                        );
+                      },
+                      child: Image(
+                        image: NetworkImage(e.advertisingImage!),
+                        width: double.infinity,
+                        fit: BoxFit.cover,
 
+                      ),
                     );
                   }).toList(),
                   options: CarouselOptions(
