@@ -40,33 +40,37 @@ class _CountriesScreenState extends State<CountriesScreen> {
     return BlocConsumer<AppCubit,AppState>(builder: (context,state){
       return Scaffold(
         backgroundColor: AppColors.primaryColor1,
-          appBar: AppBar(
-            elevation: 0,
-              backgroundColor: AppColors.primaryColor1,
-              title: Center(
-                child: Card(
-                  elevation: 0,
-                  child: TextField(
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search), hintText: 'Search Your Favourite Team...'),
-                    onChanged: (val) {
-                      setState(() {
-                        name = val;
-                      });
-                    },
-                  ),
-                ),
+          body: SingleChildScrollView(
+      child: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 10,right: 10),
+          child: Container(
+            height: 45,
+            child: Card(
+              elevation: 0,
+              child: TextField(
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search), hintText: 'Search Your Favourite Team...'),
+                onChanged: (val) {
+                  setState(() {
+                    name = val;
+                  });
+                },
               ),
-          leading:Icon(Icons.account_circle_sharp,color: AppColors.primaryColor1),
+            ),
+
           ),
-          body: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('countries').snapshots(),
+        ),
+      StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('countries').orderBy('name').snapshots(),
             builder: (context, snapshots) {
               return (snapshots.connectionState == ConnectionState.waiting)
                   ? const Center(
                 child: CircularProgressIndicator(),
               )
                   : ListView.builder(
+                shrinkWrap: true,
                   itemCount: snapshots.data!.docs.length,
                   itemBuilder: (context, index) {
                     var data = snapshots.data!.docs[index].data()
@@ -136,7 +140,11 @@ class _CountriesScreenState extends State<CountriesScreen> {
                     return Container();
                   });
             },
-          ));
+          ),
+      ],
+      ),
+      ),
+      );
     }, listener: (context,state){});
   }
 }

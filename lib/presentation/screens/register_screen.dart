@@ -6,12 +6,14 @@ import 'package:fanchat/business_logic/register/register_cubit.dart';
 import 'package:fanchat/business_logic/register/register_states.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/presentation/screens/privacy_policies.dart';
 
 import 'package:fanchat/presentation/screens/verify_code_screen.dart';
 import 'package:fanchat/presentation/widgets/post_widget.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:fanchat/utils/helpers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -270,7 +272,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ],
                       ),
                       SizedBox(height: size.height*.03,),
-
+                      privacyPolicyLinkAndTermsOfService(context)
                     ],
                   ),
                 ),
@@ -300,6 +302,53 @@ class _RegisterScreenState extends State<RegisterScreen> {
             fontFamily: AppStrings.appFont
         ),),
       ],
+    ),
+  );
+}
+
+Widget privacyPolicyLinkAndTermsOfService(context) {
+  return Container(
+    alignment: Alignment.center,
+    padding: EdgeInsets.all(10),
+    child: Center(
+        child: Text.rich(
+            TextSpan(
+                text: 'By Creating Account, you agree to our ', style: TextStyle(
+                fontSize: 16, color:AppColors.myGrey
+            ),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: 'Terms of Service', style: TextStyle(
+                    fontSize: 16, color: AppColors.navBarActiveIcon,
+                    decoration: TextDecoration.underline,
+                  ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>PrivacyPolicies()));
+                          // code to open / launch terms of service link here
+                        }
+                  ),
+                  TextSpan(
+                      text: ' and ', style: TextStyle(
+                      fontSize: 18, color: AppColors.myGrey
+                  ),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: 'Privacy Policy', style: TextStyle(
+                            fontSize: 18, color: AppColors.navBarActiveIcon,
+                            decoration: TextDecoration.underline
+                        ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>PrivacyPolicies()));
+                                // code to open / launch privacy policy link here
+                              }
+                        )
+                      ]
+                  )
+                ]
+            )
+        )
     ),
   );
 }

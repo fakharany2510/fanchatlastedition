@@ -44,10 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: 2,
-                  color: Colors.blue,
-                  width: double.infinity,
+                Padding(
+                  padding: const EdgeInsets.only(top:5),
+                  child: Container(
+                    height: 2,
+                    color: Colors.blue,
+                    width: double.infinity,
+                  ),
                 ),
                 const SizedBox(height: 5,),
                 if(cubit.advertisingModel.isNotEmpty)

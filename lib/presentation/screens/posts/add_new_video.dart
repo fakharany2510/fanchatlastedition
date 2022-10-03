@@ -2,6 +2,7 @@ import 'package:cached_video_player/cached_video_player.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/data/services/notification_helper.dart';
+import 'package:fanchat/presentation/notifications/functions/send_notification.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -105,9 +106,10 @@ class _AddNewVideoState extends State<AddNewVideo> {
                           text:postText.text,
                           name: AppCubit.get(context).userModel!.username,
                         );
-                        notifyHelper.displayNotification(
-                            title:'New Post',
-                            body:'${postText.text}'
+                        callFcmApiSendPushNotifications(
+                          title: 'New Post Added',
+                          description:postText.text,
+                          imageUrl: "",
                         );
                       }
                     },

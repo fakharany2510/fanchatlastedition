@@ -18,7 +18,8 @@ class CommentScreen extends StatefulWidget {
 
 class _CommentScreenState extends State<CommentScreen> {
   var commentController = TextEditingController();
-
+  bool commentControllerChanges=false;
+  var formKey =GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -142,30 +143,7 @@ class _CommentScreenState extends State<CommentScreen> {
                           ),
                           itemCount: AppCubit.get(context).comments.length,
                         ),
-                        //   fallback: (context ) =>
-                        //    child :Center(
-                        //     child: Column(
-                        //       mainAxisAlignment: MainAxisAlignment.center,
-                        //       children: [
-                        //         Icon(
-                        //           Icons.comment,
-                        //           size: 100.0,
-                        //           color: Colors.grey[300],
-                        //         ),
-                        //         const SizedBox(
-                        //           height: 10,
-                        //         ),
-                        //         Text(
-                        //           'Add Comment',
-                        //           style: TextStyle(
-                        //             fontSize: 26.0,
-                        //             fontWeight: FontWeight.bold,
-                        //             color: Colors.grey[300],
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
+
                       ),
 
                       Padding(
@@ -191,50 +169,32 @@ class _CommentScreenState extends State<CommentScreen> {
                                   borderRadius: BorderRadius.circular(20.0),
                                   color: Colors.grey[200],
                                 ),
-                                child: TextField(
-
-                                   onChanged: (v){
-
-                                     AppCubit.get(context).changeIconColor();
-
-
-                                   },
-                                  decoration: const InputDecoration(
-                                    hintText: 'Write a comment...',
-                                    border: InputBorder.none,
+                                child: Form(
+                                  key: formKey,
+                                  child: TextFormField(
+                                    validator: (value){
+                                      if(value!.isEmpty){
+                                        return 'please write your comment';
+                                      }
+                                    },
+                                     onChanged: (v){
+                                       AppCubit.get(context).changeIconColor();
+                                       setState((){
+                                         commentControllerChanges = true;
+                                       });
+                                     },
+                                    decoration: const InputDecoration(
+                                      hintText: 'Write a comment...',
+                                      border: InputBorder.none,
+                                    ),
+                                    controller: commentController,
                                   ),
-                                  controller: commentController,
                                 ),
                               ),
                             ),
+                            (commentControllerChanges == true) && (commentController.text != '')?
                             IconButton(
                               onPressed: (){
-                                // if(route == 'home')
-                                // {
-                                // //   DioHelper.postDate( data: {
-                                // //     "data" : commentController.text,
-                                // //   }).then((value) {
-                                // //     if(value.data['response'] == "comment is normal"){
-                                // //       print(value.data['response']);
-                                // //       AppCubit.get(context).commentHomePost(postId!, commentController.text);
-                                // //     }else{
-                                // //       customToast("Comment not Allow", Colors.red);
-                                // //     }
-                                // //   });
-                                // // }
-                                // // else if (route == 'group')
-                                // // {
-                                // //   DioHelper.postDate( data: {
-                                // //     "data" : commentController.text,
-                                // //   }).then((value) {
-                                // //     if(value.data['response'] == "comment is normal"){
-                                // //       print(value.data['response']);
-                                // //       AppCubit.get(context).commentGroupPost(postId!, commentController.text);
-                                // //     }else{
-                                // //       customToast("Comment not Allow", Colors.red);
-                                // //     }
-                                // //   });
-                                // }
                                 AppCubit.get(context).commentHomePost(widget.postId, commentController.text);
                                 AppCubit.get(context).testComments(widget.postId);
                                 commentController.text='';
@@ -248,7 +208,15 @@ class _CommentScreenState extends State<CommentScreen> {
                                 color: AppCubit.get(context).iconColor,
                                 size: 34.0,
                               )
-                            ),
+                            )
+                                : IconButton(
+                                onPressed: (){
+                                },
+                                icon: Icon(
+                                  Icons.send_rounded,
+                                  color: AppColors.myGrey,
+                                  size: 34.0,)
+                            )
                           ],
                         ),
                       ),

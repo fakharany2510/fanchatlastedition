@@ -285,7 +285,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                         ),
                         const SizedBox(height: 5,),
                         VoiceMessage(
-                          audioSrc: '${AppCubit.get(context).teamChat[widget.hashCode!].voice}',
+                          audioSrc: '${AppCubit.get(context).teamChat[widget.hashCode].voice}',
                           played: true, // To show played badge or not.
                           me: true, // Set message side.
                           contactBgColor:AppColors.myGrey ,
