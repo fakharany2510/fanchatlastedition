@@ -79,6 +79,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    AppCubit.get(context).getCheeringPost();
 
     return BlocConsumer<AppCubit,AppState>(builder: (context,state){
       return widget.countryName != null
@@ -89,7 +90,6 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
               if(scrollController.hasClients){
                 scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
               }
-              AppCubit.get(context).getCheeringPost();
               print('sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
               print(AppCubit.get(context).cheering.length);
               print('sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
@@ -161,7 +161,8 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                     body: ConditionalBuilder(
                       builder: (context)=>Column(
                         children: [
-                          AppCubit.get(context).isLast==false ?
+                          if(AppCubit.get(context).indexCheeringList==0)
+                            AppCubit.get(context).isLast==false ?
                           Container(
                               height: MediaQuery.of(context).size.height*.22,
                               decoration: BoxDecoration(

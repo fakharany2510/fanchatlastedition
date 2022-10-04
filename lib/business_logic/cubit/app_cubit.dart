@@ -1923,7 +1923,7 @@ List<int> commentIndex=[];
         .then((value){
 
           // getCheeringPost();
-      isLast=false;
+      // isLast=false;
 
       print('Upload Cheering message');
       emit(CreateCheeringSuccessState());
@@ -1943,6 +1943,7 @@ List<int> commentIndex=[];
 
   List <CheeringModel> waitingList=[];
 
+  int indexCheeringList=0;
   Future <void> getCheeringPost() async{
     FirebaseFirestore.instance
         .collection('cheering')
@@ -1958,7 +1959,8 @@ List<int> commentIndex=[];
                   emit(GetCheeringSuccessState());
                 });
                 print( cheering.first.text);
-                // isLast=false;
+                isLast=false;
+               indexCheeringList+=indexCheeringList;
                 print( isLast);
     });
 
