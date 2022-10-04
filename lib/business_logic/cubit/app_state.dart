@@ -200,10 +200,11 @@ class CreateVideoTeamChatLoadingState extends AppState {}
 class UploadVideoTeamChatLoadingState extends AppState {}
 class UploadVideoTeamChatSuccessState extends AppState {}
 class UploadVideoTeamChatErrorState extends AppState {}
+class PaySuccessState extends AppState {}
 
 
 class PickAdvertisingImageSuccessState extends AppState {}
-
+class IncreaseNumberOfPostsSuccessState extends AppState {}
 
 class UploadAdvertisingImageLoadingState extends AppState {}
 class UploadAdvertisingImageSuccessState extends AppState {}

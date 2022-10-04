@@ -522,7 +522,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Padding(
-                                        padding: const EdgeInsets.only(left: 8),
+                                        padding:  EdgeInsets.only(left: 8),
                                         child: TextFormField(
                                           onChanged: (v){
                                             setState((){

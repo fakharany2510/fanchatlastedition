@@ -14,6 +14,7 @@ class UserModel{
   bool ?accountActive ;
   bool ?advertise ;
   bool ?business ;
+  int? numberOfPosts;
 
 
   UserModel({
@@ -32,6 +33,7 @@ class UserModel{
     this.accountActive,
     this.advertise,
     this.business,
+    this.numberOfPosts,
 
   });
 
@@ -51,6 +53,7 @@ class UserModel{
     twitterLink=json['twitterLink'];
     facebookLink=json['facebookLink'];
     instagramLink=json['instagramLink'];
+    numberOfPosts=json['numberOfPosts'];
 
   }
 
@@ -71,6 +74,7 @@ class UserModel{
       'youtubeLink':youtubeLink,
       'twitterLink':twitterLink,
       'instagramLink':instagramLink,
+      'numberOfPosts':numberOfPosts,
     };
   }
 

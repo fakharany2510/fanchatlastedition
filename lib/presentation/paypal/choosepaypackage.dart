@@ -3,7 +3,7 @@ import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
-import 'package:fanchat/presentation/paypal/businesspackage.dart';
+import 'package:fanchat/presentation/paypal/advertise.dart';
 import 'package:fanchat/presentation/paypal/premiumpackage.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
@@ -125,7 +125,7 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>PremiumPackage()));
                     }
                     if(_value==2){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>BusinessPackage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Advertise()));
                     }
                   }),
             )

@@ -26,6 +26,7 @@ class _AddTextPostState extends State<AddTextPost> {
   var notifyHelper;
   bool textFormFielsChanged = false;
   bool isbuttonDisabled = false;
+  int increaseNumberOfPosts=0;
   @override
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   void initState() {
@@ -81,7 +82,7 @@ class _AddTextPostState extends State<AddTextPost> {
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : (textFormFielsChanged == true && postText.text != "")
+                  : (textFormFielsChanged == true && postText.text != ""  && AppCubit.get(context).userModel!.numberOfPosts < 12)
               ?Padding(
         padding: const EdgeInsets.all(8.0),
         child: defaultButton(
@@ -103,6 +104,10 @@ class _AddTextPostState extends State<AddTextPost> {
         imageUrl: "",
         //  token:AppCubit.get(context).userToken
         );
+        setState((){
+          increaseNumberOfPosts++;
+        });
+        AppCubit.get(context).increasNumberOfPosts(increaseNumberOfPosts);
         }
         },
 

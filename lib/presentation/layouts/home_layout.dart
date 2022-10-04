@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/add_ads/add_ads.dart';
@@ -37,12 +38,14 @@ class _HomeLayoutState extends State<HomeLayout> {
       print("==================================token================================");
     });
     AppCubit.get(context).getUser().then((value){
-      print('llllljjjjjjjjjjjjjjjjjjjjjjjj${AppCubit.get(context).userModel!.accountActive }');
+      print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
+      print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
       Future.delayed(const Duration(days: 7),(){
-        if( AppCubit.get(context).userModel!.accountActive == false){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChoosePaymentMethod()));
-        }else{
+        if( CashHelper.getData(key: 'business') == true || CashHelper.getData(key: 'advertise') == true){
           print('payed');
+        }else{
+
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChoosePaymentMethod()));
 
         }
       });

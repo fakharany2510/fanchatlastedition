@@ -2346,6 +2346,15 @@ List<int> commentIndex=[];
       print('No Image selected.');
     }
   }
+  void increasNumberOfPosts(int index){
+    FirebaseFirestore.instance.collection('users').doc(AppStrings.uId).update(
+      {
+        'numberOfPosts':index
+      }
+    ).then((value){
+      emit(IncreaseNumberOfPostsSuccessState());
+    });
+  }
 
   // var advertisingLink = TextEditingController();
   //

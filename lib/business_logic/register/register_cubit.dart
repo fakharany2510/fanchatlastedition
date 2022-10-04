@@ -68,6 +68,8 @@ class RegisterCubit extends Cubit<RegisterState>{
         String ?facebook,
         String ?instagram,
         String ?cover,
+        bool ?advertise,
+        bool ?business,
 
 
       })
@@ -83,7 +85,10 @@ class RegisterCubit extends Cubit<RegisterState>{
         facebookLink: facebook??'Enter your facebook link',
         image: image??'https://img.freepik.com/free-vector/man-shows-gesture-great-idea_10045-637.jpg?w=740&t=st=1659098857~exp=1659099457~hmac=07d524c7d7ac8cc820597784d5b1733130b117a8945288ae40ad2aaf17018419',
         cover: cover??'https://img.freepik.com/free-vector/football-player-with-ball-stadium-with-france-flags-background-vector-illustration_1284-16438.jpg?w=740&t=st=1659099057~exp=1659099657~hmac=a0bb3dcd21329344cdeb6394401b201a4062c653f424a245c7d32e2358df63e4',
-      accountActive: false
+      accountActive: false,
+        advertise:advertise?? false,
+        business: business??false,
+      numberOfPosts: 0,
     );
 
     FirebaseFirestore.instance

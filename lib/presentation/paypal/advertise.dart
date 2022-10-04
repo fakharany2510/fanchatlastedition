@@ -1,8 +1,59 @@
+// import 'package:fanchat/presentation/layouts/home_layout.dart';
+// import 'package:fanchat/presentation/screens/home_screen.dart';
+// import 'package:flutter/foundation.dart';
+// import 'package:flutter/gestures.dart';
+// import 'package:flutter/material.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
+//
+//
+// class PaypalPayment extends StatelessWidget {
+//   final double amount;
+//   final String currency;
+//   const PaypalPayment({Key? key, required this.amount, required this.currency})
+//       : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         leading: GestureDetector(
+//           onTap: () {
+//             Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeLayout()));
+//           },
+//           child: const Icon(Icons.arrow_back_ios),
+//         ),
+//       ),
+//       body: WebView(
+//         initialUrl:
+//         'http://localhost:3000/createpaypalpayment?amount=$amount&currency=$currency',
+//         javascriptMode: JavascriptMode.unrestricted,
+//         gestureRecognizers: Set()
+//           ..add(Factory<DragGestureRecognizer>(
+//                   () => VerticalDragGestureRecognizer())),
+//         onPageFinished: (value) {
+//           print(value);
+//         },
+//         navigationDelegate: (NavigationRequest request) async {
+//           if (request.url.contains('http://return_url/?status=success')) {
+//             print('return url on success');
+//             Navigator.pop(context);
+//           }
+//           if (request.url.contains('http://cancel_url')) {
+//             Navigator.pop(context);
+//           }
+//           return NavigationDecision.navigate;
+//         },
+//       ),
+//     );
+//   }
+// }
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/data/modles/user_model.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
@@ -10,23 +61,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 
-class PremiumPackage extends StatefulWidget {
-  const PremiumPackage({Key? key}) : super(key: key);
+class Advertise extends StatefulWidget {
+  const Advertise({Key? key}) : super(key: key);
 
   @override
-  State<PremiumPackage> createState() => _PremiumPackageState();
+  State<Advertise> createState() => _AdvertiseState();
 }
 
-class _PremiumPackageState extends State<PremiumPackage> {
-  bool paymentSuccess=false;
+class _AdvertiseState extends State<Advertise> {
+  bool paymentSuccess =false;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
       builder: (context,state){
         return Scaffold(
-          backgroundColor: AppColors.primaryColor1,
+            backgroundColor: AppColors.primaryColor1,
             appBar: AppBar(
               backgroundColor: AppColors.primaryColor1,
               elevation: 0,
@@ -67,16 +117,16 @@ class _PremiumPackageState extends State<PremiumPackage> {
                                 transactions: const [
                                   {
                                     "amount": {
-                                      "total": '20',
+                                      "total": '200',
                                       "currency": "USD",
                                       "details": {
-                                        "subtotal": '20',
+                                        "subtotal": '200',
                                         "shipping": '0',
                                         "shipping_discount": 0
                                       }
                                     },
                                     "description":
-                                    "fanchat premium account",
+                                    "fanchat advertise account",
                                     // "payment_options": {
                                     //   "allowed_payment_method":
                                     //       "INSTANT_FUNDING_SOURCE"
@@ -86,7 +136,7 @@ class _PremiumPackageState extends State<PremiumPackage> {
                                         {
                                           "name": "A demo product",
                                           "quantity": 1,
-                                          "price": '20',
+                                          "price": '200',
                                           "currency": "USD"
                                         }
                                       ],
@@ -108,17 +158,17 @@ class _PremiumPackageState extends State<PremiumPackage> {
                                 note: "Contact us for any questions on your order.",
                                 onSuccess: (Map params) async {
                                   print("onSuccess: $params");
-                                  CashHelper.saveData(key: 'business' , value: true);
-                                  await FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
+                                  CashHelper.saveData(key: 'advertise' , value: true);
+                                 await FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
                                       .update({
-                                    'business':true,
+                                    'advertise':true,
                                   }).then((value){
                                     setState((){
-                                      paymentSuccess=true;
-                                     });
-                                    print('SUCCESS TO ACTIVE PAYMENT FIREBASE');
+                                      paymentSuccess=true;});
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChoosePayPackage()));
+                                    print('success to update aaccountStates');
                                   }).catchError((error){
-                                    print('ERROR TO ACTIVE PAYMENT FIREBASE ${error.toString()}');
+                                    print('success to update aaccountStates${error.toString()}');
                                   });
                                 },
                                 onError: (error) {
@@ -135,20 +185,21 @@ class _PremiumPackageState extends State<PremiumPackage> {
       },
       listener: (BuildContext context, Object? state) {
         if(state is PaySuccessState){
-         // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeLayout()));
-         //  Navigator.push(
-         //    context,
-         //    MaterialPageRoute(
-         //        builder: (newcontext) =>
-         //        ChangeNotifierProvider<t extends BaseProvider>.value(
-         //          value: Provider.of<>(context),
-         //          child: HomeLayout(),
-         //        )
-         //    ),
-         //  );
+          // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeLayout()));
+          //  Navigator.push(
+          //    context,
+          //    MaterialPageRoute(
+          //        builder: (newcontext) =>
+          //        ChangeNotifierProvider<t extends BaseProvider>.value(
+          //          value: Provider.of<>(context),
+          //          child: HomeLayout(),
+          //        )
+          //    ),
+          //  );
         }
-    },
+      },
     );
   }
 
-}
+  }
+
