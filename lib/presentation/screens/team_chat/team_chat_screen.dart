@@ -89,6 +89,10 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
               if(scrollController.hasClients){
                 scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
               }
+              AppCubit.get(context).getCheeringPost();
+              print('sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
+              print(AppCubit.get(context).cheering.length);
+              print('sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
               return BlocConsumer<AppCubit,AppState>(
                 listener: (context,state){
                   if(state is PickPostImageSuccessState ){
@@ -184,75 +188,62 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                     ),
                                     width:MediaQuery.of(context).size.width*.9 ,
                                     height: MediaQuery.of(context).size.height*.18,
-                                    child:  Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
+                                    child:  ListView.separated(
+                                        itemBuilder: (context,index){
+                                          return Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
 
-                                              CircleAvatar(
-                                                backgroundImage:NetworkImage('${AppCubit.get(context).cheering.first.userImage}'),
-                                                radius: 18,
-                                              ),
-                                              const SizedBox(width: 10,),
-                                              Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Text('${AppCubit.get(context).cheering.first.username}',
-                                                        style: TextStyle(
-                                                            color: AppColors.primaryColor1,
-                                                            fontSize: 15,
-                                                            fontWeight: FontWeight.w500,
-                                                            fontFamily: AppStrings.appFont
+                                                    CircleAvatar(
+                                                      backgroundImage:NetworkImage('${AppCubit.get(context).cheering[0].userImage}'),
+                                                      radius: 18,
+                                                    ),
+                                                    const SizedBox(width: 10,),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Text('${AppCubit.get(context).cheering[0].username}',
+                                                              style: TextStyle(
+                                                                  color: AppColors.primaryColor1,
+                                                                  fontSize: 15,
+                                                                  fontWeight: FontWeight.w500,
+                                                                  fontFamily: AppStrings.appFont
+                                                              ),
+                                                            ),
+
+                                                          ],
                                                         ),
-                                                      ),
+                                                      ],
+                                                    ),
 
-                                                    ],
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 10,),
+                                                Text('${AppCubit.get(context).cheering[0].text}',
+                                                  style: TextStyle(
+                                                      color: AppColors.primaryColor1,
+                                                      fontSize: 22,
+                                                      fontWeight: FontWeight.w500,
+                                                      fontFamily: AppStrings.appFont
                                                   ),
-                                                ],
-                                              ),
-
-                                            ],
-                                          ),
-                                          const SizedBox(height: 10,),
-                                          Text('${AppCubit.get(context).cheering.first.text}',
-                                            style: TextStyle(
-                                                color: AppColors.primaryColor1,
-                                                fontSize: 22,
-                                                fontWeight: FontWeight.w500,
-                                                fontFamily: AppStrings.appFont
+                                                ),
+                                                const SizedBox(height: 10,),
+                                              ],
                                             ),
-                                          ),
-                                          const SizedBox(height: 10,),
-                                            // Align(
-                                            //   alignment: Alignment.topRight,
-                                            //   child: Text('${AppCubit.get(context).timerCheering}',
-                                            //     style: TextStyle(
-                                            //         color: AppColors.primaryColor1,
-                                            //         fontSize: 14,
-                                            //         fontWeight: FontWeight.w500,
-                                            //         fontFamily: AppStrings.appFont
-                                            //     ),
-                                            //   ),
-                                            // ),
-                                          //     if(AppCubit.get(context).count!=0 || AppCubit.get(context).count>0)
-                                          //
-                                          //     TimerBuilder.periodic(Duration(seconds: 1),
-                                          //     builder: (context) {
-                                          //       var testCount=15;
-                                          //       testCount=testCount-1;
-                                          //       AppCubit.get(context).count-=AppCubit.get(context).count;
-                                          //       return Text('${testCount}');
-                                          //     }
-                                          // ),
-                                        ],
-                                      ),
-                                    ),
+                                          );
+                                        },
+                                        separatorBuilder: (context,index){
+                                          return const SizedBox(height: 0,);
+                                        },
+                                        itemCount: 1
+                                    )
                                   ),
                                   Positioned(
                                     bottom: 25,
@@ -288,7 +279,10 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                         debugPrint('Countdown Ended');
                                         setState(() {
 
+                                          // AppCubit.get(context).isWaiting=false;
                                           AppCubit.get(context).isLast=true;
+                                          print(AppCubit.get(context).isLast);
+                                          // AppCubit.get(context).deleteCheeringPost();
 
                                         });
                                       },
@@ -300,7 +294,8 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
 
                                 ],
                               ),
-                            ):Container(),
+                            )
+                              :Container(),
                           Expanded(
                             child: Container(
                               height:MediaQuery.of(context).size.height*.83,
@@ -319,7 +314,8 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                     return MyMessageTeamChatWidget(index: index,);
                                   },
                                   separatorBuilder: (context , index)=>const SizedBox(height: 15,),
-                                  itemCount: AppCubit.get(context).teamChat.length),
+                                  itemCount: AppCubit.get(context).teamChat.length)
+                              ,
                             ),
                           ),
                           Padding(
@@ -339,6 +335,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                     return CheeringScreen(countryName: widget.countryName,countryImage: widget.countryImage,);
 
                                   }));
+
                                 },
 
                               ),

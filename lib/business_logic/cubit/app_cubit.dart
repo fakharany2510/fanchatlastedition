@@ -1921,8 +1921,11 @@ List<int> commentIndex=[];
         .collection('cheering')
         .add(model.toMap())
         .then((value){
-          getCheeringPost();
-          print('Upload Cheering message');
+
+          // getCheeringPost();
+      isLast=false;
+
+      print('Upload Cheering message');
       emit(CreateCheeringSuccessState());
     })
         .catchError((error){
@@ -1930,25 +1933,32 @@ List<int> commentIndex=[];
     });
   }
 
+  bool isWaiting=false ;
+
   bool isLast=true;
   int count=15;
 
 
   List <CheeringModel> cheering=[];
 
+  List <CheeringModel> waitingList=[];
+
   Future <void> getCheeringPost() async{
-    cheering=[];
     FirebaseFirestore.instance
         .collection('cheering')
         .orderBy('timeSpam',descending: true)
         .snapshots().listen((event) {
-                event.docs.forEach((element) {
+      cheering=[];
+      event.docs.forEach((element) {
                   cheering.add(CheeringModel.formJson(element.data()));
                   print('Get Cheering message');
+                  print('///////////////////////////////////////////');
+                  print(cheering.length);
+                  print('///////////////////////////////////////////');
                   emit(GetCheeringSuccessState());
                 });
                 print( cheering.first.text);
-                isLast=false;
+                // isLast=false;
                 print( isLast);
     });
 
@@ -1964,6 +1974,69 @@ List<int> commentIndex=[];
 
   }
 
+  // waiting list
+
+  //Create Cheering
+  // Future<void> createWaitingPost({
+  //   required String? time,
+  //   required String? timeSpam,
+  //   required String? text,
+  //
+  // })async{
+  //
+  //   CheeringModel model=CheeringModel(
+  //       time: time,
+  //       timeSpam: timeSpam,
+  //       uId: userModel!.uId,
+  //       username: userModel!.username,
+  //       userImage: userModel!.image,
+  //       text: text
+  //   );
+  //
+  //   emit(CreateCheeringLoadingState());
+  //
+  //   FirebaseFirestore.instance
+  //       .collection('waiting')
+  //       .add(model.toMap())
+  //       .then((value){
+  //
+  //     // getCheeringPost();
+  //     print('Upload waiting message');
+  //     emit(CreateCheeringSuccessState());
+  //   })
+  //       .catchError((error){
+  //     emit(CreateCheeringErrorState());
+  //   });
+  // }
+  //
+  // Future <void> getWaitingPost() async{
+  //   waitingList=[];
+  //   FirebaseFirestore.instance
+  //       .collection('waiting')
+  //       .orderBy('timeSpam',descending: true)
+  //       .snapshots().listen((event) {
+  //     event.docs.forEach((element) {
+  //       waitingList.add(CheeringModel.formJson(element.data()));
+  //       print('Get waiting message');
+  //       emit(GetCheeringSuccessState());
+  //     });
+  //     print( cheering.first.text);
+  //     isLast=false;
+  //     print( isLast);
+  //   });
+  //
+  // }
+  //
+  // Future <void> deleteWaitingPost() async{
+  //   var collection = FirebaseFirestore.instance.collection('waiting');
+  //   var snapshots = await collection.get();
+  //   for (var doc in snapshots.docs) {
+  //     await doc.reference.delete();
+  //   }
+  //   emit(DeletePostSuccessState());
+  //
+  // }
+
 
   //Create Cheering
   void deletePost({
@@ -1977,6 +2050,7 @@ List<int> commentIndex=[];
         .then((value){
 
       print('Post Delete');
+
       getPosts();
       emit(DeletePostSuccessState());
     })

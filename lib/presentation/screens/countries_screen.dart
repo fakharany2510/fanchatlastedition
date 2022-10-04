@@ -79,6 +79,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                     if (name.isEmpty) {
                       return InkWell(
                         onTap: (){
+
                           AppCubit.get(context).deleteCheeringPost().then((value) {
                             AppCubit.get(context).isLast=true;
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>
@@ -86,6 +87,9 @@ class _CountriesScreenState extends State<CountriesScreen> {
                             ));
                           });
 
+                          // AppCubit.get(context).deleteWaitingPost().then((value) {
+                          //
+                          // });
                         },
                         child: ListTile(
                           title: Text(
