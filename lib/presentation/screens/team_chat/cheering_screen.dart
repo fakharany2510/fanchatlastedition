@@ -119,25 +119,21 @@ class CheeringScreen extends StatelessWidget {
                           textColor: AppColors.myWhite,
                           buttonText: 'Post',
                           function: (){
-                            // AppCubit.get(context).count=17;
-                            // if(AppCubit.get(context).isWaiting==false){
-                            //
-                            //   AppCubit.get(context).isWaiting=true;
-                            // }
-                            // else{
-                            //
-                            //   customToast(title: 'your cheering will be appear after few seconds', color: AppColors.primaryColor1);
-                            //   // AppCubit.get(context).createWaitingPost(
-                            //   //     time: DateFormat.Hm().format(DateTime.now()),
-                            //   //     timeSpam: DateTime.now().toString(),
-                            //   //     text: cheeringController.text
-                            //   // );
-                            // }
+                            AppCubit.get(context).count=17;
+                            if(AppCubit.get(context).isWaiting==false){
                             AppCubit.get(context).createCheeringPost(
                                 time: DateFormat.Hm().format(DateTime.now()),
                                 timeSpam: DateTime.now().toString(),
                                 text: cheeringController.text
                             );
+                              AppCubit.get(context).isWaiting=true;
+                            }
+                            else{
+
+                              customToast(title: 'your cheering will be appear after few seconds', color: AppColors.primaryColor1);
+
+                            }
+
                           
                             // AppCubit.get(context).getCheeringPost();
                             // AppCubit.get(context).isLast=false;

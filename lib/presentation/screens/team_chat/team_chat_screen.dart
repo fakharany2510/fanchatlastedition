@@ -279,7 +279,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                         debugPrint('Countdown Ended');
                                         setState(() {
 
-                                          // AppCubit.get(context).isWaiting=false;
+                                          AppCubit.get(context).isWaiting=false;
                                           AppCubit.get(context).isLast=false;
                                           print(AppCubit.get(context).isLast);
                                           AppCubit.get(context).deleteCheeringPost();
