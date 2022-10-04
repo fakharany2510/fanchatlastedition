@@ -14,7 +14,7 @@ import 'package:video_player/video_player.dart';
 import '../../constants/app_strings.dart';
 import '../screens/comment_screen.dart';
 import 'package:cached_video_player/cached_video_player.dart';
-late CachedVideoPlayerController controller;
+CachedVideoPlayerController? controller;
 
 class PostWidget extends StatefulWidget {
   int ?index;
@@ -30,13 +30,13 @@ class _PostWidgetState extends State<PostWidget> {
   @override
   void initState() {
     controller = CachedVideoPlayerController.network(
-        "${AppCubit.get(context).posts[widget.index!].postVideo!}");
-    controller.initialize().then((value) {
-      controller.play();
-      controller.setLooping(true);
-      controller.setVolume(1.0);
+        "${AppCubit.get(context).posts[widget.index!].postVideo}");
+    controller!.initialize().then((value) {
+      controller!.play();
+      controller!.setLooping(true);
+      controller!.setVolume(1.0);
       setState(() {
-        controller.pause();
+        controller!.pause();
       });
     }).catchError((error){
       print('error while initializing video ${error.toString()}');
@@ -48,7 +48,7 @@ class _PostWidgetState extends State<PostWidget> {
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(listener: (context,state){
       if(state is NavigateScreenState){
-        controller.pause();
+        controller!.pause();
        // videoPlayerController!.pause();
       }
 
@@ -239,10 +239,10 @@ class _PostWidgetState extends State<PostWidget> {
                       Container(
                         height: MediaQuery.of(context).size.height*.25,
                         width: double.infinity,
-                        child: controller.value.isInitialized
+                        child: controller!.value.isInitialized
                             ? AspectRatio(
-                            aspectRatio: controller.value.aspectRatio,
-                            child: CachedVideoPlayer(controller))
+                            aspectRatio: controller!.value.aspectRatio,
+                            child: CachedVideoPlayer(controller!))
                             : const Center(child: CircularProgressIndicator())
                       ),
 
@@ -272,17 +272,17 @@ class _PostWidgetState extends State<PostWidget> {
                           child: InkWell(
                             onTap: (){
                               setState((){
-                                if(controller.value.isPlaying){
-                                  controller.pause();
+                                if(controller!.value.isPlaying){
+                                  controller!.pause();
                                 }else{
-                                  controller.play();
+                                  controller!.play();
                                 }
                               });
                             },
                             child: CircleAvatar(
                               backgroundColor: AppColors.primaryColor1,
                               radius: 20,
-                              child: controller.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
+                              child: controller!.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
                             ),
                           )
                       ),

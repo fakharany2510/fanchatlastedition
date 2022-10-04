@@ -333,6 +333,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                 onPressed: (){
                                   Navigator.push(context, MaterialPageRoute(builder: (_){
 
+
                                     return CheeringScreen(countryName: widget.countryName,countryImage: widget.countryImage,);
 
                                   }));

@@ -33,6 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
         if(state is PickPostVideoSuccessState){
           Navigator.pushNamed(context, 'add_video');
         }
+        if(state is BrowiseGetPostsSuccessState){
+          controller!.pause();
+        }
+        if(state is NavigateScreenState){
+          controller!.pause();
+        }
+
       },
       builder: (context,state){
         var cubit=AppCubit.get(context);
@@ -88,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: (){
                           setState((){
                             if(AppCubit.get(context).postModel !=null)
-                           controller.pause();
+                           controller!.pause();
                           });
                           Navigator.pushNamed(context, 'add_text');
                         },

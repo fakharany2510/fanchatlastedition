@@ -42,7 +42,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
          //  AppCubit.get(context).testComments();
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
-          AppCubit.get(context).controller!.dispose();
+          AppCubit.get(context).controller!.pause();
           AppCubit.get(context).postVideo=null;
 
         }
