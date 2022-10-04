@@ -334,106 +334,11 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                   image: AssetImage('assets/images/cheeringIcon.png')
                                 ),
                                 onPressed: (){
-                                  showDialog(
-                                      context: context,
-                                      builder: (context){
-                                         return AlertDialog(
-                                           title: Text('Write Uniform Cheering',style: TextStyle(
-                                              color: AppColors.primaryColor1,
-                                             fontSize: 17,
-                                               fontFamily: AppStrings.appFont
+                                  Navigator.push(context, MaterialPageRoute(builder: (_){
 
-                                           ),
-                                           textAlign: TextAlign.center,
-                                           ),
+                                    return CheeringScreen(countryName: widget.countryName,countryImage: widget.countryImage,);
 
-                                           content: Container(
-                                             height: 200,
-                                             child: Column(
-                                               children: [
-                                                 SizedBox(height: 10,),
-                                                 Container(
-                                                   margin: const EdgeInsets.symmetric(
-                                                       horizontal: 0
-                                                   ),
-                                                   // height:MediaQuery.of(context).size.height*.07,
-                                                   child: TextFormField(
-                                                     inputFormatters: [
-                                                       LengthLimitingTextInputFormatter(70),
-                                                     ],
-                                                     style: TextStyle(
-                                                         color:AppColors.primaryColor1,
-                                                         fontFamily: AppStrings.appFont,
-                                                         fontSize: 17
-                                                     ),
-                                                     maxLines: 4,
-                                                     keyboardType: TextInputType.text,
-                                                     controller: cheeringController,
-                                                     decoration: InputDecoration(
-
-                                                       focusColor: AppColors.myGrey,
-                                                       fillColor: Colors.white,
-                                                       enabledBorder: OutlineInputBorder(
-                                                         borderSide: BorderSide(color:AppColors.primaryColor1),
-                                                         borderRadius: BorderRadius.circular(5),
-                                                       ),
-                                                       border: OutlineInputBorder(
-                                                           borderRadius: BorderRadius.circular(5)
-                                                       ),
-                                                       focusedBorder: OutlineInputBorder(
-                                                         borderSide: BorderSide(color:AppColors.primaryColor1),
-                                                         borderRadius: BorderRadius.circular(15),
-                                                       ),
-                                                       // hintText: '$labelText',
-                                                       // hintStyle: TextStyle(
-                                                       //   color: AppColors.myGrey,
-                                                       //   fontFamily: AppStrings.appFont,
-                                                       // ),
-                                                     ),
-                                                     validator: (value){
-                                                       if(value!.isEmpty){
-                                                         return 'Write uniform cheering';
-                                                       }
-                                                     },
-                                                   ),
-                                                 ),
-                                                 SizedBox(height: 20,),
-                                                 state is CreateCheeringLoadingState?
-                                                 CircularProgressIndicator(
-                                                   color: AppColors.primaryColor1,
-                                                 ):
-                                                 defaultButton(
-                                                     width: MediaQuery.of(context).size.width*.8,
-                                                     height: MediaQuery.of(context).size.height*.07,
-                                                     buttonColor: AppColors.primaryColor1,
-                                                     textColor: AppColors.myWhite,
-                                                     buttonText: 'Post',
-                                                     function: (){
-                                                       AppCubit.get(context).count=17;
-                                                       AppCubit.get(context).createCheeringPost(
-                                                           time: DateFormat.Hm().format(DateTime.now()),
-                                                           timeSpam: DateTime.now().toString(),
-                                                           text: cheeringController.text
-                                                       ).then((value) {
-                                                         Navigator.pop(context);
-                                                       });
-
-                                                       // AppCubit.get(context).getCheeringPost();
-                                                       // AppCubit.get(context).isLast=false;
-
-                                                     }
-                                                 )
-                                               ],
-                                             ),
-                                           ),
-                                         );
-                                      }
-                                  );
-                                  // Navigator.push(context, MaterialPageRoute(builder: (_){
-                                  //
-                                  //   return CheeringScreen(countryName: widget.countryName,countryImage: widget.countryImage,);
-                                  //
-                                  // }));
+                                  }));
                                 },
 
                               ),

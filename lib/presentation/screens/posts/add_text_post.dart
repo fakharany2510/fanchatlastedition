@@ -82,7 +82,7 @@ class _AddTextPostState extends State<AddTextPost> {
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : (textFormFielsChanged == true && postText.text != ""  && AppCubit.get(context).userModel!.numberOfPosts < 12)
+                  : (textFormFielsChanged == true && postText.text != ""  && AppCubit.get(context).userModel!.numberOfPosts != 12)
               ?Padding(
         padding: const EdgeInsets.all(8.0),
         child: defaultButton(
@@ -105,7 +105,7 @@ class _AddTextPostState extends State<AddTextPost> {
         //  token:AppCubit.get(context).userToken
         );
         setState((){
-          increaseNumberOfPosts++;
+          increaseNumberOfPosts=increaseNumberOfPosts+1;
         });
         AppCubit.get(context).increasNumberOfPosts(increaseNumberOfPosts);
         }

@@ -64,19 +64,47 @@ class SingleMatch extends StatelessWidget {
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Row(
+                                          Column(
                                             children: [
-                                              Text('Egypt',style: TextStyle(
-                                                  color: AppColors.primaryColor1,
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontFamily: AppStrings.appFont
-                                              ),),
-                                              const  SizedBox(width: 5,),
                                               CircleAvatar(
-                                                radius: 20,
+                                                radius: 15,
                                                 backgroundImage:  NetworkImage(AppCubit.get(context).groupsImages[0+1]),
                                               ),
+                                              const  SizedBox(height: 5,),
+                                              Text('USA',style: TextStyle(
+                                                  color: AppColors.primaryColor1,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontFamily: AppStrings.appFont
+                                              ),),
+                                              const  SizedBox(height: 5,),
+                                              Text('Coach: Coach Name',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w500
+                                              ),
+                                              ),
+                                              const  SizedBox(height: 10,),
+                                              Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text('RONALDO'),
+                                                      SizedBox(width:10),
+                                                      Icon(Icons.sports_volleyball,color: Colors.green,)
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 5,),
+                                                  Row(
+                                                    children: [
+                                                      Text('Messi'),
+                                                      SizedBox(width:10),
+                                                      Icon(Icons.sports_volleyball,color: Colors.green,),
+                                                      Icon(Icons.sports_volleyball,color: Colors.green,),
+                                                    ],
+                                                  ),
+                                                ],
+                                              )
                                             ],
                                           ),
                                           const SizedBox(width: 5,),
@@ -132,19 +160,46 @@ class SingleMatch extends StatelessWidget {
                                             color: AppColors.primaryColor1,
                                           ),
                                           const SizedBox(width: 5,),
-                                          Row(
+                                          Column(
                                             children: [
                                               CircleAvatar(
-                                                radius: 20,
-                                                backgroundImage:  NetworkImage(AppCubit.get(context).groupsImages[0]),
+                                                radius: 15,
+                                                backgroundImage:  NetworkImage(AppCubit.get(context).groupsImages[0+3]),
                                               ),
-                                              const SizedBox(width: 5,),
-                                              Text('Italy',style: TextStyle(
+                                              const  SizedBox(height: 5,),
+                                              Text('Senegal',style: TextStyle(
                                                   color: AppColors.primaryColor1,
                                                   fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: FontWeight.w600,
                                                   fontFamily: AppStrings.appFont
                                               ),),
+                                              const  SizedBox(height: 5,),
+                                              Text('Coach: Coach Name',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500
+                                                ),
+                                              ),
+                                              const  SizedBox(height: 10,),
+                                              Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text('RONALDO'),
+                                                      SizedBox(width:10),
+                                                      Icon(Icons.sports_volleyball,color: Colors.green,)
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 5,),
+                                                  Row(
+                                                    children: [
+                                                      Text('Messi'),
+                                                      SizedBox(width:10),
+                                                      Icon(Icons.sports_volleyball,color: Colors.green,),
+                                                      Icon(Icons.sports_volleyball,color: Colors.green,),
+                                                    ],
+                                                  ),
+                                                ],
+                                              )
                                             ],
                                           ),
                                         ],
@@ -163,13 +218,15 @@ class SingleMatch extends StatelessWidget {
                           padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
                           child: Align(
                             alignment: Alignment.topLeft,
-                            child: Text('Most Matches',style: TextStyle(
-                                color: AppColors.primaryColor1,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w900,
-                                fontFamily: AppStrings.appFont
-                            ),
-                              textAlign: TextAlign.center,
+                            child: Center(
+                              child: Text('Match Statistics',style: TextStyle(
+                                  color: AppColors.primaryColor1,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: AppStrings.appFont
+                              ),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
                           ),
                         ),
@@ -188,94 +245,37 @@ class SingleMatch extends StatelessWidget {
                                     margin: const EdgeInsets.fromLTRB(15, 5,15,5),
                                     decoration: BoxDecoration(
                                       color: AppColors.primaryColor1,
-                                      borderRadius: BorderRadius.circular(50),
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
                                     width: double.infinity,
                                     child: Column(
-                                      children: [
-                                        const SizedBox(height: 10,),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text('Egypt',style: TextStyle(
-                                                    color: AppColors.myWhite,
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: AppStrings.appFont
-                                                ),),
-                                                const  SizedBox(width: 5,),
-                                                CircleAvatar(
-                                                  radius: 20,
-                                                  backgroundImage:  NetworkImage(AppCubit.get(context).groupsImages[index+1]),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(width: 5,),
-                                            Container(
-                                              height: 2,
-                                              width: 8,
-                                              color: AppColors.primaryColor1,
-                                            ),
-                                            const SizedBox(width: 5,),
-                                            Column(
-                                              children: [
-                                                Container(
-                                                  width: 70,
-                                                  height: 35,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(90),
-                                                      border: Border.all(
-                                                          color: AppColors.myWhite
-                                                      ),
-                                                      color: AppColors.myWhite
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      SizedBox(height: 5,),
-                                                      Text('4 - 2',style: TextStyle(
-                                                          color: AppColors.primaryColor1,
-                                                          fontSize: 14,
-                                                          fontWeight: FontWeight.w500,
-                                                          fontFamily: AppStrings.appFont
-                                                      ),
-                                                        textAlign: TextAlign.center,
-                                                      ),
-                                                      const SizedBox(height: 5,),
-                                                    ],
-                                                  ),
-                                                ),
-
-                                              ],
-                                            ),
-                                            const SizedBox(width: 5,),
-                                            Container(
-                                              height: 2,
-                                              width: 8,
-                                              color: AppColors.primaryColor1,
-                                            ),
-                                            const SizedBox(width: 5,),
-                                            Row(
-                                              children: [
-
-                                                CircleAvatar(
-                                                  radius: 20,
-                                                  backgroundImage:  NetworkImage(AppCubit.get(context).groupsImages[index]),
-                                                ),
-                                                const SizedBox(width: 5,),
-                                                Text('Italy',style: TextStyle(
-                                                    color: AppColors.myWhite,
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: AppStrings.appFont
-                                                ),),
-                                              ],
-                                            ),
-                                          ],
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: const [
+                                         SizedBox(height: 10,),
+                                        Text('Man Of The Match',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 18,
+                                          fontFamily: AppStrings.appFont
                                         ),
-                                        SizedBox(height: 10,)
+                                        ),
+                                        SizedBox(height:10,),
+                                        CircleAvatar(
+                                          backgroundImage:  AssetImage('assets/images/ronaldo.jpg'),
+                                          radius: 50,
+                                        ),
+                                        SizedBox(height: 10,),
+                                        Text('Cristiano Ronaldo',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 18,
+                                              fontFamily: AppStrings.appFont
+                                          ),
+                                        ),
+                                        SizedBox(height: 10,),
+
                                       ],
                                     ),
                                   ),
@@ -284,7 +284,7 @@ class SingleMatch extends StatelessWidget {
                               separatorBuilder: (context,index){
                                 return  const SizedBox(height: 0,);
                               },
-                              itemCount:4
+                              itemCount:1
                           ),
                         ),
                       ],

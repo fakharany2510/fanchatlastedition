@@ -58,41 +58,6 @@ class _MatchDetailsState extends State<MatchDetails> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              // Container(
-                              //   alignment: Alignment.center,
-                              //   width: 110,
-                              //   height: 50,
-                              //   decoration: BoxDecoration(
-                              //     borderRadius: BorderRadius.circular(35),
-                              //     border: Border.all(
-                              //         width: 2,
-                              //         color: AppColors.primaryColor1
-                              //     ),
-                              //     color: AppColors.primaryColor1
-                              //   ),
-                              //   child:Column(
-                              //     crossAxisAlignment: CrossAxisAlignment.center,
-                              //     children: [
-                              //       // const SizedBox(height: 5,),
-                              //       // Text('Today',style: TextStyle(
-                              //       //     color: AppColors.myWhite,
-                              //       //     fontSize: 15,
-                              //       //     fontWeight: FontWeight.w500,
-                              //       //     fontFamily: AppStrings.appFont
-                              //       // ),
-                              //       //   textAlign: TextAlign.center,
-                              //       // ),
-                              //       // const SizedBox(height: 7,),
-                              //       // Text('25-7-2022',style: TextStyle(
-                              //       //     color: AppColors.myWhite,
-                              //       //     fontSize: 13,
-                              //       //     fontWeight: FontWeight.w500,
-                              //       //     fontFamily: AppStrings.appFont
-                              //       // ),),
-                              //     ],
-                              //   ),
-                              // ),
-
                               Container(
                                 width: double.infinity,
                                 height: MediaQuery.of(context).size.height*.09,

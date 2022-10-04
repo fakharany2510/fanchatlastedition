@@ -2346,7 +2346,7 @@ List<int> commentIndex=[];
       print('No Image selected.');
     }
   }
-  void increasNumberOfPosts(int index){
+ void increasNumberOfPosts(int index){
     FirebaseFirestore.instance.collection('users').doc(AppStrings.uId).update(
       {
         'numberOfPosts':index

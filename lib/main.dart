@@ -92,7 +92,9 @@ class MyApp extends StatelessWidget {
               ),
              // initialRoute: 'register',
               routes: {
-                '/' :(context)=> SplashScreen(),
+                '/' :(context)=> (AppStrings.uId != null)
+                ?HomeLayout()
+            :SplashScreen(),
                 'home_layout':(context)=> const HomeLayout(),
                // 'login':(context)=> LoginScreen(),
                 'register':(context)=>RegisterScreen(),

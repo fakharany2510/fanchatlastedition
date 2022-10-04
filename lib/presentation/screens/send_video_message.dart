@@ -32,21 +32,24 @@ class SendVideoMessage extends StatelessWidget {
                 child: Column(
                   children: [
                     (AppCubit.get(context).postVideo3!= null )
-                        ?Expanded(
-                      child: Container(
-                        height: size.height,
-                        width: size.width,
-                        child: AspectRatio(
-                          aspectRatio:AppCubit.get(context).controller!.value.aspectRatio,
-                          child: AppCubit.get(context).controller ==null
-                              ?SizedBox(height: 0,)
-                              :CachedVideoPlayer(
-                              AppCubit.get(context).controller!
-                          ),
+                        ?Column(
+                          children: [
+                            SizedBox(height: size.height*.2,),
+                            Container(
+                              height: size.height*.5,
+                              width: size.width,
+                              child: AspectRatio(
+                                aspectRatio:AppCubit.get(context).controller!.value.aspectRatio,
+                                child: AppCubit.get(context).controller ==null
+                                    ?SizedBox(height: 0,)
+                                    :CachedVideoPlayer(
+                                    AppCubit.get(context).controller!
+                                ),
 
-                        ),
-                      ),
-                    )
+                              ),
+                            ),
+                          ],
+                        )
                         : Expanded(child: Container(
                       child: Center(child: Text('No Video Selected Yet',
                           style: TextStyle(
