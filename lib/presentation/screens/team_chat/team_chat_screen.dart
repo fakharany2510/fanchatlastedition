@@ -161,8 +161,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                     body: ConditionalBuilder(
                       builder: (context)=>Column(
                         children: [
-                          if(AppCubit.get(context).indexCheeringList==0)
-                            AppCubit.get(context).isLast==false ?
+                          AppCubit.get(context).cheering.isNotEmpty ?
                           Container(
                               height: MediaQuery.of(context).size.height*.22,
                               decoration: BoxDecoration(
@@ -281,9 +280,9 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                         setState(() {
 
                                           // AppCubit.get(context).isWaiting=false;
-                                          AppCubit.get(context).isLast=true;
+                                          AppCubit.get(context).isLast=false;
                                           print(AppCubit.get(context).isLast);
-                                          // AppCubit.get(context).deleteCheeringPost();
+                                          AppCubit.get(context).deleteCheeringPost();
 
                                         });
                                       },
