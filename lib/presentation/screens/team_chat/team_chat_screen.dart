@@ -284,6 +284,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                           print(AppCubit.get(context).isLast);
                                           AppCubit.get(context).deleteCheeringPost();
 
+
                                         });
                                       },
                                       onChange: (String timeStamp) {
