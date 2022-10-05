@@ -46,15 +46,18 @@ class _AdvertisingAreaWidgetState extends State<AdvertisingAreaWidget> {
             children: [
               InkWell(
                   onTap: (){
-                    (AdvertisingCubit.get(context).advertising[widget.index!].postImage!="")?
-                    Navigator.push(context, MaterialPageRoute(builder: (_){
-                      return AdvertisingFullPost(image: '${AdvertisingCubit.get(context).advertising[widget.index!].postImage}',imageLink: '',);
-                    })):Navigator.push(context, MaterialPageRoute(builder: (_){
-                      return AdvertisingFullVideo(
-                          videoLink: '',
-                          video: '${AdvertisingCubit.get(context).advertising[widget.index!].postVideo}');
-
-                    }));
+                    // (AdvertisingCubit.get(context).advertising[widget.index!].postImage!="")?
+                    // Navigator.push(context, MaterialPageRoute(builder: (_){
+                    //   return AdvertisingFullPost(image: '${AdvertisingCubit.get(context).advertising[widget.index!].postImage}',imageLink: '',);
+                    // })):Navigator.push(context, MaterialPageRoute(builder: (_){
+                    //   return AdvertisingFullVideo(
+                    //       videoLink: '',
+                    //       video: '${AdvertisingCubit.get(context).advertising[widget.index!].postVideo}');
+                    //
+                    // }));
+                    AdvertisingCubit.get(context).toAdvertisingLink(
+                        advertisingLink: AdvertisingCubit.get(context).advertising[widget.index!].advertisingLink!
+                    );
                   },
                   child: (AdvertisingCubit.get(context).advertising[widget.index!].postImage!="")
                       ?Stack(
@@ -83,18 +86,18 @@ class _AdvertisingAreaWidgetState extends State<AdvertisingAreaWidget> {
                             icon: CircleAvatar(radius: 15, child: Icon(Icons.image,color: AppColors.myWhite,size: 15,))
                         ),
                       ),
-                      Positioned(
-                        top: 40,
-                        right: 0,
-                        child: IconButton(
-                            onPressed: (){
-                              AdvertisingCubit.get(context).toAdvertisingLink(
-                                  advertisingLink: AdvertisingCubit.get(context).advertising[widget.index!].advertisingLink!
-                              );
-                            },
-                            icon: CircleAvatar(radius: 15, child: Icon(Icons.link_outlined,color: AppColors.myWhite,size: 15,))
-                        ),
-                      ),
+                      // Positioned(
+                      //   top: 40,
+                      //   right: 0,
+                      //   child: IconButton(
+                      //       onPressed: (){
+                      //         AdvertisingCubit.get(context).toAdvertisingLink(
+                      //             advertisingLink: AdvertisingCubit.get(context).advertising[widget.index!].advertisingLink!
+                      //         );
+                      //       },
+                      //       icon: CircleAvatar(radius: 15, child: Icon(Icons.link_outlined,color: AppColors.myWhite,size: 15,))
+                      //   ),
+                      // ),
 
                     ],
                   )
@@ -145,18 +148,18 @@ class _AdvertisingAreaWidgetState extends State<AdvertisingAreaWidget> {
                             ),
                           )
                       ),
-                      Positioned(
-                        top: 40,
-                        right: 0,
-                        child: IconButton(
-                            onPressed: (){
-                              AdvertisingCubit.get(context).toAdvertisingLink(
-                                advertisingLink: AdvertisingCubit.get(context).advertising[widget.index!].advertisingLink!
-                              );
-                            },
-                            icon: CircleAvatar(radius: 15, child: Icon(Icons.link_outlined,color: AppColors.myWhite,size: 15,))
-                        ),
-                      ),
+                      // Positioned(
+                      //   top: 40,
+                      //   right: 0,
+                      //   child: IconButton(
+                      //       onPressed: (){
+                      //         AdvertisingCubit.get(context).toAdvertisingLink(
+                      //           advertisingLink: AdvertisingCubit.get(context).advertising[widget.index!].advertisingLink!
+                      //         );
+                      //       },
+                      //       icon: CircleAvatar(radius: 15, child: Icon(Icons.link_outlined,color: AppColors.myWhite,size: 15,))
+                      //   ),
+                      // ),
 
                     ],
                   )

@@ -22,7 +22,9 @@ class _EditCoverState extends State<EditCover> {
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
         listener: (context,state){
-
+          if(state is UpdateUserSuccessState){
+            Navigator.pop(context);
+          }
         },
       builder: (context,state){
 
@@ -69,7 +71,10 @@ class _EditCoverState extends State<EditCover> {
                           ),),
                       ),
                       SizedBox(width: 15,),
-                      TextButton(
+                      state is GetCoverImageLoadingState || state is GetProfileImageLoadingState?
+                      CircularProgressIndicator(
+                        color: AppColors.primaryColor1,
+                      ):TextButton(
                         onPressed: (){
                           cubit
                               .uploadUserCover(

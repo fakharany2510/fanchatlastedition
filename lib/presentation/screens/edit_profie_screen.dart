@@ -334,7 +334,10 @@ class EditProfileScreen extends StatelessWidget {
                             facebookLink: cubit.changeFacebookLinkController.text,
                             instagramLink:cubit.changeTwitterLinkController.text,
                             twitterLink:cubit.changeInstagramLinkController.text,
-                          );
+                          ).then((value) {
+                            cubit.getUser();
+
+                          });
                           printMessage(cubit.changeUserNameController.text);
                           // Navigator.pushNamed(context, 'edit_profile');
                         }),

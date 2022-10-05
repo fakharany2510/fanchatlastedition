@@ -120,14 +120,10 @@ class UserProfile extends StatelessWidget {
                       onTap: (){
                         cubit.toFacebook(facebookLink: cubit.profileFace);
                       },
-                      child: const CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.white,
-                        child: Image(
-                          height: 35,
-                          width: 35,
-                          image: AssetImage('assets/images/facebook.png'),
-                        ),
+                      child: Image(
+                        height: 35,
+                        width: 35,
+                        image: AssetImage('assets/images/facebook.png'),
                       ),
                     ),
                     const SizedBox(width: 10,),
@@ -135,14 +131,10 @@ class UserProfile extends StatelessWidget {
                       onTap: (){
                         cubit.toInstagram(instagramLink:cubit.profileInstagram);
                       },
-                      child: const CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.white,
-                        child: Image(
-                          height: 30,
-                          width: 30,
-                          image: AssetImage('assets/images/instagram.png'),
-                        ),
+                      child: Image(
+                        height: 30,
+                        width: 30,
+                        image: AssetImage('assets/images/instagram.png'),
                       ),
                     ),
                     const SizedBox(width: 10,),
@@ -151,14 +143,10 @@ class UserProfile extends StatelessWidget {
                         cubit.toTwitter(twitterLink: cubit.profileTwitter);
 
                       },
-                      child: const CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.white,
-                        child: Image(
-                          height: 35,
-                          width: 35,
-                          image: AssetImage('assets/images/twitter.png'),
-                        ),
+                      child: Image(
+                        height: 35,
+                        width: 35,
+                        image: AssetImage('assets/images/twitter.png'),
                       ),
                     ),
                     const SizedBox(width: 10,),
@@ -167,14 +155,10 @@ class UserProfile extends StatelessWidget {
                         cubit.toYoutube(youtubeLink: cubit.profileYoutube);
 
                       },
-                      child: const CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.white,
-                        child: Image(
-                          height: 35,
-                          width: 35,
-                          image: AssetImage('assets/images/youtube.png'),
-                        ),
+                      child: Image(
+                        height: 35,
+                        width: 35,
+                        image: AssetImage('assets/images/youtube.png'),
                       ),
                     ),
                     const SizedBox(width: 10,),

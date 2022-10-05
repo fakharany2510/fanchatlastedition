@@ -350,6 +350,7 @@ class AppCubit extends Cubit<AppState> {
       required String ?twitterLink,
       required String ?facebookLink,
    })async{
+    emit(GetProfileImageLoadingState());
 
     UserModel model= UserModel(
       username: name,

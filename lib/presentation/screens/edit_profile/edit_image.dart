@@ -21,6 +21,9 @@ class _EditImageState extends State<EditImage> {
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
+        if(state is UpdateUserSuccessState){
+          Navigator.pop(context);
+        }
 
       },
       builder: (context,state){
@@ -55,7 +58,7 @@ class _EditImageState extends State<EditImage> {
                         cubit.getProfileImage();
 
                       },
-                      child:  Text('Edit Cover',style: TextStyle(
+                      child:  Text('Edit Image',style: TextStyle(
                           color: AppColors.primaryColor1,
                           fontFamily: AppStrings.appFont,
                           fontWeight: FontWeight.w700,
@@ -63,7 +66,10 @@ class _EditImageState extends State<EditImage> {
                       ),),
                     ),
                     SizedBox(width: 15,),
-                    TextButton(
+                    state is GetProfileImageLoadingState?
+                    CircularProgressIndicator(
+                      color: AppColors.primaryColor1,
+                    ):TextButton(
                       onPressed: (){
                         cubit
                             .uploadUserImage(
@@ -82,7 +88,7 @@ class _EditImageState extends State<EditImage> {
                           fontWeight: FontWeight.w700,
                           fontSize: 18
                       ),),
-                    ),
+                    )
 
                   ],
                 )
