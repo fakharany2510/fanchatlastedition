@@ -5,6 +5,7 @@ import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/data/modles/advertising_model.dart';
 import 'package:fanchat/data/modles/cheering_model.dart';
 import 'package:fanchat/data/modles/fan_model.dart';
+import 'package:fanchat/data/modles/profile_model.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
 import 'package:fanchat/presentation/screens/public_chat/public_chat_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -88,14 +89,7 @@ class AppCubit extends Cubit<AppState> {
     'https://images.netdirector.co.uk/gforces-auto/image/upload/w_1349,h_450,q_auto,c_fill,f_auto,fl_lossy/auto-client/07057d0e6193c6b928e53a2ec37e91ef/mg_hs_cover.png'
   ];
 
-  List fanImages=[
-    'https://img.freepik.com/free-photo/beautiful-tree-middle-field-covered-with-grass-with-tree-line-background_181624-29267.jpg?w=900&t=st=1659045801~exp=1659046401~hmac=504feac168c627bb796b580e3b468ca8d5325a36678dc17621bde464cd5d0772',
-    'https://img.freepik.com/free-photo/sahara-desert-sunlight-blue-sky-morocco-africa_181624-19549.jpg?w=996&t=st=1659045804~exp=1659046404~hmac=5c76bce362790fab659ddab0c0a41863fa3f0dc531ac51446c71ae036924a763',
-    'https://img.freepik.com/free-photo/empty-wooden-dock-lake-during-breathtaking-sunset-cool-background_181624-27469.jpg?w=740&t=st=1659045813~exp=1659046413~hmac=e3c81b3ac69beb13f9588398d3e16b10d170108d4b9d3cc18f4a7a14ad8eeca8',
-    'https://img.freepik.com/free-photo/narrow-road-green-grassy-field-surrounded-by-green-trees-with-bright-sun-background_181624-9968.jpg?w=740&t=st=1659045814~exp=1659046414~hmac=4f98cde1a1c50474249a2231811857c77a05edb5175af945997af20ef7445ce7',
-    'https://img.freepik.com/free-photo/nature-design-with-bokeh-effect_1048-1882.jpg?w=740&t=st=1659045819~exp=1659046419~hmac=ad9c886eeb0cd7dc1788e1daf28cf119b887ef66fd30040c80fbd2e98b5246da',
-    'https://img.freepik.com/free-photo/vertical-shot-people-riding-camels-sand-dune-desert_181624-34974.jpg?w=740&t=st=1659044349~exp=1659044949~hmac=3f0c742eb4e47d6cdf45dc0ce3b37df273351228ddc2ca166458d2e6f2e92ca2'
-  ];
+
   int currentIndex=0;
   void navigateScreen(int index,context){
 
@@ -2528,5 +2522,245 @@ List<int> commentIndex=[];
   //   await launch(url , forceSafariVC: false);
   //   emit(LaunchAdvertisingImageSuccessState());
   // }
+
+
+
+///////////////////////////////////////////////////////////profile//////////////////
+//////////////////////////////fanarea///////////////////////////////
+//pick fan image post
+  File? profilePostImage;
+  Future<void> pickProfilePostImage() async {
+    final pickedFile  =
+    await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      profilePostImage=File(pickedFile.path);
+      var decodedImage = await decodeImageFromList(profilePostImage!.readAsBytesSync());
+      emit(PickProfilePostImageSuccessState());
+    } else {
+      print('no fanPostImage selected');
+      emit(PickProfilePostImageErrorState());
+    }
+  }
+/////////////////////////////////////
+////////////////////////////////////////
+//Create fan Post
+  void createProfileImagePost({
+    required String? dateTime,
+    required String? time,
+    required String? timeSpam,
+    required String? text,
+    String? postImage,
+  }){
+    emit(FanCreatePostLoadingState());
+
+    ProfileModel model=ProfileModel(
+      name: userModel!.username,
+      image:userModel!.image,
+      userId:userModel!.uId,
+      dateTime:dateTime,
+      time: time,
+      postImage:postImage??'',
+      postVideo: "",
+      timeSmap: timeSpam,
+      likes: 0,
+      postId: AppStrings.postUid,
+    );
+
+    FirebaseFirestore.instance
+        .collection('profileImages')
+        .add(model.toMap())
+        .then((value){
+      printMessage(value.id);
+      AppStrings.postUid=value.id;
+      FirebaseFirestore.instance
+          .collection('profileImages')
+          .doc(AppStrings.uId)
+          .update({
+        'postId':AppStrings.uId
+      }).then((value){
+        emit(ProfileCreatePostSuccessState());
+      });
+      //  getPosts();
+      emit(ProfileCreatePostSuccessState());
+    })
+        .catchError((error){
+      emit(ProfileCreatePostErrorState());
+    });
+  }
+///////////////////////////////////////////
+//upload fan post image
+  void uploadProfilePostImage({
+    String? userId,
+    String? name,
+    String? image,
+    required String ? time,
+    required String? dateTime,
+    required String? text,
+    required String? timeSpam,
+  }){
+    emit(ProfileUploadImagePostLoadingState());
+    //كدا انا بكريت instance من ال storage
+    firebase_storage.FirebaseStorage.instance
+    //كدا بقوله انا فين في الstorage
+        .ref()
+    //كدا بقةله هتحرك ازاي جوا ال storage
+    //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
+        .child('profile/${Uri.file(profilePostImage!.path).pathSegments.last}')
+    //كدا بعمل رفع للصوره
+        .putFile(profilePostImage!).then((value){
+      value.ref.getDownloadURL().then((value){
+        createProfileImagePost(
+          dateTime: dateTime,
+          postImage: value,
+          text: text,
+          time: time,
+          timeSpam: timeSpam,
+
+        );
+        getProfilePosts();
+        emit(ProfileUploadImagePostSuccessState());
+
+      }).catchError((error){
+        print('error while get fan post ${error.toString()}');
+        emit(ProfileUploadImagePostErrorState());
+      });
+    }).catchError((error){
+      print('error while get fan post ${error.toString()}');
+      emit(FanUploadImagePostErrorState());
+    });
+  }
+//////////////////////////////////////////////
+  //pick fan post video
+  File? ProfilePostVideo;
+
+  void pickProfilePostVideo() async {
+    final pickedFile =
+    await picker.pickVideo(source: ImageSource.gallery,);
+    if (pickedFile != null) {
+      ProfilePostVideo = File(pickedFile.path);
+      videoPlayerController = VideoPlayerController.file(ProfilePostVideo!)
+        ..initialize().then((value) {
+          videoPlayerController!.play();
+          emit(PickProfilePostVideoSuccessState());
+        }).catchError((error) {
+          print('error picking  prfile video ${error.toString()}');
+          emit(PickProfilePostVideoErrorState());
+        });
+    }
+  }
+////////////////////////////////////////
+//////////////////////////////////////////////
+//Create fan videoPost
+  void createProfileVideoPost({
+    required String dateTime,
+    required String? text,
+    required String time,
+    required String? timeSpam,
+    String? postVideo,
+  }){
+    emit(FanCreateVideoPostLoadingState());
+
+    ProfileModel model=ProfileModel(
+        name: userModel!.username,
+        image:userModel!.image,
+        userId:userModel!.uId,
+        dateTime:dateTime,
+        postImage:'',
+        postVideo: postVideo??'',
+        time: time  ,
+        timeSmap: timeSpam,
+        likes: 0,
+        postId: AppStrings.postUid
+    );
+
+    FirebaseFirestore.instance
+        .collection('profileImages')
+        .add(model.toMap())
+        .then((value){
+      //getPosts();
+      AppStrings.postUid=value.id;
+      FirebaseFirestore.instance
+          .collection('profileImages')
+          .doc(AppStrings.uId)
+          .update({
+        'postId':AppStrings.uId
+      }).then((value){
+        emit(ProfileCreateVideoPostSuccessState());
+      });
+      emit(ProfileCreateVideoPostSuccessState());
+    })
+        .catchError((error){
+      emit(ProfileCreateVideoPostErrorState());
+    });
+  }
+///////////////////////////////////////////////
+//upload fan post video to storage
+  void uploadProfilePostVideo({
+    String? userId,
+    String? name,
+    String? video,
+    required String dateTime,
+    required String time,
+    required String timeSpam,
+    required String? text,
+  }){
+    emit(ProfileUploadVideoPostLoadingState());
+    //كدا انا بكريت instance من ال storage
+    firebase_storage.FirebaseStorage.instance
+    //كدا بقوله انا فين في الstorage
+        .ref()
+    //كدا بقةله هتحرك ازاي جوا ال storage
+    //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
+        .child('profile/${Uri.file( ProfilePostVideo!.path).pathSegments.last}')
+    //كدا بعمل رفع للصوره
+        .putFile(ProfilePostVideo!).then((value){
+      value.ref.getDownloadURL().then((value){
+        createProfileVideoPost(
+          dateTime:dateTime,
+          postVideo: value,
+          text: text,
+          time: time,
+          timeSpam:timeSpam,
+        );
+        getProfilePosts();
+        emit(FanUploadVideoPostSuccessState());
+
+      }).catchError((error){
+        emit(FanUploadVideoPostErrorState());
+      });
+    }).catchError((error){
+      emit(FanUploadVideoPostErrorState());
+    });
+  }
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+
+//get Posts
+  List<ProfileModel> profileImages=[];
+  void getProfilePosts(){
+    profileImages=[];
+    postsId=[];
+    likes=[];
+    emit(BrowiseGetProfilePostsLoadingState());
+    FirebaseFirestore.instance
+        .collection('profileImages')
+        .orderBy('timeSmap',descending: true)
+        .get()
+        .then((value) {
+      value.docs.forEach((element) async{
+        profileImages.add(ProfileModel.fromJson(element.data()));
+        // Delete a record
+        // await database?.rawDelete('DELETE * FROM Posts');
+        emit(BrowiseGetProfilePostsSuccessState());
+
+      });
+    }
+    )
+        .catchError((error){
+      emit(BrowiseGetFanPostsErrorState());
+      print('error while getting profile posts ${error.toString()}');
+    });
+  }
+
 }
 

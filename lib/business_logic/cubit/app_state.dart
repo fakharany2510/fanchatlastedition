@@ -227,3 +227,34 @@ class UploadImagePrivateErrorState extends AppState {}
 class CreateImagePrivateLoadingState extends AppState {}
 class CreateImagePrivateSuccessState extends AppState {}
 class CreateImagePrivateErrorState extends AppState {}
+
+
+
+//fan area
+//image
+class PickProfilePostImageSuccessState extends AppState {}
+class PickProfilePostImageErrorState extends AppState {}
+//video
+class PickProfilePostVideoSuccessState extends AppState {}
+class PickProfilePostVideoErrorState extends AppState {}
+
+//////fan post
+class ProfileCreatePostLoadingState extends AppState {}
+class ProfileCreatePostSuccessState extends AppState {}
+class ProfileCreatePostErrorState extends AppState {}
+
+class ProfileUploadImagePostLoadingState extends AppState {}
+class ProfileUploadImagePostSuccessState extends AppState {}
+class ProfileUploadImagePostErrorState extends AppState {}
+
+class ProfileCreateVideoPostSuccessState extends AppState {}
+class ProfileCreateVideoPostErrorState extends AppState {}
+class ProfileCreateVideoPostLoadingState extends AppState {}
+
+class ProfileUploadVideoPostLoadingState extends AppState {}
+class ProfileUploadVideoPostSuccessState extends AppState {}
+class ProfileUploadVideoPostErrorState extends AppState {}
+
+class BrowiseGetProfilePostsLoadingState extends AppState {}
+class BrowiseGetProfilePostsSuccessState extends AppState {}
+class BrowiseGetProfilePostsErrorState extends AppState {}

@@ -1,5 +1,6 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/presentation/screens/another_match_details.dart';
+import 'package:fanchat/presentation/widgets/profile_area_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,7 +33,8 @@ class UserProfile extends StatelessWidget {
         return Scaffold(
           appBar: customAppbar('Profile',context),
           backgroundColor: AppColors.primaryColor1,
-          body: cubit.userModel !=null?SingleChildScrollView(
+          body: cubit.userModel !=null?
+          SingleChildScrollView(
             child: Column(
               children: [
                 //profile
@@ -111,7 +113,6 @@ class UserProfile extends StatelessWidget {
                     const Icon(Icons.check_circle,color: Colors.blue,size:15,),
                   ],
                 ),
-
                 const SizedBox(height:10,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -162,41 +163,27 @@ class UserProfile extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10,),
+
                   ],
                 ),
-
-                const SizedBox(height: 15,),
-                GridView.count(
-                  shrinkWrap: true,
-                  childAspectRatio: 1/1.3,
-                  crossAxisSpacing: 2,
-                  mainAxisSpacing: 2,
-                  crossAxisCount: 3,
-                  children: List.generate(
-                      cubit.fanImages.length, (index) => Column(
+                const SizedBox(width: 10,),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Stack(
                     children: [
-                      Stack(
-                        children: [
-                          Image(
-                            height: MediaQuery.of(context).size.height*.2,
-                            fit: BoxFit.cover,
-                            image: NetworkImage('${cubit.fanImages[index]}'),
-                          ),
-
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: IconButton(
-                                onPressed: (){
-                                },
-                                icon:Icon(Icons.image,color: AppColors.myWhite,)
-                            ),
-                          ),
-                        ],
-                      )
+                      GridView.count(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        childAspectRatio: 1/1.3,
+                        crossAxisSpacing: 2,
+                        mainAxisSpacing: 2,
+                        crossAxisCount: 3,
+                        children: List.generate(
+                            AppCubit.get(context).profileImages.length, (index) => ProfileAreaWidget(index: index,)),
+                      ),
                     ],
-                  )),
-                )
+                  ),
+                ),
               ],
             ),
           ):const Center(

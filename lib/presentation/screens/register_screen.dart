@@ -1,6 +1,5 @@
 import 'package:country_pickers/country.dart';
-import 'package:fanchat/business_logic/login/login_cubit.dart';
-import 'package:fanchat/business_logic/login/login_state.dart';
+
 
 import 'package:fanchat/business_logic/register/register_cubit.dart';
 import 'package:fanchat/business_logic/register/register_states.dart';
@@ -9,10 +8,8 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/screens/privacy_policies.dart';
 
 import 'package:fanchat/presentation/screens/verify_code_screen.dart';
-import 'package:fanchat/presentation/widgets/post_widget.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:fanchat/utils/helpers.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,6 +26,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  int _value=0;
   //RegisterScreen({Key? key}) : super(key: key);
   Map<String,dynamic>? _userData;
   AccessToken? _accessToken;
@@ -195,18 +193,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           height: size.height*.06,
                           function: (){
                             if(name.text == "fanchat"){
+                            if(_value ==1 ){
                               AppStrings.uId = '1832855570382325';
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeLayout()));
+                            }else{
+                              Fluttertoast.showToast(
+                                msg:"You Must Agree To Privacy Policies First",
+                                toastLength: Toast.LENGTH_LONG,
+                                gravity: ToastGravity.TOP,
+                                timeInSecForIosWeb: 5,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                                fontSize: 18.0,
+                              );
                             }
-                            else if(formKey.currentState!.validate() || isNullOrBlank(phoneNumber) ){
-                              CashHelper.saveData(key: 'name',value: name.text);
-                              CashHelper.saveData(key: 'phone',value: phoneNumber);
-                              Navigator.push(context,
-                                  MaterialPageRoute
-                                    (builder: (context)=>VerifyPhoneNumberScreen(phoneNumber: phoneNumber,)));
+                            }
+                            else if(formKey.currentState!.validate() || isNullOrBlank(phoneNumber)){
+                             if(_value ==1 ){
+                               CashHelper.saveData(key: 'name',value: name.text);
+                               CashHelper.saveData(key: 'phone',value: phoneNumber);
+                               Navigator.push(context,
+                                   MaterialPageRoute
+                                     (builder: (context)=>VerifyPhoneNumberScreen(phoneNumber: phoneNumber,)));
 
-                              print('user Name = ${name.text}');
-                              print('user phone = ${phoneNumber}');
+                               print('user Name = ${name.text}');
+                               print('user phone = ${phoneNumber}');
+                             }else{
+                               Fluttertoast.showToast(
+                                 msg:"You Must Agree To Privacy Policies First",
+                                 toastLength: Toast.LENGTH_LONG,
+                                 gravity: ToastGravity.TOP,
+                                 timeInSecForIosWeb: 5,
+                                 backgroundColor: Colors.red,
+                                 textColor: Colors.white,
+                                 fontSize: 18.0,
+                               );
+                             }
                             }
 
                           }
@@ -244,14 +266,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           defaultSocialMediaButton(
                               context: context,
                               function: (){
-                                // if(_userData ==null){
-                                //
-                                //   _login();
-                                //
-                                // }else{
-                                //   _logout();
-                                // }
-                                RegisterCubit.get(context).signInWithFacebook();
+                               if(_value ==1){
+                                 RegisterCubit.get(context).signInWithFacebook();
+                               }else{
+                                 Fluttertoast.showToast(
+                                   msg:"You Must Agree To Privacy Policies First",
+                                   toastLength: Toast.LENGTH_LONG,
+                                   gravity: ToastGravity.TOP,
+                                   timeInSecForIosWeb: 5,
+                                   backgroundColor: Colors.red,
+                                   textColor: Colors.white,
+                                   fontSize: 18.0,
+                                 );
+                               }
                               },
                               size:size,
                               buttonColor: AppColors.primaryColor1,
@@ -262,7 +289,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           defaultSocialMediaButton(
                               context: context,
                               function: (){
-                                RegisterCubit.get(context).loginWithGoogle();
+                                if(_value == 1){
+                                  RegisterCubit.get(context).loginWithGoogle();
+                                }else{
+                                  Fluttertoast.showToast(
+                                    msg:"You Must Agree To Privacy Policies First",
+                                    toastLength: Toast.LENGTH_LONG,
+                                    gravity: ToastGravity.TOP,
+                                    timeInSecForIosWeb: 5,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 18.0,
+                                  );
+                                }
                               },
                               size:size,
                               buttonColor: AppColors.primaryColor1,
@@ -272,7 +311,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ],
                       ),
                       SizedBox(height: size.height*.03,),
-                      privacyPolicyLinkAndTermsOfService(context)
+                Row(
+                  children: [
+                    Radio(
+                        value: 1,
+                        hoverColor: Colors.green,
+                        groupValue: _value,
+                        toggleable: true,
+                        onChanged: (value){
+                      setState((){
+                        _value=1;
+                      });
+                    }),
+                    Container(
+                      child: Text.rich(
+                          TextSpan(
+                              text: 'Agree to our ', style: TextStyle(
+                              fontSize: 16, color:AppColors.myGrey
+                          ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: 'Privacy Policies', style: TextStyle(
+                                  fontSize: 16, color: AppColors.navBarActiveIcon,
+                                  decoration: TextDecoration.underline,
+                                ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>PrivacyPolicies()));
+                                        // code to open / launch terms of service link here
+                                      }
+                                ),
+                              ]
+                          )
+                      ),
+                    ),
+                  ],
+                ),
                     ],
                   ),
                 ),
@@ -302,53 +376,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             fontFamily: AppStrings.appFont
         ),),
       ],
-    ),
-  );
-}
-
-Widget privacyPolicyLinkAndTermsOfService(context) {
-  return Container(
-    alignment: Alignment.center,
-    padding: EdgeInsets.all(10),
-    child: Center(
-        child: Text.rich(
-            TextSpan(
-                text: 'By Creating Account, you agree to our ', style: TextStyle(
-                fontSize: 16, color:AppColors.myGrey
-            ),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: 'Terms of Service', style: TextStyle(
-                    fontSize: 16, color: AppColors.navBarActiveIcon,
-                    decoration: TextDecoration.underline,
-                  ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>PrivacyPolicies()));
-                          // code to open / launch terms of service link here
-                        }
-                  ),
-                  TextSpan(
-                      text: ' and ', style: TextStyle(
-                      fontSize: 18, color: AppColors.myGrey
-                  ),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: 'Privacy Policy', style: TextStyle(
-                            fontSize: 18, color: AppColors.navBarActiveIcon,
-                            decoration: TextDecoration.underline
-                        ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>PrivacyPolicies()));
-                                // code to open / launch privacy policy link here
-                              }
-                        )
-                      ]
-                  )
-                ]
-            )
-        )
     ),
   );
 }

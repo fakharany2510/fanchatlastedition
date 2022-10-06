@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
-import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/paypal/advertise.dart';
 import 'package:fanchat/presentation/paypal/premiumpackage.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';

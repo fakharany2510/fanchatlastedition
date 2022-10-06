@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
-import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/screens/team_chat/team_chat_screen.dart';
@@ -15,6 +14,8 @@ class CountriesScreen extends StatefulWidget {
 }
 
 class _CountriesScreenState extends State<CountriesScreen> {
+  ScrollController _childScrollController = ScrollController();
+  ScrollController _parentScrollController = ScrollController();
   String name = "";
   List<Map<String, dynamic>> data = [
 
@@ -41,6 +42,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
       return Scaffold(
         backgroundColor: AppColors.primaryColor1,
           body: SingleChildScrollView(
+            controller:_parentScrollController ,
       child: Column(
       children: [
         Padding(
@@ -62,15 +64,38 @@ class _CountriesScreenState extends State<CountriesScreen> {
 
           ),
         ),
-      StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('countries').orderBy('name').snapshots(),
+        NotificationListener(
+          onNotification: (ScrollNotification notification) {
+            if (notification is ScrollUpdateNotification) {
+              if (notification.metrics.pixels ==
+                  notification.metrics.maxScrollExtent) {
+                debugPrint('Reached the bottom');
+                _parentScrollController.animateTo(
+                    _parentScrollController.position.maxScrollExtent,
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.easeIn);
+              } else if (notification.metrics.pixels ==
+                  notification.metrics.minScrollExtent) {
+                debugPrint('Reached the top');
+                _parentScrollController.animateTo(
+                    _parentScrollController.position.minScrollExtent,
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.easeIn);
+              }
+            }
+            return true;
+          },
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection('countries').orderBy('name').snapshots(),
             builder: (context, snapshots) {
               return (snapshots.connectionState == ConnectionState.waiting)
                   ? const Center(
                 child: CircularProgressIndicator(),
               )
                   : ListView.builder(
-                shrinkWrap: true,
+                  controller: _childScrollController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
                   itemCount: snapshots.data!.docs.length,
                   itemBuilder: (context, index) {
                     var data = snapshots.data!.docs[index].data()
@@ -79,7 +104,6 @@ class _CountriesScreenState extends State<CountriesScreen> {
                     if (name.isEmpty) {
                       return InkWell(
                         onTap: (){
-
                           AppCubit.get(context).deleteCheeringPost().then((value) {
                             AppCubit.get(context).isLast=true;
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>
@@ -90,7 +114,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                           // AppCubit.get(context).deleteWaitingPost().then((value) {
                           //
                           // });
-                        },
+                         },
                         child: ListTile(
                           title: Text(
                             data['name'],
@@ -129,7 +153,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                             data['name'],
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontFamily: AppStrings.appFont,
@@ -145,6 +169,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                   });
             },
           ),
+        ),
       ],
       ),
       ),

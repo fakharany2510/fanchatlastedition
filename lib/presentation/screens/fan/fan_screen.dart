@@ -1,17 +1,11 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
-import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
-import 'package:fanchat/constants/app_strings.dart';
-import 'package:fanchat/presentation/paypal/advertise.dart';
-import 'package:fanchat/presentation/paypal/advertiseNavFan.dart';
 import 'package:fanchat/presentation/screens/fan/add_fan_image.dart';
 import 'package:fanchat/presentation/screens/fan/add_fan_video.dart';
 import 'package:fanchat/presentation/widgets/fan_area_widget.dart';
-import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:lottie/lottie.dart';
 
 class FanScreen extends StatelessWidget {
   const FanScreen({Key? key}) : super(key: key);
@@ -55,28 +49,17 @@ class FanScreen extends StatelessWidget {
                 elevation: 1,
                 overlayColor: AppColors.myWhite,
                 overlayOpacity: 0.0001,
-
                 children: [
                   SpeedDialChild(
                       onTap: (){
-                       if (CashHelper.getData(key: 'advertise') == true){
                          AppCubit.get(context).pickFanPostVideo();
-                       }else{
-                         Navigator.push(context, MaterialPageRoute(builder: (context)=>AdvertiseNav()));
-                       }
-
                       },
                       child: Icon(Icons.video_camera_back,color: Colors.red),
                       backgroundColor: AppColors.myWhite
                   ),
                   SpeedDialChild(
                     onTap: (){
-                      if (CashHelper.getData(key: 'advertise') == true){
                         AppCubit.get(context).pickFanPostImage();
-                      }else{
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>AdvertiseNav()));
-
-                      }
                     },
                     child: Icon(Icons.image,color: Colors.green,),
                     backgroundColor: AppColors.myWhite,

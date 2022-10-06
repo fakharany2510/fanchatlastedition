@@ -6,14 +6,13 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/firebase_options.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
-import 'package:fanchat/presentation/screens/advertising/advertising_screen.dart';
 import 'package:fanchat/presentation/screens/edit_profie_screen.dart';
 import 'package:fanchat/presentation/screens/fan/fan_full_post.dart';
 import 'package:fanchat/presentation/screens/messages_details.dart';
 import 'package:fanchat/presentation/screens/posts/add_new_image.dart';
 import 'package:fanchat/presentation/screens/posts/add_new_video.dart';
 import 'package:fanchat/presentation/screens/posts/add_text_post.dart';
-import 'package:fanchat/presentation/screens/profile_screen.dart';
+import 'package:fanchat/presentation/screens/profile_area/profile_screen.dart';
 import 'package:fanchat/presentation/screens/register_screen.dart';
 import 'package:fanchat/presentation/screens/splash_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
@@ -70,7 +69,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
         providers:[
-          BlocProvider(create: (context)=>AppCubit()..getUser()..getCountries()..getPosts()..getAllUsers()..getFanPosts()..periodic()),
+          BlocProvider(create: (context)=>AppCubit()..getUser()..getCountries()..getProfilePosts()..getPosts()..getAllUsers()..getFanPosts()..periodic()),
           BlocProvider(create: (context)=>AdvertisingCubit()..getAdvertisingPosts()),
         ],
         child: FirebasePhoneAuthProvider(

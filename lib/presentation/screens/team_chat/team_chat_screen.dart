@@ -13,7 +13,6 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
-import 'package:fanchat/presentation/screens/profile_screen.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:fanchat/presentation/screens/team_chat/cheering_screen.dart';
 import 'package:fanchat/presentation/screens/team_chat/send_image_chat_screen.dart';

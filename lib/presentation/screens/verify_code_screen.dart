@@ -6,7 +6,6 @@ import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/widgets/custom_loader.dart';
 import 'package:fanchat/presentation/widgets/pin_input_field.dart';
-import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:fanchat/utils/helpers.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
@@ -187,8 +186,8 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                     children:  [
                       CustomLoader(color: AppColors.navBarActiveIcon),
                       SizedBox(height: 50),
-                      Center(
-                        child: Text(
+                     const Center (
+                        child:  Text(
                           'Sending OTP',
                           style: TextStyle(fontSize: 25,
                           color: Colors.white,
@@ -204,7 +203,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                     children: [
                       Text(
                         "We've sent an SMS with a verification code to ${widget.phoneNumber}",
-                        style:  TextStyle(fontSize: 25,
+                        style:  const TextStyle(fontSize: 25,
                         fontFamily: AppStrings.appFont,
                           color: Colors.white
                         ),
