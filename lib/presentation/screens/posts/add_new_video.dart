@@ -33,6 +33,9 @@ class _AddNewVideoState extends State<AddNewVideo> {
   TextEditingController postText=TextEditingController();
 
   Widget build(BuildContext context) {
+
+
+
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
