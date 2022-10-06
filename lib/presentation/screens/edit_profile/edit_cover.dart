@@ -56,6 +56,7 @@ class _EditCoverState extends State<EditCover> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+
                       TextButton(
                           onPressed: (){
                             cubit.getCoverImage().then((value) {
@@ -71,10 +72,12 @@ class _EditCoverState extends State<EditCover> {
                           ),),
                       ),
                       SizedBox(width: 15,),
-                      state is GetCoverImageLoadingState || state is GetProfileImageLoadingState?
+                      if( cubit.coverImage != null)
+                      state is GetCoverImageLoadingState ||state is UpdateUserLoadingState?
                       CircularProgressIndicator(
                         color: AppColors.primaryColor1,
-                      ):TextButton(
+                      ):
+                      TextButton(
                         onPressed: (){
                           cubit
                               .uploadUserCover(

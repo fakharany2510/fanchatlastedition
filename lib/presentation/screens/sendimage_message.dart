@@ -25,7 +25,7 @@ class _SendImageState extends State<SendImage> {
        // //  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel:widget.userModel,)),);
        //    Navigator.pop(context);
        //  }
-        if(state is BrowiseUploadImagePostSuccessState){
+        if(state is CreateImagePrivateSuccessState){
           Navigator.pop(context);
         }
       },
@@ -65,7 +65,7 @@ class _SendImageState extends State<SendImage> {
                 ],
               )
           ),
-          floatingActionButton: state is BrowiseUploadImagePostLoadingState || state is BrowiseCreatePostLoadingState
+          floatingActionButton: state is UploadImagePrivateLoadingState || state is CreateImagePrivateLoadingState
               ?CircularProgressIndicator(color: AppColors.navBarActiveIcon,)
                 :FloatingActionButton(
             onPressed: (){

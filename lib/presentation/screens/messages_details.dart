@@ -759,6 +759,7 @@ class _ChatDetailsState extends State<ChatDetails> {
     Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('ali/${Uri.file(voice.path).pathSegments.last}');
     await storageReference.putFile(voice).then((value){
       AppCubit.get(context).createVoiceMessage(
+
         recevierId: widget.userModel.uId!,
         dateTime: DateTime.now().toString(),
         voice: voice.path,

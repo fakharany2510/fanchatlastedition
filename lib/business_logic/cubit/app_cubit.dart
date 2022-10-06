@@ -266,11 +266,11 @@ class AppCubit extends Cubit<AppState> {
         updateProfile(name: name,
             phone: phone,
             bio: bio,
-            cover: coverPath,
-            facebookLink: facebookLink,
-            instagramLink: instagramLink,
-            twitterLink: twitterLink,
-            youtubeLink: youtubeLink
+            image: profilePath,
+            facebookLink: facebookLink??'Enter your facebook link',
+            instagramLink: instagramLink??'Enter your instagram link',
+            twitterLink: twitterLink??'Enter your twitter link',
+            youtubeLink: youtubeLink??'Enter your youtube link'
         );
         emit(GetProfileImageSuccessState());
 
@@ -310,14 +310,15 @@ class AppCubit extends Cubit<AppState> {
 
         printMessage('Upload Success');
         coverPath = value;
-        updateProfile(name: name,
+        updateProfile(
+            name: name,
             phone: phone,
             bio: bio,
             cover: coverPath,
-            facebookLink: facebookLink,
-            instagramLink: instagramLink,
-            twitterLink: twitterLink,
-            youtubeLink: youtubeLink
+            facebookLink: facebookLink??'Enter your facebook link',
+            instagramLink: instagramLink??'Enter your instagram link',
+            twitterLink: twitterLink??'Enter your twitter link',
+            youtubeLink: youtubeLink??'Enter your youtube link'
         );
         emit(GetCoverImageSuccessState());
 
@@ -350,7 +351,7 @@ class AppCubit extends Cubit<AppState> {
       required String ?twitterLink,
       required String ?facebookLink,
    })async{
-    emit(GetProfileImageLoadingState());
+    emit(UpdateUserLoadingState());
 
     UserModel model= UserModel(
       username: name,
@@ -359,17 +360,16 @@ class AppCubit extends Cubit<AppState> {
       image: image?? userModel!.image,
       cover: cover?? userModel!.cover,
       phone: phone,
-      youtubeLink: youtubeLink,
-      facebookLink: facebookLink,
-      twitterLink: twitterLink,
-      instagramLink: instagramLink,
+      facebookLink: facebookLink??'Enter your facebook link',
+      instagramLink: instagramLink??'Enter your instagram link',
+      twitterLink: twitterLink??'Enter your twitter link',
+      youtubeLink: youtubeLink??'Enter your youtube link'
 
     );
-    emit(UpdateUserLoadingState());
     FirebaseFirestore.instance.
     collection('users').
     doc(AppStrings.uId).update(model.toMap()).then((value) {
-
+      getUser();
       emit(UpdateUserSuccessState());
     }).catchError((error){
 
@@ -1056,7 +1056,7 @@ List<int> commentIndex=[];
     String? messageImage,
     String? senderId,
   }){
-    emit(BrowiseCreatePostLoadingState());
+    emit(CreateImagePrivateLoadingState());
     MessageModel model=MessageModel(
       image: messageImage,
       text: "",
@@ -1074,10 +1074,10 @@ List<int> commentIndex=[];
         .collection('messages')
         .add(model.toMap())
         .then((value){
-      emit(SendMessageSuccessState());
+      emit(CreateImagePrivateSuccessState());
     })
         .catchError((error){
-      emit(SendMessageErrorState());
+      emit(CreateImagePrivateErrorState());
 
     });
     //Set Reciever Chat
@@ -1089,10 +1089,10 @@ List<int> commentIndex=[];
         .collection('messages')
         .add(model.toMap())
         .then((value){
-      emit(SendMessageSuccessState());
+      emit(CreateImagePrivateSuccessState());
     })
         .catchError((error){
-      emit(SendMessageErrorState());
+      emit(CreateImagePrivateErrorState());
     });
   }
 //////////////////////////////////////////
@@ -1102,7 +1102,7 @@ List<int> commentIndex=[];
     required String text,
     required String senderId
   }){
-    emit(BrowiseUploadImagePostLoadingState());
+    emit(UploadImagePrivateLoadingState());
     //كدا انا بكريت instance من ال storage
     firebase_storage.FirebaseStorage.instance
     //كدا بقوله انا فين في الstorage
@@ -1120,13 +1120,13 @@ List<int> commentIndex=[];
           senderId: AppStrings.uId
         );
 
-        emit(BrowiseUploadImagePostSuccessState());
+        emit(UploadImagePrivateSuccessState());
 
       }).catchError((error){
-        emit(BrowiseUploadImagePostErrorState());
+        emit(UploadImagePrivateErrorState());
       });
     }).catchError((error){
-      emit(BrowiseUploadImagePostErrorState());
+      emit(UploadImagePrivateErrorState());
     });
   }
   ///////////////////////////////////messages////////////////////////////
@@ -1218,7 +1218,6 @@ List<int> commentIndex=[];
     emit(StopLoadingState());
 
     MessageModel model=MessageModel(
-        image: "",
         text: "",
        dateTime: dateTime,
         recevierId: recevierId,
@@ -1226,7 +1225,6 @@ List<int> commentIndex=[];
         voice: voice
     );
     emit(StopLoadingState());
-
     //Set My Chat
     FirebaseFirestore.instance
         .collection('users')
@@ -1640,7 +1638,6 @@ List<int> commentIndex=[];
   }){
 
     PublicChatModel model=PublicChatModel(
-        image: "",
         text: "",
         dateTime: dateTime,
         senderId: AppStrings.uId,
@@ -1812,7 +1809,6 @@ List<int> commentIndex=[];
   }){
 
     PublicChatModel model=PublicChatModel(
-        image: "",
         text: "",
         dateTime: dateTime,
         senderId: AppStrings.uId,

@@ -47,16 +47,16 @@ class _SenderMessageWidgetState extends State<SenderMessageWidget> {
       },
       builder: (context,state){
         return Align(
-          alignment:AlignmentDirectional.centerEnd,
+          alignment:AlignmentDirectional.centerStart,
           child: (AppCubit.get(context).messages[widget.index!].text!="")
               ?Container(
             padding: const EdgeInsets.all(10),
             decoration:  BoxDecoration(
-              color: AppColors.primaryColor2,
+              color: AppColors.myGrey,
               borderRadius:const  BorderRadius.only(
                 topRight: Radius.circular(10),
                 topLeft: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
               ),
             ),
             child: Text('${AppCubit.get(context).messages[widget.index!].text}',

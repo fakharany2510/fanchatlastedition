@@ -16,12 +16,14 @@ Widget textFormFieldWidget(
       required TextInputType inputType,
       required String labelText,
       required String errorMessage,
-      required Widget prefixIcon,
+       Widget ?prefixIcon,
       Function ?function,
+      int ?maxLines,
     }
-    )=>Container(
+    )=> Container(
   // height:MediaQuery.of(context).size.height*.07,
   child: TextFormField(
+
     style: TextStyle(
       color:AppColors.myGrey,
       fontFamily: AppStrings.appFont,
@@ -52,6 +54,7 @@ Widget textFormFieldWidget(
       ),
       prefixIcon: prefixIcon,
     ),
+    maxLines: maxLines,
     validator: (value){
       if(value!.isEmpty){
         return'${errorMessage}';

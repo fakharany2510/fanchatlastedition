@@ -203,15 +203,13 @@ class EditProfileScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                   child: textFormFieldWidget(
+                      maxLines: 4,
                       context: context,
                       controller: cubit.changeUserBioController,
                       errorMessage: "please enter your bio",
                       inputType: TextInputType.text,
                       labelText: "Bio",
-                      prefixIcon: Icon(
-                        Icons.info,
-                        color: AppColors.myGrey,
-                      )),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -267,49 +265,49 @@ class EditProfileScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10,),
 
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 25),
-                    child: Text("Select Favorite Team :",style: TextStyle(
-                        color: AppColors.myGrey,
-                        fontSize: 16,
-                        fontFamily: AppStrings.appFont
-                    ),),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 0, right: 0, top: 10),
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 15
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: AppColors.myWhite,
-                        width: 1
-                      ),
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                    child: CountryPickerDropdown(
-                      dropdownColor: AppColors.primaryColor1,
-                      initialValue: CashHelper.getData(key: 'isoCode')==null? 'QA':CashHelper.getData(key: 'isoCode'),
-                      itemBuilder: _buildDropdownItem,
-                      priorityList:[
-                        CountryPickerUtils.getCountryByIsoCode('GB'),
-                        CountryPickerUtils.getCountryByIsoCode('CN'),
-                      ],
-                      sortComparator: (Country a, Country b) => a.isoCode.compareTo(b.isoCode),
-                      onValuePicked: (Country country) {
-                        print("${country.isoCode}");
-                        printMessage("+${country.phoneCode}");
-                        CashHelper.saveData(key: 'isoCode',value:"${country.isoCode}" );
-
-                        CashHelper.saveData(key: 'Team',value:"${country.name}" );
-                      },
-                    ),
-                  ),
-                ),
+                // Align(
+                //   alignment: Alignment.topLeft,
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(left: 25),
+                //     child: Text("Select Favorite Team :",style: TextStyle(
+                //         color: AppColors.myGrey,
+                //         fontSize: 16,
+                //         fontFamily: AppStrings.appFont
+                //     ),),
+                //   ),
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 0, right: 0, top: 10),
+                //   child: Container(
+                //     margin: const EdgeInsets.symmetric(
+                //       horizontal: 15
+                //     ),
+                //     decoration: BoxDecoration(
+                //       border: Border.all(
+                //         color: AppColors.myWhite,
+                //         width: 1
+                //       ),
+                //       borderRadius: BorderRadius.circular(20)
+                //     ),
+                //     child: CountryPickerDropdown(
+                //       dropdownColor: AppColors.primaryColor1,
+                //       initialValue: CashHelper.getData(key: 'isoCode')==null? 'QA':CashHelper.getData(key: 'isoCode'),
+                //       itemBuilder: _buildDropdownItem,
+                //       priorityList:[
+                //         CountryPickerUtils.getCountryByIsoCode('GB'),
+                //         CountryPickerUtils.getCountryByIsoCode('CN'),
+                //       ],
+                //       sortComparator: (Country a, Country b) => a.isoCode.compareTo(b.isoCode),
+                //       onValuePicked: (Country country) {
+                //         print("${country.isoCode}");
+                //         printMessage("+${country.phoneCode}");
+                //         CashHelper.saveData(key: 'isoCode',value:"${country.isoCode}" );
+                //
+                //         CashHelper.saveData(key: 'Team',value:"${country.name}" );
+                //       },
+                //     ),
+                //   ),
+                // ),
 
                 const SizedBox(height: 30),
                 state is UpdateUserLoadingState ||

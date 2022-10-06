@@ -53,6 +53,7 @@ class _EditImageState extends State<EditImage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+
                     TextButton(
                       onPressed: (){
                         cubit.getProfileImage();
@@ -65,11 +66,13 @@ class _EditImageState extends State<EditImage> {
                           fontSize: 18
                       ),),
                     ),
-                    SizedBox(width: 15,),
-                    state is GetProfileImageLoadingState?
+                    const SizedBox(width: 15,),
+                    if(cubit.profileImage != null)
+                    state is GetProfileImageLoadingState ||state is UpdateUserLoadingState?
                     CircularProgressIndicator(
                       color: AppColors.primaryColor1,
-                    ):TextButton(
+                    ):
+                    TextButton(
                       onPressed: (){
                         cubit
                             .uploadUserImage(

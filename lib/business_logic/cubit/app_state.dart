@@ -218,3 +218,12 @@ class GetAdvertisingImageLoadingState extends AppState {}
 class GetAdvertisingImageSuccessState extends AppState {}
 class GetAdvertisingImageErrorState extends AppState {}
 class LaunchAdvertisingImageSuccessState extends AppState {}
+
+
+class UploadImagePrivateLoadingState extends AppState {}
+class UploadImagePrivateSuccessState extends AppState {}
+class UploadImagePrivateErrorState extends AppState {}
+
+class CreateImagePrivateLoadingState extends AppState {}
+class CreateImagePrivateSuccessState extends AppState {}
+class CreateImagePrivateErrorState extends AppState {}
