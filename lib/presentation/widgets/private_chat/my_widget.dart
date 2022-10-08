@@ -50,7 +50,10 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
             alignment:AlignmentDirectional.centerEnd,
             child: (AppCubit.get(context).messages[widget.index!].text!="")
                 ?Container(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5
+              ),
               decoration:  BoxDecoration(
                 color: AppColors.primaryColor1,
                 borderRadius:const  BorderRadius.only(
@@ -74,7 +77,10 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: AppCubit.get(context).messages[widget.index!].image)));
               },
               child: Container(
-                padding: const EdgeInsets.all(5),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5
+                ),
                 decoration:  BoxDecoration(
                   color: AppColors.primaryColor1,
                   borderRadius:const  BorderRadius.only(

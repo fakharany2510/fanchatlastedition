@@ -57,7 +57,10 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                   (AppCubit.get(context).publicChat[widget.index!].text!="")?
                   Container(
                     width: MediaQuery.of(context).size.width*.74,
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5
+                    ),
                     decoration:  BoxDecoration(
                       color: AppColors.primaryColor1,
                       borderRadius:const  BorderRadius.only(
@@ -95,7 +98,10 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width*.74,
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5
+                      ),
                       decoration:  BoxDecoration(
                         color: AppColors.primaryColor1,
                         borderRadius:const  BorderRadius.only(
@@ -151,7 +157,10 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                   (AppCubit.get(context).publicChat[widget.index!].video!=null)
                       ?Container(
                     width: MediaQuery.of(context).size.width*.74,
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5
+                    ),
                     decoration:  BoxDecoration(
                       color: AppColors.primaryColor1,
                       borderRadius:const  BorderRadius.only(
@@ -238,7 +247,10 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                       ):
                   Container(
                     width: MediaQuery.of(context).size.width*.60,
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5
+                    ),
                     decoration:  BoxDecoration(
                       color: AppColors.primaryColor1,
                       borderRadius:const  BorderRadius.only(

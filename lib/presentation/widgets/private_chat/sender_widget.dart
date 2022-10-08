@@ -50,7 +50,10 @@ class _SenderMessageWidgetState extends State<SenderMessageWidget> {
           alignment:AlignmentDirectional.centerStart,
           child: (AppCubit.get(context).messages[widget.index!].text!="")
               ?Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 5
+            ),
             decoration:  BoxDecoration(
               color: AppColors.myGrey,
               borderRadius:const  BorderRadius.only(
@@ -74,7 +77,10 @@ class _SenderMessageWidgetState extends State<SenderMessageWidget> {
               Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: AppCubit.get(context).messages[widget.index!].image)));
             },
             child: Container(
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5
+              ),
               decoration:  BoxDecoration(
                 color: AppColors.primaryColor1,
                 borderRadius:const  BorderRadius.only(

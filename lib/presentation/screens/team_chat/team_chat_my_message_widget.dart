@@ -76,7 +76,10 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                   (AppCubit.get(context).teamChat[widget.index!].text!="")
                       ?Container(
                     width: MediaQuery.of(context).size.width*.74,
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5
+                    ),
                     decoration:  BoxDecoration(
                       color: AppColors.myGrey,
                       borderRadius:const  BorderRadius.only(
@@ -113,7 +116,10 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                   (AppCubit.get(context).teamChat[widget.index!].image !=null) ?
                   Container(
                     width: MediaQuery.of(context).size.width*.74,
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5
+                    ),
                     decoration:  BoxDecoration(
                       color: AppColors.myGrey,
                       borderRadius:const  BorderRadius.only(
@@ -175,7 +181,10 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                   (AppCubit.get(context).teamChat[widget.index!].video != null)
                       ?Container(
                     width: MediaQuery.of(context).size.width*.74,
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5
+                    ),
                     decoration:  BoxDecoration(
                       color: AppColors.myGrey,
                       borderRadius:const  BorderRadius.only(
@@ -262,7 +271,10 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                   ):
                   Container(
                     width: MediaQuery.of(context).size.width*.60,
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5
+                    ),
                     decoration:  BoxDecoration(
                       color: AppColors.myGrey,
                       borderRadius:const  BorderRadius.only(

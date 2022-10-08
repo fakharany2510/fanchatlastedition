@@ -167,6 +167,11 @@ class _AdvertisingAreaWidgetState extends State<AdvertisingAreaWidget> {
             ],
           );
         },
-        listener: (context , state){});
+        listener: (context , state){
+          if(state is NavigateScreenState){
+            videoPlayerController!.pause();
+            // videoPlayerController!.pause();
+          }
+        });
   }
 }
