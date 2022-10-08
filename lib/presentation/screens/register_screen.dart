@@ -293,7 +293,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           defaultSocialMediaButton(
                               context: context,
                               function: (){
-                                if(_value == 1){
+                                if(isCheckBoxTrue == true){
                                   RegisterCubit.get(context).loginWithGoogle();
                                 }else{
                                   Fluttertoast.showToast(
