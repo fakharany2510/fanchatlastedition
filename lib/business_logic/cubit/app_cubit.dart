@@ -2574,9 +2574,9 @@ List<int> commentIndex=[];
       AppStrings.postUid=value.id;
       FirebaseFirestore.instance
           .collection('profileImages')
-          .doc(AppStrings.uId)
+          .doc(AppStrings.postUid)
           .update({
-        'postId':AppStrings.uId
+        'postId':AppStrings.postUid
       }).then((value){
         emit(ProfileCreatePostSuccessState());
       });
@@ -2681,9 +2681,9 @@ List<int> commentIndex=[];
       AppStrings.postUid=value.id;
       FirebaseFirestore.instance
           .collection('profileImages')
-          .doc(AppStrings.uId)
+          .doc(AppStrings.postUid)
           .update({
-        'postId':AppStrings.uId
+        'postId':AppStrings.postUid
       }).then((value){
         emit(ProfileCreateVideoPostSuccessState());
       });
@@ -2762,5 +2762,10 @@ List<int> commentIndex=[];
     });
   }
 
+
+  void onPressCheckBox(bool value){
+    value = true;
+    emit(ChangeCheckBoxSuccessState());
+  }
 }
 

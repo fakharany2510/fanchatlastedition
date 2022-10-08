@@ -258,3 +258,6 @@ class ProfileUploadVideoPostErrorState extends AppState {}
 class BrowiseGetProfilePostsLoadingState extends AppState {}
 class BrowiseGetProfilePostsSuccessState extends AppState {}
 class BrowiseGetProfilePostsErrorState extends AppState {}
+
+
+class ChangeCheckBoxSuccessState extends AppState {}

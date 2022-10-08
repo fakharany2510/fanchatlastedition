@@ -27,6 +27,10 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   int _value=0;
+  bool isCheckBoxTrue=false;
+  void onPressCheckBox(bool value){
+    value = true;
+  }
   //RegisterScreen({Key? key}) : super(key: key);
   Map<String,dynamic>? _userData;
   AccessToken? _accessToken;
@@ -193,7 +197,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           height: size.height*.06,
                           function: (){
                             if(name.text == "fanchat"){
-                            if(_value ==1 ){
+                            if(isCheckBoxTrue == true ){
                               AppStrings.uId = '1832855570382325';
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeLayout()));
                             }else{
@@ -209,7 +213,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                             }
                             else if(formKey.currentState!.validate() || isNullOrBlank(phoneNumber)){
-                             if(_value ==1 ){
+                             if(isCheckBoxTrue == true ){
                                CashHelper.saveData(key: 'name',value: name.text);
                                CashHelper.saveData(key: 'phone',value: phoneNumber);
                                Navigator.push(context,
@@ -266,7 +270,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           defaultSocialMediaButton(
                               context: context,
                               function: (){
-                               if(_value ==1){
+                               if(isCheckBoxTrue == true){
                                  RegisterCubit.get(context).signInWithFacebook();
                                }else{
                                  Fluttertoast.showToast(
@@ -313,16 +317,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(height: size.height*.03,),
                 Row(
                   children: [
-                    Radio(
-                        value: 1,
-                        hoverColor: Colors.green,
-                        groupValue: _value,
-                        toggleable: true,
-                        onChanged: (value){
-                      setState((){
-                        _value=1;
-                      });
-                    }),
+                  Checkbox(
+                      value: isCheckBoxTrue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(2.0),
+                      ),
+                      side: MaterialStateBorderSide.resolveWith(
+                            (states) => BorderSide(width: 1.0, color: AppColors.myGrey),
+                      ),
+                      onChanged:(bool? value){
+                    setState((){
+                      isCheckBoxTrue=true;
+                    });
+                      }
+                  ),
                     Container(
                       child: Text.rich(
                           TextSpan(

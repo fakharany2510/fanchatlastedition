@@ -8,12 +8,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-class CheeringScreen extends StatelessWidget {
+class CheeringScreen extends StatefulWidget {
   CheeringScreen({Key? key,required this.countryName,required this.countryImage}) : super(key: key);
   String ?countryName;
   String ?countryImage;
 
+  @override
+  State<CheeringScreen> createState() => _CheeringScreenState();
+}
+
+class _CheeringScreenState extends State<CheeringScreen> {
   var cheeringController=TextEditingController();
+
+  var formKey=GlobalKey<FormState>();
+
+  bool cheeringControllerChanges = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +32,7 @@ class CheeringScreen extends StatelessWidget {
              AppCubit.get(context).getCheeringPost().then((value) {
                // AppCubit.get(context).getWaitingPost();
                Navigator.push(context, MaterialPageRoute(builder: (_){
-                 return TeamChatScreen(countryName: countryName!, countryImage: countryImage!);
+                 return TeamChatScreen(countryName: widget.countryName!, countryImage: widget.countryImage!);
                }));
              });
            }
@@ -67,51 +76,60 @@ class CheeringScreen extends StatelessWidget {
                             horizontal: 20
                         ),
                         // height:MediaQuery.of(context).size.height*.07,
-                        child: TextFormField(
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(70),
-                          ],
-                          style: TextStyle(
-                            color:AppColors.primaryColor1,
-                            fontFamily: AppStrings.appFont,
-                            fontSize: 17
-                          ),
-                          maxLines: 3,
-                          keyboardType: TextInputType.text,
-                          controller: cheeringController,
-                          decoration: InputDecoration(
-
-                            focusColor: AppColors.myGrey,
-                            fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color:AppColors.primaryColor1),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5)
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color:AppColors.primaryColor1),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            // hintText: '$labelText',
-                            // hintStyle: TextStyle(
-                            //   color: AppColors.myGrey,
-                            //   fontFamily: AppStrings.appFont,
-                            // ),
-                          ),
-                          validator: (value){
-                            if(value!.isEmpty){
-                              return 'Write uniform cheering';
-                            }
+                        child: Form(
+                          key: formKey,
+                          onChanged: (){
+                            setState((){
+                              cheeringControllerChanges=true;
+                            });
                           },
-                        ),
+                          child: TextFormField(
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(70),
+                            ],
+                            style: TextStyle(
+                                color:AppColors.primaryColor1,
+                                fontFamily: AppStrings.appFont,
+                                fontSize: 17
+                            ),
+                            maxLines: 3,
+                            keyboardType: TextInputType.text,
+                            controller: cheeringController,
+                            decoration: InputDecoration(
+
+                              focusColor: AppColors.myGrey,
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color:AppColors.primaryColor1),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5)
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color:AppColors.primaryColor1),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              // hintText: '$labelText',
+                              // hintStyle: TextStyle(
+                              //   color: AppColors.myGrey,
+                              //   fontFamily: AppStrings.appFont,
+                              // ),
+                            ),
+                            validator: (value){
+                              if(value!.isEmpty){
+                                return 'Write uniform cheering';
+                              }
+                            },
+                          ),
+                        )
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height*.05,),
                       state is CreateCheeringLoadingState?
                       CircularProgressIndicator(
                         color: AppColors.primaryColor1,
                       ):
+                      (cheeringControllerChanges == true) && (cheeringController.text != '')?
                       defaultButton(
                           width: MediaQuery.of(context).size.width*.8,
                           height: MediaQuery.of(context).size.height*.07,
@@ -134,10 +152,18 @@ class CheeringScreen extends StatelessWidget {
 
                             }
 
-                          
+
                             // AppCubit.get(context).getCheeringPost();
                             // AppCubit.get(context).isLast=false;
 
+                          }
+                      ): defaultButton(
+                          width: MediaQuery.of(context).size.width*.8,
+                          height: MediaQuery.of(context).size.height*.07,
+                          buttonColor: AppColors.myGrey,
+                          textColor: AppColors.primaryColor1,
+                          buttonText: 'Post',
+                          function: (){
                           }
                       )
                     ],
