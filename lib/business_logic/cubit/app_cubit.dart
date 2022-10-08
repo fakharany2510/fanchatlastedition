@@ -116,10 +116,18 @@ class AppCubit extends Cubit<AppState> {
 
 
   bool checkValue=false;
+
+  bool postVideoPLay=false;
+
   void checkBox(value){
 
     checkValue=value;
     emit(CheckBoxState());
+  }
+
+  void throwState(){
+
+    emit(PauseVideoState());
   }
 
   UserModel? userModel;

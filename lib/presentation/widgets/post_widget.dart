@@ -14,7 +14,8 @@ import 'package:video_player/video_player.dart';
 import '../../constants/app_strings.dart';
 import '../screens/comment_screen.dart';
 import 'package:cached_video_player/cached_video_player.dart';
-CachedVideoPlayerController? controller;
+
+import '../screens/home_screen.dart';
 
 class PostWidget extends StatefulWidget {
   int ?index;
@@ -23,25 +24,26 @@ class PostWidget extends StatefulWidget {
   PostWidget({Key? key,this.index}) : super(key: key);
 
   @override
-  State<PostWidget> createState() => _PostWidgetState();
+  State<PostWidget> createState() => PostWidgetState();
 }
 
-class _PostWidgetState extends State<PostWidget> {
+class PostWidgetState extends State<PostWidget> {
+  VideoPlayerController? controller;
+  Future <void> ?intilize;
+
   @override
   void initState() {
-    controller = CachedVideoPlayerController.network(
-        "${AppCubit.get(context).posts[widget.index!].postVideo}");
-    controller!.initialize().then((value) {
-      controller!.play();
-      controller!.setLooping(true);
-      controller!.setVolume(1.0);
-      setState(() {
-        controller!.pause();
-      });
-    }).catchError((error){
-      print('error while initializing video ${error.toString()}');
-    });
-
+    // controller = CachedVideoPlayerController.network(
+    //     AppCubit.get(context).posts[widget.index!].postVideo!);
+    // controller!.initialize();
+    // controller!.pause();
+    // controller!.setLooping(true);
+    // controller!.setVolume(1.0);
+    controller=VideoPlayerController.network(
+        AppCubit.get(context).posts[widget.index!].postVideo!);
+    intilize=controller!.initialize();
+    controller!.setLooping(true);
+    controller!.setVolume(1.0);
     super.initState();
   }
   @override
@@ -51,6 +53,12 @@ class _PostWidgetState extends State<PostWidget> {
         controller!.pause();
        // videoPlayerController!.pause();
       }
+      if(state is PauseVideoState){
+        controller!.pause();
+        // videoPlayerController!.pause();
+      }
+
+
 
     },
       builder: (context,state){
@@ -142,7 +150,7 @@ class _PostWidgetState extends State<PostWidget> {
                                 Icons.more_vert_sharp,
                                 color: Colors.white,
                               ),
-                              itemBuilder: (context) => [
+                              itemBuilder: (BuildContext context) => [
 
                                 PopupMenuItem(
                                   value: 1,
@@ -239,12 +247,31 @@ class _PostWidgetState extends State<PostWidget> {
                       Container(
                         height: MediaQuery.of(context).size.height*.25,
                         width: double.infinity,
-                        child: controller!.value.isInitialized
-                            ? AspectRatio(
-                            aspectRatio: controller!.value.aspectRatio,
-                            child: CachedVideoPlayer(controller!))
-                            : const Center(child: CircularProgressIndicator())
-                      ),
+                        child:FutureBuilder(
+                          future: intilize,
+                          builder: (context,snapshot){
+                            if(snapshot.connectionState == ConnectionState.done){
+                              return AspectRatio(
+                                aspectRatio: controller!.value.aspectRatio,
+                                child: VideoPlayer(controller!),
+                              );
+                            }
+                            else{
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          },
+
+
+
+                        )),
+                      //   controller!.value.isInitialized
+                      //       ? AspectRatio(
+                      //       aspectRatio: controller!.value.aspectRatio,
+                      //       child: CachedVideoPlayer(controller!))
+                      //       : const Center(child: CircularProgressIndicator())
+                      // ),
 
           // FutureBuilder(
                         //   future: intilize,
@@ -271,11 +298,16 @@ class _PostWidgetState extends State<PostWidget> {
                           right: 20,
                           child: InkWell(
                             onTap: (){
+                              print('hhfhds');
                               setState((){
+                                print('hhfhds 5653');
                                 if(controller!.value.isPlaying){
                                   controller!.pause();
+                                  isPostPlaying=true;
                                 }else{
                                   controller!.play();
+                                  isPostPlaying=false;
+
                                 }
                               });
                             },

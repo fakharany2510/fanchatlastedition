@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/post_widget.dart';
 
+
+bool isPostPlaying= true;
 class HomeScreen extends StatefulWidget {
     HomeScreen(
       {Key? key, required this.pageHeight, required this.pageWidth})
@@ -22,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
    ScrollController _parentScrollController = ScrollController();
 
+
   @override
 
   Widget build(BuildContext context) {
@@ -34,10 +37,11 @@ class _HomeScreenState extends State<HomeScreen> {
           Navigator.pushNamed(context, 'add_video');
         }
         if(state is BrowiseGetPostsSuccessState){
-          controller!.pause();
+          // controller!.pause();
         }
         if(state is NavigateScreenState){
-          controller!.pause();
+          // controller!.pause();
+
         }
 
       },
@@ -93,10 +97,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 3,),
                       InkWell(
                         onTap: (){
-                          setState((){
-                            if(AppCubit.get(context).postModel !=null)
-                           controller!.pause();
+
+                          setState(() {
+                            print('State ////////////////////////');
+
+                          state is NavigateScreenState;
+                            print(state);
+                            isPostPlaying=false;
+                            AppCubit.get(context).throwState();
                           });
+                          print('I am here');
                           Navigator.pushNamed(context, 'add_text');
                         },
                         child: Container(

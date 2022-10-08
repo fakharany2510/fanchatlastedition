@@ -22,17 +22,18 @@ class FanAreaWidget extends StatefulWidget {
 }
 
 class _FanAreaWidgetState extends State<FanAreaWidget> {
-  VideoPlayerController ?videoPlayerController;
+  VideoPlayerController ?fanVideoPlayerController;
   Future <void> ?intilize;
 
   @override
   void initState() {
-    videoPlayerController=VideoPlayerController.network(
+    fanVideoPlayerController=VideoPlayerController.network(
         AppCubit.get(context).fans[widget.index!].postVideo!
     );
-    intilize=videoPlayerController!.initialize();
-    videoPlayerController!.setLooping(true);
-    videoPlayerController!.setVolume(1.0);    super.initState();
+    intilize=fanVideoPlayerController!.initialize();
+    fanVideoPlayerController!.setLooping(true);
+    fanVideoPlayerController!.setVolume(1.0);
+    super.initState();
   }
   @override
   Widget build(BuildContext context) {
@@ -153,8 +154,8 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
                           builder: (context,snapshot){
                             if(snapshot.connectionState == ConnectionState.done){
                               return AspectRatio(
-                                aspectRatio: videoPlayerController!.value.aspectRatio,
-                                child: VideoPlayer(videoPlayerController!),
+                                aspectRatio: fanVideoPlayerController!.value.aspectRatio,
+                                child: VideoPlayer(fanVideoPlayerController!),
                               );
                             }
                             else{
@@ -174,14 +175,14 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
                           child: InkWell(
                             onTap: (){
                               setState((){
-                                if(videoPlayerController!.value.isPlaying){
-                                  videoPlayerController!.pause();
+                                if(fanVideoPlayerController!.value.isPlaying){
+                                  fanVideoPlayerController!.pause();
                                 }else{
-                                  videoPlayerController!.play();
+                                  fanVideoPlayerController!.play();
                                 }
                               });
                             },
-                            child: videoPlayerController!.value.isPlaying?  CircleAvatar(radius: 15, child: Icon(Icons.pause,color: AppColors.myWhite,size: 15,)): CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: AppColors.myWhite,size: 15,)),
+                            child: fanVideoPlayerController!.value.isPlaying?  CircleAvatar(radius: 15, child: Icon(Icons.pause,color: AppColors.myWhite,size: 15,)): CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: AppColors.myWhite,size: 15,)),
                           )
                       ),
                       Positioned(
@@ -256,6 +257,12 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
             ],
           );
         },
-        listener: (context , state){});
+        listener: (context , state){
+          if(state is NavigateScreenState){
+            fanVideoPlayerController!.pause();
+          // videoPlayerController!.pause();
+        }
+
+        });
   }
 }

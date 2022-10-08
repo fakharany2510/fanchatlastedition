@@ -20,6 +20,7 @@ class FanScreen extends StatelessWidget {
           if(state is PickFanPostVideoSuccessState){
             Navigator.push(context, MaterialPageRoute(builder: (context)=>AddFanVideo()));
           }
+
         },
       builder: (context,state){
           var cubit=AppCubit.get(context);
