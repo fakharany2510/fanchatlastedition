@@ -1,6 +1,8 @@
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/utils/utils.dart';
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/screens/more_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -155,14 +157,22 @@ customAppbar(String title,context){
         image: AssetImage('assets/images/more_screen.png'),
       ),
     ),
-    title:Container(
-      height: MediaQuery.of(context).size.height*1,
-      width: MediaQuery.of(context).size.width*.25,
-      child: Image(
-        image: AssetImage('assets/images/ncolors.png'),
-        height: 100,
-        width: 100,
+    title: GestureDetector(
+      onTap: (){
+        AppCubit.get(context).currentIndex=0;
+        Navigator.push(context, MaterialPageRoute(builder: (_){
+          return HomeLayout();
+        }));
+      },
+      child: Container(
+        height: MediaQuery.of(context).size.height*1,
+        width: MediaQuery.of(context).size.width*.25,
+        child: Image(
+          image: AssetImage('assets/images/ncolors.png'),
+          height: 100,
+          width: 100,
 
+        ),
       ),
     ),
     centerTitle: true,

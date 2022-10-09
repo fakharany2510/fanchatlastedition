@@ -25,6 +25,12 @@ class _CheeringScreenState extends State<CheeringScreen> {
   bool cheeringControllerChanges = false;
 
   @override
+  void initState() {
+    AppCubit.get(context).getWaitingCheering();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
         listener: (context,state){
@@ -145,10 +151,13 @@ class _CheeringScreenState extends State<CheeringScreen> {
                                 text: cheeringController.text
                             );
                               AppCubit.get(context).isWaiting=true;
+                              print('here');
+                              AppCubit.get(context).updateWaitingCheering();
                             }
                             else{
 
-                              customToast(title: 'your cheering will be appear after few seconds', color: AppColors.primaryColor1);
+                              customToast(title: 'Please, Waiting few seconds and try again', color: AppColors.primaryColor1);
+                              Navigator.pop(context);
 
                             }
 

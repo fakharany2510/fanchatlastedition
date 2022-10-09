@@ -178,7 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 color: AppColors.myGrey
                             ),
                             onChanged: (phone) => phoneNumber = phone.completeNumber,
-                            initialCountryCode: 'QA',
+                            initialCountryCode: 'AF',
                             flagsButtonPadding: const EdgeInsets.only(right: 10),
                             showDropdownIcon: false,
                             keyboardType: TextInputType.phone,
@@ -316,6 +316,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       SizedBox(height: size.height*.03,),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                   Checkbox(
                       value: isCheckBoxTrue,

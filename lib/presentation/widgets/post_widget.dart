@@ -13,8 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 import '../../constants/app_strings.dart';
 import '../screens/comment_screen.dart';
-import 'package:cached_video_player/cached_video_player.dart';
-
 import '../screens/home_screen.dart';
 
 class PostWidget extends StatefulWidget {
@@ -79,9 +77,8 @@ class PostWidgetState extends State<PostWidget> {
                       onTap: (){
                         AppCubit.get(context).profileId = '${AppCubit.get(context).posts[widget.index!].userId}';
                         AppCubit.get(context).getAllUsers().then((value) {
-
-                          Navigator.push(context, MaterialPageRoute(builder: (_){
-
+                          if(AppCubit.get(context).userModel!.uId!=AppCubit.get(context).posts[widget.index!].userId) {
+                            Navigator.push(context, MaterialPageRoute(builder: (_){
                             return UserProfile(
                               userId: '${AppCubit.get(context).posts[widget.index!].userId}',
                               userImage: '${AppCubit.get(context).posts[widget.index!].image}',
@@ -89,6 +86,7 @@ class PostWidgetState extends State<PostWidget> {
 
                             );
                           }));
+                          }
 
                         });
                       },

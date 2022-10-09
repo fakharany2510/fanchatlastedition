@@ -163,12 +163,11 @@ class UserProfile extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10,),
-
                   ],
                 ),
                 const SizedBox(width: 10,),
                 Padding(
-                  padding: const EdgeInsets.only(top: 5),
+                  padding: const EdgeInsets.only(top: 25),
                   child: Stack(
                     children: [
                       GridView.count(

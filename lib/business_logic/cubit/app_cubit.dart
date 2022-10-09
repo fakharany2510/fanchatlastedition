@@ -1953,6 +1953,29 @@ List<int> commentIndex=[];
 
   bool isWaiting=false ;
 
+  void getWaitingCheering(){
+
+    FirebaseFirestore.instance.collection('watingCheering').doc('oeD0jEyvAjiaSBKjuW3d').get().then((value) {
+      isWaiting=value['isWaiting'];
+      print(isWaiting);
+      emit(GetWaitingSuccessState());
+    });
+
+  }
+
+  void updateWaitingCheering(){
+
+    FirebaseFirestore.instance.collection('watingCheering').doc('oeD0jEyvAjiaSBKjuW3d').update({
+      'isWaiting':isWaiting
+    }).then((value) {
+      print('uPDATE Waiting success');
+      emit(UpdateWaitingSuccessState());
+    }).catchError((error){
+      print('${error.toString()}');
+      emit(UpdateWaitingSuccessState());
+    });
+
+  }
   bool isLast=true;
   int count=15;
 

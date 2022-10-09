@@ -219,9 +219,13 @@ class EditProfileScreen extends StatelessWidget {
                       errorMessage: "please enter your youtube link",
                       inputType: TextInputType.text,
                       labelText: "Enter Youtube Link",
-                      prefixIcon: Icon(
-                        Icons.info,
-                        color: AppColors.myGrey,
+                      prefixIcon:  Container(
+                        height: 5,
+                        width: 5,
+                        margin: EdgeInsets.all(12),
+                        child: Image(
+                            image: AssetImage('assets/images/youtube.png')
+                        ),
                       )),
                 ),
                 Padding(
@@ -232,9 +236,13 @@ class EditProfileScreen extends StatelessWidget {
                       errorMessage: "please enter your facebook link",
                       inputType: TextInputType.text,
                       labelText: "Enter Facebook Link",
-                      prefixIcon: Icon(
-                        Icons.info,
-                        color: AppColors.myGrey,
+                      prefixIcon:  Container(
+                        height: 5,
+                        width: 5,
+                        margin: EdgeInsets.all(12),
+                        child: Image(
+                            image: AssetImage('assets/images/facebook.png')
+                        ),
                       )),
                 ),
                 Padding(
@@ -245,23 +253,32 @@ class EditProfileScreen extends StatelessWidget {
                       errorMessage: "please enter your twitter link",
                       inputType: TextInputType.text,
                       labelText: "Enter Twitter Link",
-                      prefixIcon: Icon(
-                        Icons.info,
-                        color: AppColors.myGrey,
+                      prefixIcon: Container(
+                        height: 5,
+                        width: 5,
+                        margin: EdgeInsets.all(12),
+                        child: Image(
+                            image: AssetImage('assets/images/twitter.png')
+                        ),
                       )),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                   child: textFormFieldWidget(
                       context: context,
+
                       controller: cubit.changeInstagramLinkController,
                       errorMessage: "please enter your instagram link",
                       inputType: TextInputType.text,
                       labelText: "Enter Instagram Link",
-                      prefixIcon: Icon(
-                        Icons.info,
-                        color: AppColors.myGrey,
-                      )),
+                      prefixIcon:  Container(
+                        height: 5,
+                        width: 5,
+                        margin: EdgeInsets.all(12),
+                        child: Image(
+                            image: AssetImage('assets/images/instagram.png')
+                        ),
+                      ),),
                 ),
                 const SizedBox(height: 10,),
 
@@ -335,6 +352,7 @@ class EditProfileScreen extends StatelessWidget {
 
                           ).then((value) {
                             cubit.getUser();
+                            Navigator.pop(context);
                             customToast(title: 'Data Updated', color: AppColors.primaryColor1);
 
                           });

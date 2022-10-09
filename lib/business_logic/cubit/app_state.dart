@@ -262,6 +262,9 @@ class BrowiseGetProfilePostsLoadingState extends AppState {}
 class BrowiseGetProfilePostsSuccessState extends AppState {}
 class BrowiseGetProfilePostsErrorState extends AppState {}
 
+class GetWaitingSuccessState extends AppState {}
+class UpdateWaitingSuccessState extends AppState {}
+
 
 class ChangeCheckBoxSuccessState extends AppState {}
 class PauseVideoState extends AppState {}

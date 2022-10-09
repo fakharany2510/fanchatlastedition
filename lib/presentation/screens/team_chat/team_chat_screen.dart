@@ -247,11 +247,11 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
 
                                                   ],
                                                 ),
-                                                const SizedBox(height: 10,),
+                                                const SizedBox(height: 5,),
                                                 Text('${AppCubit.get(context).cheering[0].text}',
                                                   style: TextStyle(
                                                       color: AppColors.primaryColor1,
-                                                      fontSize: 22,
+                                                      fontSize: 18,
                                                       fontWeight: FontWeight.w500,
                                                       fontFamily: AppStrings.appFont
                                                   ),
@@ -268,14 +268,14 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                     )
                                   ),
                                   Positioned(
-                                    bottom: 25,
-                                    right: 25,
+                                    bottom: 15,
+                                    right: 5,
                                     child: CircularCountDownTimer(
                                       duration: 15,
                                       initialDuration: 0,
                                       controller: CountDownController(),
-                                      width: MediaQuery.of(context).size.width*.12,
-                                      height: MediaQuery.of(context).size.height*.06,
+                                      width: MediaQuery.of(context).size.width*.10,
+                                      height: MediaQuery.of(context).size.height*.03,
                                       ringColor: Colors.grey[300]!,
                                       ringGradient: null,
                                       fillColor: AppColors.myGrey,
@@ -285,7 +285,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                       strokeWidth: 20.0,
                                       strokeCap: StrokeCap.round,
                                       textStyle: const TextStyle(
-                                          fontSize: 33.0,
+                                          fontSize: 15.0,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold
                                       ),
@@ -302,6 +302,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                         setState(() {
 
                                           AppCubit.get(context).isWaiting=false;
+                                          AppCubit.get(context).updateWaitingCheering();
                                           AppCubit.get(context).isLast=false;
                                           print(AppCubit.get(context).isLast);
                                           AppCubit.get(context).deleteCheeringPost();
