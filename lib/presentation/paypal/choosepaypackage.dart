@@ -43,11 +43,26 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children:  [
-                Radio(value: 1, groupValue: _value, onChanged: (value){
-                  setState((){
-                    _value=1;
-                  });
-                }),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20,right: 10),
+                  child: Container(
+                    height: 20,
+                    width:20,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(50)
+                    ),
+                    child:Radio(
+
+                        value: 1,
+                        groupValue: _value,
+                        onChanged: (value){
+                          setState((){
+                            _value=1;
+                          });
+                        }),
+                  ),
+                ),
                 const Image(image: AssetImage('assets/images/premium.webp'),
                   height: 50,
                   width: 50,
@@ -78,11 +93,26 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children:  [
-                Radio(value: 2, groupValue: _value, onChanged: (value){
-                  setState((){
-                    _value=2;
-                  });
-                }),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20,right: 10),
+                  child: Container(
+                    height: 20,
+                    width:20,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(50)
+                    ),
+                    child:Radio(
+
+                        value: 2,
+                        groupValue: _value,
+                        onChanged: (value){
+                          setState((){
+                            _value=1;
+                          });
+                        }),
+                  ),
+                ),
                 const Image(image: AssetImage('assets/images/business.png'),
                   height: 50,
                   width: 50,

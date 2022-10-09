@@ -34,14 +34,26 @@ class _ChoosePaymentMethodState extends State<ChoosePaymentMethod> {
             ),
             Row(
               children: [
-                Radio(
-                    value: 1,
-                    groupValue: _value,
-                    onChanged: (value){
-                      setState((){
-                        _value=1;
-                      });
-                    }),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Container(
+                  height: 20,
+                  width:20,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50)
+                  ),
+                  child:Radio(
+
+                      value: 1,
+                      groupValue: _value,
+                      onChanged: (value){
+                        setState((){
+                          _value=1;
+                        });
+                      }),
+                ),
+              ),
                 SizedBox(width:5,),
                 Image(image: AssetImage('assets/images/chosepay1.png'),width: 100,height: 100,)
               ],
