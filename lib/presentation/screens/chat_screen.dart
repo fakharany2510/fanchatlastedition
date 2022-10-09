@@ -20,6 +20,8 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
+  ScrollController _childScrollController = ScrollController();
+  ScrollController _parentScrollController = ScrollController();
   String name = "";
   UserModel? model;
   @override
@@ -32,98 +34,135 @@ class _ChatsScreenState extends State<ChatsScreen> {
       listener: (context , state){},
       builder: (context , state){
         return Scaffold(
-            backgroundColor: AppColors.myWhite,
-            appBar: AppBar(
-                elevation: 0,
-                backgroundColor: AppColors.primaryColor1,
-                title: Card(
-                  elevation: 0,
-
-                  child: TextField(
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search), hintText: 'Search Your Friend...'),
-                    onChanged: (val) {
-                      setState(() {
-                        name = val;
-                      });
-                    },
-                  ),
-                )),
-            body: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection('users').snapshots(),
-              builder: (context, snapshots) {
-                return (snapshots.connectionState == ConnectionState.waiting)
-                    ? Center(
-                  child: CircularProgressIndicator(),
-                )
-                    : ListView.separated(
-                  separatorBuilder: (context,index)=>Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+            backgroundColor: AppColors.primaryColor1,
+            appBar:customAppbar('private chat', context),
+            body:SingleChildScrollView(
+              controller:_parentScrollController ,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10,right: 10),
                     child: Container(
-                      width: double.infinity,
-                      height: 0,
-                      color: AppColors.myGrey,
+                      height: 45,
+                      child:Card(
+                        elevation: 0,
+
+                        child: TextField(
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.search), hintText: 'Search Your Friend...'),
+                          onChanged: (val) {
+                            setState(() {
+                              name = val;
+                            });
+                          },
+                        ),
+                      ) ,
                     ),
                   ),
-                    itemCount: AppCubit.get(context).users.length,
-
-                    itemBuilder: (context, index) {
-
-                   //  as Map<String, dynamic>;
-
-                      if (name.isEmpty) {
-                        return InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel:AppCubit.get(context).users[index])));
-                            print('users length 1111111111111111 ${AppCubit.get(context).users.length}');
-                          },
-                          child: ListTile(
-                            title: Text(
-                              AppCubit.get(context).users[index].username!,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: AppColors.primaryColor1,
-                                  fontFamily: AppStrings.appFont,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            leading: CircleAvatar(
-                              backgroundImage: NetworkImage(AppCubit.get(context).users[index].image!),
-                            ),
-                          ),
-                        );
+                  SizedBox(height: 10,),
+                  NotificationListener(
+                    onNotification: (ScrollNotification notification) {
+                      if (notification is ScrollUpdateNotification) {
+                        if (notification.metrics.pixels ==
+                            notification.metrics.maxScrollExtent) {
+                          debugPrint('Reached the bottom');
+                          _parentScrollController.animateTo(
+                              _parentScrollController.position.maxScrollExtent,
+                              duration: const Duration(seconds: 1),
+                              curve: Curves.easeIn);
+                        } else if (notification.metrics.pixels ==
+                            notification.metrics.minScrollExtent) {
+                          debugPrint('Reached the top');
+                          _parentScrollController.animateTo(
+                              _parentScrollController.position.minScrollExtent,
+                              duration: const Duration(seconds: 1),
+                              curve: Curves.easeIn);
+                        }
                       }
-                      if (AppCubit.get(context).users[index].username!
-                          .toString()
-                          .toLowerCase()
-                          .startsWith(name.toLowerCase())) {
-                        return InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel: AppCubit.get(context).users[index],)));
-                          },
-                          child: ListTile(
-                            title: Text(
-                              AppCubit.get(context).users[index].username!,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: AppColors.primaryColor1,
-                                  fontSize: 16,
-                                  fontFamily: AppStrings.appFont,
-                                  fontWeight: FontWeight.bold),
+                      return true;
+                    },
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance.collection('users').snapshots(),
+                      builder: (context, snapshots) {
+                        return (snapshots.connectionState == ConnectionState.waiting)
+                            ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                            : ListView.separated(
+                          shrinkWrap: true,
+                            separatorBuilder: (context,index)=>Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+                              child: Container(
+                                width: double.infinity,
+                                height: 0,
+                                color: AppColors.myGrey,
+                              ),
                             ),
+                            itemCount: AppCubit.get(context).users.length,
 
-                            leading: CircleAvatar(
-                              backgroundImage: NetworkImage(AppCubit.get(context).users[index].image!),
-                            ),
-                          ),
-                        );
-                      }
-                      return Container();
-                    });
-              },
-            ));
+                            itemBuilder: (context, index) {
+
+                              //  as Map<String, dynamic>;
+
+                              if (name.isEmpty) {
+                                return InkWell(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel:AppCubit.get(context).users[index])));
+                                    print('users length 1111111111111111 ${AppCubit.get(context).users.length}');
+                                  },
+                                  child: ListTile(
+                                    title: Text(
+                                      AppCubit.get(context).users[index].username!,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          color: AppColors.myWhite,
+                                          fontFamily: AppStrings.appFont,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    leading: CircleAvatar(
+                                      backgroundImage: NetworkImage(AppCubit.get(context).users[index].image!),
+                                    ),
+                                  ),
+                                );
+                              }
+                              if (AppCubit.get(context).users[index].username!
+                                  .toString()
+                                  .toLowerCase()
+                                  .startsWith(name.toLowerCase())) {
+                                return InkWell(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel: AppCubit.get(context).users[index],)));
+                                  },
+                                  child: ListTile(
+                                    title: Text(
+                                      AppCubit.get(context).users[index].username!,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          color: AppColors.myWhite,
+                                          fontSize: 16,
+                                          fontFamily: AppStrings.appFont,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+
+                                    leading: CircleAvatar(
+                                      backgroundImage: NetworkImage(AppCubit.get(context).users[index].image!),
+                                    ),
+                                  ),
+                                );
+                              }
+                              return Container();
+                            });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            )
+
+        );
 
       },
     );

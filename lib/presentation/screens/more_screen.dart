@@ -173,12 +173,7 @@ class MoreScreen extends StatelessWidget {
                                       ),
                                     ),
                                     onTap: (){
-                                      CashHelper.saveData(key: 'advertise',value: false);
-                                      CashHelper.saveData(key: 'business',value: false);
-                                      AppCubit.get(context).signOut();
-                                      Navigator.pushReplacement(context,
-                                          MaterialPageRoute(builder: (context)=>RegisterScreen())
-                                      );
+                                      showMyDialog(context);
                                     },
                                   ),
                                   // const SizedBox(height:10),
@@ -240,6 +235,77 @@ class MoreScreen extends StatelessWidget {
               ),
             ),
 
+        );
+      },
+    );
+  }
+  Future<void> showMyDialog(context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+         // title: const Text('Aew you sure you want to logout from FanChat'),
+          content: SingleChildScrollView(
+            child:Container(
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 70,
+                    child: Image(image: AssetImage('assets/images/ncolort.png'),
+                      height: 100,
+                      width: 100,
+                    ),
+                  ),
+                  Text('Are you sure you want to logout from FanChat',
+                  textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500
+                    ),
+                  )
+                ],
+              ),
+            )
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  child:  Text('Approve',
+                    style: TextStyle(
+                        color: AppColors.navBarActiveIcon,
+                        fontSize: 16
+                    ),
+                  ),
+                  onPressed: () {
+                    CashHelper.saveData(key: 'advertise',value: false);
+                    CashHelper.saveData(key: 'business',value: false);
+                    AppCubit.get(context).signOut();
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context)=>RegisterScreen()));
+                  },
+                ),
+                SizedBox(width: 15,),
+                TextButton(
+                  child: const Text('Cancel',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 16
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            )
+          ],
         );
       },
     );
