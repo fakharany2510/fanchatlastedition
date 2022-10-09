@@ -183,9 +183,27 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500
                               ),),
+                              SizedBox(height: 10,),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
+                                  CircleAvatar(
+                                    radius: 20,
+                                    backgroundColor: AppColors.myWhite,
+                                    child:IconButton(
+                                        onPressed: (){
+                                          setState(() {
+                                            recording=false;
+                                          });
+                                          // pauseRecord();
+                                        },
+                                        icon:Icon(
+                                          Icons.delete,
+                                          color: AppColors.primaryColor1,
+                                          size: 20,
+                                        )
+                                    ),
+                                  ),
                                   CircleAvatar(
                                     radius: 20,
                                     backgroundColor: AppColors.myWhite,
@@ -193,7 +211,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                         onPressed: (){
                                           pauseRecord();
                                         },
-                                        icon:   RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
+                                        icon:RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
                                           Icons.radio_button_unchecked_rounded,
                                           color: AppColors.primaryColor1,
                                           size: 20,
@@ -204,7 +222,6 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                         )
                                     ),
                                   ),
-                                  SizedBox(width: MediaQuery.of(context).size.width*.5,),
                                   CircleAvatar(
                                     radius: 20,
                                     backgroundColor: AppColors.myWhite,

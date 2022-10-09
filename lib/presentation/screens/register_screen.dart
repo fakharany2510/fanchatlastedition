@@ -178,7 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 color: AppColors.myGrey
                             ),
                             onChanged: (phone) => phoneNumber = phone.completeNumber,
-                            initialCountryCode: 'IN',
+                            initialCountryCode: 'QA',
                             flagsButtonPadding: const EdgeInsets.only(right: 10),
                             showDropdownIcon: false,
                             keyboardType: TextInputType.phone,

@@ -188,9 +188,27 @@ class _ChatDetailsState extends State<ChatDetails> {
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500
                               ),),
+                              const SizedBox(height: 10,),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
+                                  CircleAvatar(
+                                    radius: 20,
+                                    backgroundColor: AppColors.myWhite,
+                                    child:IconButton(
+                                        onPressed: (){
+                                          setState(() {
+                                            recording=false;
+                                          });
+                                          // pauseRecord();
+                                        },
+                                        icon:Icon(
+                                          Icons.delete,
+                                          color: AppColors.primaryColor1,
+                                          size: 20,
+                                        )
+                                    ),
+                                  ),
                                   CircleAvatar(
                                     radius: 20,
                                     backgroundColor: AppColors.myWhite,
@@ -209,7 +227,6 @@ class _ChatDetailsState extends State<ChatDetails> {
                                         )
                                     ),
                                   ),
-                                  SizedBox(width: MediaQuery.of(context).size.width*.5,),
                                   CircleAvatar(
                                     radius: 20,
                                     backgroundColor: AppColors.myWhite,
@@ -234,7 +251,6 @@ class _ChatDetailsState extends State<ChatDetails> {
                                         )
                                     ),
                                   ),
-
                                 ],
                               )
                             ],

@@ -89,13 +89,15 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height:7,),
+                  if(cubit.userModel!.bio != 'Enter your bio')
                   Text('${cubit.userModel!.bio}',
                     style:  TextStyle(
                         color: AppColors.myWhite,
-                        fontSize: 16,
+                        fontSize: 15,
                         fontWeight: FontWeight.w500,
                         fontFamily: AppStrings.appFont
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 15,),
                   Row(

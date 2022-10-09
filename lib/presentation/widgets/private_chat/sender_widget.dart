@@ -106,8 +106,8 @@ class _SenderMessageWidgetState extends State<SenderMessageWidget> {
               ?Stack(
             children: [
               Container(
-                  decoration:  BoxDecoration(
-                    borderRadius:const  BorderRadius.only(
+                  decoration:  const BoxDecoration(
+                    borderRadius:BorderRadius.only(
                       topRight: Radius.circular(10),
                       topLeft: Radius.circular(10),
                       bottomLeft: Radius.circular(10),

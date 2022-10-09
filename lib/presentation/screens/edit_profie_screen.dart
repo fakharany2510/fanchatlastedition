@@ -330,10 +330,12 @@ class EditProfileScreen extends StatelessWidget {
                             bio: cubit.changeUserBioController.text,
                             youtubeLink: cubit.changeYoutubeLinkController.text,
                             facebookLink: cubit.changeFacebookLinkController.text,
-                            instagramLink:cubit.changeTwitterLinkController.text,
-                            twitterLink:cubit.changeInstagramLinkController.text,
+                            twitterLink:cubit.changeTwitterLinkController.text,
+                            instagramLink:cubit.changeInstagramLinkController.text,
+
                           ).then((value) {
                             cubit.getUser();
+                            customToast(title: 'Data Updated', color: AppColors.primaryColor1);
 
                           });
                           printMessage(cubit.changeUserNameController.text);
