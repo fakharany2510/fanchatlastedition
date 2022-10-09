@@ -16,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record_mp3/record_mp3.dart';
@@ -89,7 +90,7 @@ class _ChatDetailsState extends State<ChatDetails> {
             AppCubit.get(context).getMessages(recevierId: widget.userModel.uId!);
             return BlocConsumer<AppCubit,AppState>(
               listener: (context,state){
-                if(state is PickPostImageSuccessState ){
+                if(state is PickChatImageSuccessState ){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.userModel)));
                 }
                 if(state is PickPrivateChatViedoSuccessState ){
@@ -257,11 +258,11 @@ class _ChatDetailsState extends State<ChatDetails> {
                           ) ,
                         ):
                         Padding(
-                            padding: const EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(8),
                             child: Row(
                               children: [
                                 Container(
-                                  width: MediaQuery.of(context).size.width*.74,
+                                  width: MediaQuery.of(context).size.width*.70,
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -312,123 +313,131 @@ class _ChatDetailsState extends State<ChatDetails> {
                                             textMessage.clear();
                                           },
                                           color: AppColors.primaryColor1,
-                                          icon: AppCubit.get(context).isSend? const CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?const Icon(Icons.mic,color: Colors.white,size: 17):const Icon(Icons.send,color: Colors.white,size: 17)
+                                          icon: AppCubit.get(context).isSend? const CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?const Icon(Icons.mic,color: Colors.white,size: 18):const Icon(Icons.send,color: Colors.white,size: 18)
                                       ),
                                     )
                                 ),
                                 const SizedBox(width: 5,),
-                                Container(
-                                    width: 35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: AppColors.primaryColor1
-                                    ),
-                                    child: Center(
-                                      child: IconButton(
-                                        onPressed: (){
-                                          Scaffold.of(context).showBottomSheet((context) => Container(
-                                            color: AppColors.primaryColor1,
-
-                                            width: MediaQuery.of(context).size.width,
-                                            height: MediaQuery.of(context).size.height*.12,
-
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  GestureDetector(
-                                                    onTap: (){
-                                                      AppCubit.get(context).pickPostImage();
-                                                    },
-                                                    child: Row(
-                                                      children: [
-                                                        const SizedBox(width: 10,),
-                                                        Icon(
-                                                          Icons.image,
-                                                          color: AppColors.myWhite,
-                                                        ),
-                                                        const SizedBox(width: 10,),
-                                                        const Text('Image',style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontFamily: AppStrings.appFont,
-                                                            fontSize: 18,
-                                                            fontWeight: FontWeight.w500
-                                                        ),),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 15,),
-                                                  GestureDetector(
-                                                    onTap: (){
-                                                      AppCubit.get(context).pickPostVideo3();
-
-                                                    },
-                                                    child: Row(
-                                                      children: [
-                                                        const SizedBox(width: 10,),
-                                                        Icon(
-                                                          Icons.video_collection,
-                                                          color: AppColors.myWhite,
-                                                        ),
-                                                        const SizedBox(width: 10,),
-                                                        const Text('Video',style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontFamily: AppStrings.appFont,
-                                                            fontSize: 18,
-                                                            fontWeight: FontWeight.w500
-                                                        ),),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-
-                                          ));
-
-                                        },
-                                        color: AppColors.primaryColor1,
-                                        icon: const ImageIcon(
-                                          AssetImage("assets/images/fanarea.png"),
-                                          color:Colors.white,
-                                          size: 17,
-                                        ),
-                                      ),
-                                    )
-                                ),
-                                //                 Container(
-                                //                     width: 40,
-                                //                     height: 40,
-                                //                     decoration: BoxDecoration(
-                                //                         borderRadius: BorderRadius.circular(50),
-                                //                         color: AppColors.primaryColor1
-                                //                     ),
-                                //                     child: Center(
-                                //                       child: IconButton(
-                                //                         icon: recording
-                                //                             ? Icon(Icons.pause_outlined, color: Colors.red)
-                                //                             : Icon(
-                                //                           Icons.mic,
-                                //                           color:Colors.white,
+                                // Container(
+                                //     width: 35,
+                                //     height: 35,
+                                //     decoration: BoxDecoration(
+                                //         borderRadius: BorderRadius.circular(50),
+                                //         color: AppColors.primaryColor1
+                                //     ),
+                                //     child: Center(
+                                //       child:
+                                //       IconButton(
+                                //         onPressed: (){
+                                //           Scaffold.of(context).showBottomSheet((context) => Container(
+                                //             color: AppColors.primaryColor1,
+                                //
+                                //             width: MediaQuery.of(context).size.width,
+                                //             height: MediaQuery.of(context).size.height*.12,
+                                //
+                                //             child: Padding(
+                                //               padding: const EdgeInsets.all(8.0),
+                                //               child: Column(
+                                //                 crossAxisAlignment: CrossAxisAlignment.start,
+                                //                 children: [
+                                //                   GestureDetector(
+                                //                     onTap: (){
+                                //                       AppCubit.get(context).pickPostImage();
+                                //                     },
+                                //                     child: Row(
+                                //                       children: [
+                                //                         const SizedBox(width: 10,),
+                                //                         Icon(
+                                //                           Icons.image,
+                                //                           color: AppColors.myWhite,
                                 //                         ),
-                                //                         onPressed: () =>{
-                                //                            recording?stopRecord():startRecord(),
-                                //                           AppCubit.get(context).getMessages(recevierId:widget.userModel.uId!)
-                                // },
-                                //                         color:Theme.of(context).primaryColor,
-                                //                       ),
-                                //                     )
-                                //                 ),
+                                //                         const SizedBox(width: 10,),
+                                //                         const Text('Image',style: TextStyle(
+                                //                             color: Colors.white,
+                                //                             fontFamily: AppStrings.appFont,
+                                //                             fontSize: 18,
+                                //                             fontWeight: FontWeight.w500
+                                //                         ),),
+                                //                       ],
+                                //                     ),
+                                //                   ),
+                                //                   const SizedBox(height: 15,),
+                                //                   GestureDetector(
+                                //                     onTap: (){
+                                //                       AppCubit.get(context).pickPostVideo3();
+                                //
+                                //                     },
+                                //                     child: Row(
+                                //                       children: [
+                                //                         const SizedBox(width: 10,),
+                                //                         Icon(
+                                //                           Icons.video_collection,
+                                //                           color: AppColors.myWhite,
+                                //                         ),
+                                //                         const SizedBox(width: 10,),
+                                //                         const Text('Video',style: TextStyle(
+                                //                             color: Colors.white,
+                                //                             fontFamily: AppStrings.appFont,
+                                //                             fontSize: 18,
+                                //                             fontWeight: FontWeight.w500
+                                //                         ),),
+                                //                       ],
+                                //                     ),
+                                //                   ),
+                                //                 ],
+                                //               ),
+                                //             ),
+                                //
+                                //           ));
+                                //
+                                //         },
+                                //         color: AppColors.primaryColor1,
+                                //         icon: const ImageIcon(
+                                //           AssetImage("assets/images/fanarea.png"),
+                                //           color:Colors.white,
+                                //           size: 17,
+                                //         ),
+                                //       ),
+                                //     )
+                                // ),
                               ],
                             )
                         ),
-
                       ],
                     ),
                     condition:AppCubit.get(context).messages.length >=0 ,
-                    fallback:(context)=>const Center(child: CircularProgressIndicator()) ,
+                    fallback:(context)=>const Center(child: CircularProgressIndicator()),
+                  ),
+                  floatingActionButton:Padding(
+                    padding: const EdgeInsets.only(bottom:0,left:5),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width*.14,
+                      height: MediaQuery.of(context).size.height*.045,
+
+                      child: SpeedDial(
+                      backgroundColor: AppColors.primaryColor1,
+                      animatedIcon: AnimatedIcons.menu_close,
+                      elevation: 1,
+                      overlayColor: AppColors.myWhite,
+                      overlayOpacity: 0.0001,
+                      children: [
+                        SpeedDialChild(
+                            onTap: (){
+                              AppCubit.get(context).pickPostVideo3();
+                            },
+                            child: Icon(Icons.video_camera_back,color: Colors.red,size: 22),
+                            backgroundColor: AppColors.myWhite
+                        ),
+                        SpeedDialChild(
+                          onTap: (){
+                            AppCubit.get(context).pickChatImage();
+                          },
+                          child: Icon(Icons.image,color: Colors.green,size: 22,),
+                          backgroundColor: AppColors.myWhite,
+                        ),
+                      ],
+                ),
+                    ),
                   ),
                 );
               },
@@ -439,253 +448,6 @@ class _ChatDetailsState extends State<ChatDetails> {
       fallback: (context)=>const Center(child: CircularProgressIndicator()),
     );
   }
-
-  // Widget buildMyMessages(MessageModel model,context,index){
-  //
-  //   return Align(
-  //
-  //     alignment:AlignmentDirectional.centerEnd,
-  //     child: (model.text!="")
-  //         ?Container(
-  //       padding: const EdgeInsets.all(10),
-  //       decoration:  BoxDecoration(
-  //         color: AppColors.primaryColor1,
-  //         borderRadius:const  BorderRadius.only(
-  //           topRight: Radius.circular(10),
-  //           topLeft: Radius.circular(10),
-  //           bottomLeft: Radius.circular(10),
-  //         ),
-  //       ),
-  //       child: Text('${model.text}',
-  //         style:  const TextStyle(
-  //             fontWeight: FontWeight.w500,
-  //             fontSize: 17,
-  //             color: Colors.white,
-  //             fontFamily: AppStrings.appFont
-  //         ),
-  //       ),
-  //     )
-  //         :(model.image !=null)
-  //         ? GestureDetector(
-  //       onTap: (){
-  //         Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: model.image)));
-  //       },
-  //       child: Container(
-  //         padding: const EdgeInsets.all(5),
-  //         decoration:  BoxDecoration(
-  //           color: AppColors.primaryColor1,
-  //           borderRadius:const  BorderRadius.only(
-  //             topRight: Radius.circular(10),
-  //             topLeft: Radius.circular(10),
-  //             bottomLeft: Radius.circular(10),
-  //           ),
-  //         ),
-  //         child: Container(
-  //           height: MediaQuery.of(context).size.height*.28,
-  //           width: MediaQuery.of(context).size.width*.55,
-  //           child:  CachedNetworkImage(
-  //             cacheManager: AppCubit.get(context).manager,
-  //             imageUrl: "${model.image}",
-  //             placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-  //             fit: BoxFit.fill,
-  //           ),
-  //         ),
-  //       ),
-  //     )
-  //         :
-  //     (model.video != null)
-  //         ?Stack(
-  //       children: [
-  //         Container(
-  //             decoration:  const BoxDecoration(
-  //               borderRadius:BorderRadius.only(
-  //                 topRight: Radius.circular(10),
-  //                 topLeft: Radius.circular(10),
-  //                 bottomLeft: Radius.circular(10),
-  //               ),
-  //             ),
-  //             height: MediaQuery.of(context).size.height*.25,
-  //             width: MediaQuery.of(context).size.width*.55,
-  //             child: controllerPrivate!.value.isInitialized
-  //                 ? AspectRatio(
-  //                 aspectRatio: controllerPrivate!.value.aspectRatio,
-  //                 child: CachedVideoPlayer(controllerPrivate!))
-  //                 : const Center(child: CircularProgressIndicator())
-  //         ),
-  //
-  //         // FutureBuilder(
-  //         //   future: intilize,
-  //         //   builder: (context,snapshot){
-  //         //     if(snapshot.connectionState == ConnectionState.done){
-  //         //       return AspectRatio(
-  //         //         aspectRatio: videoPlayerController!.value.aspectRatio,
-  //         //         child: VideoPlayer(videoPlayerController!),
-  //         //       );
-  //         //     }
-  //         //     else{
-  //         //       return const Center(
-  //         //         child: CircularProgressIndicator(),
-  //         //       );
-  //         //     }
-  //         //   },
-  //         //
-  //         //
-  //         //
-  //         // ),
-  //
-  //         Positioned(
-  //             top: 10,
-  //             right: 20,
-  //             child: InkWell(
-  //               onTap: (){
-  //                 setState((){
-  //                   if(controllerPrivate!.value.isPlaying){
-  //                     controllerPrivate!.pause();
-  //                   }else{
-  //                     controllerPrivate!.play();
-  //                   }
-  //                 });
-  //               },
-  //               child: CircleAvatar(
-  //                 backgroundColor: AppColors.primaryColor1,
-  //                 radius: 20,
-  //                 child: controllerPrivate!.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
-  //               ),
-  //             )
-  //         ),
-  //       ],
-  //     ):
-  //     VoiceMessage(
-  //       audioSrc: '${AppCubit.get(context).messages[index].voice}',
-  //       played: true, // To show played badge or not.
-  //       me: true, // Set message side.
-  //       meBgColor: AppColors.primaryColor1,
-  //       mePlayIconColor: AppColors.navBarActiveIcon,
-  //       onPlay: () {
-  //
-  //       }, // Do something when voice played.
-  //     ),
-  //   );
-  //
-  // }
-
-
-  //----------------------------
-  // Widget builsRecievedMessages(MessageModel model,context,index)=>Align(
-  //   alignment:AlignmentDirectional.centerStart,
-  //   child: (model.text!="")
-  //       ?Container(
-  //     padding: const EdgeInsets.all(10),
-  //     decoration:  BoxDecoration(
-  //       color: AppColors.myGrey,
-  //       borderRadius:const  BorderRadius.only(
-  //         topRight: Radius.circular(10),
-  //         topLeft: Radius.circular(10),
-  //         bottomRight: Radius.circular(10),
-  //       ),
-  //     ),
-  //     child: Text('${model.text}',
-  //       style:  TextStyle(
-  //           fontWeight: FontWeight.w500,
-  //           fontSize: 17,
-  //           color: AppColors.primaryColor1,
-  //           fontFamily: AppStrings.appFont
-  //       ),
-  //     ),
-  //   )
-  //       :(model.image != null)
-  //       ?GestureDetector(
-  //     onTap: (){
-  //       Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: model.image)));
-  //     },
-  //     child: Container(
-  //       padding: const EdgeInsets.all(5),
-  //       decoration:  BoxDecoration(
-  //         color: AppColors.myGrey,
-  //         borderRadius:const  BorderRadius.only(
-  //           topRight: Radius.circular(10),
-  //           topLeft: Radius.circular(10),
-  //           bottomRight: Radius.circular(10),
-  //         ),
-  //       ),
-  //       child: Container(
-  //         // margin: EdgeInsets.all(5),
-  //         height: MediaQuery.of(context).size.height*.28,
-  //         width: MediaQuery.of(context).size.width*.55,
-  //         child: CachedNetworkImage(
-  //           cacheManager: AppCubit.get(context).manager,
-  //           imageUrl: "${model.image}",
-  //           placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-  //           fit: BoxFit.fill,
-  //         ),
-  //       ),
-  //     ),
-  //   ):
-  //   (model.video != null)
-  //       ?Stack(
-  //     children: [
-  //       Container(
-  //           height: MediaQuery.of(context).size.height*.25,
-  //           width:MediaQuery.of(context).size.width*.55,
-  //           child: controllerPrivate!.value.isInitialized
-  //               ? AspectRatio(
-  //               aspectRatio: controllerPrivate!.value.aspectRatio,
-  //               child: CachedVideoPlayer(controllerPrivate!))
-  //               : const Center(child: CircularProgressIndicator())
-  //       ),
-  //
-  //       // FutureBuilder(
-  //       //   future: intilize,
-  //       //   builder: (context,snapshot){
-  //       //     if(snapshot.connectionState == ConnectionState.done){
-  //       //       return AspectRatio(
-  //       //         aspectRatio: videoPlayerController!.value.aspectRatio,
-  //       //         child: VideoPlayer(videoPlayerController!),
-  //       //       );
-  //       //     }
-  //       //     else{
-  //       //       return const Center(
-  //       //         child: CircularProgressIndicator(),
-  //       //       );
-  //       //     }
-  //       //   },
-  //       //
-  //       //
-  //       //
-  //       // ),
-  //
-  //       Positioned(
-  //           top: 10,
-  //           right: 20,
-  //           child: InkWell(
-  //             onTap: (){
-  //               setState((){
-  //                 if(controllerPrivate!.value.isPlaying){
-  //                   controllerPrivate!.pause();
-  //                 }else{
-  //                   controllerPrivate!.play();
-  //                 }
-  //               });
-  //             },
-  //             child: CircleAvatar(
-  //               backgroundColor: AppColors.primaryColor1,
-  //               radius: 20,
-  //               child: controllerPrivate!.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
-  //             ),
-  //           )
-  //       ),
-  //     ],
-  //   )
-  //
-  //       :VoiceMessage(
-  //     audioSrc: '${AppCubit.get(context).messages[index].voice}',
-  //     played: true, // To show played badge or not.
-  //     me: false, // Set message side.
-  //     onPlay: () {}, // Do something when voice played.
-  //   ),
-  // );
-
-  //////////////////////////voice functions////////////////////
   @override
   void dispose() {
     super.dispose();

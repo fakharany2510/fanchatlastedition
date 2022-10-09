@@ -36,7 +36,7 @@ class _SendImageState extends State<SendImage> {
               padding:  EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  (AppCubit.get(context).postImage!= null )
+                  (AppCubit.get(context).chatImage!= null )
                       ?Expanded(
                     child: Container(
                       height: size.height,
@@ -44,7 +44,7 @@ class _SendImageState extends State<SendImage> {
                       child: Align(
                         alignment: AlignmentDirectional.bottomCenter,
                         child: Image(
-                          image: FileImage(AppCubit.get(context).postImage!),
+                          image: FileImage(AppCubit.get(context).chatImage!),
                           height: MediaQuery.of(context).size.height,
                           width: MediaQuery.of(context).size.width,
                           fit: BoxFit.contain,

@@ -7,6 +7,7 @@ import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/presentation/screens/team_chat/send_video_team_chat.dart';
 import 'package:fanchat/presentation/screens/team_chat/team_chat_message_widget.dart';
 import 'package:fanchat/presentation/screens/team_chat/team_chat_my_message_widget.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
 import 'package:fanchat/constants/app_colors.dart';
@@ -109,6 +110,28 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                   return Scaffold(
                     backgroundColor: Colors.white,
                     appBar: AppBar(
+                      actions: [
+                       Padding(
+                         padding: const EdgeInsets.all(10.0),
+                         child: InkWell(
+                           child:Image(
+                             color: Colors.white,
+                               height:40 ,
+                               width: 40,
+                               image: AssetImage('assets/images/cheeringIcon.png')
+                           ),
+                           onTap: (){
+                             Navigator.push(context, MaterialPageRoute(builder: (_){
+
+
+                               return CheeringScreen(countryName: widget.countryName,countryImage: widget.countryImage,);
+
+                             }));
+
+                           },
+                         ),
+                       )
+                      ],
                       backgroundColor: AppColors.primaryColor1,
                       elevation: 0,
                       titleSpacing: 0.0,
@@ -319,30 +342,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                               ,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 15, 10),
-                            child: Align(
-                              alignment: Alignment.topRight,
-                              child: FloatingActionButton(
-                                backgroundColor: AppColors.myWhite,
-                                child: const Image(
-                                  height:40 ,
-                                  width: 40,
-                                  image: AssetImage('assets/images/cheeringIcon.png')
-                                ),
-                                onPressed: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (_){
 
-
-                                    return CheeringScreen(countryName: widget.countryName,countryImage: widget.countryImage,);
-
-                                  }));
-
-                                },
-
-                              ),
-                            ),
-                          ),
                           recording==true?
                           Container(
                             width: double.infinity,
@@ -429,11 +429,11 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                             ) ,
                           ):
                           Padding(
-                              padding: const EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(8),
                               child: Row(
                                 children: [
                                   Container(
-                                    width: MediaQuery.of(context).size.width*.74,
+                                    width: MediaQuery.of(context).size.width*.70,
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
                                     decoration: BoxDecoration(
                                       border: Border.all(
@@ -485,92 +485,92 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                               textMessage.clear();
                                             },
                                             color: AppColors.primaryColor1,
-                                            icon: AppCubit.get(context).isSend? const CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?const Icon(Icons.mic,color: Colors.white,size: 17):const Icon(Icons.send,color: Colors.white,size: 17)
+                                            icon: AppCubit.get(context).isSend? const CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?const Icon(Icons.mic,color: Colors.white,size: 18):const Icon(Icons.send,color: Colors.white,size: 18)
                                         ),
                                       )
                                   ),
                                   const SizedBox(width: 5,),
-                                  Container(
-                                      width: 35,
-                                      height: 35,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(50),
-                                          color: AppColors.primaryColor1
-                                      ),
-                                      child: Center(
-                                        child: IconButton(
-                                          onPressed: (){
-                                            Scaffold.of(context).showBottomSheet((context) => Container(
-                                              color: AppColors.primaryColor1,
-
-                                              width: MediaQuery.of(context).size.width,
-                                              height: MediaQuery.of(context).size.height*.12,
-
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    GestureDetector(
-                                                      onTap: (){
-                                                        AppCubit.get(context).pickPostImage();
-                                                      },
-                                                      child: Row(
-                                                        children: [
-                                                          const SizedBox(width: 10,),
-                                                          Icon(
-                                                            Icons.image,
-                                                            color: AppColors.myWhite,
-                                                          ),
-                                                          const SizedBox(width: 10,),
-                                                          const Text('Image',style: TextStyle(
-                                                              color: Colors.white,
-                                                              fontFamily: AppStrings.appFont,
-                                                              fontSize: 18,
-                                                              fontWeight: FontWeight.w500
-                                                          ),),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    const SizedBox(height: 15,),
-                                                    GestureDetector(
-                                                      onTap: (){
-                                                        AppCubit.get(context).pickPostVideo5();
-
-                                                      },
-                                                      child: Row(
-                                                        children: [
-                                                          const SizedBox(width: 10,),
-                                                          Icon(
-                                                            Icons.video_collection,
-                                                            color: AppColors.myWhite,
-                                                          ),
-                                                          const SizedBox(width: 10,),
-                                                          const Text('Video',style: TextStyle(
-                                                              color: Colors.white,
-                                                              fontFamily: AppStrings.appFont,
-                                                              fontSize: 18,
-                                                              fontWeight: FontWeight.w500
-                                                          ),),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-
-                                            ));
-
-                                          },
-                                          color: AppColors.primaryColor1,
-                                          icon: const ImageIcon(
-                                            AssetImage("assets/images/fanarea.png"),
-                                            color:Colors.white,
-                                            size: 15,
-                                          ),
-                                        ),
-                                      )
-                                  ),
+                                  // Container(
+                                  //     width: 35,
+                                  //     height: 35,
+                                  //     decoration: BoxDecoration(
+                                  //         borderRadius: BorderRadius.circular(50),
+                                  //         color: AppColors.primaryColor1
+                                  //     ),
+                                  //     child: Center(
+                                  //       child: IconButton(
+                                  //         onPressed: (){
+                                  //           Scaffold.of(context).showBottomSheet((context) => Container(
+                                  //             color: AppColors.primaryColor1,
+                                  //
+                                  //             width: MediaQuery.of(context).size.width,
+                                  //             height: MediaQuery.of(context).size.height*.12,
+                                  //
+                                  //             child: Padding(
+                                  //               padding: const EdgeInsets.all(8.0),
+                                  //               child: Column(
+                                  //                 crossAxisAlignment: CrossAxisAlignment.start,
+                                  //                 children: [
+                                  //                   GestureDetector(
+                                  //                     onTap: (){
+                                  //                       AppCubit.get(context).pickPostImage();
+                                  //                     },
+                                  //                     child: Row(
+                                  //                       children: [
+                                  //                         const SizedBox(width: 10,),
+                                  //                         Icon(
+                                  //                           Icons.image,
+                                  //                           color: AppColors.myWhite,
+                                  //                         ),
+                                  //                         const SizedBox(width: 10,),
+                                  //                         const Text('Image',style: TextStyle(
+                                  //                             color: Colors.white,
+                                  //                             fontFamily: AppStrings.appFont,
+                                  //                             fontSize: 18,
+                                  //                             fontWeight: FontWeight.w500
+                                  //                         ),),
+                                  //                       ],
+                                  //                     ),
+                                  //                   ),
+                                  //                   const SizedBox(height: 15,),
+                                  //                   GestureDetector(
+                                  //                     onTap: (){
+                                  //                       AppCubit.get(context).pickPostVideo5();
+                                  //
+                                  //                     },
+                                  //                     child: Row(
+                                  //                       children: [
+                                  //                         const SizedBox(width: 10,),
+                                  //                         Icon(
+                                  //                           Icons.video_collection,
+                                  //                           color: AppColors.myWhite,
+                                  //                         ),
+                                  //                         const SizedBox(width: 10,),
+                                  //                         const Text('Video',style: TextStyle(
+                                  //                             color: Colors.white,
+                                  //                             fontFamily: AppStrings.appFont,
+                                  //                             fontSize: 18,
+                                  //                             fontWeight: FontWeight.w500
+                                  //                         ),),
+                                  //                       ],
+                                  //                     ),
+                                  //                   ),
+                                  //                 ],
+                                  //               ),
+                                  //             ),
+                                  //
+                                  //           ));
+                                  //
+                                  //         },
+                                  //         color: AppColors.primaryColor1,
+                                  //         icon: const ImageIcon(
+                                  //           AssetImage("assets/images/fanarea.png"),
+                                  //           color:Colors.white,
+                                  //           size: 15,
+                                  //         ),
+                                  //       ),
+                                  //     )
+                                  // ),
                                 ],
                               )
                           ),
@@ -580,8 +580,39 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                       condition:AppCubit.get(context).teamChat.length >=0 ,
                       fallback:(context)=>const Center(child: CircularProgressIndicator()) ,
                     ),
+                    floatingActionButton: Padding(
+                      padding: const EdgeInsets.only(bottom:0,left:5),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width*.14,
+                        height: MediaQuery.of(context).size.height*.045,
 
+                        child: SpeedDial(
+                          backgroundColor: AppColors.primaryColor1,
+                          animatedIcon: AnimatedIcons.menu_close,
+                          elevation: 1,
+                          overlayColor: AppColors.myWhite,
+                          overlayOpacity: 0.0001,
+                          children: [
+                            SpeedDialChild(
+                                onTap: (){
+                                  AppCubit.get(context).pickPostVideo5();
+                                },
+                                child: Icon(Icons.video_camera_back,color: Colors.red,size: 22),
+                                backgroundColor: AppColors.myWhite
+                            ),
+                            SpeedDialChild(
+                              onTap: (){
+                           AppCubit.get(context).pickPostImage();
+                              },
+                              child: Icon(Icons.image,color: Colors.green,size: 22,),
+                              backgroundColor: AppColors.myWhite,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   );
+
                 },
               );
             }

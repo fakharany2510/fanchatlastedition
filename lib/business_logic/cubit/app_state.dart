@@ -12,6 +12,9 @@ class PushEndListState extends AppState {}
 class CheckBoxState extends AppState {}
 class PickPostImageSuccessState extends AppState {}
 class PickPostImageErrorState extends AppState {}
+
+class PickChatImageSuccessState extends AppState {}
+class PickChatImageErrorState extends AppState {}
 class CreatePostLoadingState extends AppState {}
 class PickPostVideoSuccessState extends AppState {}
 class PickPostVideoErrorState extends AppState {}

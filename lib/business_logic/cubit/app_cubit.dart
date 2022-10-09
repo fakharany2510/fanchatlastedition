@@ -423,6 +423,25 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 //-------------------------------------e;
+  //////////////////////////////////////////////////////
+  File? chatImage;
+  Future<void> pickChatImage() async {
+    final pickedFile  =
+    await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      chatImage=File(pickedFile.path);
+      var decodedImage = await decodeImageFromList(chatImage!.readAsBytesSync());
+      print(decodedImage.width);
+      print(decodedImage.height);
+      imageWidth=double.parse('${decodedImage.width}');
+      imageHeight=double.parse('${decodedImage.height}');
+      emit(PickChatImageSuccessState());
+    } else {
+      print('no chatImage selected');
+      emit(PickChatImageErrorState());
+    }
+  }
+  /////////////////////////////////////////////////////////////////////
   // change viseo upload
   bool videoButtonTapped = false;
   void isVideoButtonTapped(){
@@ -1076,12 +1095,12 @@ List<int> commentIndex=[];
         .collection('messages')
         .add(model.toMap())
         .then((value){
-      emit(CreateImagePrivateSuccessState());
     })
         .catchError((error){
       emit(CreateImagePrivateErrorState());
 
     });
+    emit(CreateImagePrivateSuccessState());
     //Set Reciever Chat
     FirebaseFirestore.instance
         .collection('users')
@@ -1111,9 +1130,9 @@ List<int> commentIndex=[];
         .ref()
     //كدا بقةله هتحرك ازاي جوا ال storage
     //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
-        .child('MessageImages/${Uri.file(postImage!.path).pathSegments.last}')
+        .child('MessageImages/${Uri.file(chatImage!.path).pathSegments.last}')
     //كدا بعمل رفع للصوره
-        .putFile(postImage!).then((value){
+        .putFile(chatImage!).then((value){
       value.ref.getDownloadURL().then((value){
         createImageMessage(
           messageImage: value,
