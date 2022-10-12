@@ -197,6 +197,7 @@ class _CommentScreenState extends State<CommentScreen> {
                               onPressed: (){
                                 AppCubit.get(context).commentHomePost(widget.postId, commentController.text);
                                 AppCubit.get(context).testComments(widget.postId);
+                                AppCubit.get(context).getPosts();
                                 commentController.text='';
                               },
                               icon:  commentController.text=='' ?  Icon(
