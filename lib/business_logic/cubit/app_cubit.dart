@@ -1310,7 +1310,7 @@ List<int> commentIndex=[];
       fanPostVideo = File(pickedFile.path);
       videoPlayerController = VideoPlayerController.file(fanPostVideo!)
         ..initialize().then((value) {
-          videoPlayerController!.play();
+          videoPlayerController!.pause();
           emit(PickFanPostVideoSuccessState());
         }).catchError((error) {
           print('error picking  fan video ${error.toString()}');

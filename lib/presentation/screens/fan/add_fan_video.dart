@@ -1,7 +1,6 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
-import 'package:fanchat/presentation/screens/fan/fan_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,9 +14,11 @@ class AddFanVideo extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
+
         if(state is FanCreateVideoPostSuccessState){
          // AppCubit.get(context).videoPlayerController!.dispose();
           AppCubit.get(context).videoPlayerController==null;
+          AppCubit.get(context).videoPlayerController!.pause();
           AppCubit.get(context).postVideo=null;
           AppCubit.get(context).currentIndex=2;
 

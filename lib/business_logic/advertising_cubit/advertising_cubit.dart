@@ -41,6 +41,7 @@ class AdvertisingCubit extends Cubit<AdvertisingState>{
       controller = CachedVideoPlayerController.file(postVideo!)
         ..initialize().then((value) {
           controller!.pause();
+
           emit(PickAdvertisingPostImageErrorState());
         }).catchError((error) {
           print('error picking video ${error.toString()}');
