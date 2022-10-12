@@ -62,7 +62,7 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: AppColors.primaryColor1.withOpacity(.75),
+                      color: AppColors.primaryColor1.withOpacity(.9),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
