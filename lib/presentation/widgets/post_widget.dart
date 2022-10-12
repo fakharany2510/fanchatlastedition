@@ -149,35 +149,6 @@ class PostWidgetState extends State<PostWidget> {
                                 color: Colors.white,
                               ),
                               itemBuilder: (BuildContext context) => [
-
-                                PopupMenuItem(
-                                  value: 1,
-                                  child: Text('Edit',
-                                    overflow: TextOverflow.ellipsis,
-                                    style:  TextStyle(
-                                        fontSize: 13,
-                                        color: AppColors.primaryColor1,
-                                        fontFamily: AppStrings.appFont
-                                    ),
-                                  ),
-                                  onTap: (){
-                                    // if(AppCubit.get(context).posts[widget.index!].postImage!=""){
-                                    //   Navigator.push(context, MaterialPageRoute(builder: (_){
-                                    //     return EditPostImageScreen(
-                                    //         userImage: AppCubit.get(context).posts[widget.index!].image!,
-                                    //         userName: AppCubit.get(context).posts[widget.index!].name!,
-                                    //         postImage: AppCubit.get(context).posts[widget.index!].postImage!,
-                                    //         time: AppCubit.get(context).posts[widget.index!].time!,
-                                    //         date: AppCubit.get(context).posts[widget.index!].dateTime!,
-                                    //         index: widget.index!,
-                                    //     );
-                                    //
-                                    //   }));
-                                    // }
-
-                                  },
-                                ),
-
                                 PopupMenuItem(
                                   value: 2,
                                   child: Text('Delete',

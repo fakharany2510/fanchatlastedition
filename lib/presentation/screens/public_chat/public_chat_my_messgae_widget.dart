@@ -74,43 +74,54 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
               Column(
                 children: [
                   (AppCubit.get(context).publicChat[widget.index!].text!="")
-                      ?Container(
-                    width: MediaQuery.of(context).size.width*.74,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5
-                    ),
-                    decoration:  BoxDecoration(
-                      color: AppColors.myGrey,
+                      ?
+                  Material(
+                    color: AppColors.navBarActiveIcon.withOpacity(.5),
+                    shape: RoundedRectangleBorder(
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10),
                       ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('${AppCubit.get(context).publicChat[widget.index!].senderName}',
-                          style:  TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 9,
-                              color: AppColors.primaryColor1,
-                              fontFamily: AppStrings.appFont
-                          ),
-
+                    child: Container(
+                      width: MediaQuery.of(context).size.width*.74,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5
+                      ),
+                      decoration:  BoxDecoration(
+                        color: AppColors.navBarActiveIcon.withOpacity(.5),
+                        borderRadius:const  BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          topLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
                         ),
-                        const SizedBox(height: 5,),
-                        Text('${AppCubit.get(context).publicChat[widget.index!].text}',
-                          style:  const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18,
-                              color: Colors.white,
-                              fontFamily: AppStrings.appFont
-                          ),
-                        )
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('${AppCubit.get(context).publicChat[widget.index!].senderName}',
+                            style:  TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 9,
+                                color: AppColors.primaryColor1,
+                                fontFamily: AppStrings.appFont
+                            ),
 
-                      ],
+                          ),
+                          const SizedBox(height: 5,),
+                          Text('${AppCubit.get(context).publicChat[widget.index!].text}',
+                            style:  const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontFamily: AppStrings.appFont
+                            ),
+                          )
+
+                        ],
+                      ),
                     ),
                   ):
                   (AppCubit.get(context).publicChat[widget.index!].image !=null) ?

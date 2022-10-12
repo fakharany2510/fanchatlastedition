@@ -78,8 +78,9 @@ class SingleMatch extends StatelessWidget {
                                                   fontFamily: AppStrings.appFont
                                               ),),
                                               const  SizedBox(height: 5,),
-                                              Text('Coach: Coach Name',
+                                              Text('Coach Name',
                                               style: TextStyle(
+                                                overflow: TextOverflow.ellipsis,
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500
                                               ),
@@ -99,7 +100,6 @@ class SingleMatch extends StatelessWidget {
                                                     children: [
                                                       Text('Messi'),
                                                       SizedBox(width:10),
-                                                      Icon(Icons.sports_volleyball,color: Colors.green,),
                                                       Icon(Icons.sports_volleyball,color: Colors.green,),
                                                     ],
                                                   ),
@@ -130,7 +130,7 @@ class SingleMatch extends StatelessWidget {
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
                                                     SizedBox(height: 5,),
-                                                    Text('Not start',style: TextStyle(
+                                                    Text('Not started',style: TextStyle(
                                                         color: AppColors.myWhite,
                                                         fontSize: 13,
                                                         fontWeight: FontWeight.w500,
@@ -174,7 +174,7 @@ class SingleMatch extends StatelessWidget {
                                                   fontFamily: AppStrings.appFont
                                               ),),
                                               const  SizedBox(height: 5,),
-                                              Text('Coach: Coach Name',
+                                              Text('Coach Name',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w500
                                                 ),
@@ -194,7 +194,6 @@ class SingleMatch extends StatelessWidget {
                                                     children: [
                                                       Text('Messi'),
                                                       SizedBox(width:10),
-                                                      Icon(Icons.sports_volleyball,color: Colors.green,),
                                                       Icon(Icons.sports_volleyball,color: Colors.green,),
                                                     ],
                                                   ),

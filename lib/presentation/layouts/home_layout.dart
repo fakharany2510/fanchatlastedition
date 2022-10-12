@@ -127,7 +127,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                       fontFamily: AppStrings.appFont
                   ),
                   unselectedLabelStyle:const TextStyle(
-                      fontFamily: AppStrings.appFont
+                      fontFamily: AppStrings.appFont,
                   ),
                   unselectedFontSize: 10,
                   selectedFontSize: 13,
@@ -165,23 +165,23 @@ class _HomeLayoutState extends State<HomeLayout> {
                     ),
                     BottomNavigationBarItem(
                         icon:ImageIcon(
-                          const AssetImage("assets/images/fanarea1.png"),
+                          const AssetImage("assets/images/gallery.png"),
                           color:AppColors.myGrey,
                         ),
                         activeIcon:ImageIcon(
-                          const AssetImage("assets/images/fanarea1.png"),
+                          const AssetImage("assets/images/gallery.png"),
                           color:AppColors.navBarActiveIcon,
                         ),
-                        label: 'Fan'
+                        label: 'Gallery'
                     ),
                     BottomNavigationBarItem(
                       icon: ImageIcon(
-                        const AssetImage("assets/images/team.png"),
+                        const AssetImage("assets/images/teanchatn.png"),
                         color:AppColors.myGrey,
                       ),
-                      label: 'Team Chat',
+                      label: 'Team chat',
                       activeIcon:ImageIcon(
-                        const AssetImage("assets/images/chat.png"),
+                        const AssetImage("assets/images/teanchatn.png"),
                         color:AppColors.navBarActiveIcon,
                       ),
 
@@ -195,7 +195,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                         const AssetImage("assets/images/chat.png"),
                         color:AppColors.navBarActiveIcon,
                       ),
-                      label: 'public chat',
+                      label: 'Public chat',
 
                     ),
                     BottomNavigationBarItem(

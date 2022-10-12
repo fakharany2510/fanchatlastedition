@@ -122,26 +122,6 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
                         : const Center(child: CircularProgressIndicator())
                 ),
 
-                // FutureBuilder(
-                //   future: intilize,
-                //   builder: (context,snapshot){
-                //     if(snapshot.connectionState == ConnectionState.done){
-                //       return AspectRatio(
-                //         aspectRatio: videoPlayerController!.value.aspectRatio,
-                //         child: VideoPlayer(videoPlayerController!),
-                //       );
-                //     }
-                //     else{
-                //       return const Center(
-                //         child: CircularProgressIndicator(),
-                //       );
-                //     }
-                //   },
-                //
-                //
-                //
-                // ),
-
                 Positioned(
                     top: 10,
                     right: 20,

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/screens/fan/add_fan_image.dart';
@@ -25,15 +27,39 @@ class FanScreen extends StatelessWidget {
       builder: (context,state){
           var cubit=AppCubit.get(context);
           return Scaffold(
-            backgroundColor: AppColors.primaryColor1,
+
             body: Padding(
-              padding: const EdgeInsets.only(top: 5),
+              padding: const EdgeInsets.only(top: 0),
               child: Stack(
                 children: [
+                  Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child:Opacity(
+                        child:  Image(
+                          image: AssetImage('assets/images/bg 2.jpg'),
+                          fit: BoxFit.cover,
+
+                        ),
+                        opacity: 1,
+                      )
+                  ),
+                  // Container(
+                  //   height: MediaQuery.of(context).size.height,
+                  //   width: MediaQuery.of(context).size.width,
+                  //   child:Opacity(
+                  //     child:  Image(
+                  //       image: AssetImage('assets/images/fanback.jpeg'),
+                  //       fit: BoxFit.cover,
+                  //
+                  //     ),
+                  //     opacity: .09,
+                  //   )
+                  // ),
                   GridView.count(
                     childAspectRatio: 1/1.3,
                     crossAxisSpacing: 2,
-                    mainAxisSpacing: 2,
+                    mainAxisSpacing: 0,
                     crossAxisCount: 3,
                     children: List.generate(
                         AppCubit.get(context).fans.length, (index) => FanAreaWidget(index: index,)),

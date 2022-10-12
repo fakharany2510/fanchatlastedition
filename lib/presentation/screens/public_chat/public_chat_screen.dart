@@ -15,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record_mp3/record_mp3.dart';
@@ -143,265 +144,318 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                       ),
                     ),
                   ),
-                  body: ConditionalBuilder(
-                    builder: (context)=>Column(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            height:MediaQuery.of(context).size.height*.83,
-                            color: Colors.white,
-                            padding: const EdgeInsets.all(10),
-                            child: ListView.separated(
-                              controller: scrollController,
-                                physics: const BouncingScrollPhysics(),
-                                itemBuilder: (context , index)
-                                {
-                                  var publicChat =AppCubit.get(context).publicChat[index];
-                                  if(AppCubit.get(context).userModel!.uId == publicChat.senderId)
-                                    //send message
-                                    return SenderPublicChatWidget(index: index);
-                                  //receive message
-                                  return MyMessagePublicChatWidget(index: index,);
-                                },
-                                separatorBuilder: (context , index)=>const SizedBox(height: 15,),
-                                itemCount: AppCubit.get(context).publicChat.length),
-                          ),
-                        ),
-                        recording==true?
-                        Container(
-                          width: double.infinity,
-                          height: 100,
-                          decoration: BoxDecoration(
-                              color: AppColors.primaryColor1
-                          ),
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 5,),
-                              Text('${statusText}',style: const TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: AppStrings.appFont,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500
-                              ),),
-                              SizedBox(height: 10,),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  body: Stack(
+                    children: [
+                      Container(
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          child:Opacity(
+                            child:  Image(
+                              image: AssetImage('assets/images/background1.jpg'),
+                              fit: BoxFit.cover,
+
+                            ),
+                            opacity: 1,
+                          )
+                      ),
+                      ConditionalBuilder(
+                        builder: (context)=>Column(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height:MediaQuery.of(context).size.height*.83,
+
+                                padding: const EdgeInsets.all(10),
+                                child: ListView.separated(
+                                    controller: scrollController,
+                                    physics: const BouncingScrollPhysics(),
+                                    itemBuilder: (context , index)
+                                    {
+                                      var publicChat =AppCubit.get(context).publicChat[index];
+                                      if(AppCubit.get(context).userModel!.uId == publicChat.senderId)
+                                        //send message
+                                        return SenderPublicChatWidget(index: index);
+                                      //receive message
+                                      return MyMessagePublicChatWidget(index: index,);
+                                    },
+                                    separatorBuilder: (context , index)=>const SizedBox(height: 15,),
+                                    itemCount: AppCubit.get(context).publicChat.length),
+                              ),
+                            ),
+                            recording==true?
+                            Container(
+                              width: double.infinity,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                  color: AppColors.primaryColor1
+                              ),
+                              child: Column(
                                 children: [
-                                  CircleAvatar(
-                                    radius: 20,
-                                    backgroundColor: AppColors.myWhite,
-                                    child:IconButton(
-                                        onPressed: (){
-                                          setState(() {
-                                            recording=false;
-                                          });
-                                          // pauseRecord();
-                                        },
-                                        icon:Icon(
-                                          Icons.delete,
-                                          color: AppColors.primaryColor1,
-                                          size: 20,
-                                        )
-                                    ),
-                                  ),
-                                  CircleAvatar(
-                                    radius: 20,
-                                    backgroundColor: AppColors.myWhite,
-                                    child:IconButton(
-                                        onPressed: (){
-                                          pauseRecord();
-                                        },
-                                        icon:RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
-                                          Icons.radio_button_unchecked_rounded,
-                                          color: AppColors.primaryColor1,
-                                          size: 20,
-                                        ):Icon(
-                                          Icons.pause,
-                                          color: AppColors.primaryColor1,
-                                          size: 20,
-                                        )
-                                    ),
-                                  ),
-                                  CircleAvatar(
-                                    radius: 20,
-                                    backgroundColor: AppColors.myWhite,
-                                    child:  IconButton(
-                                        onPressed: (){
-                                          setState(() {
-                                            recording=false;
-                                            AppCubit.get(context).isSend=true;
-                                          });
-                                          stopRecord();
-                                          scrollController.animateTo(
-                                            scrollController.position.maxScrollExtent,
-                                            duration: const Duration(milliseconds: 300),
-                                            curve: Curves.easeOut,
-                                          );
-                                          // toogleRecord();
-                                        },
-                                        icon:  Icon(
-                                          Icons.send,
-                                          color: AppColors.primaryColor1,
-                                          size: 20,
-                                        )
-                                    ),
-                                  ),
+                                  const SizedBox(height: 5,),
+                                  Text('${statusText}',style: const TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: AppStrings.appFont,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500
+                                  ),),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 20,
+                                        backgroundColor: AppColors.myWhite,
+                                        child:IconButton(
+                                            onPressed: (){
+                                              setState(() {
+                                                recording=false;
+                                              });
+                                              // pauseRecord();
+                                            },
+                                            icon:Icon(
+                                              Icons.delete,
+                                              color: AppColors.primaryColor1,
+                                              size: 20,
+                                            )
+                                        ),
+                                      ),
+                                      CircleAvatar(
+                                        radius: 20,
+                                        backgroundColor: AppColors.myWhite,
+                                        child:IconButton(
+                                            onPressed: (){
+                                              pauseRecord();
+                                            },
+                                            icon:RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
+                                              Icons.radio_button_unchecked_rounded,
+                                              color: AppColors.primaryColor1,
+                                              size: 20,
+                                            ):Icon(
+                                              Icons.pause,
+                                              color: AppColors.primaryColor1,
+                                              size: 20,
+                                            )
+                                        ),
+                                      ),
+                                      CircleAvatar(
+                                        radius: 20,
+                                        backgroundColor: AppColors.myWhite,
+                                        child:  IconButton(
+                                            onPressed: (){
+                                              setState(() {
+                                                recording=false;
+                                                AppCubit.get(context).isSend=true;
+                                              });
+                                              stopRecord();
+                                              scrollController.animateTo(
+                                                scrollController.position.maxScrollExtent,
+                                                duration: const Duration(milliseconds: 300),
+                                                curve: Curves.easeOut,
+                                              );
+                                              // toogleRecord();
+                                            },
+                                            icon:  Icon(
+                                              Icons.send,
+                                              color: AppColors.primaryColor1,
+                                              size: 20,
+                                            )
+                                        ),
+                                      ),
 
+                                    ],
+                                  )
                                 ],
-                              )
-                            ],
-                          ) ,
-                        ):
-                        Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width*.74,
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color:AppColors.primaryColor1,
-                                        width: 1
-                                    ),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Padding(
-                                      padding: const EdgeInsets.only(left: 8),
-                                      child: TextFormField(
-                                        onChanged: (v){
-                                          setState((){
-                                            isWriting=true;
-                                          });
-                                        },
-                                        keyboardType: TextInputType.multiline,
-                                        maxLines: null,
-                                        controller: textMessage,
-                                        decoration:  InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'Write your message...',
-
+                              ) ,
+                            ):
+                            Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width*.70,
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color:AppColors.myWhite,
+                                            width: 1
                                         ),
-                                      )
-                                  ),
-                                ),
-                                const SizedBox(width: 5,),
-                                Container(
-                                    width:35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: AppColors.primaryColor1
-                                    ),
-                                    child: Center(
-                                      child: IconButton(
-                                          onPressed: (){
-                                            HapticFeedback.vibrate();
-                                            textMessage.text==""
-                                                ?{
-                                              recording?stopRecord():startRecord(),
-                                              AppCubit.get(context).getPublicChat()
-                                            }
-                                                :AppCubit.get(context).sendPublicChat(
-                                                dateTime: DateTime.now().toString(),
-                                                text: textMessage.text);
-                                            textMessage.clear();
-                                          },
-                                          color: AppColors.primaryColor1,
-                                          icon: AppCubit.get(context).isSend? const CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?const Icon(Icons.mic,color: Colors.white,size: 17):const Icon(Icons.send,color: Colors.white,size: 17)
+                                        borderRadius: BorderRadius.circular(20),
                                       ),
-                                    )
-                                ),
-                                const SizedBox(width: 5,),
-                                Container(
-                                    width: 35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: AppColors.primaryColor1
-                                    ),
-                                    child: Center(
-                                      child: IconButton(
-                                        onPressed: (){
-                                          Scaffold.of(context).showBottomSheet((context) => Container(
-                                            color: AppColors.primaryColor1,
-
-                                            width: MediaQuery.of(context).size.width,
-                                            height: MediaQuery.of(context).size.height*.12,
-
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  GestureDetector(
-                                                    onTap: (){
-                                                      AppCubit.get(context).pickPostImage();
-                                                    },
-                                                    child: Row(
-                                                      children: [
-                                                        const SizedBox(width: 10,),
-                                                        Icon(
-                                                          Icons.image,
-                                                          color: AppColors.myWhite,
-                                                        ),
-                                                        const SizedBox(width: 10,),
-                                                        const Text('Image',style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontFamily: AppStrings.appFont,
-                                                            fontSize: 18,
-                                                            fontWeight: FontWeight.w500
-                                                        ),),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 15,),
-                                                  GestureDetector(
-                                                    onTap: (){
-                                                      AppCubit.get(context).pickPostVideo4();
-
-                                                    },
-                                                    child: Row(
-                                                      children: [
-                                                        const SizedBox(width: 10,),
-                                                        Icon(
-                                                          Icons.video_collection,
-                                                          color: AppColors.myWhite,
-                                                        ),
-                                                        const SizedBox(width: 10,),
-                                                        const Text('Video',style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontFamily: AppStrings.appFont,
-                                                            fontSize: 18,
-                                                            fontWeight: FontWeight.w500
-                                                        ),),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                      child: Padding(
+                                          padding: const EdgeInsets.only(left: 8),
+                                          child: TextFormField(
+                                            onChanged: (v){
+                                              setState((){
+                                                isWriting=true;
+                                              });
+                                            },
+                                            style: TextStyle(
+                                                color: Colors.white
                                             ),
+                                            keyboardType: TextInputType.multiline,
+                                            maxLines: null,
+                                            controller: textMessage,
+                                            decoration:  InputDecoration(
+                                              border: InputBorder.none,
+                                              hintText: 'Write your message...',
+                                              hintStyle: TextStyle(
+                                                color: Colors.white
+                                              )
 
-                                          ));
-
-                                        },
-                                        color: AppColors.primaryColor1,
-                                        icon: const ImageIcon(
-                                          AssetImage("assets/images/fanarea.png"),
-                                          color:Colors.white,
-                                          size: 15,
-                                        ),
+                                            ),
+                                          )
                                       ),
-                                    )
-                                ),
-                              ],
-                            )
-                        ),
+                                    ),
+                                    const SizedBox(width: 5,),
+                                    Container(
+                                        width:35,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(50),
+                                            color: AppColors.primaryColor1
+                                        ),
+                                        child: Center(
+                                          child: IconButton(
+                                              onPressed: (){
+                                                HapticFeedback.vibrate();
+                                                textMessage.text==""
+                                                    ?{
+                                                  recording?stopRecord():startRecord(),
+                                                  AppCubit.get(context).getPublicChat()
+                                                }
+                                                    :AppCubit.get(context).sendPublicChat(
+                                                    dateTime: DateTime.now().toString(),
+                                                    text: textMessage.text);
+                                                textMessage.clear();
+                                              },
+                                              color: AppColors.primaryColor1,
+                                              icon: AppCubit.get(context).isSend? const CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?const Icon(Icons.mic,color: Colors.white,size: 18):const Icon(Icons.send,color: Colors.white,size: 18)
+                                          ),
+                                        )
+                                    ),
+                                    const SizedBox(width: 5,),
+                                    // Container(
+                                    //     width: 35,
+                                    //     height: 35,
+                                    //     decoration: BoxDecoration(
+                                    //         borderRadius: BorderRadius.circular(50),
+                                    //         color: AppColors.primaryColor1
+                                    //     ),
+                                    //     child: Center(
+                                    //       child: IconButton(
+                                    //         onPressed: (){
+                                    //           Scaffold.of(context).showBottomSheet((context) => Container(
+                                    //             color: AppColors.primaryColor1,
+                                    //
+                                    //             width: MediaQuery.of(context).size.width,
+                                    //             height: MediaQuery.of(context).size.height*.12,
+                                    //
+                                    //             child: Padding(
+                                    //               padding: const EdgeInsets.all(8.0),
+                                    //               child: Column(
+                                    //                 crossAxisAlignment: CrossAxisAlignment.start,
+                                    //                 children: [
+                                    //                   GestureDetector(
+                                    //                     onTap: (){
+                                    //                       AppCubit.get(context).pickPostImage();
+                                    //                     },
+                                    //                     child: Row(
+                                    //                       children: [
+                                    //                         const SizedBox(width: 10,),
+                                    //                         Icon(
+                                    //                           Icons.image,
+                                    //                           color: AppColors.myWhite,
+                                    //                         ),
+                                    //                         const SizedBox(width: 10,),
+                                    //                         const Text('Image',style: TextStyle(
+                                    //                             color: Colors.white,
+                                    //                             fontFamily: AppStrings.appFont,
+                                    //                             fontSize: 18,
+                                    //                             fontWeight: FontWeight.w500
+                                    //                         ),),
+                                    //                       ],
+                                    //                     ),
+                                    //                   ),
+                                    //                   const SizedBox(height: 15,),
+                                    //                   GestureDetector(
+                                    //                     onTap: (){
+                                    //                       AppCubit.get(context).pickPostVideo4();
+                                    //
+                                    //                     },
+                                    //                     child: Row(
+                                    //                       children: [
+                                    //                         const SizedBox(width: 10,),
+                                    //                         Icon(
+                                    //                           Icons.video_collection,
+                                    //                           color: AppColors.myWhite,
+                                    //                         ),
+                                    //                         const SizedBox(width: 10,),
+                                    //                         const Text('Video',style: TextStyle(
+                                    //                             color: Colors.white,
+                                    //                             fontFamily: AppStrings.appFont,
+                                    //                             fontSize: 18,
+                                    //                             fontWeight: FontWeight.w500
+                                    //                         ),),
+                                    //                       ],
+                                    //                     ),
+                                    //                   ),
+                                    //                 ],
+                                    //               ),
+                                    //             ),
+                                    //
+                                    //           ));
+                                    //
+                                    //         },
+                                    //         color: AppColors.primaryColor1,
+                                    //         icon: const ImageIcon(
+                                    //           AssetImage("assets/images/fanarea.png"),
+                                    //           color:Colors.white,
+                                    //           size: 15,
+                                    //         ),
+                                    //       ),
+                                    //     )
+                                    // ),
+                                  ],
+                                )
+                            ),
 
-                      ],
+                          ],
+                        ),
+                        condition:AppCubit.get(context).publicChat.length >=0 ,
+                        fallback:(context)=>const Center(child: CircularProgressIndicator()) ,
+                      ),
+                    ],
+                  ),
+                  floatingActionButton:Padding(
+                    padding: const EdgeInsets.only(bottom:0,left:5),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width*.14,
+                      height: MediaQuery.of(context).size.height*.045,
+
+                      child: SpeedDial(
+                        backgroundColor: AppColors.primaryColor1,
+                        animatedIcon: AnimatedIcons.menu_close,
+                        elevation: 1,
+                        overlayColor: AppColors.myWhite,
+                        overlayOpacity: 0.0001,
+                        children: [
+                          SpeedDialChild(
+                              onTap: (){
+                                AppCubit.get(context).pickPostVideo4();
+                              },
+                              child: Icon(Icons.video_camera_back,color: Colors.red,size: 22),
+                              backgroundColor: AppColors.myWhite
+                          ),
+                          SpeedDialChild(
+                            onTap: (){
+                              AppCubit.get(context).pickPostImage();
+                            },
+                            child: Icon(Icons.image,color: Colors.green,size: 22,),
+                            backgroundColor: AppColors.myWhite,
+                          ),
+                        ],
+                      ),
                     ),
-                    condition:AppCubit.get(context).publicChat.length >=0 ,
-                    fallback:(context)=>const Center(child: CircularProgressIndicator()) ,
                   ),
                 );
               },

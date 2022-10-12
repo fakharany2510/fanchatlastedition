@@ -150,12 +150,7 @@ customAppbar(String title,context){
                 return MoreScreen();
              }));
       },
-      icon: const Image(
-        color: Colors.white,
-        height: 25,
-        width: 25,
-        image: AssetImage('assets/images/more_screen.png'),
-      ),
+      icon:Icon(Icons.menu,size: 30,color: AppColors.myGrey,)
     ),
     title: GestureDetector(
       onTap: (){
@@ -178,13 +173,6 @@ customAppbar(String title,context){
     centerTitle: true,
     elevation: 0.0,
     actions: [
-      IconButton(onPressed: (){}, constraints: BoxConstraints(),
-        padding: EdgeInsets.only(right: 20),
-        icon: ImageIcon(
-        AssetImage("assets/images/notification.png"),
-        color:AppColors.navBarActiveIcon,
-
-      ),),
 
     ],
   );

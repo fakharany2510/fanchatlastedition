@@ -53,7 +53,6 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
                         borderRadius: BorderRadius.circular(50)
                     ),
                     child:Radio(
-
                         value: 1,
                         groupValue: _value,
                         onChanged: (value){
@@ -108,7 +107,7 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
                         groupValue: _value,
                         onChanged: (value){
                           setState((){
-                            _value=1;
+                            _value=2;
                           });
                         }),
                   ),
