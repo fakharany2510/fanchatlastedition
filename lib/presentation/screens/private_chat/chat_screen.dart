@@ -105,6 +105,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
                               //  as Map<String, dynamic>;
 
+
                               if (name.isEmpty) {
                                 return InkWell(
                                   onTap: (){
