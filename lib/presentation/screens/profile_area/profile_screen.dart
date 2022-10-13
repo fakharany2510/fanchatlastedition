@@ -167,20 +167,34 @@ class ProfileScreen extends StatelessWidget {
                           }
                       ),
                       const Spacer(),
-                      GestureDetector(
-                        onTap: (){
-                         // cubit.toPayPal();
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const ChoosePaymentMethod()));
-                        },
-                        child: const CircleAvatar(
-                          radius: 29,
-                          backgroundColor: Colors.white,
-                          child: CircleAvatar(
-                            radius: 28,
-                            backgroundImage: AssetImage('assets/images/pay.png'),
-                          ),
-                        ),
-                      ),
+                     Column(
+                       children: [
+                         GestureDetector(
+                           onTap: (){
+                             // cubit.toPayPal();
+                             Navigator.push(context, MaterialPageRoute(builder: (context)=>const ChoosePaymentMethod()));
+                           },
+                           child: const CircleAvatar(
+                             radius: 29,
+                             backgroundColor: Colors.white,
+                             child: CircleAvatar(
+                               radius: 30,
+                               backgroundImage: AssetImage('assets/images/usedpay.png'),
+                             ),
+                           ),
+                         ),
+                         SizedBox(
+                           height: 5,
+                         ),
+                         Text('Buy a Package',
+                         style: TextStyle(
+                           overflow: TextOverflow.ellipsis,
+                           fontSize: 12,
+                           color: Colors.white
+                         ),
+                         )
+                       ],
+                     ),
                       const SizedBox(width: 15,)
                     ],
                   ),

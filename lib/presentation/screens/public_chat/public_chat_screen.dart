@@ -276,7 +276,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                       clipBehavior: Clip.antiAliasWithSaveLayer,
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color:AppColors.myWhite,
+                                            color:AppColors.primaryColor1,
                                             width: 1
                                         ),
                                         borderRadius: BorderRadius.circular(20),
@@ -290,7 +290,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                               });
                                             },
                                             style: TextStyle(
-                                                color: Colors.white
+                                                color: AppColors.primaryColor1
                                             ),
                                             keyboardType: TextInputType.multiline,
                                             maxLines: null,
@@ -299,7 +299,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                               border: InputBorder.none,
                                               hintText: 'Write your message...',
                                               hintStyle: TextStyle(
-                                                color: Colors.white
+                                                color: AppColors.primaryColor1
                                               )
 
                                             ),

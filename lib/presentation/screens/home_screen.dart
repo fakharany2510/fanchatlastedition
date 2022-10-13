@@ -182,9 +182,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         separatorBuilder: (context,index)=>Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 0),
                           child: Container(
-                            height: MediaQuery.of(context).size.height*.00030,
+                            height: MediaQuery.of(context).size.height*.01,
                             width: double.infinity,
-                            color: AppColors.myGrey,
+                            color: AppColors.myGrey.withOpacity(.1),
                           ),
                         ),
                         itemCount: AppCubit.get(context).posts.length)

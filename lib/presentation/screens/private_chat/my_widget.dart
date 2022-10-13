@@ -3,7 +3,6 @@ import 'package:cached_video_player/cached_video_player.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
-import 'package:fanchat/data/modles/message_model.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

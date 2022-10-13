@@ -76,7 +76,7 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                   (AppCubit.get(context).publicChat[widget.index!].text!="")
                       ?
                   Material(
-                    color: AppColors.navBarActiveIcon.withOpacity(.5),
+                    color: AppColors.navBarActiveIcon.withOpacity(.9),
                     shape: RoundedRectangleBorder(
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
