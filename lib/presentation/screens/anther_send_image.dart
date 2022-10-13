@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../constants/app_strings.dart';
 import '../../data/modles/user_model.dart';
-import 'messages_details.dart';
+import 'private_chat/messages_details.dart';
 
 class AntherSendImage extends StatefulWidget {
   String ?userId;
@@ -78,6 +78,8 @@ class _AntherSendImageState extends State<AntherSendImage> {
                     senderId: AppStrings.uId!,
                     dateTime: DateTime.now().toString(),
                     recevierId:widget.userId!,
+                    recevierImage:widget.userImage!,
+                    recevierName:widget.userName!,
                     text: ""
                 );
               },

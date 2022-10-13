@@ -101,6 +101,7 @@ class AppCubit extends Cubit<AppState> {
     }
     if(currentIndex==3){
       getAllUsers();
+      getLastUsers();
     }
     if(currentIndex==2){
      // getFanPosts();
@@ -1073,6 +1074,8 @@ List<int> commentIndex=[];
   /////////////////////////////////////////////////////////////////
   void createImageMessage({
     required String recevierId,
+    required String recevierName,
+    required String recevierImage,
     required String dateTime,
     String? messageImage,
     String? senderId,
@@ -1083,6 +1086,8 @@ List<int> commentIndex=[];
       text: "",
       dateTime: dateTime,
       recevierId: recevierId,
+      recevierName: recevierName,
+      recevierImage: recevierImage,
       senderId: AppStrings.uId
     );
 
@@ -1095,12 +1100,28 @@ List<int> commentIndex=[];
         .collection('messages')
         .add(model.toMap())
         .then((value){
+      emit(CreateImagePrivateSuccessState());
+
     })
         .catchError((error){
       emit(CreateImagePrivateErrorState());
 
     });
-    emit(CreateImagePrivateSuccessState());
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(AppStrings.uId)
+        .collection('chats')
+        .doc(recevierId)
+        .set(model.toMap())
+        .then((value){
+      emit(CreateImagePrivateSuccessState());
+
+    })
+        .catchError((error){
+      emit(CreateImagePrivateErrorState());
+
+    });
     //Set Reciever Chat
     FirebaseFirestore.instance
         .collection('users')
@@ -1115,10 +1136,25 @@ List<int> commentIndex=[];
         .catchError((error){
       emit(CreateImagePrivateErrorState());
     });
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(recevierId)
+        .collection('chats')
+        .doc(AppStrings.uId)
+        .set(model.toMap())
+        .then((value){
+      emit(CreateImagePrivateSuccessState());
+    })
+        .catchError((error){
+      emit(CreateImagePrivateErrorState());
+    });
   }
 //////////////////////////////////////////
   void uploadMessageImage({
     required String recevierId,
+    required String recevierName,
+    required String recevierImage,
     required String dateTime,
     required String text,
     required String senderId
@@ -1137,6 +1173,8 @@ List<int> commentIndex=[];
         createImageMessage(
           messageImage: value,
           recevierId: recevierId,
+          recevierName: recevierName,
+          recevierImage: recevierImage,
           dateTime: dateTime,
           senderId: AppStrings.uId
         );
@@ -1155,6 +1193,8 @@ List<int> commentIndex=[];
 
   void sendMessage({
     required String recevierId,
+    required String recevierName,
+    required String recevierImage,
     required String dateTime,
     required String text,
 
@@ -1164,6 +1204,8 @@ List<int> commentIndex=[];
       senderId: AppStrings.uId,
       dateTime: dateTime,
       text: text,
+      recevierImage: recevierImage,
+      recevierName: recevierName
     );
     //Set My Chat
     FirebaseFirestore.instance
@@ -1180,6 +1222,23 @@ List<int> commentIndex=[];
       emit(SendMessageErrorState());
 
     });
+
+    //last user
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(AppStrings.uId)
+        .collection('chats')
+        .doc(recevierId)
+        .set(model.toMap())
+        .then((value){
+      emit(SendMessageSuccessState());
+    })
+        .catchError((error){
+      emit(SendMessageErrorState());
+
+    });
+
+
     //Set Reciever Chat
     FirebaseFirestore.instance
         .collection('users')
@@ -1188,6 +1247,20 @@ List<int> commentIndex=[];
         .doc(AppStrings.uId)
         .collection('messages')
         .add(model.toMap())
+        .then((value){
+      emit(SendMessageSuccessState());
+    })
+        .catchError((error){
+      emit(SendMessageErrorState());
+    });
+
+    //last user
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(recevierId)
+        .collection('chats')
+        .doc(AppStrings.uId)
+        .set(model.toMap())
         .then((value){
       emit(SendMessageSuccessState());
     })
@@ -1222,6 +1295,28 @@ List<int> commentIndex=[];
 
     });
   }
+
+
+  List lastUsers=[];
+  void getLastUsers(){
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(AppStrings.uId)
+        .collection('chats')
+        .orderBy('dateTime')
+        .snapshots()
+        .listen((event) {
+      lastUsers = [];
+      event.docs.forEach((element) {
+      lastUsers.add((element.data()));
+        print('llllllllllllllllllllllllllllllllllllllllllllllllllllllllll');
+      });
+      emit(GetMessageSuccessState());
+
+    });
+  }
+
+  ///////////////////////
   bool isWritingMessage=false;
   void changeIcon(){
     isWritingMessage!=isWritingMessage;
@@ -1232,6 +1327,8 @@ List<int> commentIndex=[];
   ///////////////////////////////voice message
   void createVoiceMessage({
      required String recevierId,
+     required String recevierName,
+     required String recevierImage,
     required String dateTime,
    required String voice,
 
@@ -1242,6 +1339,8 @@ List<int> commentIndex=[];
         text: "",
        dateTime: dateTime,
         recevierId: recevierId,
+        recevierName: recevierName,
+        recevierImage: recevierImage,
         senderId: AppStrings.uId,
         voice: voice
     );
@@ -1263,6 +1362,23 @@ List<int> commentIndex=[];
       emit(SendMessageErrorState());
       print(error.toString());
     });
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(AppStrings.uId)
+        .collection('chats')
+        .doc(recevierId)
+        .set(model.toMap())
+        .then((value){
+      emit(StopLoadingState());
+      isSend=false;
+      emit(SendMessageSuccessState());
+    })
+        .catchError((error){
+      emit(SendMessageErrorState());
+      print(error.toString());
+    });
+
     //Set Reciever Chat
     FirebaseFirestore.instance
         .collection('users')
@@ -1271,6 +1387,20 @@ List<int> commentIndex=[];
         .doc(AppStrings.uId)
         .collection('messages')
         .add(model.toMap())
+        .then((value){
+      emit(SendMessageSuccessState());
+    })
+        .catchError((error){
+      emit(SendMessageErrorState());
+      print(error.toString());
+    });
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(recevierId)
+        .collection('chats')
+        .doc(AppStrings.uId)
+        .set(model.toMap())
         .then((value){
       emit(SendMessageSuccessState());
     })
@@ -2113,6 +2243,8 @@ List<int> commentIndex=[];
   // BrowisePostModel? postModel;
   void uploadPrivateVideo({
     required String recevierId,
+    required String recevierName,
+    required String recevierImage,
     required String dateTime,
     required String text,
     required String senderId
@@ -2131,6 +2263,8 @@ List<int> commentIndex=[];
         createVideoPrivate(
             messageViedo: value,
             recevierId: recevierId,
+            recevierName: recevierName,
+            recevierImage: recevierImage,
             dateTime: dateTime,
             senderId: AppStrings.uId
         );
@@ -2148,6 +2282,8 @@ List<int> commentIndex=[];
 //Create Post
   void createVideoPrivate({
     required String recevierId,
+    required String recevierName,
+    required String recevierImage,
     required String dateTime,
     String? messageViedo,
     String? senderId,
@@ -2159,6 +2295,8 @@ List<int> commentIndex=[];
         text: "",
         dateTime: dateTime,
         recevierId: recevierId,
+        recevierName: recevierName,
+        recevierImage: recevierImage,
         senderId: AppStrings.uId
     );
 
@@ -2177,6 +2315,20 @@ List<int> commentIndex=[];
       emit(SendMessageErrorState());
 
     });
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(AppStrings.uId)
+        .collection('chats')
+        .doc(recevierId)
+        .set(model.toMap())
+        .then((value){
+      emit(SendMessageSuccessState());
+    })
+        .catchError((error){
+      emit(SendMessageErrorState());
+
+    });
     //Set Reciever Chat
     FirebaseFirestore.instance
         .collection('users')
@@ -2185,6 +2337,19 @@ List<int> commentIndex=[];
         .doc(AppStrings.uId)
         .collection('messages')
         .add(model.toMap())
+        .then((value){
+      emit(SendMessageSuccessState());
+    })
+        .catchError((error){
+      emit(SendMessageErrorState());
+    });
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(recevierId)
+        .collection('chats')
+        .doc(AppStrings.uId)
+        .set(model.toMap())
         .then((value){
       emit(SendMessageSuccessState());
     })

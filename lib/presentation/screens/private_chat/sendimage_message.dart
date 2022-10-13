@@ -2,13 +2,15 @@ import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../constants/app_strings.dart';
-import '../../data/modles/user_model.dart';
+import '../../../constants/app_strings.dart';
+import '../../../data/modles/user_model.dart';
 import 'messages_details.dart';
 
 class SendImage extends StatefulWidget {
-  UserModel userModel;
-  SendImage(this.userModel);
+  String ?userId;
+  String ?userImage;
+  String ?userName;
+  SendImage(this.userName,this.userImage,this.userId);
   @override
   State<SendImage> createState() => _SendImageState();
 }
@@ -72,7 +74,9 @@ class _SendImageState extends State<SendImage> {
           AppCubit.get(context).uploadMessageImage(
               senderId: AppStrings.uId!,
               dateTime: DateTime.now().toString(),
-              recevierId:widget.userModel.uId!,
+              recevierId:widget.userId!,
+              recevierImage:widget.userImage!,
+              recevierName: widget.userName!,
               text: ""
           );
         },

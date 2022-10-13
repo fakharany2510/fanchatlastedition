@@ -7,9 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SendVideoMessage extends StatelessWidget {
-  UserModel userModel;
-
-  SendVideoMessage({Key? key,required this.userModel}) : super(key: key);
+  String ?userId;
+  String ?userImage;
+  String ?userName;
+  SendVideoMessage({Key? key,required this.userId,required this.userImage,required this.userName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +83,9 @@ class SendVideoMessage extends StatelessWidget {
                 AppCubit.get(context).uploadPrivateVideo(
                     senderId: AppStrings.uId!,
                     dateTime: DateTime.now().toString(),
-                    recevierId:userModel.uId!,
+                    recevierId:userId!,
+                    recevierImage:userImage!,
+                    recevierName:userName!,
                     text: ""
                 );
               },

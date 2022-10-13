@@ -6,11 +6,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
-import 'package:fanchat/presentation/screens/send_video_message.dart';
-import 'package:fanchat/presentation/screens/sendimage_message.dart';
+import 'package:fanchat/presentation/screens/private_chat/send_video_message.dart';
+import 'package:fanchat/presentation/screens/private_chat/sendimage_message.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
-import 'package:fanchat/presentation/widgets/private_chat/my_widget.dart';
-import 'package:fanchat/presentation/widgets/private_chat/sender_widget.dart';
+import 'package:fanchat/presentation/screens/private_chat/my_widget.dart';
+import 'package:fanchat/presentation/screens/private_chat/sender_widget.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,8 +24,8 @@ import 'package:uuid/uuid.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:voice_message_package/voice_message_package.dart';
 
-import '../../data/modles/message_model.dart';
-import '../../data/modles/user_model.dart';
+import '../../../data/modles/message_model.dart';
+import '../../../data/modles/user_model.dart';
  // CachedVideoPlayerController? controllerPrivate;
 
 
@@ -36,10 +36,11 @@ Future<String> _getTempPath(String path) async {
   return tempPath + '/' + path;
 }
 class ChatDetails extends StatefulWidget {
-  UserModel userModel;
-
+  String ?userId;
+  String ?userImage;
+  String ?userName;
   final onSendMessage;
-  ChatDetails({required this.userModel,this.onSendMessage});
+  ChatDetails({required this.userId,required this.userName,required this.userImage,this.onSendMessage});
 
   @override
   State<ChatDetails> createState() => _ChatDetailsState();
@@ -58,22 +59,6 @@ class _ChatDetailsState extends State<ChatDetails> {
 
   @override
   void initState() {
-    // controllerPrivate = CachedVideoPlayerController.network(
-    //     'https://firebasestorage.googleapis.com/v0/b/fanchat-7db9e.appspot.com/o/privatechat%2Fimage_picker4734177635856049259.mp4?alt=media&token=c61a5764-104f-4ec3-b203-d93d8369e720');
-    //  controllerPrivate!.initialize().then((value) {
-    //   controllerPrivate!.play();
-    //   controllerPrivate!.setLooping(true);
-    //   controllerPrivate!.setVolume(1.0);
-    //   setState(() {
-    //     controllerPrivate!.pause();
-    //   });
-    // }).catchError((error){
-    //   print('error while initializing video ${error.toString()}');
-    // });
-    // if(scrollController.hasClients){
-    //   scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
-    // }
-    // super.initState();
 
     isWriting = false;
   }
@@ -87,14 +72,14 @@ class _ChatDetailsState extends State<ChatDetails> {
             if(scrollController.hasClients){
               scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
             }
-            AppCubit.get(context).getMessages(recevierId: widget.userModel.uId!);
+            AppCubit.get(context).getMessages(recevierId: widget.userId!);
             return BlocConsumer<AppCubit,AppState>(
               listener: (context,state){
                 if(state is PickChatImageSuccessState ){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.userModel)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.userName,widget.userImage,widget.userId)));
                 }
                 if(state is PickPrivateChatViedoSuccessState ){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SendVideoMessage(userModel: widget.userModel, )));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SendVideoMessage(userId: widget.userId,userImage: widget.userImage,userName: widget.userName, )));
                 }
               },
               builder: (context,state){
@@ -122,7 +107,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         CircleAvatar(
-                          backgroundImage:  NetworkImage('${widget.userModel.image}') as ImageProvider,
+                          backgroundImage:  NetworkImage('${widget.userImage}'),
                           radius: 22,
                         ),
                         const SizedBox(width: 15,),
@@ -131,7 +116,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                           children: [
                             Row(
                               children: [
-                                Text('${widget.userModel.username}',
+                                Text(widget.userName!,
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,
@@ -163,9 +148,9 @@ class _ChatDetailsState extends State<ChatDetails> {
                                 itemBuilder: (context , index)
                                 {
                                   var message =AppCubit.get(context).messages[index];
-                                  if(widget.userModel.uId == message.senderId)
-                                    //send message
+                                  if(widget.userId == message.senderId) {
                                     return SenderMessageWidget(index: index,);
+                                  }
                                   //receive message
                                     return MyMessageWidget(index: index,);
                                 },
@@ -304,10 +289,12 @@ class _ChatDetailsState extends State<ChatDetails> {
                                             textMessage.text==""
                                                 ?{
                                               recording?stopRecord():startRecord(),
-                                              AppCubit.get(context).getMessages(recevierId:widget.userModel.uId!)
+                                              AppCubit.get(context).getMessages(recevierId:widget.userId!)
                                             }
                                                 :AppCubit.get(context).sendMessage(
-                                                recevierId: widget.userModel.uId!,
+                                                recevierId: widget.userId!,
+                                                recevierImage:widget.userImage!,
+                                                recevierName: widget.userName!,
                                                 dateTime: DateTime.now().toString(),
                                                 text: textMessage.text);
                                             textMessage.clear();
@@ -444,7 +431,7 @@ class _ChatDetailsState extends State<ChatDetails> {
             );
           }
       ),
-      condition: widget.userModel !=null,
+      condition: widget.userName !=null,
       fallback: (context)=>const Center(child: CircularProgressIndicator()),
     );
   }
@@ -538,7 +525,9 @@ class _ChatDetailsState extends State<ChatDetails> {
     await storageReference.putFile(voice).then((value){
       AppCubit.get(context).createVoiceMessage(
 
-        recevierId: widget.userModel.uId!,
+        recevierId: widget.userId!,
+        recevierImage:widget.userImage!,
+        recevierName: widget.userName!,
         dateTime: DateTime.now().toString(),
         voice: voice.path,
       );

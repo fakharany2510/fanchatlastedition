@@ -8,7 +8,7 @@ import 'package:fanchat/firebase_options.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/screens/edit_profie_screen.dart';
 import 'package:fanchat/presentation/screens/fan/fan_full_post.dart';
-import 'package:fanchat/presentation/screens/messages_details.dart';
+import 'package:fanchat/presentation/screens/private_chat/messages_details.dart';
 import 'package:fanchat/presentation/screens/posts/add_new_image.dart';
 import 'package:fanchat/presentation/screens/posts/add_new_video.dart';
 import 'package:fanchat/presentation/screens/posts/add_text_post.dart';
@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
         providers:[
-          BlocProvider(create: (context)=>AppCubit()..getUser()..getCountries()..getProfilePosts()..getPosts()..getAllUsers()..getFanPosts()..periodic()),
+          BlocProvider(create: (context)=>AppCubit()..getUser()..getCountries()..getProfilePosts()..getPosts()..getAllUsers()..getFanPosts()..periodic()..getLastUsers()),
           BlocProvider(create: (context)=>AdvertisingCubit()..getAdvertisingPosts()),
         ],
         child: FirebasePhoneAuthProvider(
@@ -103,7 +103,6 @@ class MyApp extends StatelessWidget {
                 'add_video':(context)=>AddNewVideo(),
                 'add_text':(context)=>AddTextPost(),
                 'fan_post':(context)=>FanFullPost(),
-                'message':(context)=>ChatDetails(userModel: AppCubit.get(context).userModel!,),
               },
             ),
           ),

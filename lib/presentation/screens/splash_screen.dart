@@ -26,6 +26,7 @@ class SplashScreen extends StatefulWidget {
     if(AppStrings.uId !=null){
       AppCubit.get(context).getUser();
       AppCubit.get(context).getAllUsers();
+      AppCubit.get(context).getLastUsers();
       widget = HomeLayout();
     }else{
       widget = RegisterScreen();

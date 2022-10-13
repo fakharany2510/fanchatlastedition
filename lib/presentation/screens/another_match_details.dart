@@ -8,7 +8,9 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/screens/anther_send_image.dart';
-import 'package:fanchat/presentation/screens/sendimage_message.dart';
+import 'package:fanchat/presentation/screens/private_chat/my_widget.dart';
+import 'package:fanchat/presentation/screens/private_chat/sender_widget.dart';
+import 'package:fanchat/presentation/screens/private_chat/sendimage_message.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -144,9 +146,9 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                                   var message =AppCubit.get(context).messages[index];
                                   if(widget.userId! == message.senderId)
                                     //send message
-                                    return builsRecievedMessages(message,context,index);
+                                    return SenderMessageWidget(index: index,);
                                   //receive message
-                                  return buildMyMessages(message,context,index);
+                                  return MyMessageWidget(index: index,);
                                 },
                                 separatorBuilder: (context , index)=>const SizedBox(height: 15,),
                                 itemCount: AppCubit.get(context).messages.length),
@@ -271,6 +273,8 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                                             }
                                                 :AppCubit.get(context).sendMessage(
                                                 recevierId: widget.userId!,
+                                                recevierName: widget.userName!,
+                                                recevierImage: widget.userImage!,
                                                 dateTime: DateTime.now().toString(),
                                                 text: textMessage.text);
                                             textMessage.clear();
@@ -547,6 +551,8 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
     await storageReference.putFile(voice).then((value){
       AppCubit.get(context).createVoiceMessage(
         recevierId: widget.userId!,
+        recevierName: widget.userName!,
+        recevierImage: widget.userImage!,
         dateTime: DateTime.now().toString(),
         voice: voice.path,
       );

@@ -1,7 +1,7 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
-import 'package:fanchat/presentation/screens/chat_screen.dart';
+import 'package:fanchat/presentation/screens/private_chat/chat_screen.dart';
 
 import 'package:fanchat/presentation/screens/register_screen.dart';
 

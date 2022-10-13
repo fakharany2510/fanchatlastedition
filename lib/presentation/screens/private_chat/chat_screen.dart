@@ -7,7 +7,7 @@ import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/user_model.dart';
-import 'package:fanchat/presentation/screens/messages_details.dart';
+import 'package:fanchat/presentation/screens/private_chat/messages_details.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +27,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
   @override
   void initState(){
     AppCubit.get(context).getAllUsers();
+    AppCubit.get(context).getLastUsers();
     super.initState();
   }
   Widget build(BuildContext context) {
@@ -98,7 +99,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                 color: AppColors.myGrey,
                               ),
                             ),
-                            itemCount: AppCubit.get(context).users.length,
+                            itemCount: AppCubit.get(context).lastUsers.length,
 
                             itemBuilder: (context, index) {
 
@@ -107,12 +108,16 @@ class _ChatsScreenState extends State<ChatsScreen> {
                               if (name.isEmpty) {
                                 return InkWell(
                                   onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel:AppCubit.get(context).users[index])));
-                                    print('users length 1111111111111111 ${AppCubit.get(context).users.length}');
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                        ChatDetails(
+                                          userName:AppCubit.get(context).lastUsers[index]['recevierName'],
+                                          userId: AppCubit.get(context).lastUsers[index]['recevierId'],
+                                          userImage: AppCubit.get(context).lastUsers[index]['recevierImage'],                                        )));
+                                    print('users length 1111111111111111 ${AppCubit.get(context).lastUsers.length}');
                                   },
                                   child: ListTile(
                                     title: Text(
-                                      AppCubit.get(context).users[index].username!,
+                                      AppCubit.get(context).lastUsers[index]['recevierName']!,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -122,22 +127,26 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                           fontWeight: FontWeight.bold),
                                     ),
                                     leading: CircleAvatar(
-                                      backgroundImage: NetworkImage(AppCubit.get(context).users[index].image!),
+                                      backgroundImage: NetworkImage(AppCubit.get(context).lastUsers[index]['recevierImage']!),
                                     ),
                                   ),
                                 );
                               }
-                              if (AppCubit.get(context).users[index].username!
+                              if (AppCubit.get(context).lastUsers[index]['recevierName']!
                                   .toString()
                                   .toLowerCase()
                                   .startsWith(name.toLowerCase())) {
                                 return InkWell(
                                   onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel: AppCubit.get(context).users[index],)));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatDetails(
+                                      userName:AppCubit.get(context).lastUsers[index]['recevierName'],
+                                      userId: AppCubit.get(context).lastUsers[index]['recevierId'],
+                                      userImage: AppCubit.get(context).lastUsers[index]['recevierImage'],
+                                    )));
                                   },
                                   child: ListTile(
                                     title: Text(
-                                      AppCubit.get(context).users[index].username!,
+                                      AppCubit.get(context).lastUsers[index]['recevierName']!,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -148,7 +157,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                     ),
 
                                     leading: CircleAvatar(
-                                      backgroundImage: NetworkImage(AppCubit.get(context).users[index].image!),
+                                      backgroundImage: NetworkImage(AppCubit.get(context).lastUsers[index]['recevierImage']),
                                     ),
                                   ),
                                 );
@@ -168,10 +177,15 @@ class _ChatsScreenState extends State<ChatsScreen> {
     );
   }
 
-  Widget buildChatItem(UserModel model , context)=>InkWell(
+  Widget buildChatItem(UserModel model , context,index)=>InkWell(
     splashColor: AppColors.primaryColor1,
     onTap: (){
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel: model,)));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>
+          ChatDetails(
+            userName:AppCubit.get(context).lastUsers[index]['recevierName'],
+            userId: AppCubit.get(context).lastUsers[index]['recevierId'],
+            userImage: AppCubit.get(context).lastUsers[index]['recevierImage'],          )
+      ));
       print('kkkkkkkkkkkkkkkkkkkkkkkkkkk${model.uId}');
     },
     child: Padding(

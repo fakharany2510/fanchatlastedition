@@ -3,6 +3,8 @@
 class MessageModel{
   String? senderId;
   String? recevierId;
+  String? recevierName;
+  String? recevierImage;
   String? dateTime;
   String? text;
   String? image;
@@ -13,6 +15,8 @@ class MessageModel{
   MessageModel({
    this.senderId,
     this.recevierId,
+    this.recevierImage,
+    this.recevierName,
     this.dateTime,
     this.text,
     this.image,
@@ -22,6 +26,8 @@ class MessageModel{
   MessageModel.fromJson(Map<String , dynamic> json){
     senderId=json['senderId'];
     recevierId=json['recevierId'];
+    recevierImage=json['recevierImage'];
+    recevierName=json['recevierName'];
     dateTime=json['dateTime'];
     text=json['text'];
     image=json['image'];
@@ -33,6 +39,8 @@ class MessageModel{
     return{
       'senderId':senderId,
       'recevierId':recevierId,
+      'recevierImage':recevierImage,
+      'recevierName':recevierName,
       'dateTime':dateTime,
       'text':text,
       'image':image,

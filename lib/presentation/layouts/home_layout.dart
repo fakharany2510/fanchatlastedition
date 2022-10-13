@@ -14,7 +14,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../screens/chat_screen.dart';
+import '../screens/private_chat/chat_screen.dart';
 import '../screens/fan/fan_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/match_details.dart';
