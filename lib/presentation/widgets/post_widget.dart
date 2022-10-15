@@ -26,11 +26,15 @@ class PostWidget extends StatefulWidget {
 }
 
 class PostWidgetState extends State<PostWidget> {
+
+
+
   VideoPlayerController? controller;
   Future <void> ?intilize;
 
   @override
   void initState() {
+
     // controller = CachedVideoPlayerController.network(
     //     AppCubit.get(context).posts[widget.index!].postVideo!);
     // controller!.initialize();
@@ -60,6 +64,7 @@ class PostWidgetState extends State<PostWidget> {
 
     },
       builder: (context,state){
+
         return Card(
           elevation: 2,
           shadowColor: Colors.grey[150],
@@ -131,7 +136,8 @@ class PostWidgetState extends State<PostWidget> {
                                 ),
                               ),
                               const SizedBox(height: 5,),
-                              Text('${AppCubit.get(context).posts[widget.index!].time}',
+
+                              Text(AppCubit.get(context).getTimeDifferenceFromNow(DateTime.tryParse(AppCubit.get(context).posts[widget.index!].timeSmap!)!),
                                 overflow: TextOverflow.ellipsis,
                                 style:  TextStyle(
                                     fontSize: 13,
