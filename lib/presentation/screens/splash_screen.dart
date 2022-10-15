@@ -1,23 +1,17 @@
-import 'package:cached_video_player/cached_video_player.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
-import 'package:fanchat/constants/app_strings.dart';
-import 'package:fanchat/constants/app_strings.dart';
+
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/paypal/choosepaymentmethod.dart';
 import 'package:fanchat/presentation/screens/register_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:splash_screen_view/SplashScreenView.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:flutter/src/animation/tween.dart';
+
 import 'package:video_player/video_player.dart';
 
-import 'login_screen.dart';
 import 'package:flutter/services.dart';
-import 'package:lottie/lottie.dart';
-import 'package:flutter/material.dart';
+
 
 class SplashScreen extends StatefulWidget {
    SplashScreen({Key? key}) : super(key: key);

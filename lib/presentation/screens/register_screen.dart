@@ -8,6 +8,7 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/screens/privacy_policies.dart';
 
 import 'package:fanchat/presentation/screens/verify_code_screen.dart';
+import 'package:fanchat/presentation/screens/welcome_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:fanchat/utils/helpers.dart';
 import 'package:flutter/gestures.dart';
@@ -110,7 +111,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 print('uid is null');
               }else{
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context)=>HomeLayout()));
+                    MaterialPageRoute(builder: (context)=>WelcomeScreen()));
               }
 
             }).catchError((error){

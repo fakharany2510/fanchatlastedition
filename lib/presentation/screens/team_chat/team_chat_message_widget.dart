@@ -123,7 +123,7 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                           ),
                           const SizedBox(height: 5,),
                           Material(
-                            elevation: 100,
+                            elevation: 0,
                             shadowColor: AppColors.myGrey,
                             clipBehavior: Clip.antiAliasWithSaveLayer,
 

@@ -180,406 +180,421 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                         ),
                       ),
                     ),
-                    body: ConditionalBuilder(
-                      builder: (context)=>Column(
-                        children: [
-                          AppCubit.get(context).cheering.isNotEmpty ?
-                          Container(
-                              height: MediaQuery.of(context).size.height*.22,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: AppColors.primaryColor1
-                                  )
+                    body:Stack(
+                      children: [
+                        Container(
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            child:Opacity(
+                              child:  Image(
+                                image: AssetImage('assets/images/background1.jpg'),
+                                fit: BoxFit.cover,
+
                               ),
-                              margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                              child: Stack(
-                                children: [
-                                  Lottie.asset(
-                                      height:  MediaQuery.of(context).size.height*.18,
-                                      width: double.infinity,
-                                      'assets/images/cheer.json'
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 5,
-                                        horizontal: 15
+                              opacity: 1,
+                            )
+                        ),
+                        ConditionalBuilder(
+                          builder: (context)=>Column(
+                            children: [
+                              AppCubit.get(context).cheering.isNotEmpty ?
+                              Container(
+                                height: MediaQuery.of(context).size.height*.22,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: AppColors.primaryColor1
+                                    )
+                                ),
+                                margin: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                                child: Stack(
+                                  children: [
+                                    Lottie.asset(
+                                        height:  MediaQuery.of(context).size.height*.18,
+                                        width: double.infinity,
+                                        'assets/images/cheer.json'
                                     ),
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 5,
-                                        horizontal: 5
-                                    ),
-                                    width:MediaQuery.of(context).size.width*.9 ,
-                                    height: MediaQuery.of(context).size.height*.18,
-                                    child:  ListView.separated(
-                                        itemBuilder: (context,index){
-                                          return Padding(
-                                            padding: const EdgeInsets.all(4.0),
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                    Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5,
+                                            horizontal: 15
+                                        ),
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 5,
+                                            horizontal: 5
+                                        ),
+                                        width:MediaQuery.of(context).size.width*.9 ,
+                                        height: MediaQuery.of(context).size.height*.18,
+                                        child:  ListView.separated(
+                                            itemBuilder: (context,index){
+                                              return Padding(
+                                                padding: const EdgeInsets.all(4.0),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: [
-
-                                                    CircleAvatar(
-                                                      backgroundImage:NetworkImage('${AppCubit.get(context).cheering[0].userImage}'),
-                                                      radius: 18,
-                                                    ),
-                                                    const SizedBox(width: 10,),
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
-                                                        Row(
-                                                          children: [
-                                                            Text('${AppCubit.get(context).cheering[0].username}',
-                                                              style: TextStyle(
-                                                                  color: AppColors.primaryColor1,
-                                                                  fontSize: 15,
-                                                                  fontWeight: FontWeight.w500,
-                                                                  fontFamily: AppStrings.appFont
-                                                              ),
-                                                            ),
 
+                                                        CircleAvatar(
+                                                          backgroundImage:NetworkImage('${AppCubit.get(context).cheering[0].userImage}'),
+                                                          radius: 18,
+                                                        ),
+                                                        const SizedBox(width: 10,),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            Row(
+                                                              children: [
+                                                                Text('${AppCubit.get(context).cheering[0].username}',
+                                                                  style: TextStyle(
+                                                                      color: AppColors.primaryColor1,
+                                                                      fontSize: 15,
+                                                                      fontWeight: FontWeight.w500,
+                                                                      fontFamily: AppStrings.appFont
+                                                                  ),
+                                                                ),
+
+                                                              ],
+                                                            ),
                                                           ],
                                                         ),
+
                                                       ],
                                                     ),
-
+                                                    const SizedBox(height: 5,),
+                                                    Text('${AppCubit.get(context).cheering[0].text}',
+                                                      style: TextStyle(
+                                                          color: AppColors.primaryColor1,
+                                                          fontSize: 18,
+                                                          fontWeight: FontWeight.w500,
+                                                          fontFamily: AppStrings.appFont
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 10,),
                                                   ],
                                                 ),
-                                                const SizedBox(height: 5,),
-                                                Text('${AppCubit.get(context).cheering[0].text}',
-                                                  style: TextStyle(
-                                                      color: AppColors.primaryColor1,
-                                                      fontSize: 18,
-                                                      fontWeight: FontWeight.w500,
-                                                      fontFamily: AppStrings.appFont
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 10,),
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                        separatorBuilder: (context,index){
-                                          return const SizedBox(height: 0,);
-                                        },
-                                        itemCount: 1
-                                    )
-                                  ),
-                                  Positioned(
-                                    bottom: 15,
-                                    right: 5,
-                                    child: CircularCountDownTimer(
-                                      duration: 15,
-                                      initialDuration: 0,
-                                      controller: CountDownController(),
-                                      width: MediaQuery.of(context).size.width*.10,
-                                      height: MediaQuery.of(context).size.height*.03,
-                                      ringColor: Colors.grey[300]!,
-                                      ringGradient: null,
-                                      fillColor: AppColors.myGrey,
-                                      fillGradient: null,
-                                      backgroundColor: AppColors.primaryColor1,
-                                      backgroundGradient: null,
-                                      strokeWidth: 20.0,
-                                      strokeCap: StrokeCap.round,
-                                      textStyle: const TextStyle(
-                                          fontSize: 15.0,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold
-                                      ),
-                                      textFormat: CountdownTextFormat.S,
-                                      isReverse: true,
-                                      isReverseAnimation: true,
-                                      isTimerTextShown: true,
-                                      autoStart: true,
-                                      onStart: () {
-                                        debugPrint('Countdown Started');
-                                      },
-                                      onComplete: () {
-                                        debugPrint('Countdown Ended');
-                                        setState(() {
-
-                                          AppCubit.get(context).isWaiting=false;
-                                          AppCubit.get(context).updateWaitingCheering();
-                                          AppCubit.get(context).isLast=false;
-                                          print(AppCubit.get(context).isLast);
-                                          AppCubit.get(context).deleteCheeringPost();
-
-
-                                        });
-                                      },
-                                      onChange: (String timeStamp) {
-                                        debugPrint('Countdown Changed $timeStamp');
-                                      },
-                                    ),
-                                  ),
-
-
-                                ],
-                              ),
-                            )
-                              :Container(),
-                          Expanded(
-                            child: Container(
-                              height:MediaQuery.of(context).size.height*.83,
-                              color: Colors.white,
-                              padding: const EdgeInsets.all(10),
-                              child: ListView.separated(
-                                  controller: scrollController,
-                                  physics: const BouncingScrollPhysics(),
-                                  itemBuilder: (context , index)
-                                  {
-                                    var teamChat =AppCubit.get(context).teamChat[index];
-                                    if(AppCubit.get(context).userModel!.uId == teamChat.senderId)
-                                      //send message
-                                      return SenderTeamChatWidget(index: index);
-                                    //receive message
-                                    return MyMessageTeamChatWidget(index: index,);
-                                  },
-                                  separatorBuilder: (context , index)=>const SizedBox(height: 15,),
-                                  itemCount: AppCubit.get(context).teamChat.length)
-                              ,
-                            ),
-                          ),
-
-                          recording==true?
-                          Container(
-                            width: double.infinity,
-                            height: 100,
-                            decoration: BoxDecoration(
-                                color: AppColors.primaryColor1
-                            ),
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 5,),
-                                Text(statusText,style: const TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: AppStrings.appFont,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500
-                                ),),
-                                SizedBox(height: 10,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 20,
-                                      backgroundColor: AppColors.myWhite,
-                                      child:IconButton(
-                                          onPressed: (){
-                                            setState(() {
-                                              recording=false;
-                                            });
-                                            // pauseRecord();
-                                          },
-                                          icon:Icon(
-                                            Icons.delete,
-                                            color: AppColors.primaryColor1,
-                                            size: 20,
-                                          )
-                                      ),
-                                    ),
-                                    CircleAvatar(
-                                      radius: 20,
-                                      backgroundColor: AppColors.myWhite,
-                                      child:IconButton(
-                                          onPressed: (){
-                                            pauseRecord();
-                                          },
-                                          icon:   RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
-                                            Icons.radio_button_unchecked_rounded,
-                                            color: AppColors.primaryColor1,
-                                            size: 20,
-                                          ):Icon(
-                                            Icons.pause,
-                                            color: AppColors.primaryColor1,
-                                            size: 20,
-                                          )
-                                      ),
-                                    ),
-                                    CircleAvatar(
-                                      radius: 20,
-                                      backgroundColor: AppColors.myWhite,
-                                      child:  IconButton(
-                                          onPressed: (){
-                                            setState(() {
-                                              recording=false;
-                                              AppCubit.get(context).isSend=true;
-                                            });
-                                            stopRecord();
-                                            scrollController.animateTo(
-                                              scrollController.position.maxScrollExtent,
-                                              duration: const Duration(milliseconds: 300),
-                                              curve: Curves.easeOut,
-                                            );
-                                            // toogleRecord();
-                                          },
-                                          icon:  Icon(
-                                            Icons.send,
-                                            color: AppColors.primaryColor1,
-                                            size: 20,
-                                          )
-                                      ),
-                                    ),
-
-                                  ],
-                                )
-                              ],
-                            ) ,
-                          ):
-                          Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width*.70,
-                                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color:AppColors.primaryColor1,
-                                          width: 1
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Padding(
-                                        padding:  EdgeInsets.only(left: 8),
-                                        child: TextFormField(
-                                          onChanged: (v){
-                                            setState((){
-                                              isWriting=true;
-                                            });
-                                          },
-                                          keyboardType: TextInputType.multiline,
-                                          maxLines: null,
-                                          controller: textMessage,
-                                          decoration:  const InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: 'Write your message...',
-
-                                          ),
+                                              );
+                                            },
+                                            separatorBuilder: (context,index){
+                                              return const SizedBox(height: 0,);
+                                            },
+                                            itemCount: 1
                                         )
                                     ),
-                                  ),
-                                  const SizedBox(width: 5,),
-                                  Container(
-                                      width:35,
-                                      height: 35,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(50),
-                                          color: AppColors.primaryColor1
-                                      ),
-                                      child: Center(
-                                        child: IconButton(
-                                            onPressed: (){
-                                              HapticFeedback.vibrate();
-                                              textMessage.text==""
-                                                  ?{
-                                                recording?stopRecord():startRecord(),
-                                                AppCubit.get(context).getTeamChat(widget.countryName)
-                                              }
-                                                  :AppCubit.get(context).sendTeamChat(
-                                                  countryName: widget.countryName,
-                                                  dateTime: DateTime.now().toString(),
-                                                  text: textMessage.text);
-                                              textMessage.clear();
-                                            },
-                                            color: AppColors.primaryColor1,
-                                            icon: AppCubit.get(context).isSend? const CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?const Icon(Icons.mic,color: Colors.white,size: 18):const Icon(Icons.send,color: Colors.white,size: 18)
+                                    Positioned(
+                                      bottom: 15,
+                                      right: 5,
+                                      child: CircularCountDownTimer(
+                                        duration: 15,
+                                        initialDuration: 0,
+                                        controller: CountDownController(),
+                                        width: MediaQuery.of(context).size.width*.10,
+                                        height: MediaQuery.of(context).size.height*.03,
+                                        ringColor: Colors.grey[300]!,
+                                        ringGradient: null,
+                                        fillColor: AppColors.myGrey,
+                                        fillGradient: null,
+                                        backgroundColor: AppColors.primaryColor1,
+                                        backgroundGradient: null,
+                                        strokeWidth: 20.0,
+                                        strokeCap: StrokeCap.round,
+                                        textStyle: const TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold
                                         ),
-                                      )
-                                  ),
-                                  const SizedBox(width: 5,),
-                                  // Container(
-                                  //     width: 35,
-                                  //     height: 35,
-                                  //     decoration: BoxDecoration(
-                                  //         borderRadius: BorderRadius.circular(50),
-                                  //         color: AppColors.primaryColor1
-                                  //     ),
-                                  //     child: Center(
-                                  //       child: IconButton(
-                                  //         onPressed: (){
-                                  //           Scaffold.of(context).showBottomSheet((context) => Container(
-                                  //             color: AppColors.primaryColor1,
-                                  //
-                                  //             width: MediaQuery.of(context).size.width,
-                                  //             height: MediaQuery.of(context).size.height*.12,
-                                  //
-                                  //             child: Padding(
-                                  //               padding: const EdgeInsets.all(8.0),
-                                  //               child: Column(
-                                  //                 crossAxisAlignment: CrossAxisAlignment.start,
-                                  //                 children: [
-                                  //                   GestureDetector(
-                                  //                     onTap: (){
-                                  //                       AppCubit.get(context).pickPostImage();
-                                  //                     },
-                                  //                     child: Row(
-                                  //                       children: [
-                                  //                         const SizedBox(width: 10,),
-                                  //                         Icon(
-                                  //                           Icons.image,
-                                  //                           color: AppColors.myWhite,
-                                  //                         ),
-                                  //                         const SizedBox(width: 10,),
-                                  //                         const Text('Image',style: TextStyle(
-                                  //                             color: Colors.white,
-                                  //                             fontFamily: AppStrings.appFont,
-                                  //                             fontSize: 18,
-                                  //                             fontWeight: FontWeight.w500
-                                  //                         ),),
-                                  //                       ],
-                                  //                     ),
-                                  //                   ),
-                                  //                   const SizedBox(height: 15,),
-                                  //                   GestureDetector(
-                                  //                     onTap: (){
-                                  //                       AppCubit.get(context).pickPostVideo5();
-                                  //
-                                  //                     },
-                                  //                     child: Row(
-                                  //                       children: [
-                                  //                         const SizedBox(width: 10,),
-                                  //                         Icon(
-                                  //                           Icons.video_collection,
-                                  //                           color: AppColors.myWhite,
-                                  //                         ),
-                                  //                         const SizedBox(width: 10,),
-                                  //                         const Text('Video',style: TextStyle(
-                                  //                             color: Colors.white,
-                                  //                             fontFamily: AppStrings.appFont,
-                                  //                             fontSize: 18,
-                                  //                             fontWeight: FontWeight.w500
-                                  //                         ),),
-                                  //                       ],
-                                  //                     ),
-                                  //                   ),
-                                  //                 ],
-                                  //               ),
-                                  //             ),
-                                  //
-                                  //           ));
-                                  //
-                                  //         },
-                                  //         color: AppColors.primaryColor1,
-                                  //         icon: const ImageIcon(
-                                  //           AssetImage("assets/images/fanarea.png"),
-                                  //           color:Colors.white,
-                                  //           size: 15,
-                                  //         ),
-                                  //       ),
-                                  //     )
-                                  // ),
-                                ],
-                              )
-                          ),
+                                        textFormat: CountdownTextFormat.S,
+                                        isReverse: true,
+                                        isReverseAnimation: true,
+                                        isTimerTextShown: true,
+                                        autoStart: true,
+                                        onStart: () {
+                                          debugPrint('Countdown Started');
+                                        },
+                                        onComplete: () {
+                                          debugPrint('Countdown Ended');
+                                          setState(() {
 
-                        ],
-                      ),
-                      condition:AppCubit.get(context).teamChat.length >=0 ,
-                      fallback:(context)=>const Center(child: CircularProgressIndicator()) ,
+                                            AppCubit.get(context).isWaiting=false;
+                                            AppCubit.get(context).updateWaitingCheering();
+                                            AppCubit.get(context).isLast=false;
+                                            print(AppCubit.get(context).isLast);
+                                            AppCubit.get(context).deleteCheeringPost();
+
+
+                                          });
+                                        },
+                                        onChange: (String timeStamp) {
+                                          debugPrint('Countdown Changed $timeStamp');
+                                        },
+                                      ),
+                                    ),
+
+
+                                  ],
+                                ),
+                              )
+                                  :Container(),
+                              Expanded(
+                                child: Container(
+                                  height:MediaQuery.of(context).size.height*.83,
+                                  padding: const EdgeInsets.all(10),
+                                  child: ListView.separated(
+                                      controller: scrollController,
+                                      physics: const BouncingScrollPhysics(),
+                                      itemBuilder: (context , index)
+                                      {
+                                        var teamChat =AppCubit.get(context).teamChat[index];
+                                        if(AppCubit.get(context).userModel!.uId == teamChat.senderId)
+                                          //send message
+                                          return SenderTeamChatWidget(index: index);
+                                        //receive message
+                                        return MyMessageTeamChatWidget(index: index,);
+                                      },
+                                      separatorBuilder: (context , index)=>const SizedBox(height: 15,),
+                                      itemCount: AppCubit.get(context).teamChat.length)
+                                  ,
+                                ),
+                              ),
+
+                              recording==true?
+                              Container(
+                                width: double.infinity,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                    color: AppColors.primaryColor1
+                                ),
+                                child: Column(
+                                  children: [
+                                    const SizedBox(height: 5,),
+                                    Text(statusText,style: const TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: AppStrings.appFont,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500
+                                    ),),
+                                    SizedBox(height: 10,),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 20,
+                                          backgroundColor: AppColors.myWhite,
+                                          child:IconButton(
+                                              onPressed: (){
+                                                setState(() {
+                                                  recording=false;
+                                                });
+                                                // pauseRecord();
+                                              },
+                                              icon:Icon(
+                                                Icons.delete,
+                                                color: AppColors.primaryColor1,
+                                                size: 20,
+                                              )
+                                          ),
+                                        ),
+                                        CircleAvatar(
+                                          radius: 20,
+                                          backgroundColor: AppColors.myWhite,
+                                          child:IconButton(
+                                              onPressed: (){
+                                                pauseRecord();
+                                              },
+                                              icon:   RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
+                                                Icons.radio_button_unchecked_rounded,
+                                                color: AppColors.primaryColor1,
+                                                size: 20,
+                                              ):Icon(
+                                                Icons.pause,
+                                                color: AppColors.primaryColor1,
+                                                size: 20,
+                                              )
+                                          ),
+                                        ),
+                                        CircleAvatar(
+                                          radius: 20,
+                                          backgroundColor: AppColors.myWhite,
+                                          child:  IconButton(
+                                              onPressed: (){
+                                                setState(() {
+                                                  recording=false;
+                                                  AppCubit.get(context).isSend=true;
+                                                });
+                                                stopRecord();
+                                                scrollController.animateTo(
+                                                  scrollController.position.maxScrollExtent,
+                                                  duration: const Duration(milliseconds: 300),
+                                                  curve: Curves.easeOut,
+                                                );
+                                                // toogleRecord();
+                                              },
+                                              icon:  Icon(
+                                                Icons.send,
+                                                color: AppColors.primaryColor1,
+                                                size: 20,
+                                              )
+                                          ),
+                                        ),
+
+                                      ],
+                                    )
+                                  ],
+                                ) ,
+                              ):
+                              Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: MediaQuery.of(context).size.width*.70,
+                                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color:AppColors.primaryColor1,
+                                              width: 1
+                                          ),
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        child: Padding(
+                                            padding:  EdgeInsets.only(left: 8),
+                                            child: TextFormField(
+                                              onChanged: (v){
+                                                setState((){
+                                                  isWriting=true;
+                                                });
+                                              },
+                                              keyboardType: TextInputType.multiline,
+                                              maxLines: null,
+                                              controller: textMessage,
+                                              decoration:  const InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: 'Write your message...',
+
+                                              ),
+                                            )
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5,),
+                                      Container(
+                                          width:35,
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: AppColors.primaryColor1
+                                          ),
+                                          child: Center(
+                                            child: IconButton(
+                                                onPressed: (){
+                                                  HapticFeedback.vibrate();
+                                                  textMessage.text==""
+                                                      ?{
+                                                    recording?stopRecord():startRecord(),
+                                                    AppCubit.get(context).getTeamChat(widget.countryName)
+                                                  }
+                                                      :AppCubit.get(context).sendTeamChat(
+                                                      countryName: widget.countryName,
+                                                      dateTime: DateTime.now().toString(),
+                                                      text: textMessage.text);
+                                                  textMessage.clear();
+                                                },
+                                                color: AppColors.primaryColor1,
+                                                icon: AppCubit.get(context).isSend? const CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?const Icon(Icons.mic,color: Colors.white,size: 18):const Icon(Icons.send,color: Colors.white,size: 18)
+                                            ),
+                                          )
+                                      ),
+                                      const SizedBox(width: 5,),
+                                      // Container(
+                                      //     width: 35,
+                                      //     height: 35,
+                                      //     decoration: BoxDecoration(
+                                      //         borderRadius: BorderRadius.circular(50),
+                                      //         color: AppColors.primaryColor1
+                                      //     ),
+                                      //     child: Center(
+                                      //       child: IconButton(
+                                      //         onPressed: (){
+                                      //           Scaffold.of(context).showBottomSheet((context) => Container(
+                                      //             color: AppColors.primaryColor1,
+                                      //
+                                      //             width: MediaQuery.of(context).size.width,
+                                      //             height: MediaQuery.of(context).size.height*.12,
+                                      //
+                                      //             child: Padding(
+                                      //               padding: const EdgeInsets.all(8.0),
+                                      //               child: Column(
+                                      //                 crossAxisAlignment: CrossAxisAlignment.start,
+                                      //                 children: [
+                                      //                   GestureDetector(
+                                      //                     onTap: (){
+                                      //                       AppCubit.get(context).pickPostImage();
+                                      //                     },
+                                      //                     child: Row(
+                                      //                       children: [
+                                      //                         const SizedBox(width: 10,),
+                                      //                         Icon(
+                                      //                           Icons.image,
+                                      //                           color: AppColors.myWhite,
+                                      //                         ),
+                                      //                         const SizedBox(width: 10,),
+                                      //                         const Text('Image',style: TextStyle(
+                                      //                             color: Colors.white,
+                                      //                             fontFamily: AppStrings.appFont,
+                                      //                             fontSize: 18,
+                                      //                             fontWeight: FontWeight.w500
+                                      //                         ),),
+                                      //                       ],
+                                      //                     ),
+                                      //                   ),
+                                      //                   const SizedBox(height: 15,),
+                                      //                   GestureDetector(
+                                      //                     onTap: (){
+                                      //                       AppCubit.get(context).pickPostVideo5();
+                                      //
+                                      //                     },
+                                      //                     child: Row(
+                                      //                       children: [
+                                      //                         const SizedBox(width: 10,),
+                                      //                         Icon(
+                                      //                           Icons.video_collection,
+                                      //                           color: AppColors.myWhite,
+                                      //                         ),
+                                      //                         const SizedBox(width: 10,),
+                                      //                         const Text('Video',style: TextStyle(
+                                      //                             color: Colors.white,
+                                      //                             fontFamily: AppStrings.appFont,
+                                      //                             fontSize: 18,
+                                      //                             fontWeight: FontWeight.w500
+                                      //                         ),),
+                                      //                       ],
+                                      //                     ),
+                                      //                   ),
+                                      //                 ],
+                                      //               ),
+                                      //             ),
+                                      //
+                                      //           ));
+                                      //
+                                      //         },
+                                      //         color: AppColors.primaryColor1,
+                                      //         icon: const ImageIcon(
+                                      //           AssetImage("assets/images/fanarea.png"),
+                                      //           color:Colors.white,
+                                      //           size: 15,
+                                      //         ),
+                                      //       ),
+                                      //     )
+                                      // ),
+                                    ],
+                                  )
+                              ),
+
+                            ],
+                          ),
+                          condition:AppCubit.get(context).teamChat.length >=0 ,
+                          fallback:(context)=>const Center(child: CircularProgressIndicator()) ,
+                        ),
+                      ],
                     ),
                     floatingActionButton: Padding(
                       padding: const EdgeInsets.only(bottom:0,left:5),

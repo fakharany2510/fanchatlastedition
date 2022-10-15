@@ -143,7 +143,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                         const SizedBox(height: 5,),
                         Material(
                           shadowColor: AppColors.myGrey,
-                          elevation: 100,
+                          elevation: 0,
                           clipBehavior: Clip.antiAliasWithSaveLayer,
 
                           shape: RoundedRectangleBorder(
