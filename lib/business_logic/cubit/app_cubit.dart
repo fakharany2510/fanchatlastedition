@@ -106,6 +106,9 @@ class AppCubit extends Cubit<AppState> {
     if(currentIndex==2){
      // getFanPosts();
     }
+    if(currentIndex==0){
+      getPosts();
+    }
     emit(NavigateScreenState());
   }
 
@@ -774,9 +777,10 @@ class AppCubit extends Cubit<AppState> {
   //get Posts
     List<BrowisePostModel> posts=[];
   List<String> postsId=[];
+  List<String> myPostsId=[];
   List<int> likes=[];
 
-  void getPosts(){
+  Future<void> getPosts()async{
     posts=[];
     postsId=[];
     likes=[];
@@ -788,12 +792,30 @@ class AppCubit extends Cubit<AppState> {
         .then((value) {
       value.docs.forEach((element) async{
         posts.add(BrowisePostModel.fromJson(element.data()));
+        if(userModel!.uId== BrowisePostModel.fromJson(element.data()).userId ){
+          myPostsId.add(BrowisePostModel.fromJson(element.data()).postId!);
+        }
         emit(BrowiseGetPostsSuccessState());
 
       });
+
+      for (var element in myPostsId) {
+
+        FirebaseFirestore.instance.collection('posts').doc(element).update(
+          {
+            'image':userModel!.image,
+            'name':userModel!.username
+          }
+        ).then((value) {
+
+           print('finish Update Posts');
+          emit(BrowiseGetPostsSuccessState());
+        });
+        emit(BrowiseGetPostsSuccessState());
+      }
+
     }
-    )
-        .catchError((error){
+    ).catchError((error){
       emit(BrowiseGetPostsErrorState());
       print('error while getting posts ${error.toString()}');
     });

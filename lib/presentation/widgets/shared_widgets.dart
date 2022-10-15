@@ -155,6 +155,7 @@ customAppbar(String title,context){
     title: GestureDetector(
       onTap: (){
         AppCubit.get(context).currentIndex=0;
+        AppCubit.get(context).getPosts();
         Navigator.push(context, MaterialPageRoute(builder: (_){
           return HomeLayout();
         }));

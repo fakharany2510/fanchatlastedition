@@ -352,10 +352,13 @@ class EditProfileScreen extends StatelessWidget {
 
                           ).then((value) {
                             cubit.getUser();
-                            Navigator.pop(context);
-                            customToast(title: 'Data Updated', color: AppColors.primaryColor1);
+                            cubit.getPosts().then((value) {
+                              Navigator.pop(context);
+                              customToast(title: 'Data Updated', color: AppColors.primaryColor1);
 
-                          });
+                            });
+                            });
+
                           printMessage(cubit.changeUserNameController.text);
                           // Navigator.pushNamed(context, 'edit_profile');
                         }),
