@@ -170,8 +170,8 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
                         ),
                       ),
                       Positioned(
-                          top: 10,
-                          right: 10,
+                          top: 7,
+                          right: 5,
                           child: InkWell(
                             onTap: (){
                               setState((){
@@ -182,12 +182,12 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
                                 }
                               });
                             },
-                            child: fanVideoPlayerController!.value.isPlaying?  CircleAvatar(radius: 15, child: Icon(Icons.pause,color: AppColors.myWhite,size: 15,),backgroundColor: Colors.blue.withOpacity(.6)): CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: AppColors.myWhite,size: 15,),backgroundColor: Colors.blue.withOpacity(.6)),
+                            child: fanVideoPlayerController!.value.isPlaying?  Material(elevation: 20,color: Colors.transparent,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),child: CircleAvatar(radius: 15, child: Icon(Icons.pause,color: Colors.white,size: 15,),backgroundColor: Colors.white.withOpacity(.4))): Material(elevation: 20,color:Colors.transparent,shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(20) ),child: CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: Colors.white,size: 15,),backgroundColor: Colors.white.withOpacity(.4))),
                           )
                       ),
                       Positioned(
                         bottom: 0,
-                        right: 0,
+                        right: 5,
                         child: Row(
                           children: [
                             Text('${AppCubit.get(context).fans[widget.index!].likes}',

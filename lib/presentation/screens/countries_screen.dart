@@ -46,7 +46,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
       child: Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 10,right: 10),
+          padding: const EdgeInsets.only(left: 10,right: 10,bottom: 5),
           child: Container(
             height: 45,
             child: Card(
@@ -115,54 +115,79 @@ class _CountriesScreenState extends State<CountriesScreen> {
                           //
                           // });
                          },
-                        child: ListTile(
-                          title: Text(
-                            data['name'],
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontFamily: AppStrings.appFont,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left:13,right: 13,bottom: 5),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width*.5,
+                            height: MediaQuery.of(context).size.height*.08,
+                            decoration: BoxDecoration(
+                              color: AppColors.myGrey.withOpacity(.3)
+                            ),
+                            child: Center(
+                              child: ListTile(
+                                title: Text(
+                                  data['name'],
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: AppStrings.appFont,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
 
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(data['image']),
+                                leading: CircleAvatar(
+                                  backgroundImage: NetworkImage(data['image']),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                        )
                       );
                     }
                     if (data['name']
                         .toString()
                         .toLowerCase()
                         .startsWith(name.toLowerCase())) {
-                      return InkWell(
-                        onTap: (){
-                          // CashHelper.saveData(key: 'country',value:data['name'] ).then((value){
-                          //   //AppCubit.get(context).getTeamChat(data['name']);
-                          //
-                          // });
-                          AppCubit.get(context).isLast=true;
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                              TeamChatScreen(countryName:data['name'],countryImage: data['image'],)
-                          ));
-                        },
-                        child: ListTile(
-                          title: Text(
-                            data['name'],
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontFamily: AppStrings.appFont,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(data['image']),
-                          ),
-                        ),
+                      return  InkWell(
+                          onTap: (){
+                            // CashHelper.saveData(key: 'country',value:data['name'] ).then((value){
+                            //   //AppCubit.get(context).getTeamChat(data['name']);
+                            //
+                            // });
+                            AppCubit.get(context).isLast=true;
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                TeamChatScreen(countryName:data['name'],countryImage: data['image'],)
+                            ));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(left:13,right: 13,bottom: 5),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width*.5,
+                              height: MediaQuery.of(context).size.height*.08,
+                              decoration: BoxDecoration(
+                                  color: AppColors.myGrey.withOpacity(.3)
+                              ),
+                              child: Center(
+                                child: ListTile(
+                                  title: Text(
+                                    data['name'],
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontFamily: AppStrings.appFont,
+                                        fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                  leading: CircleAvatar(
+                                    backgroundImage: NetworkImage(data['image']),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
                       );
                     }
                     return Container();
