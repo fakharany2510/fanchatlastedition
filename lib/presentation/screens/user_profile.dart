@@ -1,6 +1,6 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/presentation/screens/another_match_details.dart';
-import 'package:fanchat/presentation/widgets/profile_area_widget.dart';
+import 'package:fanchat/presentation/widgets/user_profile_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -69,7 +69,7 @@ class UserProfile extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          right: 100,
+                          right: MediaQuery.of(context).size.height*.16,
                           child: GestureDetector(
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (_){
@@ -77,11 +77,11 @@ class UserProfile extends StatelessWidget {
                               }));
                             },
                             child: CircleAvatar(
-                              radius: 19,
+                              radius: 16,
                               backgroundColor: AppColors.myWhite,
 
                               child: CircleAvatar(
-                                radius: 18,
+                                radius: 15,
                                 backgroundColor: AppColors.primaryColor1,
                                 child: Icon(
                                   Icons.message,
@@ -167,7 +167,7 @@ class UserProfile extends StatelessWidget {
                 ),
                 const SizedBox(width: 10,),
                 Padding(
-                  padding: const EdgeInsets.only(top: 25),
+                  padding: const EdgeInsets.only(top: 15),
                   child: Stack(
                     children: [
                       GridView.count(
@@ -178,7 +178,7 @@ class UserProfile extends StatelessWidget {
                         mainAxisSpacing: 2,
                         crossAxisCount: 3,
                         children: List.generate(
-                            AppCubit.get(context).profileImages.length, (index) => ProfileAreaWidget(index: index,)),
+                            AppCubit.get(context).userProfileImages.length, (index) => UserProfileAreaWidget(index: index,)),
                       ),
                     ],
                   ),

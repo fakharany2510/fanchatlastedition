@@ -57,9 +57,9 @@ class FanScreen extends StatelessWidget {
                   //   )
                   // ),
                   GridView.count(
-                    childAspectRatio: 1/1.3,
-                    crossAxisSpacing: 2,
-                    mainAxisSpacing: 0,
+                    childAspectRatio: 1/1.15,
+                    crossAxisSpacing: MediaQuery.of(context).size.height*.008,
+                    mainAxisSpacing: MediaQuery.of(context).size.height*.00,
                     crossAxisCount: 3,
                     children: List.generate(
                         AppCubit.get(context).fans.length, (index) => FanAreaWidget(index: index,)),

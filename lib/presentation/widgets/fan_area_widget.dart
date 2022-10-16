@@ -68,15 +68,15 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
               height: MediaQuery.of(context).size.height*.18,
             fit: BoxFit.fill,
           ),
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: IconButton(
-                            onPressed: (){
-                            },
-                            icon:Icon(Icons.image,color: AppColors.myWhite,)
-                        ),
-                      ),
+                      // Positioned(
+                      //   top: 0,
+                      //   right: 0,
+                      //   child: IconButton(
+                      //       onPressed: (){
+                      //       },
+                      //       icon:Icon(Icons.image,color: AppColors.myWhite,)
+                      //   ),
+                      // ),
                       Positioned(
                         bottom: 0,
                         right: 0,
@@ -182,7 +182,7 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
                                 }
                               });
                             },
-                            child: fanVideoPlayerController!.value.isPlaying?  CircleAvatar(radius: 15, child: Icon(Icons.pause,color: AppColors.myWhite,size: 15,)): CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: AppColors.myWhite,size: 15,)),
+                            child: fanVideoPlayerController!.value.isPlaying?  CircleAvatar(radius: 15, child: Icon(Icons.pause,color: AppColors.myWhite,size: 15,),backgroundColor: Colors.blue.withOpacity(.6)): CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: AppColors.myWhite,size: 15,),backgroundColor: Colors.blue.withOpacity(.6)),
                           )
                       ),
                       Positioned(

@@ -198,9 +198,8 @@ class ProfileScreen extends StatelessWidget {
                       const SizedBox(width: 15,)
                     ],
                   ),
-                  SizedBox(height:10,),
                   Padding(
-                    padding: const EdgeInsets.only(top: 5),
+                    padding: const EdgeInsets.only(top: 0),
                     child: Stack(
                       children: [
                         GridView.count(

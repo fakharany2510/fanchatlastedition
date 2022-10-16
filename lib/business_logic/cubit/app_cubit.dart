@@ -2818,6 +2818,8 @@ List<int> commentIndex=[];
     );
 
     FirebaseFirestore.instance
+        .collection('users')
+        .doc('${AppStrings.uId}')
         .collection('profileImages')
         .add(model.toMap())
         .then((value){
@@ -2994,12 +2996,47 @@ List<int> commentIndex=[];
     likes=[];
     emit(BrowiseGetProfilePostsLoadingState());
     FirebaseFirestore.instance
+         .collection('users')
+         .doc('${AppStrings.uId}')
         .collection('profileImages')
         .orderBy('timeSmap',descending: true)
         .get()
         .then((value) {
       value.docs.forEach((element) async{
         profileImages.add(ProfileModel.fromJson(element.data()));
+        // Delete a record
+        // await database?.rawDelete('DELETE * FROM Posts');
+        emit(BrowiseGetProfilePostsSuccessState());
+
+      });
+    }
+    )
+        .catchError((error){
+      emit(BrowiseGetFanPostsErrorState());
+      print('error while getting profile posts ${error.toString()}');
+    });
+  }
+
+
+  // get user posts
+
+  List<ProfileModel> userProfileImages=[];
+  Future<void> getUserProfilePosts({
+    required String id,
+   })async{
+    userProfileImages=[];
+    postsId=[];
+    likes=[];
+    emit(BrowiseGetProfilePostsLoadingState());
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc('${id}')
+        .collection('profileImages')
+        .orderBy('timeSmap',descending: true)
+        .get()
+        .then((value) {
+      value.docs.forEach((element) async{
+        userProfileImages.add(ProfileModel.fromJson(element.data()));
         // Delete a record
         // await database?.rawDelete('DELETE * FROM Posts');
         emit(BrowiseGetProfilePostsSuccessState());

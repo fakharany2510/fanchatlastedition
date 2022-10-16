@@ -13,22 +13,22 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 
-class ProfileAreaWidget extends StatefulWidget {
+class UserProfileAreaWidget extends StatefulWidget {
   int? index;
-  ProfileAreaWidget({Key? key, this.index}) : super(key: key);
+  UserProfileAreaWidget({Key? key, this.index}) : super(key: key);
 
   @override
-  State<ProfileAreaWidget> createState() => _ProfileAreaWidgetState();
+  State<UserProfileAreaWidget> createState() => _UserProfileAreaWidgetState();
 }
 
-class _ProfileAreaWidgetState extends State<ProfileAreaWidget> {
+class _UserProfileAreaWidgetState extends State<UserProfileAreaWidget> {
   VideoPlayerController ?videoPlayerController;
   Future <void> ?intilize;
 
   @override
   void initState() {
     videoPlayerController=VideoPlayerController.network(
-        AppCubit.get(context).profileImages[widget.index!].postVideo!
+        AppCubit.get(context).userProfileImages[widget.index!].postVideo!
     );
     intilize=videoPlayerController!.initialize();
     videoPlayerController!.setLooping(true);
@@ -42,14 +42,14 @@ class _ProfileAreaWidgetState extends State<ProfileAreaWidget> {
             children: [
               InkWell(
                   onTap: (){
-                    // (AppCubit.get(context).profileImages[widget.index!].postImage!="")?
+                    // (AppCubit.get(context).userProfileImages[widget.index!].postImage!="")?
                     // Navigator.push(context, MaterialPageRoute(builder: (_){
-                    //   return FanFullPost(image: '${AppCubit.get(context).profileImages[widget.index!].postImage}',userImage: '${AppCubit.get(context).profileImages[widget.index!].image}',userName: '${AppCubit.get(context).profileImages[widget.index!].name}',);
+                    //   return FanFullPost(image: '${AppCubit.get(context).userProfileImages[widget.index!].postImage}',userImage: '${AppCubit.get(context).profileImages[widget.index!].image}',userName: '${AppCubit.get(context).profileImages[widget.index!].name}',);
                     // })):Navigator.push(context, MaterialPageRoute(builder: (_){
-                    //   return FanFullVideo(video: '${AppCubit.get(context).profileImages[widget.index!].postVideo}',userImage: '${AppCubit.get(context).profileImages[widget.index!].image}',userName: '${AppCubit.get(context).profileImages[widget.index!].name}',);
+                    //   return FanFullVideo(video: '${AppCubit.get(context).userProfileImages[widget.index!].postVideo}',userImage: '${AppCubit.get(context).profileImages[widget.index!].image}',userName: '${AppCubit.get(context).profileImages[widget.index!].name}',);
                     // }));
                   },
-                  child: (AppCubit.get(context).profileImages[widget.index!].postImage!="")
+                  child: (AppCubit.get(context).userProfileImages[widget.index!].postImage!="")
                       ?Stack(
                     children: [
                       // Image(
@@ -60,7 +60,7 @@ class _ProfileAreaWidgetState extends State<ProfileAreaWidget> {
                       // ),
                       CachedNetworkImage(
                         cacheManager: AppCubit.get(context).manager,
-                        imageUrl: "${AppCubit.get(context).profileImages[widget.index!].postImage}",
+                        imageUrl: "${AppCubit.get(context).userProfileImages[widget.index!].postImage}",
                         placeholder: (context, url) => Center(child: CircularProgressIndicator()),
                         // maxHeightDiskCache:75,
                         width: 200,
@@ -81,7 +81,7 @@ class _ProfileAreaWidgetState extends State<ProfileAreaWidget> {
                       //   right: 0,
                       //   child: Row(
                       //     children: [
-                      //       Text('${AppCubit.get(context).profileImages[widget.index!].likes}',
+                      //       Text('${AppCubit.get(context).userProfileImages[widget.index!].likes}',
                       //         style: TextStyle(
                       //             color: AppColors.myWhite,
                       //             fontSize: 13,
@@ -92,22 +92,22 @@ class _ProfileAreaWidgetState extends State<ProfileAreaWidget> {
                       //           padding:EdgeInsets.zero,
                       //           constraints: BoxConstraints(),
                       //           onPressed:(){
-                      //             AppCubit.get(context).likePosts('${AppCubit.get(context).profileImages[widget.index!].postId}',AppCubit.get(context).profileImages[widget.index!].likes!);
+                      //             AppCubit.get(context).likePosts('${AppCubit.get(context).userProfileImages[widget.index!].postId}',AppCubit.get(context).profileImages[widget.index!].likes!);
                       //
-                      //             if(CashHelper.getData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}')==null || CashHelper.getData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}')==false){
+                      //             if(CashHelper.getData(key: '${AppCubit.get(context).userProfileImages[widget.index!].postId}')==null || CashHelper.getData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}')==false){
                       //               setState(() {
-                      //                 AppCubit.get(context).profileImages[widget.index!].likes=AppCubit.get(context).profileImages[widget.index!].likes!+1;
+                      //                 AppCubit.get(context).userProfileImages[widget.index!].likes=AppCubit.get(context).profileImages[widget.index!].likes!+1;
                       //               });
                       //               AppCubit.get(context).isLikeFan[widget.index!]=true;
-                      //               CashHelper.saveData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
+                      //               CashHelper.saveData(key: '${AppCubit.get(context).userProfileImages[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
                       //               setState(() {
                       //                 FirebaseFirestore.instance
                       //                     .collection('users')
                       //                     .doc('${AppStrings.uId}')
                       //                     .collection('profileImages')
-                      //                     .doc('${AppCubit.get(context).profileImages[widget.index!].postId}')
+                      //                     .doc('${AppCubit.get(context).userProfileImages[widget.index!].postId}')
                       //                     .update({
-                      //                   'likes':AppCubit.get(context).profileImages[widget.index!].likes
+                      //                   'likes':AppCubit.get(context).userProfileImages[widget.index!].likes
                       //                 }).then((value){
                       //                   print('Siiiiiiiiiiiiiiiiiiiiiiii');
                       //
@@ -117,21 +117,21 @@ class _ProfileAreaWidgetState extends State<ProfileAreaWidget> {
                       //             }
                       //             else{
                       //               setState(() {
-                      //                 AppCubit.get(context).profileImages[widget.index!].likes=AppCubit.get(context).profileImages[widget.index!].likes!-1;
+                      //                 AppCubit.get(context).userProfileImages[widget.index!].likes=AppCubit.get(context).profileImages[widget.index!].likes!-1;
                       //
                       //               });
                       //               AppCubit.get(context).isLikeFan[widget.index!]=false;
-                      //               CashHelper.saveData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
+                      //               CashHelper.saveData(key: '${AppCubit.get(context).userProfileImages[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
                       //               setState(() {
                       //                 FirebaseFirestore.instance
                       //                     .collection('users')
                       //                     .doc('${AppStrings.uId}')
                       //                     .collection('profileImages')
-                      //                     .doc('${AppCubit.get(context).profileImages[widget.index!].postId}')
+                      //                     .doc('${AppCubit.get(context).userProfileImages[widget.index!].postId}')
                       //                     .update({
-                      //                   'likes':AppCubit.get(context).profileImages[widget.index!].likes
+                      //                   'likes':AppCubit.get(context).userProfileImages[widget.index!].likes
                       //                 }).then((value){
-                      //                   printMessage('This is right ${AppCubit.get(context).profileImages[widget.index!].likes}');
+                      //                   printMessage('This is right ${AppCubit.get(context).userProfileImages[widget.index!].likes}');
                       //                   print('Siiiiiiiiiiiiiiiiiiiiiiii');
                       //
                       //                 });
@@ -139,8 +139,8 @@ class _ProfileAreaWidgetState extends State<ProfileAreaWidget> {
                       //
                       //             }
                       //           },
-                      //           icon: CashHelper.getData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}')==null ?
-                      //           Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20):CashHelper.getData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}') ?Icon(Icons.favorite,color: Colors.red,size: 20):
+                      //           icon: CashHelper.getData(key: '${AppCubit.get(context).userProfileImages[widget.index!].postId}')==null ?
+                      //           Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20):CashHelper.getData(key: '${AppCubit.get(context).userProfileImages[widget.index!].postId}') ?Icon(Icons.favorite,color: Colors.red,size: 20):
                       //           Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20)),
                       //     ],
                       //   ),
@@ -193,67 +193,67 @@ class _ProfileAreaWidgetState extends State<ProfileAreaWidget> {
                       //   right: 0,
                       //   child: Row(
                       //     children: [
-                      //       Text('${AppCubit.get(context).profileImages[widget.index!].likes}',
+                      //       Text('${AppCubit.get(context).userProfileImages[widget.index!].likes}',
                       //         style: TextStyle(
                       //             color: AppColors.myWhite,
                       //             fontSize: 13,
                       //             fontWeight: FontWeight.w500,
                       //             fontFamily: AppStrings.appFont
                       //         ),),
-                      //       IconButton(
-                      //           padding:EdgeInsets.zero,
-                      //           constraints: BoxConstraints(),
-                      //           onPressed:(){
-                      //             AppCubit.get(context).likePosts('${AppCubit.get(context).profileImages[widget.index!].postId}',AppCubit.get(context).profileImages[widget.index!].likes!);
-                      //
-                      //             if(CashHelper.getData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}')==null || CashHelper.getData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}')==false){
-                      //               setState(() {
-                      //                 AppCubit.get(context).profileImages[widget.index!].likes=AppCubit.get(context).profileImages[widget.index!].likes!+1;
-                      //               });
-                      //               AppCubit.get(context).isLikeFan[widget.index!]=true;
-                      //               CashHelper.saveData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
-                      //               setState(() {
-                      //                 FirebaseFirestore.instance
-                      //                     .collection('users')
-                      //                     .doc('${AppStrings.uId}')
-                      //                     .collection('profileImages')
-                      //                     .doc('${AppCubit.get(context).profileImages[widget.index!].postId}')
-                      //                     .update({
-                      //                   'likes':AppCubit.get(context).profileImages[widget.index!].likes
-                      //                 }).then((value){
-                      //                   print('Siiiiiiiiiiiiiiiiiiiiiiii');
-                      //
-                      //                 });
-                      //               });
-                      //
-                      //             }
-                      //             else{
-                      //               setState(() {
-                      //                 AppCubit.get(context).profileImages[widget.index!].likes=AppCubit.get(context).profileImages[widget.index!].likes!-1;
-                      //
-                      //               });
-                      //               AppCubit.get(context).isLikeFan[widget.index!]=false;
-                      //               CashHelper.saveData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
-                      //               setState(() {
-                      //                 FirebaseFirestore.instance
-                      //                     .collection('users')
-                      //                     .doc('${AppStrings.uId}')
-                      //                     .collection('profileImages')
-                      //                     .doc('${AppCubit.get(context).profileImages[widget.index!].postId}')
-                      //                     .update({
-                      //                   'likes':AppCubit.get(context).profileImages[widget.index!].likes
-                      //                 }).then((value){
-                      //                   printMessage('This is right ${AppCubit.get(context).profileImages[widget.index!].likes}');
-                      //                   print('Siiiiiiiiiiiiiiiiiiiiiiii');
-                      //
-                      //                 });
-                      //               });
-                      //
-                      //             }
-                      //           },
-                      //           icon: CashHelper.getData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}')==null ?
-                      //           Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20):CashHelper.getData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}') ?Icon(Icons.favorite,color: Colors.red,size: 20):
-                      //           Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20)),
+                      //       // IconButton(
+                      //       //     padding:EdgeInsets.zero,
+                      //       //     constraints: BoxConstraints(),
+                      //       //     onPressed:(){
+                      //       //       AppCubit.get(context).likePosts('${AppCubit.get(context).userProfileImages[widget.index!].postId}',AppCubit.get(context).profileImages[widget.index!].likes!);
+                      //       //
+                      //       //       if(CashHelper.getData(key: '${AppCubit.get(context).userProfileImages[widget.index!].postId}')==null || CashHelper.getData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}')==false){
+                      //       //         setState(() {
+                      //       //           AppCubit.get(context).userProfileImages[widget.index!].likes=AppCubit.get(context).profileImages[widget.index!].likes!+1;
+                      //       //         });
+                      //       //         AppCubit.get(context).isLikeFan[widget.index!]=true;
+                      //       //         CashHelper.saveData(key: '${AppCubit.get(context).userProfileImages[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
+                      //       //         setState(() {
+                      //       //           FirebaseFirestore.instance
+                      //       //               .collection('users')
+                      //       //               .doc('${AppStrings.uId}')
+                      //       //               .collection('profileImages')
+                      //       //               .doc('${AppCubit.get(context).userProfileImages[widget.index!].postId}')
+                      //       //               .update({
+                      //       //             'likes':AppCubit.get(context).userProfileImages[widget.index!].likes
+                      //       //           }).then((value){
+                      //       //             print('Siiiiiiiiiiiiiiiiiiiiiiii');
+                      //       //
+                      //       //           });
+                      //       //         });
+                      //       //
+                      //       //       }
+                      //       //       else{
+                      //       //         setState(() {
+                      //       //           AppCubit.get(context).userProfileImages[widget.index!].likes=AppCubit.get(context).profileImages[widget.index!].likes!-1;
+                      //       //
+                      //       //         });
+                      //       //         AppCubit.get(context).isLikeFan[widget.index!]=false;
+                      //       //         CashHelper.saveData(key: '${AppCubit.get(context).userProfileImages[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
+                      //       //         setState(() {
+                      //       //           FirebaseFirestore.instance
+                      //       //               .collection('users')
+                      //       //               .doc('${AppStrings.uId}')
+                      //       //               .collection('profileImages')
+                      //       //               .doc('${AppCubit.get(context).userProfileImages[widget.index!].postId}')
+                      //       //               .update({
+                      //       //             'likes':AppCubit.get(context).userProfileImages[widget.index!].likes
+                      //       //           }).then((value){
+                      //       //             printMessage('This is right ${AppCubit.get(context).userProfileImages[widget.index!].likes}');
+                      //       //             print('Siiiiiiiiiiiiiiiiiiiiiiii');
+                      //       //
+                      //       //           });
+                      //       //         });
+                      //       //
+                      //       //       }
+                      //       //     },
+                      //       //     icon: CashHelper.getData(key: '${AppCubit.get(context).userProfileImages[widget.index!].postId}')==null ?
+                      //       //     Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20):CashHelper.getData(key: '${AppCubit.get(context).profileImages[widget.index!].postId}') ?Icon(Icons.favorite,color: Colors.red,size: 20):
+                      //       //     Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20)),
                       //     ],
                       //   ),
                       // ),

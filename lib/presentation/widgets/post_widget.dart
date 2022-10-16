@@ -83,14 +83,16 @@ class PostWidgetState extends State<PostWidget> {
                         AppCubit.get(context).profileId = '${AppCubit.get(context).posts[widget.index!].userId}';
                         AppCubit.get(context).getAllUsers().then((value) {
                           if(AppCubit.get(context).userModel!.uId!=AppCubit.get(context).posts[widget.index!].userId) {
-                            Navigator.push(context, MaterialPageRoute(builder: (_){
-                            return UserProfile(
-                              userId: '${AppCubit.get(context).posts[widget.index!].userId}',
-                              userImage: '${AppCubit.get(context).posts[widget.index!].image}',
-                              userName: '${AppCubit.get(context).posts[widget.index!].name}',
+                            AppCubit.get(context).getUserProfilePosts(id: '${AppCubit.get(context).posts[widget.index!].userId}').then((value) {
+                              Navigator.push(context, MaterialPageRoute(builder: (_){
+                                return UserProfile(
+                                  userId: '${AppCubit.get(context).posts[widget.index!].userId}',
+                                  userImage: '${AppCubit.get(context).posts[widget.index!].image}',
+                                  userName: '${AppCubit.get(context).posts[widget.index!].name}',
 
-                            );
-                          }));
+                                );
+                              }));
+                            });
                           }
 
                         });
@@ -109,14 +111,30 @@ class PostWidgetState extends State<PostWidget> {
                                 Row(
                                   children: [
                                     Expanded(
-                                      child: Text('${AppCubit.get(context).posts[widget.index!].name}',
-                                        overflow: TextOverflow.ellipsis,
-                                        style:  TextStyle(
-                                            color: AppColors.myWhite,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: AppStrings.appFont
-                                        ),
+                                      child: Column(
+
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                                        children: [
+                                          Text('${AppCubit.get(context).posts[widget.index!].name}',
+                                            overflow: TextOverflow.ellipsis,
+                                            style:  TextStyle(
+                                                color: AppColors.myWhite,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w700,
+                                                fontFamily: AppStrings.appFont
+                                            ),
+                                          ),
+                                          Text(AppCubit.get(context).getTimeDifferenceFromNow(DateTime.tryParse(AppCubit.get(context).posts[widget.index!].timeSmap!)!),
+                                            overflow: TextOverflow.ellipsis,
+                                            style:  TextStyle(
+                                                fontSize: 12,
+                                                color: AppColors.myGrey,
+                                                fontFamily: AppStrings.appFont
+                                            ),
+                                          ),
+
+                                        ],
                                       ),
                                     ),
                                   ],
@@ -124,29 +142,20 @@ class PostWidgetState extends State<PostWidget> {
                               ],
                             ),
                           ),
-                          const Spacer(),
-                          Column(
-                            children: [
-                              Text('${AppCubit.get(context).posts[widget.index!].dateTime}',
-                                overflow: TextOverflow.ellipsis,
-                                style:  TextStyle(
-                                    fontSize: 13,
-                                    color: AppColors.myWhite,
-                                    fontFamily: AppStrings.appFont
-                                ),
-                              ),
-                              const SizedBox(height: 5,),
-
-                              Text(AppCubit.get(context).getTimeDifferenceFromNow(DateTime.tryParse(AppCubit.get(context).posts[widget.index!].timeSmap!)!),
-                                overflow: TextOverflow.ellipsis,
-                                style:  TextStyle(
-                                    fontSize: 13,
-                                    color: AppColors.myWhite,
-                                    fontFamily: AppStrings.appFont
-                                ),
-                              ),
-                            ],
-                          ),
+                          // Column(
+                          //   children: [
+                          //     Text('${AppCubit.get(context).posts[widget.index!].dateTime}',
+                          //       overflow: TextOverflow.ellipsis,
+                          //       style:  TextStyle(
+                          //           fontSize: 13,
+                          //           color: AppColors.myWhite,
+                          //           fontFamily: AppStrings.appFont
+                          //       ),
+                          //     ),
+                          //     const SizedBox(height: 5,),
+                          //
+                          //   ],
+                          // ),
                           const SizedBox(width: 5,),
                           if(AppCubit.get(context).userModel!.uId==AppCubit.get(context).posts[widget.index!].userId)
                           PopupMenuButton(

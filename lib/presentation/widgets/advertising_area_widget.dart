@@ -77,15 +77,15 @@ class _AdvertisingAreaWidgetState extends State<AdvertisingAreaWidget> {
                         height: MediaQuery.of(context).size.height*.24,
                         fit: BoxFit.fill,
                       ),
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: IconButton(
-                            onPressed: (){
-                            },
-                            icon: CircleAvatar(radius: 15, child: Icon(Icons.image,color: AppColors.myWhite,size: 15,))
-                        ),
-                      ),
+                      // Positioned(
+                      //   top: 0,
+                      //   right: 0,
+                      //   child: IconButton(
+                      //       onPressed: (){
+                      //       },
+                      //       icon: CircleAvatar(radius: 15, child: Icon(Icons.image,color: AppColors.myWhite,size: 15,))
+                      //   ),
+                      // ),
                       // Positioned(
                       //   top: 40,
                       //   right: 0,
@@ -141,9 +141,11 @@ class _AdvertisingAreaWidgetState extends State<AdvertisingAreaWidget> {
                             },
                             child: videoPlayerController!.value.isPlaying?  CircleAvatar(
                                 radius: 15,
+                                backgroundColor:Colors.blue.withOpacity(.6),
                                 child: Icon(Icons.pause,color: AppColors.myWhite,size: 15,)
                             ): CircleAvatar(
                                 radius: 15,
+                                backgroundColor:Colors.blue.withOpacity(.6),
                                 child: Icon(Icons.play_arrow,color: AppColors.myWhite,size: 15)
                             ),
                           )

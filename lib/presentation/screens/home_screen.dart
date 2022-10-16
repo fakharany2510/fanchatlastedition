@@ -113,27 +113,39 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 5),
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height*.06,
-                          color: AppColors.myGrey,
+                          color: AppColors.myWhite,
                           child: Row(
                             children: [
                               CircleAvatar(
-                                child: CircleAvatar(
-                                  backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
-                                  radius: 20,
-                                ),
+                                backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
+                                radius: 18,
                               ),
-                               Padding(
-                                padding:  const EdgeInsets.only(left: 10,top: 0),
-                                child: Text('What\'s on your mind....?',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      color: AppColors.primaryColor1,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 17,
-                                      fontFamily: AppStrings.appFont
+                               SizedBox(width:MediaQuery.of(context).size.height*.01,),
+                               Container(
+                                 padding: EdgeInsets.only(
+                                   top: MediaQuery.of(context).size.height*.01,
+                                   bottom: MediaQuery.of(context).size.height*.01,
+                                   right: MediaQuery.of(context).size.height*.16
+                                 ),
+                                 decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*.04),
+                                   border: Border.all(
+                                     color: AppColors.primaryColor1
+                                   )
+                                 ),
+                                 child: Padding(
+                                  padding:  const EdgeInsets.only(left: 10,top: 0),
+                                  child: Text('What\'s on your mind....?',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        color: AppColors.primaryColor1,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 15,
+                                        fontFamily: AppStrings.appFont
+                                    ),
                                   ),
-                                ),
                               ),
+                               ),
                             ],
                           ),
 
