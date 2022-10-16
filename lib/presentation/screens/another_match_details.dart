@@ -9,6 +9,7 @@ import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/screens/anther_send_image.dart';
 import 'package:fanchat/presentation/screens/private_chat/my_widget.dart';
+import 'package:fanchat/presentation/screens/private_chat/send_video_message.dart';
 import 'package:fanchat/presentation/screens/private_chat/sender_widget.dart';
 import 'package:fanchat/presentation/screens/private_chat/sendimage_message.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record_mp3/record_mp3.dart';
@@ -74,8 +76,11 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
             AppCubit.get(context).getMessages(recevierId: widget.userId!);
             return BlocConsumer<AppCubit,AppState>(
               listener: (context,state){
-                if(state is PickPostImageSuccessState ){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>AntherSendImage(widget.userId,widget.userImage,widget.userName)));
+                if(state is PickChatImageSuccessState ){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImage(widget.userName,widget.userImage,widget.userId)));
+                }
+                if(state is PickPrivateChatViedoSuccessState ){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SendVideoMessage(userId: widget.userId,userImage: widget.userImage,userName: widget.userName, )));
                 }
               },
               builder: (context,state){
@@ -223,11 +228,11 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                           ) ,
                         ):
                         Padding(
-                            padding: const EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(8),
                             child: Row(
                               children: [
                                 Container(
-                                  width: MediaQuery.of(context).size.width*.74,
+                                  width: MediaQuery.of(context).size.width*.70,
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -284,52 +289,7 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                                       ),
                                     )
                                 ),
-                                SizedBox(width: 5,),
-                                Container(
-                                    width: 35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: AppColors.primaryColor1
-                                    ),
-                                    child: Center(
-                                      child: IconButton(
-                                        onPressed: (){
-                                          AppCubit.get(context).pickPostImage();
 
-                                        },
-                                        color: AppColors.primaryColor1,
-                                        icon: const ImageIcon(
-                                          AssetImage("assets/images/fanarea.png"),
-                                          color:Colors.white,
-                                          size: 17,
-                                        ),
-                                      ),
-                                    )
-                                ),
-                                //                 Container(
-                                //                     width: 40,
-                                //                     height: 40,
-                                //                     decoration: BoxDecoration(
-                                //                         borderRadius: BorderRadius.circular(50),
-                                //                         color: AppColors.primaryColor1
-                                //                     ),
-                                //                     child: Center(
-                                //                       child: IconButton(
-                                //                         icon: recording
-                                //                             ? Icon(Icons.pause_outlined, color: Colors.red)
-                                //                             : Icon(
-                                //                           Icons.mic,
-                                //                           color:Colors.white,
-                                //                         ),
-                                //                         onPressed: () =>{
-                                //                            recording?stopRecord():startRecord(),
-                                //                           AppCubit.get(context).getMessages(recevierId:widget.userModel.uId!)
-                                // },
-                                //                         color:Theme.of(context).primaryColor,
-                                //                       ),
-                                //                     )
-                                //                 ),
                               ],
                             )
                         ),
@@ -339,6 +299,38 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                     condition:AppCubit.get(context).messages.length >=0 ,
                     fallback:(context)=>const Center(child: CircularProgressIndicator()) ,
                   ),
+                  floatingActionButton:Padding(
+                    padding: const EdgeInsets.only(bottom:0,left:5),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width*.14,
+                      height: MediaQuery.of(context).size.height*.045,
+
+                      child: SpeedDial(
+                        backgroundColor: AppColors.primaryColor1,
+                        animatedIcon: AnimatedIcons.menu_close,
+                        elevation: 1,
+                        overlayColor: AppColors.myWhite,
+                        overlayOpacity: 0.0001,
+                        children: [
+                          SpeedDialChild(
+                              onTap: (){
+                                AppCubit.get(context).pickPostVideo3();
+                              },
+                              child: Icon(Icons.video_camera_back,color: Colors.red,size: 22),
+                              backgroundColor: AppColors.myWhite
+                          ),
+                          SpeedDialChild(
+                            onTap: (){
+                              AppCubit.get(context).pickChatImage();
+                            },
+                            child: Icon(Icons.image,color: Colors.green,size: 22,),
+                            backgroundColor: AppColors.myWhite,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
                 );
               },
             );

@@ -27,7 +27,7 @@ class _SendImageState extends State<SendImage> {
        // //  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChatDetails(userModel:widget.userModel,)),);
        //    Navigator.pop(context);
        //  }
-        if(state is CreateImagePrivateSuccessState){
+        if(state is UploadImagePrivateSuccessState){
           Navigator.pop(context);
         }
       },
