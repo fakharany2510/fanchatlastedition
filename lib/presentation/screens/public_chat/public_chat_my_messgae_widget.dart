@@ -308,7 +308,7 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                         ),
                         const SizedBox(height: 5,),
                         VoiceMessage(
-                          audioSrc: '${AppCubit.get(context).publicChat[widget.hashCode].voice}',
+                          audioSrc: '${AppCubit.get(context).publicChat[widget.index!].voice}',
                           played: true, // To show played badge or not.
                           me: true, // Set message side.
                           contactBgColor:AppColors.myGrey ,

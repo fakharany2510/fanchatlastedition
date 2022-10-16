@@ -82,7 +82,7 @@ class _SenderMessageWidgetState extends State<SenderMessageWidget> {
                   vertical: 5
               ),
               decoration:  BoxDecoration(
-                color: AppColors.primaryColor1,
+                color: AppColors.myGrey,
                 borderRadius:const  BorderRadius.only(
                   topRight: Radius.circular(10),
                   topLeft: Radius.circular(10),
@@ -168,7 +168,7 @@ class _SenderMessageWidgetState extends State<SenderMessageWidget> {
             audioSrc: '${AppCubit.get(context).messages[widget.index!].voice}',
             played: true, // To show played badge or not.
             me: true, // Set message side.
-            meBgColor: AppColors.primaryColor1,
+            meBgColor: AppColors.myGrey,
             mePlayIconColor: AppColors.navBarActiveIcon,
             onPlay: () {
 
