@@ -92,8 +92,7 @@ class SendVideoMessage extends StatelessWidget {
               backgroundColor: AppColors.primaryColor1,
               child: const Icon(
                 Icons.send,
-                color: Colors.white
-                ,
+                color: Colors.white,
               )
               ,
             )
