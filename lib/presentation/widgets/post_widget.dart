@@ -159,20 +159,30 @@ class PostWidgetState extends State<PostWidget> {
                           const SizedBox(width: 5,),
                           if(AppCubit.get(context).userModel!.uId==AppCubit.get(context).posts[widget.index!].userId)
                           PopupMenuButton(
+                              padding: EdgeInsets.zero,
                               icon: const Icon(
-                                Icons.more_vert_sharp,
+                                Icons.more_horiz,
                                 color: Colors.white,
                               ),
                               itemBuilder: (BuildContext context) => [
                                 PopupMenuItem(
+                                  height: 10,
                                   value: 2,
-                                  child: Text('Delete',
-                                    overflow: TextOverflow.ellipsis,
-                                    style:  TextStyle(
-                                        fontSize: 13,
-                                        color: AppColors.primaryColor1,
-                                        fontFamily: AppStrings.appFont
-                                    ),
+                                  padding: EdgeInsets.zero,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Text('Delete',
+                                          style:  TextStyle(
+                                              fontSize: 13,
+                                              color: AppColors.primaryColor1,
+                                              fontFamily: AppStrings.appFont
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   onTap: (){
                                     AppCubit.get(context).deletePost(postId: '${AppCubit.get(context).posts[widget.index!].postId}');
@@ -194,7 +204,7 @@ class PostWidgetState extends State<PostWidget> {
                           style:  TextStyle(
                               color: AppColors.myWhite,
                               fontSize: 14,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w500,
                               height: 1.2,
                               fontFamily: AppStrings.appFont
                           ),
