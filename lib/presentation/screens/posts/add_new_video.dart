@@ -88,7 +88,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
                     width: size.width*.2,
                     height: size.height*.05,
                     raduis: 10,
-                    function: (){
+                    function: ()async{
                       if(AppCubit.get(context).postVideo == null){
                         AppCubit.get(context).createVideoPost(
                             timeSpam: DateTime.now().toString(),
@@ -100,20 +100,31 @@ class _AddNewVideoState extends State<AddNewVideo> {
                             title:'New Post',
                             body:'${postText.text}'
                         );
-                      }else{
+                      }else {
                         AppCubit.get(context).controller!.pause();
-                        AppCubit.get(context).uploadPostVideo(
-                          timeSpam: DateTime.now().toString(),
-                          time: DateFormat.Hm().format(DateTime.now()),
-                          dateTime:DateFormat.yMMMd().format(DateTime.now()),
-                          text:postText.text,
-                          name: AppCubit.get(context).userModel!.username,
-                        );
-                        callFcmApiSendPushNotifications(
-                          title: 'New Post Added',
-                          description:postText.text,
-                          imageUrl: "",
-                        );
+                        final filesizeLimit = 30000000;  // in bytes // 30 Mega
+                        final filesize = await AppCubit.get(context).postVideo!.length(); // in bytes
+                        final isValidFilesize = filesize < filesizeLimit;
+                        if (isValidFilesize) {
+
+                          AppCubit.get(context).uploadPostVideo(
+                            timeSpam: DateTime.now().toString(),
+                            time: DateFormat.Hm().format(DateTime.now()),
+                            dateTime:DateFormat.yMMMd().format(DateTime.now()),
+                            text:postText.text,
+                            name: AppCubit.get(context).userModel!.username,
+                          );
+                          callFcmApiSendPushNotifications(
+                            title: 'New Post Added',
+                            description:postText.text,
+                            imageUrl: "",
+                          );
+
+
+                        } else {
+                          customToast(title: 'Video size is too big', color: Colors.red);
+                        }
+                   
                       }
                     },
                     buttonText: 'post',

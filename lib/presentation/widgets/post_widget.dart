@@ -239,7 +239,7 @@ class PostWidgetState extends State<PostWidget> {
                       ?Stack(
                     children: [
                       Container(
-                        height: MediaQuery.of(context).size.height*.25,
+                        height: MediaQuery.of(context).size.height*.4,
                         width: double.infinity,
                         child:FutureBuilder(
                           future: intilize,
