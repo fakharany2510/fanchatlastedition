@@ -76,27 +76,21 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: AppCubit.get(context).messages[widget.index!].image)));
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 5
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                    )
                 ),
-                decoration:  BoxDecoration(
-                  color: AppColors.primaryColor1,
-                  borderRadius:const  BorderRadius.only(
-                    topRight: Radius.circular(10),
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                  ),
-                ),
-                child: Container(
-                  height: MediaQuery.of(context).size.height*.28,
-                  width: MediaQuery.of(context).size.width*.55,
-                  child:  CachedNetworkImage(
-                    cacheManager: AppCubit.get(context).manager,
-                    imageUrl: "${AppCubit.get(context).messages[widget.index!].image}",
-                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                    fit: BoxFit.fill,
-                  ),
+                height: MediaQuery.of(context).size.height*.28,
+                width: MediaQuery.of(context).size.width*.55,
+                child:  CachedNetworkImage(
+                  cacheManager: AppCubit.get(context).manager,
+                  imageUrl: "${AppCubit.get(context).messages[widget.index!].image}",
+                  placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                  fit: BoxFit.fill,
                 ),
               ),
             )
@@ -104,22 +98,11 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
             (AppCubit.get(context).messages[widget.index!].video != null)
                 ?Stack(
               children: [
-                Container(
-                    decoration:  BoxDecoration(
-                      borderRadius:const  BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        topLeft: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
-                      ),
-                    ),
-                    height: MediaQuery.of(context).size.height*.25,
-                    width: MediaQuery.of(context).size.width*.55,
-                    child: mymessageController.value.isInitialized
-                        ? AspectRatio(
-                        aspectRatio: mymessageController.value.aspectRatio,
-                        child: CachedVideoPlayer(mymessageController))
-                        : const Center(child: CircularProgressIndicator())
-                ),
+                mymessageController.value.isInitialized
+                    ? AspectRatio(
+                    aspectRatio: mymessageController.value.aspectRatio,
+                    child: CachedVideoPlayer(mymessageController))
+                    : const Center(child: CircularProgressIndicator()),
 
                 Positioned(
                     top: 10,

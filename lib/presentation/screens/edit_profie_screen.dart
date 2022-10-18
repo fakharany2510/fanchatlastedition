@@ -190,16 +190,16 @@ class EditProfileScreen extends StatelessWidget {
                       labelText: "Name",
                       prefixIcon: Icon(Icons.person, color: AppColors.myGrey)),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                  child: textFormFieldWidget(
-                      context: context,
-                      controller: cubit.changeUserPhoneController,
-                      errorMessage: "please enter your phone",
-                      inputType: TextInputType.phone,
-                      labelText: "phone",
-                      prefixIcon: Icon(Icons.phone, color: AppColors.myGrey)),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                //   child: textFormFieldWidget(
+                //       context: context,
+                //       controller: cubit.changeUserPhoneController,
+                //       errorMessage: "please enter your phone",
+                //       inputType: TextInputType.phone,
+                //       labelText: "phone",
+                //       prefixIcon: Icon(Icons.phone, color: AppColors.myGrey)),
+                // ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                   child: textFormFieldWidget(

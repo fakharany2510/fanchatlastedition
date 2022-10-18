@@ -66,7 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             );
             customToast(title: 'Login Successful', color: AppColors.primaryColor1);
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context)=>HomeLayout())
+                MaterialPageRoute(builder: (context)=>const HomeLayout())
             );
 
           }
@@ -88,7 +88,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 print('uid is null');
               }else{
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context)=>HomeLayout()));
+                    MaterialPageRoute(builder: (context)=>const HomeLayout()));
               }
 
             }).catchError((error){
@@ -111,7 +111,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 print('uid is null');
               }else{
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context)=>WelcomeScreen()));
+                    MaterialPageRoute(builder: (context)=>const WelcomeScreen()));
               }
 
             }).catchError((error){
@@ -140,7 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children:  [
-                      Image(image: AssetImage('assets/images/ncolort.png'),width: 250,height: 250,),
+                      const Image(image: AssetImage('assets/images/ncolort.png'),width: 250,height: 250,),
 
                       textFormFieldWidget(
                           context: context,
@@ -152,9 +152,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       SizedBox(height: size.height*.03,),
                       Container(
-                        padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.fromLTRB(15, 20, 0, 0),
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height*.07,
+                        height: MediaQuery.of(context).size.height*.08,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: AppColors.myGrey,
@@ -162,30 +163,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           borderRadius: BorderRadius.circular(15)
                         ),
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-                          child: IntlPhoneField(
-                            dropdownTextStyle: TextStyle(
-                              color: AppColors.myGrey,
-                              fontSize: 14,
-                              fontFamily: AppStrings.appFont
-                            ),
-
-                            invalidNumberMessage: 'Invalid Phone Number!',
-                            textAlignVertical: TextAlignVertical.center,
-                            style:  TextStyle(
-                                fontSize: 15,
-                                fontFamily: AppStrings.appFont,
-                                color: AppColors.myGrey
-                            ),
-                            onChanged: (phone) => phoneNumber = phone.completeNumber,
-                            initialCountryCode: 'AF',
-                            flagsButtonPadding: const EdgeInsets.only(right: 10),
-                            showDropdownIcon: false,
-                            keyboardType: TextInputType.phone,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                            ),
+                        child: IntlPhoneField(
+                          dropdownTextStyle: TextStyle(
+                            color: AppColors.myGrey,
+                            fontSize: 14,
+                            fontFamily: AppStrings.appFont
+                          ),
+                          invalidNumberMessage: 'Invalid Phone Number!',
+                          textAlignVertical: TextAlignVertical.center,
+                          style:  TextStyle(
+                              fontSize: 15,
+                              fontFamily: AppStrings.appFont,
+                              color: AppColors.myGrey
+                          ),
+                          onChanged: (phone) => phoneNumber = phone.completeNumber,
+                          initialCountryCode: 'AF',
+                          flagsButtonPadding: const EdgeInsets.only(right: 10,bottom: 10),
+                          showDropdownIcon: false,
+                          keyboardType: TextInputType.phone,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
                           ),
                         ),
                       ),
@@ -200,7 +197,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if(name.text == "fanchat"){
                             if(isCheckBoxTrue == true ){
                               AppStrings.uId = '1832855570382325';
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeLayout()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
                             }else{
                               Fluttertoast.showToast(
                                 msg:"You Must Agree To Privacy Policies First",
@@ -347,7 +344,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>PrivacyPolicies()));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const PrivacyPolicies()));
                                         // code to open / launch terms of service link here
                                       }
                                 ),
