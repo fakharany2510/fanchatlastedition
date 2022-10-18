@@ -53,11 +53,16 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
             children: [
               GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (_){
-                    return UserProfile(userId: AppCubit.get(context).publicChat[widget.index!].senderId!,
-                        userImage:AppCubit.get(context).publicChat[widget.index!].senderImage!,
-                        userName: AppCubit.get(context).publicChat[widget.index!].senderName!);
-                  }));
+                  AppCubit.get(context).getUserProfilePosts(id: '${AppCubit.get(context).publicChat[widget.index!].senderId}').then((value) {
+                    Navigator.push(context, MaterialPageRoute(builder: (_){
+                      return UserProfile(
+                        userId: '${AppCubit.get(context).publicChat[widget.index!].senderId}',
+                        userImage: '${AppCubit.get(context).publicChat[widget.index!].senderImage}',
+                        userName: '${AppCubit.get(context).publicChat[widget.index!].senderName}',
+
+                      );
+                    }));
+                  });
                 },
                 child: CircleAvatar(
                   radius: 18,

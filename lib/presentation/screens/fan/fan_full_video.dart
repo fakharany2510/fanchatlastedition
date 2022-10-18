@@ -1,6 +1,7 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/screens/user_profile.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,9 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
 class FanFullVideo extends StatefulWidget {
-  FanFullVideo({Key? key,this.video,this.userImage,this.userName}) : super(key: key);
+  FanFullVideo({Key? key,this.video,this.userImage,this.userName,this.userId}) : super(key: key);
   String ?userImage;
   String ?userName;
+  String ?userId;
   String ?video;
   @override
   State<FanFullVideo> createState() => _FanFullVideoState();
@@ -99,10 +101,24 @@ class _FanFullVideoState extends State<FanFullVideo> {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     children: [
-                      CircleAvatar(
-                        backgroundImage: NetworkImage('${widget.userImage}',
+                      GestureDetector(
+                        onTap: (){
+                          AppCubit.get(context).getUserProfilePosts(id: '${widget.userId}').then((value) {
+                            Navigator.push(context, MaterialPageRoute(builder: (_){
+                              return UserProfile(
+                                userId: '${widget.userId}',
+                                userImage: '${widget.userImage}',
+                                userName: '${widget.userName}',
+
+                              );
+                            }));
+                          });
+                        },
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage('${widget.userImage}',
+                          ),
+                          radius: 18,
                         ),
-                        radius: 18,
                       ),
                       const SizedBox(width: 7,),
                       Expanded(

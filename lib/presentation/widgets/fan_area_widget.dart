@@ -45,9 +45,9 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
                   onTap: (){
                     (AppCubit.get(context).fans[widget.index!].postImage!="")?
                     Navigator.push(context, MaterialPageRoute(builder: (_){
-                      return FanFullPost(image: '${AppCubit.get(context).fans[widget.index!].postImage}',userImage: '${AppCubit.get(context).fans[widget.index!].image}',userName: '${AppCubit.get(context).fans[widget.index!].name}',);
+                      return FanFullPost(image: '${AppCubit.get(context).fans[widget.index!].postImage}',userImage: '${AppCubit.get(context).fans[widget.index!].image}',userName: '${AppCubit.get(context).fans[widget.index!].name}',userId: '${AppCubit.get(context).fans[widget.index!].userId}',);
                     })):Navigator.push(context, MaterialPageRoute(builder: (_){
-                      return FanFullVideo(video: '${AppCubit.get(context).fans[widget.index!].postVideo}',userImage: '${AppCubit.get(context).fans[widget.index!].image}',userName: '${AppCubit.get(context).fans[widget.index!].name}',);
+                      return FanFullVideo(video: '${AppCubit.get(context).fans[widget.index!].postVideo}',userImage: '${AppCubit.get(context).fans[widget.index!].image}',userName: '${AppCubit.get(context).fans[widget.index!].name}',userId: '${AppCubit.get(context).fans[widget.index!].userId}',);
                     }));
                   },
                   child: (AppCubit.get(context).fans[widget.index!].postImage!="")

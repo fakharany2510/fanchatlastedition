@@ -53,11 +53,15 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
             children: [
               GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (_){
-                    return UserProfile(userId: AppCubit.get(context).teamChat[widget.index!].senderId!,
-                        userImage:AppCubit.get(context).teamChat[widget.index!].senderImage!,
-                        userName: AppCubit.get(context).teamChat[widget.index!].senderName!);
-                  }));
+                  AppCubit.get(context).getUserProfilePosts(id: '${AppCubit.get(context).teamChat[widget.index!].senderId}').then((value) {
+                    Navigator.push(context, MaterialPageRoute(builder: (_){
+                      return UserProfile(
+                        userId: '${AppCubit.get(context).teamChat[widget.index!].senderId}',
+                        userImage: '${AppCubit.get(context).teamChat[widget.index!].senderImage}',
+                        userName: '${AppCubit.get(context).teamChat[widget.index!].senderName}',
+                      );
+                    }));
+                  });
                 },
                 child: CircleAvatar(
                   radius: 18,

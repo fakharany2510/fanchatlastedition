@@ -11,6 +11,7 @@ import 'package:fanchat/presentation/screens/private_chat/sendimage_message.dart
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:fanchat/presentation/screens/private_chat/my_widget.dart';
 import 'package:fanchat/presentation/screens/private_chat/sender_widget.dart';
+import 'package:fanchat/presentation/screens/user_profile.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -106,9 +107,23 @@ class _ChatDetailsState extends State<ChatDetails> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        CircleAvatar(
-                          backgroundImage:  NetworkImage('${widget.userImage}'),
-                          radius: 22,
+                        GestureDetector(
+                          onTap: (){
+                            AppCubit.get(context).getUserProfilePosts(id: '${widget.userId}').then((value) {
+                              Navigator.push(context, MaterialPageRoute(builder: (_){
+                                return UserProfile(
+                                  userId: '${widget.userId}',
+                                  userImage: '${widget.userImage}',
+                                  userName: '${widget.userName}',
+
+                                );
+                              }));
+                            });
+                          },
+                          child: CircleAvatar(
+                            backgroundImage:  NetworkImage('${widget.userImage}'),
+                            radius: 22,
+                          ),
                         ),
                         const SizedBox(width: 15,),
                         Column(

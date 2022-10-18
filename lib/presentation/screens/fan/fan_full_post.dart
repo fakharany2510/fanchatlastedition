@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/screens/user_profile.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,10 +10,11 @@ import '../../../constants/app_colors.dart';
 
 class FanFullPost extends StatelessWidget {
 
-  FanFullPost({Key? key,this.image,this.userImage,this.userName}) : super(key: key);
+  FanFullPost({Key? key,this.image,this.userImage,this.userName,this.userId}) : super(key: key);
   String ?image;
   String ?userName;
   String ?userImage;
+  String ?userId;
 
 
   @override
@@ -33,10 +35,24 @@ class FanFullPost extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     children: [
-                      CircleAvatar(
-                        backgroundImage: NetworkImage('${userImage}',
+                      GestureDetector(
+                        onTap: (){
+                          AppCubit.get(context).getUserProfilePosts(id: '$userId').then((value) {
+                            Navigator.push(context, MaterialPageRoute(builder: (_){
+                              return UserProfile(
+                                userId: '$userId',
+                                userImage: '$userImage',
+                                userName: '$userName',
+
+                              );
+                            }));
+                          });
+                        },
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage('$userImage',
+                          ),
+                          radius: 18,
                         ),
-                        radius: 18,
                       ),
                       const SizedBox(width: 7,),
                       Expanded(
@@ -46,7 +62,7 @@ class FanFullPost extends StatelessWidget {
                             Row(
                               children: [
                                 Expanded(
-                                  child: Text('${userName}',
+                                  child: Text('$userName',
                                     overflow: TextOverflow.ellipsis,
                                     style:  TextStyle(
                                         color: AppColors.primaryColor1,
@@ -76,7 +92,7 @@ class FanFullPost extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       child:  CachedNetworkImage(
                           cacheManager: AppCubit.get(context).manager,
-                          imageUrl: "${image}",
+                          imageUrl: "$image",
                           placeholder: (context, url) => Center(child: CircularProgressIndicator()),
                       ),
                     )
