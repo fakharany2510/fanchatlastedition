@@ -146,7 +146,7 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                                 // maxHeightDiskCache:75,
                                 width: 200,
                                 height: MediaQuery.of(context).size.height*.2,
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                               ),
                             ),
                           )
@@ -191,11 +191,11 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                                     bottomLeft: Radius.circular(10),
                                   ),
                                 ),
-                                height: MediaQuery.of(context).size.height*.25,
+                               // height: MediaQuery.of(context).size.height*.25,
                                 width: MediaQuery.of(context).size.width*.74,
                                 child: senderController.value.isInitialized
                                     ? AspectRatio(
-                                    aspectRatio: senderController.value.aspectRatio,
+                                    aspectRatio:senderController.value.size.width/senderController.value.size.height,
                                     child: CachedVideoPlayer(senderController))
                                     : const Center(child: CircularProgressIndicator())
                             ),

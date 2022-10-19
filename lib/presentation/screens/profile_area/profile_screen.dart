@@ -1,20 +1,16 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
-import 'package:fanchat/presentation/paypal/choosepaymentmethod.dart';
+import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/screens/profile_area/add_profile_image.dart';
-import 'package:fanchat/presentation/screens/fan/add_fan_video.dart';
 import 'package:fanchat/presentation/screens/profile_area/add_profile_video.dart';
 import 'package:fanchat/presentation/widgets/profile_area_widget.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-
-
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -172,7 +168,7 @@ class ProfileScreen extends StatelessWidget {
                          GestureDetector(
                            onTap: (){
                              // cubit.toPayPal();
-                             Navigator.push(context, MaterialPageRoute(builder: (context)=>const ChoosePaymentMethod()));
+                             Navigator.push(context, MaterialPageRoute(builder: (context)=>const ChoosePayPackage()));
                            },
                            child: const CircleAvatar(
                              radius: 29,
@@ -183,10 +179,10 @@ class ProfileScreen extends StatelessWidget {
                              ),
                            ),
                          ),
-                         SizedBox(
+                         const SizedBox(
                            height: 5,
                          ),
-                         Text('Buy a Package',
+                         const Text('Buy a Package',
                          style: TextStyle(
                            overflow: TextOverflow.ellipsis,
                            fontSize: 12,

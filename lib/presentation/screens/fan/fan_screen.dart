@@ -37,7 +37,7 @@ class FanScreen extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       child:Opacity(
                         child:  Image(
-                          image: AssetImage('assets/images/bg 2.jpg'),
+                          image: AssetImage('assets/images/b3.jpg'),
                           fit: BoxFit.cover,
 
                         ),
@@ -57,7 +57,7 @@ class FanScreen extends StatelessWidget {
                   //   )
                   // ),
                   GridView.count(
-                    childAspectRatio: 1/1.24,
+                    childAspectRatio: 1/1.23,
                     crossAxisSpacing: MediaQuery.of(context).size.height*.008,
                     mainAxisSpacing: MediaQuery.of(context).size.height*.00,
                     crossAxisCount: 3,

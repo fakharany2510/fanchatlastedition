@@ -91,7 +91,7 @@ class _SenderMessageWidgetState extends State<SenderMessageWidget> {
                 cacheManager: AppCubit.get(context).manager,
                 imageUrl: "${AppCubit.get(context).messages[widget.index!].image}",
                 placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                fit: BoxFit.fill,
+                fit: BoxFit.contain,
               ),
             ),
           )
@@ -101,7 +101,7 @@ class _SenderMessageWidgetState extends State<SenderMessageWidget> {
             children: [
               senderController.value.isInitialized
                   ? AspectRatio(
-                  aspectRatio: senderController.value.aspectRatio,
+                  aspectRatio:senderController.value.size.width/senderController.value.size.height,
                   child: CachedVideoPlayer(senderController))
                   : const Center(child: CircularProgressIndicator()),
 

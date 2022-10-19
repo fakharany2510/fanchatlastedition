@@ -13,6 +13,7 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 import '../screens/private_chat/chat_screen.dart';
 import '../screens/fan/fan_screen.dart';
@@ -31,27 +32,26 @@ class _HomeLayoutState extends State<HomeLayout> {
   @override
   void initState(){
     super.initState();
-    print("==================================token================================");
-    FirebaseMessaging.instance.getToken().then((token){
-      AppCubit.get(context).saveToken(token!);
-      print(token);
-      print("==================================token================================");
-    });
-    AppCubit.get(context).getUser().then((value){
-      print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
-      print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
-      Future.delayed(const Duration(days: 7),(){
-        if( CashHelper.getData(key: 'business') == true || CashHelper.getData(key: 'advertise') == true){
-          print('payed');
-        }else{
-
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChoosePaymentMethod()));
-
-        }
-      });
-    }).catchError((error){
-      print('error');
-    });
+    // print("==================================token================================");
+    // FirebaseMessaging.instance.getToken().then((token){
+    //   AppCubit.get(context).saveToken(token!);
+    //   print(token);
+    //   print("==================================token================================");
+    // });
+    // AppCubit.get(context).getUser().then((value){
+    //   print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
+    //   print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
+    //   Future.delayed(const Duration(days: 7),(){
+    //     if( CashHelper.getData(key: 'business') == true || CashHelper.getData(key: 'advertise') == true){
+    //       print('payed');
+    //     }else{
+    //       showMyDialog2(context);
+    //
+    //     }
+    //   });
+    // }).catchError((error){
+    //   print('error');
+    // });
 
 
 
@@ -221,4 +221,64 @@ class _HomeLayoutState extends State<HomeLayout> {
         },
     );
   }
+}
+Future<void> showMyDialog2(context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: AppColors.myWhite,
+        // title: const Text('Aew you sure you want to logout from FanChat'),
+        content: SingleChildScrollView(
+            child:Container(
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:   [
+                  const CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    radius: 70,
+                    child: Image(image: AssetImage('assets/images/ncolort.png'),
+                      height: 100,
+                      width: 100,
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      'Get a premium package',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontFamily: AppStrings.appFont,
+                        color: AppColors.primaryColor1,
+                        fontSize: 19,
+                      ),
+                    )
+                  ),
+                ],
+              ),
+            )
+        ),
+        actions: <Widget>[
+          Column(
+            children: [
+              defaultButton(
+                  width: MediaQuery.of(context).size.width*.7,
+                  height: MediaQuery.of(context).size.height*.07,
+                  buttonColor: AppColors.navBarActiveIcon,
+                  textColor: AppColors.myWhite,
+                  buttonText: 'Buy a package ',
+                  fontSize: 15,
+                  function: (){
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context)=>ChoosePayPackage()));
+
+                  })
+            ],
+          )
+        ],
+      );
+    },
+  );
 }

@@ -66,7 +66,7 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
          // maxHeightDiskCache:75,
               width: 200,
               height: MediaQuery.of(context).size.height*.18,
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
           ),
                       // Positioned(
                       //   top: 0,

@@ -1,10 +1,12 @@
 import 'package:country_pickers/country.dart';
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 
 
 import 'package:fanchat/business_logic/register/register_cubit.dart';
 import 'package:fanchat/business_logic/register/register_states.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/screens/privacy_policies.dart';
 
 import 'package:fanchat/presentation/screens/verify_code_screen.dart';
@@ -65,9 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               value: state.uId,
             );
             customToast(title: 'Login Successful', color: AppColors.primaryColor1);
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context)=>const HomeLayout())
-            );
+            showMyDialog(context);
 
           }
           if(state is UserRegisterErrorState){
@@ -87,8 +87,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               if(AppStrings.uId == null){
                 print('uid is null');
               }else{
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context)=>const HomeLayout()));
+                showMyDialog(context);
               }
 
             }).catchError((error){
@@ -110,8 +109,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               if(AppStrings.uId == null){
                 print('uid is null');
               }else{
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context)=>const WelcomeScreen()));
+             showMyDialog(context);
               }
 
             }).catchError((error){
@@ -384,5 +382,81 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),),
       ],
     ),
+  );
+
+
+}
+Future<void> showMyDialog(context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: AppColors.myWhite,
+        // title: const Text('Aew you sure you want to logout from FanChat'),
+        content: SingleChildScrollView(
+            child:Container(
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+
+                children:  [
+                  const CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    radius: 70,
+                    child: Image(image: AssetImage('assets/images/ncolort.png'),
+                      height: 100,
+                      width: 100,
+                    ),
+                  ),
+                  const Text('Congratulations\nYou are now on 7-day free trial.\nEnjoy FAN Chat',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: AppStrings.appFont
+                    ),
+                  )
+                ],
+              ),
+            )
+        ),
+        actions: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment:CrossAxisAlignment.center,
+            children: [
+              Center(
+                child: defaultButton(
+                    width: MediaQuery.of(context).size.width*.7,
+                    height: MediaQuery.of(context).size.width*.15,
+                    buttonColor: AppColors.primaryColor1,
+                    textColor: AppColors.myWhite,
+                    buttonText: 'Start',
+                    fontSize: 15,
+                    function: (){
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context)=>HomeLayout()));
+                    }),
+              ),
+              SizedBox(height:30,),
+              Center(
+                child: defaultButton(
+                    width: MediaQuery.of(context).size.width*.7,
+                    height: MediaQuery.of(context).size.width*.15,
+                    buttonColor: AppColors.navBarActiveIcon,
+                    textColor: AppColors.myWhite,
+                    buttonText: 'Buy a package',
+                    fontSize: 15,
+                    function: (){
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context)=>ChoosePayPackage()));
+                    }),
+              ),
+            ],
+          )
+        ],
+      );
+    },
   );
 }

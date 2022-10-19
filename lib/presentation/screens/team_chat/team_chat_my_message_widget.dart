@@ -159,7 +159,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: AppCubit.get(context).teamChat[widget.index!].image)));
                             },
                             child: Container(
-                              height: MediaQuery.of(context).size.height*.28,
+                            //  height: MediaQuery.of(context).size.height*.28,
                               width: MediaQuery.of(context).size.width*.70,
                               clipBehavior: Clip.antiAliasWithSaveLayer,
                               decoration: BoxDecoration(
@@ -223,7 +223,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                                 width: MediaQuery.of(context).size.width*.74,
                                 child: mymessageController.value.isInitialized
                                     ? AspectRatio(
-                                    aspectRatio: mymessageController.value.aspectRatio,
+                                    aspectRatio:mymessageController.value.size.width/mymessageController.value.size.height,
                                     child: CachedVideoPlayer(mymessageController))
                                     : const Center(child: CircularProgressIndicator())
                             ),

@@ -4,12 +4,15 @@ import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
+import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/widgets/custom_loader.dart';
 import 'package:fanchat/presentation/widgets/pin_input_field.dart';
+import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:fanchat/utils/helpers.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 
 class VerifyPhoneNumberScreen extends StatefulWidget {
@@ -76,9 +79,10 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
         child: BlocConsumer<RegisterCubit , RegisterState>(
           listener: (context, state){
             if (state is UserDataSuccessState){
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute
-                    (builder: (context)=>HomeLayout()));
+              showMyDialog(context);
+              // Navigator.pushReplacement(context,
+              //     MaterialPageRoute
+              //       (builder: (context)=>HomeLayout()));
             }
           },
           builder: (context, state){
@@ -274,6 +278,85 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
           },
         ),
       )
+    );
+  }
+  Future<void> showMyDialog(context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppColors.myWhite,
+          // title: const Text('Aew you sure you want to logout from FanChat'),
+          content: SingleChildScrollView(
+              child:Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:   [
+                    const CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      radius: 70,
+                      child: Image(image: AssetImage('assets/images/ncolort.png'),
+                        height: 100,
+                        width: 100,
+                      ),
+                    ),
+                    Center(
+                      child:Text(
+                        'Congratulations\nYou are now on a 7-day free trial. Enjoy FAN Chat',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: AppColors.primaryColor1,
+                            fontFamily: AppStrings.appFont,
+                            fontWeight: FontWeight.w600,
+                            height:1.4
+                        ),
+                      ),
+
+                    ),
+                  ],
+                ),
+              )
+          ),
+          actions: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(
+                  child: defaultButton(
+                      width: MediaQuery.of(context).size.width*.7,
+                      height: MediaQuery.of(context).size.height*.07,
+                      buttonColor: AppColors.primaryColor1,
+                      textColor: AppColors.myWhite,
+                      buttonText: 'Start',
+                      fontSize: 15,
+                      function: (){
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context)=>HomeLayout()));
+                      }),
+                ),
+                SizedBox(height:30,),
+                Center(
+                  child: defaultButton(
+                      width: MediaQuery.of(context).size.width*.7,
+                      height: MediaQuery.of(context).size.height*.07,
+                      buttonColor: AppColors.navBarActiveIcon,
+                      textColor: AppColors.myWhite,
+                      buttonText: 'Get a premium package ',
+                      fontSize: 15,
+                      function: (){
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context)=>ChoosePayPackage()));
+                      }),
+                )
+              ],
+            )
+          ],
+        );
+      },
     );
   }
 }

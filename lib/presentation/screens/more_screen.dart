@@ -202,6 +202,7 @@ class MoreScreen extends StatelessWidget {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: AppColors.myWhite,
          // title: const Text('Aew you sure you want to logout from FanChat'),
           content: SingleChildScrollView(
             child:Container(
@@ -209,16 +210,25 @@ class MoreScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
 
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
+                children:  [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child:InkWell(
+                      child: Image(image: AssetImage('assets/images/x-mark.png'),height: 20,width: 20),
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                 const CircleAvatar(
+                    backgroundColor: Colors.transparent,
                     radius: 70,
                     child: Image(image: AssetImage('assets/images/ncolort.png'),
                       height: 100,
                       width: 100,
                     ),
                   ),
-                  Text('Are you sure you want to logout from FanChat',
+                  const Text('Are you sure you want to logout from FanChat',
                   textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 18,
@@ -234,10 +244,12 @@ class MoreScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  child:  Text('Approve',
+                  child:  Text('Logout',
                     style: TextStyle(
                         color: AppColors.navBarActiveIcon,
-                        fontSize: 16
+                        fontSize: 18,
+                      fontFamily: AppStrings.appFont,
+                      fontWeight: FontWeight.w600
                     ),
                   ),
                   onPressed: () {
@@ -246,18 +258,6 @@ class MoreScreen extends StatelessWidget {
                     AppCubit.get(context).signOut();
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context)=>RegisterScreen()));
-                  },
-                ),
-                SizedBox(width: 15,),
-                TextButton(
-                  child: const Text('Cancel',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 16
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
                   },
                 ),
               ],

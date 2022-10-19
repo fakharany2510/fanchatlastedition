@@ -96,7 +96,7 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                         vertical: 5
                       ),
                       decoration:  BoxDecoration(
-                        color: AppColors.navBarActiveIcon.withOpacity(.5),
+                        color: AppColors.primaryColor1.withOpacity(.3),
                         borderRadius:const  BorderRadius.only(
                           topRight: Radius.circular(10),
                           topLeft: Radius.circular(10),
@@ -231,11 +231,11 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                                     bottomLeft: Radius.circular(10),
                                   ),
                                 ),
-                                height: MediaQuery.of(context).size.height*.25,
+                               // height: MediaQuery.of(context).size.height*.25,
                                 width: MediaQuery.of(context).size.width*.74,
                                 child: mymessageController.value.isInitialized
                                     ? AspectRatio(
-                                    aspectRatio: mymessageController.value.aspectRatio,
+                                    aspectRatio:mymessageController.value.size.width/mymessageController.value.size.height,
                                     child: CachedVideoPlayer(mymessageController))
                                     : const Center(child: CircularProgressIndicator())
                             ),

@@ -473,6 +473,7 @@ class AppCubit extends Cubit<AppState> {
 
 
   File? postVideo;
+
   void pickPostVideo2() async {
     final pickedFile =
     await picker.pickVideo(source: ImageSource.gallery);
@@ -481,6 +482,7 @@ class AppCubit extends Cubit<AppState> {
       controller = CachedVideoPlayerController.file(postVideo!)
         ..initialize().then((value) {
           controller!.pause();
+
           emit(PickPostVideoSuccessState());
         }).catchError((error) {
           print('error picking video ${error.toString()}');
@@ -494,9 +496,12 @@ class AppCubit extends Cubit<AppState> {
     await picker.pickVideo(source: ImageSource.gallery);
     if (pickedFile != null) {
       postVideo3 = File(pickedFile.path);
+     // var decodedVideo = await decodeImageFromList(postVideo3!.readAsBytesSync());
       controller = CachedVideoPlayerController.file(postVideo3!)
         ..initialize().then((value) {
           controller!.pause();
+        //  videoWidth3=double.parse('${decodedVideo.width}');
+         // videoHeight3=double.parse('${decodedVideo.height}');
           emit(PickPrivateChatViedoSuccessState());
         }).catchError((error) {
           print('error picking video ${error.toString()}');

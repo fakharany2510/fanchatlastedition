@@ -90,7 +90,7 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
                   cacheManager: AppCubit.get(context).manager,
                   imageUrl: "${AppCubit.get(context).messages[widget.index!].image}",
                   placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                  fit: BoxFit.fill,
+                  fit: BoxFit.contain,
                 ),
               ),
             )
@@ -99,9 +99,12 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
                 ?Stack(
               children: [
                 mymessageController.value.isInitialized
-                    ? AspectRatio(
-                    aspectRatio: mymessageController.value.aspectRatio,
-                    child: CachedVideoPlayer(mymessageController))
+                    ? Container(
+                  width: 200,
+                      child: AspectRatio(
+                      aspectRatio:mymessageController.value.size.width/mymessageController.value.size.height,
+                      child: CachedVideoPlayer(mymessageController)),
+                    )
                     : const Center(child: CircularProgressIndicator()),
 
                 Positioned(

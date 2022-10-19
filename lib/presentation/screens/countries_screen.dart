@@ -92,7 +92,21 @@ class _CountriesScreenState extends State<CountriesScreen> {
                   ? const Center(
                 child: CircularProgressIndicator(),
               )
-                  : ListView.builder(
+                  : Stack(
+                children: [
+                  Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child:Opacity(
+                        child:  Image(
+                          image: AssetImage('assets/images/b3.jpg'),
+                          fit: BoxFit.cover,
+
+                        ),
+                        opacity: 1,
+                      )
+                  ),
+                  ListView.builder(
                   controller: _childScrollController,
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -103,46 +117,46 @@ class _CountriesScreenState extends State<CountriesScreen> {
 
                     if (name.isEmpty) {
                       return InkWell(
-                        onTap: (){
-                          AppCubit.get(context).deleteCheeringPost().then((value) {
-                            AppCubit.get(context).isLast=true;
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                                TeamChatScreen(countryName:data['name'],countryImage: data['image'],)
-                            ));
-                          });
+                          onTap: (){
+                            AppCubit.get(context).deleteCheeringPost().then((value) {
+                              AppCubit.get(context).isLast=true;
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                  TeamChatScreen(countryName:data['name'],countryImage: data['image'],)
+                              ));
+                            });
 
-                          // AppCubit.get(context).deleteWaitingPost().then((value) {
-                          //
-                          // });
-                         },
-                        child: Padding(
-                          padding: const EdgeInsets.only(left:13,right: 13,bottom: 5),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width*.5,
-                            height: MediaQuery.of(context).size.height*.08,
-                            decoration: BoxDecoration(
-                              color: AppColors.myGrey.withOpacity(.3)
-                            ),
-                            child: Center(
-                              child: ListTile(
-                                title: Text(
-                                  data['name'],
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: AppStrings.appFont,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                            // AppCubit.get(context).deleteWaitingPost().then((value) {
+                            //
+                            // });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(left:13,right: 13,bottom: 5),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width*.5,
+                              height: MediaQuery.of(context).size.height*.08,
+                              decoration: BoxDecoration(
+                                  color: AppColors.myGrey.withOpacity(.3)
+                              ),
+                              child: Center(
+                                child: ListTile(
+                                  title: Text(
+                                    data['name'],
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: AppStrings.appFont,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
 
-                                leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(data['image']),
+                                  leading: CircleAvatar(
+                                    backgroundImage: NetworkImage(data['image']),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
+                          )
                       );
                     }
                     if (data['name']
@@ -191,7 +205,9 @@ class _CountriesScreenState extends State<CountriesScreen> {
                       );
                     }
                     return Container();
-                  });
+                  }),
+                ],
+              );
             },
           ),
         ),
