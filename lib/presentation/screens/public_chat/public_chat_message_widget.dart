@@ -198,6 +198,7 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                                     aspectRatio:senderController.value.size.width/senderController.value.size.height,
                                     child: CachedVideoPlayer(senderController))
                                     : const Center(child: CircularProgressIndicator())
+
                             ),
 
                             // FutureBuilder(
