@@ -4,6 +4,7 @@ import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/message_model.dart';
+import 'package:fanchat/presentation/screens/private_chat/open_full_video_private_chat.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,11 +59,11 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                   Container(
                     width: MediaQuery.of(context).size.width*.74,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
+                        horizontal: 5,
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: AppColors.primaryColor1,
+                      color: const Color(0xff7895b2).withOpacity(.9),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
@@ -99,11 +100,11 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                     child: Container(
                       width: MediaQuery.of(context).size.width*.74,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
+                          horizontal: 5,
                           vertical: 5
                       ),
                       decoration:  BoxDecoration(
-                        color: AppColors.primaryColor1,
+                        color: const Color(0xff7895b2).withOpacity(.9),
                         borderRadius:const  BorderRadius.only(
                           topRight: Radius.circular(10),
                           topLeft: Radius.circular(10),
@@ -158,11 +159,11 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                       ?Container(
                     width: MediaQuery.of(context).size.width*.74,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
+                        horizontal: 5,
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: AppColors.primaryColor1,
+                      color: const Color(0xff7895b2).withOpacity(.9),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
@@ -183,60 +184,35 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                         const SizedBox(height: 5,),
                         Stack(
                           children: [
-                            Container(
-                                decoration:  BoxDecoration(
-                                  borderRadius:const  BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                  ),
-                                ),
-                               // height: MediaQuery.of(context).size.height*.25,
-                                width: MediaQuery.of(context).size.width*.74,
-                                child: senderController.value.isInitialized
-                                    ? AspectRatio(
-                                    aspectRatio:senderController.value.size.width/senderController.value.size.height,
-                                    child: CachedVideoPlayer(senderController))
-                                    : const Center(child: CircularProgressIndicator())
-                            ),
-
-                            // FutureBuilder(
-                            //   future: intilize,
-                            //   builder: (context,snapshot){
-                            //     if(snapshot.connectionState == ConnectionState.done){
-                            //       return AspectRatio(
-                            //         aspectRatio: videoPlayerController!.value.aspectRatio,
-                            //         child: VideoPlayer(videoPlayerController!),
-                            //       );
-                            //     }
-                            //     else{
-                            //       return const Center(
-                            //         child: CircularProgressIndicator(),
-                            //       );
-                            //     }
-                            //   },
-                            //
-                            //
-                            //
-                            // ),
+                            senderController.value.isInitialized
+                                ? Container(
+                              width: 200,
+                              child: AspectRatio(
+                                  aspectRatio:senderController.value.size.width/senderController.value.size.height,
+                                  child: CachedVideoPlayer(senderController)),
+                            )
+                                : const Center(child: CircularProgressIndicator()),
 
                             Positioned(
-                                top: 10,
-                                right: 20,
+                                top: MediaQuery.of(context).size.height*.2,
+                                right: MediaQuery.of(context).size.height*.08,
                                 child: InkWell(
                                   onTap: (){
-                                    setState((){
-                                      if(senderController.value.isPlaying){
-                                        senderController.pause();
-                                      }else{
-                                        senderController.play();
-                                      }
-                                    });
+                                    // setState((){
+                                    //   if(mymessageController.value.isPlaying){
+                                    //     mymessageController.pause();
+                                    //   }else{
+                                    //     mymessageController.play();
+                                    //   }
+                                    // });
+                                    Navigator.push(context, MaterialPageRoute(builder: (_){
+                                      return OpenFullVideoPrivateChat(controller: senderController);
+                                    }));
                                   },
                                   child: CircleAvatar(
-                                    backgroundColor: AppColors.primaryColor1,
-                                    radius: 20,
-                                    child: senderController.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
+                                    backgroundColor: Colors.white.withOpacity(.2),
+                                    radius: 40,
+                                    child: senderController.value.isPlaying? Icon(Icons.pause,size: 40,color: Colors.white.withOpacity(.5),): Icon(Icons.play_arrow,size: 40,color: Colors.white.withOpacity(.5),),
                                   ),
                                 )
                             ),
@@ -248,11 +224,11 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                   Container(
                     width: MediaQuery.of(context).size.width*.60,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
+                        horizontal: 5,
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: AppColors.primaryColor1,
+                      color: const Color(0xff7895b2).withOpacity(.9),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),

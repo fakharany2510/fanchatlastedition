@@ -4,6 +4,7 @@ import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/screens/edit_screen/edit_screen.dart';
+import 'package:fanchat/presentation/screens/posts/open_full_video.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:fanchat/presentation/screens/user_profile.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
@@ -238,28 +239,31 @@ class PostWidgetState extends State<PostWidget> {
                       : (AppCubit.get(context).posts[widget.index!].postVideo !="")
                       ?Stack(
                     children: [
-                      Container(
-                        // height: MediaQuery.of(context).size.height*.4,
-                        // width: double.infinity,
-                        child:FutureBuilder(
-                          future: intilize,
-                          builder: (context,snapshot){
-                            if(snapshot.connectionState == ConnectionState.done){
-                              return AspectRatio(
-                                aspectRatio: controller!.value.aspectRatio,
-                                child: VideoPlayer(controller!),
-                              );
-                            }
-                            else{
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                          },
+                      FutureBuilder(
+                        future: intilize,
+                        builder: (context,snapshot){
+                          if(snapshot.connectionState == ConnectionState.done){
+                            return ClipRect(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                heightFactor: 0.5,
+                                child: AspectRatio(
+                                  aspectRatio: 1.1/1.1,
+                                  child: VideoPlayer(controller!),
+                                ),
+                              ),
+                            );
+                          }
+                          else{
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
 
 
 
-                        )),
+                      ),
                       //   controller!.value.isInitialized
                       //       ? AspectRatio(
                       //       aspectRatio: controller!.value.aspectRatio,
@@ -288,27 +292,34 @@ class PostWidgetState extends State<PostWidget> {
                         // ),
 
                       Positioned(
-                          top: 10,
-                          right: 20,
+                          top: MediaQuery.of(context).size.height*.055,
+                          right: MediaQuery.of(context).size.height*.18,
                           child: InkWell(
                             onTap: (){
-                              print('hhfhds');
-                              setState((){
-                                print('hhfhds 5653');
-                                if(controller!.value.isPlaying){
-                                  controller!.pause();
-                                  isPostPlaying=true;
-                                }else{
-                                  controller!.play();
-                                  isPostPlaying=false;
+                              // print('hhfhds');
+                              // setState((){
+                              //   print('hhfhds 5653');
+                              //   if(controller!.value.isPlaying){
+                              //     controller!.pause();
+                              //     isPostPlaying=true;
+                              //   }else{
+                              //     controller!.play();
+                              //     isPostPlaying=false;
+                              //
+                              //   }
+                              // });
+                              Navigator.push(context, MaterialPageRoute(builder: (_){
+                                 return OpenFullVideo(
+                                   controller: controller,
+                                   intilize: intilize,
+                                 );
+                              }));
 
-                                }
-                              });
                             },
                             child: CircleAvatar(
-                              backgroundColor: AppColors.primaryColor1,
-                              radius: 20,
-                              child: controller!.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
+                              backgroundColor: Colors.white.withOpacity(.2),
+                              radius: 50,
+                              child: controller!.value.isPlaying?  Icon(Icons.pause,size: 50,color: Colors.white.withOpacity(.4),): Icon(Icons.play_arrow,size: 50, color:Colors.white.withOpacity(.4)),
                             ),
                           )
                       ),

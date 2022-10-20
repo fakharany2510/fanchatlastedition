@@ -40,38 +40,46 @@ class _EditCoverState extends State<EditCover> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: 60,),
-                  Container(
-                    height: 400,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3),
-                        image: DecorationImage(
-                            image: cubit.coverImage == null
-                                ? NetworkImage(
-                                '${cubit.userModel!.cover}')
-                                : cubit.cover,
-                            fit: BoxFit.cover)),
+                  GestureDetector(
+                    onTap: (){
+                      cubit.getCoverImage().then((value) {
+                        setState(() {
+                        });
+                      });
+                    },
+                    child: Container(
+                      height: 400,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(3),
+                          image: DecorationImage(
+                              image: cubit.coverImage == null
+                                  ? NetworkImage(
+                                  '${cubit.userModel!.cover}')
+                                  : cubit.cover,
+                              fit: BoxFit.cover)),
+                    ),
                   ),
                   Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
 
-                      TextButton(
-                          onPressed: (){
-                            cubit.getCoverImage().then((value) {
-                              setState(() {
-                              });
-                            });
-                          },
-                          child:  Text('Edit Cover',style: TextStyle(
-                              color: AppColors.primaryColor1,
-                              fontFamily: AppStrings.appFont,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18
-                          ),),
-                      ),
-                      SizedBox(width: 15,),
+                      // TextButton(
+                      //     onPressed: (){
+                      //       cubit.getCoverImage().then((value) {
+                      //         setState(() {
+                      //         });
+                      //       });
+                      //     },
+                      //     child:  Text('Edit Cover',style: TextStyle(
+                      //         color: AppColors.primaryColor1,
+                      //         fontFamily: AppStrings.appFont,
+                      //         fontWeight: FontWeight.w700,
+                      //         fontSize: 18
+                      //     ),),
+                      // ),
+                      // SizedBox(width: 15,),
                       if( cubit.coverImage != null)
                       state is GetCoverImageLoadingState ||state is UpdateUserLoadingState?
                       CircularProgressIndicator(
@@ -99,7 +107,9 @@ class _EditCoverState extends State<EditCover> {
                       ),
 
                     ],
-                  )
+                  ),
+                  SizedBox(height: 15,),
+
                 ],
               ),
             ),

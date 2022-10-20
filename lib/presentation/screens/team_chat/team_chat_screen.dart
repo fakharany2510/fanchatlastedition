@@ -2,14 +2,11 @@ import 'dart:async';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/presentation/screens/team_chat/send_video_team_chat.dart';
 import 'package:fanchat/presentation/screens/team_chat/team_chat_message_widget.dart';
 import 'package:fanchat/presentation/screens/team_chat/team_chat_my_message_widget.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:intl/intl.dart';
-import 'package:timer_builder/timer_builder.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
@@ -23,7 +20,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:intl_phone_field/countries.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -451,7 +447,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                         clipBehavior: Clip.antiAliasWithSaveLayer,
                                         decoration: BoxDecoration(
                                           border: Border.all(
-                                              color:AppColors.primaryColor1,
+                                              color: const Color(0xff7895b2).withOpacity(.9),
                                               width: 1
                                           ),
                                           borderRadius: BorderRadius.circular(20),

@@ -14,8 +14,8 @@ class CountriesScreen extends StatefulWidget {
 }
 
 class _CountriesScreenState extends State<CountriesScreen> {
-  ScrollController _childScrollController = ScrollController();
-  ScrollController _parentScrollController = ScrollController();
+  final ScrollController _childScrollController = ScrollController();
+  final ScrollController _parentScrollController = ScrollController();
   String name = "";
   List<Map<String, dynamic>> data = [
 
@@ -137,21 +137,38 @@ class _CountriesScreenState extends State<CountriesScreen> {
                               decoration: BoxDecoration(
                                   color: AppColors.myGrey.withOpacity(.3)
                               ),
-                              child: Center(
-                                child: ListTile(
-                                  title: Text(
-                                    data['name'],
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: AppStrings.appFont,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.height*.1,
+                                ),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: ListTile(
+                                    title: Text(
+                                      data['name'],
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: AppStrings.appFont,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
 
-                                  leading: CircleAvatar(
-                                    backgroundImage: NetworkImage(data['image']),
+                                    leading: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: AppColors.primaryColor1.withOpacity(.7),
+                                          width: 1
+                                        )
+                                      ),
+                                      child: Image(
+                                        image: NetworkImage(data['image']),
+                                        fit: BoxFit.cover,
+                                        height:MediaQuery.of(context).size.height*.05,
+                                        width:MediaQuery.of(context).size.height*.08,
+                                      ),
+                                    )
                                   ),
                                 ),
                               ),
@@ -182,7 +199,8 @@ class _CountriesScreenState extends State<CountriesScreen> {
                               decoration: BoxDecoration(
                                   color: AppColors.myGrey.withOpacity(.3)
                               ),
-                              child: Center(
+                              child: Align(
+                                alignment: Alignment.center,
                                 child: ListTile(
                                   title: Text(
                                     data['name'],

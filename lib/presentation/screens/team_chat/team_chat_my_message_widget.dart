@@ -4,6 +4,8 @@ import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/message_model.dart';
+import 'package:fanchat/presentation/screens/home_screen.dart';
+import 'package:fanchat/presentation/screens/private_chat/open_full_video_private_chat.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:fanchat/presentation/screens/user_profile.dart';
 import 'package:flutter/material.dart';
@@ -81,11 +83,11 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                       ?Container(
                     width: MediaQuery.of(context).size.width*.74,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
+                        horizontal: 5,
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: AppColors.myGrey,
+                      color: const Color(0xffeef1ff).withOpacity(.9),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
@@ -99,7 +101,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                           style:  TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 9,
-                              color: AppColors.primaryColor1,
+                              color:  Color(0xff7895b2),
                               fontFamily: AppStrings.appFont
                           ),
 
@@ -109,7 +111,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                           style:  const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
-                              color: Colors.white,
+                              color:  Color(0xff7895b2),
                               fontFamily: AppStrings.appFont
                           ),
                         )
@@ -121,11 +123,11 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                   Container(
                     width: MediaQuery.of(context).size.width*.74,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
+                        horizontal: 5,
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: AppColors.myGrey,
+                      color: const Color(0xffeef1ff).withOpacity(.9),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
@@ -139,14 +141,14 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                           style:  TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 9,
-                              color: AppColors.primaryColor1,
+                              color:  Color(0xff7895b2),
                               fontFamily: AppStrings.appFont
                           ),
 
                         ),
                         const SizedBox(height: 5,),
                         Material(
-                          shadowColor: AppColors.myGrey,
+                          shadowColor: const Color(0xffeef1ff).withOpacity(.9),
                           elevation: 0,
                           clipBehavior: Clip.antiAliasWithSaveLayer,
 
@@ -186,11 +188,11 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                       ?Container(
                     width: MediaQuery.of(context).size.width*.74,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
+                        horizontal: 5,
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: AppColors.myGrey,
+                      color: const Color(0xffeef1ff).withOpacity(.9),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
@@ -203,7 +205,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                           style:  TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 9,
-                              color: AppColors.primaryColor1,
+                              color:  Color(0xff7895b2),
                               fontFamily: AppStrings.appFont
                           ),
 
@@ -211,60 +213,37 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                         const SizedBox(height: 5,),
                         Stack(
                           children: [
-                            Container(
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                  ),
-                                ),
-                                height: MediaQuery.of(context).size.height*.25,
-                                width: MediaQuery.of(context).size.width*.74,
-                                child: mymessageController.value.isInitialized
-                                    ? AspectRatio(
-                                    aspectRatio:mymessageController.value.size.width/mymessageController.value.size.height,
-                                    child: CachedVideoPlayer(mymessageController))
-                                    : const Center(child: CircularProgressIndicator())
-                            ),
-
-                            // FutureBuilder(
-                            //   future: intilize,
-                            //   builder: (context,snapshot){
-                            //     if(snapshot.connectionState == ConnectionState.done){
-                            //       return AspectRatio(
-                            //         aspectRatio: videoPlayerController!.value.aspectRatio,
-                            //         child: VideoPlayer(videoPlayerController!),
-                            //       );
-                            //     }
-                            //     else{
-                            //       return const Center(
-                            //         child: CircularProgressIndicator(),
-                            //       );
-                            //     }
-                            //   },
-                            //
-                            //
-                            //
-                            // ),
+                            mymessageController.value.isInitialized
+                                ? Container(
+                              width: 200,
+                              child: AspectRatio(
+                                  aspectRatio:mymessageController.value.size.width/mymessageController.value.size.height,
+                                  child: CachedVideoPlayer(mymessageController)),
+                            )
+                                : const Center(child: CircularProgressIndicator()),
 
                             Positioned(
-                                top: 10,
-                                right: 20,
+                                top: MediaQuery.of(context).size.height*.2,
+                                right: MediaQuery.of(context).size.height*.08,
                                 child: InkWell(
                                   onTap: (){
-                                    setState((){
-                                      if(mymessageController.value.isPlaying){
-                                        mymessageController.pause();
-                                      }else{
-                                        mymessageController.play();
-                                      }
-                                    });
+                                    // setState((){
+                                    //   if(mymessageController.value.isPlaying){
+                                    //     mymessageController.pause();
+                                    //   }else{
+                                    //     mymessageController.play();
+                                    //   }
+                                    // });
+                                    mymessageController.play();
+                                    isPostPlaying=false;
+                                    Navigator.push(context, MaterialPageRoute(builder: (_){
+                                      return OpenFullVideoPrivateChat(controller: mymessageController);
+                                    }));
                                   },
                                   child: CircleAvatar(
-                                    backgroundColor: AppColors.primaryColor1,
-                                    radius: 20,
-                                    child: mymessageController.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
+                                    backgroundColor: Colors.white.withOpacity(.2),
+                                    radius: 40,
+                                    child: mymessageController.value.isPlaying? Icon(Icons.pause,size: 40,color: Colors.white.withOpacity(.5),): Icon(Icons.play_arrow,size: 40,color: Colors.white.withOpacity(.5),),
                                   ),
                                 )
                             ),
@@ -276,11 +255,11 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                   Container(
                     width: MediaQuery.of(context).size.width*.60,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
+                        horizontal: 5,
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: AppColors.myGrey,
+                      color: const Color(0xffeef1ff).withOpacity(.9),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
@@ -294,7 +273,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                           style:  TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 9,
-                              color: AppColors.primaryColor1,
+                              color:  Color(0xff7895b2),
                               fontFamily: AppStrings.appFont
                           ),
 

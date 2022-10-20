@@ -40,33 +40,38 @@ class _EditImageState extends State<EditImage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(height: 60,),
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 150,
+                GestureDetector(
+                  onTap: (){
+                    cubit.getProfileImage();
+                  },
                   child: CircleAvatar(
-                    backgroundImage: cubit.profileImage == null
-                        ? NetworkImage('${cubit.userModel!.image}')
-                        : cubit.profile,
-                    radius: 145,
+                    backgroundColor: Colors.white,
+                    radius: 150,
+                    child: CircleAvatar(
+                      backgroundImage: cubit.profileImage == null
+                          ? NetworkImage('${cubit.userModel!.image}')
+                          : cubit.profile,
+                      radius: 145,
+                    ),
                   ),
-                ),                Spacer(),
+                ),
+                Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
 
-                    TextButton(
-                      onPressed: (){
-                        cubit.getProfileImage();
-
-                      },
-                      child:  Text('Edit Image',style: TextStyle(
-                          color: AppColors.primaryColor1,
-                          fontFamily: AppStrings.appFont,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18
-                      ),),
-                    ),
-                    const SizedBox(width: 15,),
+                    // TextButton(
+                    //   onPressed: (){
+                    //     cubit.getProfileImage();
+                    //
+                    //   },
+                    //   child:  Text('Edit Image',style: TextStyle(
+                    //       color: AppColors.primaryColor1,
+                    //       fontFamily: AppStrings.appFont,
+                    //       fontWeight: FontWeight.w700,
+                    //       fontSize: 18
+                    //   ),),
+                    // ),
                     if(cubit.profileImage != null)
                     state is GetProfileImageLoadingState ||state is UpdateUserLoadingState?
                     CircularProgressIndicator(
@@ -94,7 +99,8 @@ class _EditImageState extends State<EditImage> {
                     )
 
                   ],
-                )
+                ),
+                SizedBox(height: 15,),
               ],
             ),
           ),

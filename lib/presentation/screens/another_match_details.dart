@@ -135,178 +135,197 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                       ),
                     ),
                   ),
-                  body: ConditionalBuilder(
-                    builder: (context)=>Column(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            height:MediaQuery.of(context).size.height*.83,
-                            color: Colors.white,
-                            padding: EdgeInsets.all(10),
-                            child: ListView.separated(
-                                controller: scrollController,
-                                physics: BouncingScrollPhysics(),
-                                itemBuilder: (context , index)
-                                {
-                                  var message =AppCubit.get(context).messages[index];
-                                  if(widget.userId! == message.senderId)
-                                    //send message
-                                    return SenderMessageWidget(index: index,);
-                                  //receive message
-                                  return MyMessageWidget(index: index,);
-                                },
-                                separatorBuilder: (context , index)=>const SizedBox(height: 15,),
-                                itemCount: AppCubit.get(context).messages.length),
-                          ),
-                        ),
-                        recording==true?
-                        Container(
-                          width: double.infinity,
-                          height: 100,
-                          decoration: BoxDecoration(
-                              color: AppColors.primaryColor1
-                          ),
-                          child: Column(
-                            children: [
-                              SizedBox(height: 5,),
-                              Text('${statusText}',style: const TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: AppStrings.appFont,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500
-                              ),),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                  body: Stack(
+                    children: [
+                      Container(
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          child:const Opacity(
+                            opacity: 1,
+                            child:  Image(
+                              image: AssetImage('assets/images/chat_image.jpg'),
+                              fit: BoxFit.cover,
+
+                            ),
+                          )
+                      ),
+
+                      ConditionalBuilder(
+                        builder: (context)=>Column(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height:MediaQuery.of(context).size.height*.83,
+                                padding: EdgeInsets.all(10),
+                                child: ListView.separated(
+                                    controller: scrollController,
+                                    physics: BouncingScrollPhysics(),
+                                    itemBuilder: (context , index)
+                                    {
+                                      var message =AppCubit.get(context).messages[index];
+                                      if(widget.userId! == message.senderId)
+                                        //send message
+                                        return SenderMessageWidget(index: index,);
+                                      //receive message
+                                      return MyMessageWidget(index: index,);
+                                    },
+                                    separatorBuilder: (context , index)=>const SizedBox(height: 15,),
+                                    itemCount: AppCubit.get(context).messages.length),
+                              ),
+                            ),
+                            recording==true?
+                            Container(
+                              width: double.infinity,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                  color: AppColors.primaryColor1
+                              ),
+                              child: Column(
                                 children: [
-                                  CircleAvatar(
-                                    radius: 20,
-                                    backgroundColor: AppColors.myWhite,
-                                    child:IconButton(
-                                        onPressed: (){
-                                          pauseRecord();
-                                        },
-                                        icon:   RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
-                                          Icons.radio_button_unchecked_rounded,
-                                          color: AppColors.primaryColor1,
-                                          size: 20,
-                                        ):Icon(
-                                          Icons.pause,
-                                          color: AppColors.primaryColor1,
-                                          size: 20,
-                                        )
-                                    ),
-                                  ),
-                                  SizedBox(width: MediaQuery.of(context).size.width*.5,),
-                                  CircleAvatar(
-                                    radius: 20,
-                                    backgroundColor: AppColors.myWhite,
-                                    child:  IconButton(
-                                        onPressed: (){
-                                          setState(() {
-                                            recording=false;
-                                            AppCubit.get(context).isSend=true;
-                                          });
-                                          stopRecord();
-                                          scrollController.animateTo(
-                                            scrollController.position.maxScrollExtent,
-                                            duration: const Duration(milliseconds: 300),
-                                            curve: Curves.easeOut,
-                                          );
-                                          // toogleRecord();
-                                        },
-                                        icon:  Icon(
-                                          Icons.send,
-                                          color: AppColors.primaryColor1,
-                                          size: 20,
-                                        )
-                                    ),
-                                  ),
-
-                                ],
-                              )
-                            ],
-                          ) ,
-                        ):
-                        Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width*.70,
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color:AppColors.primaryColor1,
-                                        width: 1
-                                    ),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Padding(
-                                      padding: const EdgeInsets.only(left: 8),
-                                      child: TextFormField(
-                                        onChanged: (v){
-                                          setState((){
-                                            isWriting=true;
-                                          });
-                                        },
-                                        keyboardType: TextInputType.multiline,
-                                        maxLines: null,
-                                        controller: textMessage,
-                                        decoration:  const InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'Write your message...',
+                                  SizedBox(height: 5,),
+                                  Text('${statusText}',style: const TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: AppStrings.appFont,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500
+                                  ),),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 20,
+                                        backgroundColor: AppColors.myWhite,
+                                        child:IconButton(
+                                            onPressed: (){
+                                              pauseRecord();
+                                            },
+                                            icon:   RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
+                                              Icons.radio_button_unchecked_rounded,
+                                              color: AppColors.primaryColor1,
+                                              size: 20,
+                                            ):Icon(
+                                              Icons.pause,
+                                              color: AppColors.primaryColor1,
+                                              size: 20,
+                                            )
                                         ),
-                                      )
-                                  ),
-                                ),
-                                SizedBox(width: 5,),
-                                Container(
-                                    width: 35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: AppColors.primaryColor1
-                                    ),
-                                    child: Center(
-                                      child: IconButton(
-                                          onPressed: (){
-                                            HapticFeedback.vibrate();
-                                            textMessage.text==""
-                                                ?{
-                                              recording?stopRecord():startRecord(),
-                                              AppCubit.get(context).getMessages(recevierId:widget.userId!)
-                                            }
-                                                :AppCubit.get(context).sendMessage(
-                                                recevierId: widget.userId!,
-                                                recevierName: widget.userName!,
-                                                recevierImage: widget.userImage!,
-                                                dateTime: DateTime.now().toString(),
-                                                text: textMessage.text);
-                                            textMessage.clear();
-                                          },
-                                          color: AppColors.primaryColor1,
-                                          icon: AppCubit.get(context).isSend? CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?Icon(Icons.mic,color: Colors.white,size: 17):Icon(Icons.send,color: Colors.white,size: 17)
                                       ),
-                                    )
-                                ),
+                                      SizedBox(width: MediaQuery.of(context).size.width*.5,),
+                                      CircleAvatar(
+                                        radius: 20,
+                                        backgroundColor: AppColors.myWhite,
+                                        child:  IconButton(
+                                            onPressed: (){
+                                              setState(() {
+                                                recording=false;
+                                                AppCubit.get(context).isSend=true;
+                                              });
+                                              stopRecord();
+                                              scrollController.animateTo(
+                                                scrollController.position.maxScrollExtent,
+                                                duration: const Duration(milliseconds: 300),
+                                                curve: Curves.easeOut,
+                                              );
+                                              // toogleRecord();
+                                            },
+                                            icon:  Icon(
+                                              Icons.send,
+                                              color: AppColors.primaryColor1,
+                                              size: 20,
+                                            )
+                                        ),
+                                      ),
 
-                              ],
-                            )
+                                    ],
+                                  )
+                                ],
+                              ) ,
+                            ):
+                            Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width*.70,
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: const Color(0xff7895b2).withOpacity(.9),
+                                            width: 1
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Padding(
+                                          padding: const EdgeInsets.only(left: 8),
+                                          child: TextFormField(
+                                            onChanged: (v){
+                                              setState((){
+                                                isWriting=true;
+                                              });
+                                            },
+                                            keyboardType: TextInputType.multiline,
+                                            maxLines: null,
+                                            controller: textMessage,
+                                            decoration:   InputDecoration(
+                                              hintStyle: TextStyle(
+                                                color:  Color(0xffeef1ff).withOpacity(.9),
+                                              ),
+                                              border: InputBorder.none,
+                                              hintText: 'Write your message...',
+                                            ),
+                                          )
+                                      ),
+                                    ),
+                                    SizedBox(width: 5,),
+                                    Container(
+                                        width: 35,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(50),
+                                          color: const Color(0xff7895b2).withOpacity(.9),
+                                        ),
+                                        child: Center(
+                                          child: IconButton(
+                                              onPressed: (){
+                                                HapticFeedback.vibrate();
+                                                textMessage.text==""
+                                                    ?{
+                                                  recording?stopRecord():startRecord(),
+                                                  AppCubit.get(context).getMessages(recevierId:widget.userId!)
+                                                }
+                                                    :AppCubit.get(context).sendMessage(
+                                                    recevierId: widget.userId!,
+                                                    recevierName: widget.userName!,
+                                                    recevierImage: widget.userImage!,
+                                                    dateTime: DateTime.now().toString(),
+                                                    text: textMessage.text);
+                                                textMessage.clear();
+                                              },
+                                              color: const Color(0xff7895b2).withOpacity(.9),
+                                              icon: AppCubit.get(context).isSend? CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?Icon(Icons.mic,color: Colors.white,size: 17):Icon(Icons.send,color: Colors.white,size: 17)
+                                          ),
+                                        )
+                                    ),
+
+                                  ],
+                                )
+                            ),
+
+                          ],
                         ),
-
-                      ],
-                    ),
-                    condition:AppCubit.get(context).messages.length >=0 ,
-                    fallback:(context)=>const Center(child: CircularProgressIndicator()) ,
+                        condition:AppCubit.get(context).messages.length >=0 ,
+                        fallback:(context)=>const Center(child: CircularProgressIndicator()) ,
+                      ),
+                    ],
                   ),
                   floatingActionButton:Padding(
-                    padding: const EdgeInsets.only(bottom:0,left:5),
+                    padding: const EdgeInsets.only(bottom:0,left:10),
                     child: Container(
-                      width: MediaQuery.of(context).size.width*.14,
-                      height: MediaQuery.of(context).size.height*.045,
+                      width: MediaQuery.of(context).size.width*.10,
+                      height: MediaQuery.of(context).size.height*.05,
 
                       child: SpeedDial(
-                        backgroundColor: AppColors.primaryColor1,
+                        backgroundColor: const Color(0xff7895b2).withOpacity(.9),
                         animatedIcon: AnimatedIcons.menu_close,
                         elevation: 1,
                         overlayColor: AppColors.myWhite,

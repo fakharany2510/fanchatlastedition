@@ -149,13 +149,13 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                       Container(
                           height: MediaQuery.of(context).size.height,
                           width: MediaQuery.of(context).size.width,
-                          child:Opacity(
+                          child:const Opacity(
+                            opacity: 1,
                             child:  Image(
-                              image: AssetImage('assets/images/background1.jpg'),
+                              image: AssetImage('assets/images/public_chat_image.jpeg'),
                               fit: BoxFit.cover,
 
                             ),
-                            opacity: 1,
                           )
                       ),
                       ConditionalBuilder(
@@ -276,7 +276,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                       clipBehavior: Clip.antiAliasWithSaveLayer,
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                            color:AppColors.primaryColor1,
+                                            color: const Color(0xff7895b2).withOpacity(.9),
                                             width: 1
                                         ),
                                         borderRadius: BorderRadius.circular(20),
@@ -290,7 +290,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                               });
                                             },
                                             style: TextStyle(
-                                                color: AppColors.primaryColor1
+                                                color: AppColors.myWhite
                                             ),
                                             keyboardType: TextInputType.multiline,
                                             maxLines: null,
@@ -299,7 +299,8 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                               border: InputBorder.none,
                                               hintText: 'Write your message...',
                                               hintStyle: TextStyle(
-                                                color: AppColors.primaryColor1
+                                                    color:  Color(0xffeef1ff).withOpacity(.9),
+
                                               )
 
                                             ),
@@ -312,7 +313,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                         height: 35,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(50),
-                                            color: AppColors.primaryColor1
+                                          color: const Color(0xff7895b2).withOpacity(.9),
                                         ),
                                         child: Center(
                                           child: IconButton(
@@ -429,11 +430,11 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                   floatingActionButton:Padding(
                     padding: const EdgeInsets.only(bottom:0,left:5),
                     child: Container(
-                      width: MediaQuery.of(context).size.width*.14,
-                      height: MediaQuery.of(context).size.height*.045,
+                      width: MediaQuery.of(context).size.width*.10,
+                      height: MediaQuery.of(context).size.height*.05,
 
                       child: SpeedDial(
-                        backgroundColor: AppColors.primaryColor1,
+                        backgroundColor: const Color(0xff7895b2).withOpacity(.9),
                         animatedIcon: AnimatedIcons.menu_close,
                         elevation: 1,
                         overlayColor: AppColors.myWhite,

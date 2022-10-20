@@ -61,17 +61,18 @@ class _CheeringScreenState extends State<CheeringScreen> {
                         width: 90,
                         image: AssetImage('assets/images/cheers.png'),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(height: 15,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Write uniform cheering',
+                          Text('Send a uniform cheer to all your team fans \n and share the fun with every one',
                             style: TextStyle(
                                 color: AppColors.primaryColor1,
-                                fontSize: 22,
+                                fontSize: 17,
                                 fontWeight: FontWeight.w400,
                                 fontFamily: AppStrings.appFont
                             ),
+                            textAlign: TextAlign.center,
                           ),
 
                         ],
@@ -171,7 +172,7 @@ class _CheeringScreenState extends State<CheeringScreen> {
                           height: MediaQuery.of(context).size.height*.07,
                           buttonColor: AppColors.myGrey,
                           textColor: AppColors.primaryColor1,
-                          buttonText: 'Post',
+                          buttonText: 'Send',
                           function: (){
                           }
                       )

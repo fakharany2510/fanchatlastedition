@@ -3,6 +3,9 @@ import 'package:cached_video_player/cached_video_player.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/screens/home_screen.dart';
+import 'package:fanchat/presentation/screens/posts/open_full_video.dart';
+import 'package:fanchat/presentation/screens/private_chat/open_full_video_private_chat.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,11 +53,11 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
             child: (AppCubit.get(context).messages[widget.index!].text!="")
                 ?Container(
               padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
+                  horizontal: 5,
                   vertical: 5
               ),
               decoration:  BoxDecoration(
-                color: AppColors.primaryColor1,
+                color: const Color(0xff7895b2).withOpacity(.9),
                 borderRadius:const  BorderRadius.only(
                   topRight: Radius.circular(10),
                   topLeft: Radius.circular(10),
@@ -108,22 +111,27 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
                     : const Center(child: CircularProgressIndicator()),
 
                 Positioned(
-                    top: 10,
-                    right: 20,
+                    top: MediaQuery.of(context).size.height*.2,
+                    right: MediaQuery.of(context).size.height*.08,
                     child: InkWell(
                       onTap: (){
-                        setState((){
-                          if(mymessageController.value.isPlaying){
-                            mymessageController.pause();
-                          }else{
-                            mymessageController.play();
-                          }
-                        });
+                        // setState((){
+                        //   if(mymessageController.value.isPlaying){
+                        //     mymessageController.pause();
+                        //   }else{
+                        //     mymessageController.play();
+                        //   }
+                        // });
+                        mymessageController.play();
+                        isPostPlaying=false;
+                        Navigator.push(context, MaterialPageRoute(builder: (_){
+                          return OpenFullVideoPrivateChat(controller: mymessageController);
+                        }));
                       },
                       child: CircleAvatar(
-                        backgroundColor: AppColors.primaryColor1,
-                        radius: 20,
-                        child: mymessageController.value.isPlaying? const Icon(Icons.pause):const Icon(Icons.play_arrow),
+                        backgroundColor: Colors.white.withOpacity(.2),
+                        radius: 40,
+                        child: mymessageController.value.isPlaying? Icon(Icons.pause,size: 40,color: Colors.white.withOpacity(.5),): Icon(Icons.play_arrow,size: 40,color: Colors.white.withOpacity(.5),),
                       ),
                     )
                 ),
