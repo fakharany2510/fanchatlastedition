@@ -121,7 +121,7 @@ class AppCubit extends Cubit<AppState> {
           return "${difference.inDays}d ago";
         }
       }
-      getPosts();
+     // getPosts();
     }
     emit(NavigateScreenState());
   }
@@ -569,8 +569,9 @@ class AppCubit extends Cubit<AppState> {
             timeSpam: timeSpam,
 
         );
-        getPosts();
         emit(BrowiseUploadImagePostSuccessState());
+        getPosts();
+
 
       }).catchError((error){
         emit(BrowiseUploadImagePostErrorState());
@@ -619,8 +620,16 @@ class AppCubit extends Cubit<AppState> {
               }).then((value){
             emit(BrowiseCreatePostSuccessState());
           });
+          uploadPostImage(
+            text:text ,
+            dateTime:time ,
+            time: time,
+            timeSpam:time ,
+            image: postImage,
+            name: userModel!.username ,
+            userId: userModel!.uId,
+          );
         //  getPosts();
-      emit(BrowiseCreatePostSuccessState());
     })
         .catchError((error){
       emit(BrowiseCreatePostErrorState());
@@ -748,10 +757,11 @@ class AppCubit extends Cubit<AppState> {
           .update({
         'postId':AppStrings.postUid
       }).then((value){
+
         emit(BrowiseCreateTextPostSuccessState());
+
       });
       getPosts();
-      emit(BrowiseCreateTextPostSuccessState());
     })
         .catchError((error){
       emit(BrowiseCreateTextPostErrorState());
@@ -814,7 +824,7 @@ class AppCubit extends Cubit<AppState> {
         if(userModel!.uId== BrowisePostModel.fromJson(element.data()).userId ){
           myPostsId.add(BrowisePostModel.fromJson(element.data()).postId!);
         }
-        emit(BrowiseGetPostsSuccessState());
+
 
       });
 
@@ -827,11 +837,9 @@ class AppCubit extends Cubit<AppState> {
           }
         ).then((value) {
 
-           print('finish Update Posts');
-          emit(BrowiseGetPostsSuccessState());
         });
-        emit(BrowiseGetPostsSuccessState());
       }
+      emit(BrowiseGetPostsSuccessState());
 
     }
     ).catchError((error){

@@ -32,7 +32,7 @@ class _AddNewImageState extends State<AddNewImage> {
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
-        if(state is BrowiseGetPostsSuccessState){
+        if(state is BrowiseGetPostsLoadingState){
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
         }
 
@@ -91,6 +91,13 @@ class _AddNewImageState extends State<AddNewImage> {
                           //  token:AppCubit.get(context).userToken
                         );
                       }else{
+                        // AppCubit.get(context).createImagePost(
+                        //   time: DateFormat.Hm().format(DateTime.now()),
+                        //   timeSpam: DateTime.now().toString(),
+                        //   dateTime: DateFormat.yMMMd().format(DateTime.now()),
+                        //   text:postText.text,
+                        //   postImage: AppCubit.get(context).userModel!.image
+                        // );
                         AppCubit.get(context).uploadPostImage(
                           dateTime: DateFormat.yMMMd().format(DateTime.now()),
                           time: DateFormat.Hm().format(DateTime.now()),

@@ -63,6 +63,8 @@ dependencies:
   searchable_listview: ^2.0.1
   timer_builder: ^2.0.0
   circular_countdown_timer: ^0.2.2
+  pay: ^1.0.11
+
 
 
   #Google SignIn

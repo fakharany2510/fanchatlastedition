@@ -64,7 +64,7 @@ class _FanFullVideoState extends State<FanFullVideo> {
               height: MediaQuery.of(context).size.height*02,
               width: MediaQuery.of(context).size.width*.4,
               child: Image(
-                image: AssetImage('assets/images/appbarLogo.png'),
+                image: AssetImage('assets/images/ncolort.png'),
 
               ),
             ),

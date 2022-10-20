@@ -39,7 +39,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
-        if(state is BrowiseGetPostsSuccessState){
+        if(state is BrowiseCreateVideoPostLoadingState){
          // Navigator.of(context).popAndPushNamed('home_layout');
          //  AppCubit.get(context).testLikes();
          //  AppCubit.get(context).testComments();

@@ -32,26 +32,26 @@ class _HomeLayoutState extends State<HomeLayout> {
   @override
   void initState(){
     super.initState();
-    // print("==================================token================================");
-    // FirebaseMessaging.instance.getToken().then((token){
-    //   AppCubit.get(context).saveToken(token!);
-    //   print(token);
-    //   print("==================================token================================");
-    // });
-    // AppCubit.get(context).getUser().then((value){
-    //   print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
-    //   print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
-    //   Future.delayed(const Duration(days: 7),(){
-    //     if( CashHelper.getData(key: 'business') == true || CashHelper.getData(key: 'advertise') == true){
-    //       print('payed');
-    //     }else{
-    //       showMyDialog2(context);
-    //
-    //     }
-    //   });
-    // }).catchError((error){
-    //   print('error');
-    // });
+    print("==================================token================================");
+    FirebaseMessaging.instance.getToken().then((token){
+      AppCubit.get(context).saveToken(token!);
+      print(token);
+      print("==================================token================================");
+    });
+    AppCubit.get(context).getUser().then((value){
+      print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
+      print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
+      Future.delayed(const Duration(days: 7),(){
+        if( CashHelper.getData(key: 'business') == true || CashHelper.getData(key: 'advertise') == true){
+          print('payed');
+        }else{
+          showMyDialog2(context);
+
+        }
+      });
+    }).catchError((error){
+      print('error');
+    });
 
 
 

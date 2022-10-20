@@ -9,9 +9,7 @@ import '../widgets/post_widget.dart';
 
 bool isPostPlaying= true;
 class HomeScreen extends StatefulWidget {
-    HomeScreen(
-      {Key? key, required this.pageHeight, required this.pageWidth})
-      : super(key: key);
+    HomeScreen({Key? key, required this.pageHeight, required this.pageWidth}) : super(key: key);
   final double? pageHeight;
   final double? pageWidth;
 
@@ -203,13 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         :Padding(
                           padding: const EdgeInsets.only(top:170),
                           child: Center(
-                      child: Text('No Posts Added Yet',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: AppColors.navBarActiveIcon,
-
-                      ),
-                      )
+                      child: CircularProgressIndicator()
                     ),
                         ),
                 ),

@@ -46,11 +46,11 @@ class _AddTextPostState extends State<AddTextPost> {
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit, AppState>(
       listener: (context, state) {
-        if (state is BrowiseGetPostsSuccessState) {
+        if (state is BrowiseGetPostsLoadingState) {
           // AppCubit.get(context).testLikes();
           // AppCubit.get(context).testComments();
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => HomeLayout()));
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+
           AppCubit.get(context).postImage = null;
         }
       },
@@ -98,16 +98,16 @@ class _AddTextPostState extends State<AddTextPost> {
         time: DateFormat.Hm().format(DateTime.now()),
         dateTime: DateFormat.yMMMd().format(DateTime.now()),
         );
-        callFcmApiSendPushNotifications(
-        title: 'New Post Added',
-        description:postText.text,
-        imageUrl: "",
-        //  token:AppCubit.get(context).userToken
-        );
-        setState((){
-          increaseNumberOfPosts=increaseNumberOfPosts+1;
-        });
-        AppCubit.get(context).increasNumberOfPosts(increaseNumberOfPosts);
+        // callFcmApiSendPushNotifications(
+        // title: 'New Post Added',
+        // description:postText.text,
+        // imageUrl: "",
+        // //  token:AppCubit.get(context).userToken
+        // );
+        // setState((){
+        //   increaseNumberOfPosts=increaseNumberOfPosts+1;
+        // });
+       // AppCubit.get(context).increasNumberOfPosts(increaseNumberOfPosts);
         }
         },
 
