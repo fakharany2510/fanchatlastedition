@@ -195,7 +195,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: size.height*.03,),
+                        SizedBox(height: size.height*.07,),
                         defaultButton(
                             textColor: AppColors.primaryColor1,
                             buttonText: 'LOGIN',
@@ -246,81 +246,81 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         SizedBox(height: size.height*.02,),
 
-                        SizedBox(height: size.height*.03,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 1,
-                              width: size.width*.3,
-                              color: Colors.grey.shade400,
-                            ),
-                            const SizedBox(width: 5,),
-                            Text('or',
-                              style: TextStyle(
-                                  fontSize:16,
-                                  color: AppColors.myGrey,
-                                  fontFamily: AppStrings.appFont
-                              ),
-                            ),
-                            const SizedBox(width: 5,),
-                            Container(
-                              height: 1,
-                              width: size.width*.3,
-                              color: Colors.grey.shade400,
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height*.03,),
-                        Row(
-                          children: [
-                            defaultSocialMediaButton(
-                                context: context,
-                                function: (){
-                                 if(isCheckBoxTrue == true){
-                                   RegisterCubit.get(context).signInWithFacebook();
-                                 }else{
-                                   Fluttertoast.showToast(
-                                     msg:"You Must Agree To Privacy Policies First",
-                                     toastLength: Toast.LENGTH_LONG,
-                                     gravity: ToastGravity.TOP,
-                                     timeInSecForIosWeb: 5,
-                                     backgroundColor: Colors.red,
-                                     textColor: Colors.white,
-                                     fontSize: 18.0,
-                                   );
-                                 }
-                                },
-                                size:size,
-                                buttonColor: AppColors.primaryColor1,
-                                buttonText: "Facebook",
-                                imagePath: 'assets/images/face.png'
-                            ),
-                            SizedBox(width: MediaQuery.of(context).size.width*.03,),
-                            defaultSocialMediaButton(
-                                context: context,
-                                function: (){
-                                  if(isCheckBoxTrue == true){
-                                    RegisterCubit.get(context).loginWithGoogle();
-                                  }else{
-                                    Fluttertoast.showToast(
-                                      msg:"You Must Agree To Privacy Policies First",
-                                      toastLength: Toast.LENGTH_LONG,
-                                      gravity: ToastGravity.TOP,
-                                      timeInSecForIosWeb: 5,
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
-                                      fontSize: 18.0,
-                                    );
-                                  }
-                                },
-                                size:size,
-                                  buttonColor: AppColors.primaryColor1,
-                                buttonText: "Google",
-                                imagePath: 'assets/images/google1.png'
-                            ),
-                          ],
-                        ),
+                        // SizedBox(height: size.height*.03,),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Container(
+                        //       height: 1,
+                        //       width: size.width*.3,
+                        //       color: Colors.grey.shade400,
+                        //     ),
+                        //     const SizedBox(width: 5,),
+                        //     Text('or',
+                        //       style: TextStyle(
+                        //           fontSize:16,
+                        //           color: AppColors.myGrey,
+                        //           fontFamily: AppStrings.appFont
+                        //       ),
+                        //     ),
+                        //     const SizedBox(width: 5,),
+                        //     Container(
+                        //       height: 1,
+                        //       width: size.width*.3,
+                        //       color: Colors.grey.shade400,
+                        //     ),
+                        //   ],
+                        // ),
+                        // SizedBox(height: size.height*.03,),
+                        // Row(
+                        //   children: [
+                        //     defaultSocialMediaButton(
+                        //         context: context,
+                        //         function: (){
+                        //          if(isCheckBoxTrue == true){
+                        //            RegisterCubit.get(context).signInWithFacebook();
+                        //          }else{
+                        //            Fluttertoast.showToast(
+                        //              msg:"You Must Agree To Privacy Policies First",
+                        //              toastLength: Toast.LENGTH_LONG,
+                        //              gravity: ToastGravity.TOP,
+                        //              timeInSecForIosWeb: 5,
+                        //              backgroundColor: Colors.red,
+                        //              textColor: Colors.white,
+                        //              fontSize: 18.0,
+                        //            );
+                        //          }
+                        //         },
+                        //         size:size,
+                        //         buttonColor: AppColors.primaryColor1,
+                        //         buttonText: "Facebook",
+                        //         imagePath: 'assets/images/face.png'
+                        //     ),
+                        //     SizedBox(width: MediaQuery.of(context).size.width*.03,),
+                        //     defaultSocialMediaButton(
+                        //         context: context,
+                        //         function: (){
+                        //           if(isCheckBoxTrue == true){
+                        //             RegisterCubit.get(context).loginWithGoogle();
+                        //           }else{
+                        //             Fluttertoast.showToast(
+                        //               msg:"You Must Agree To Privacy Policies First",
+                        //               toastLength: Toast.LENGTH_LONG,
+                        //               gravity: ToastGravity.TOP,
+                        //               timeInSecForIosWeb: 5,
+                        //               backgroundColor: Colors.red,
+                        //               textColor: Colors.white,
+                        //               fontSize: 18.0,
+                        //             );
+                        //           }
+                        //         },
+                        //         size:size,
+                        //           buttonColor: AppColors.primaryColor1,
+                        //         buttonText: "Google",
+                        //         imagePath: 'assets/images/google1.png'
+                        //     ),
+                        //   ],
+                        // ),
                         SizedBox(height: size.height*.03,),
                         Row(
                     mainAxisAlignment: MainAxisAlignment.center,
