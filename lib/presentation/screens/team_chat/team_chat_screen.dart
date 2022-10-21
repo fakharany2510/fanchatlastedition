@@ -183,7 +183,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                             width: MediaQuery.of(context).size.width,
                             child:Opacity(
                               child:  Image(
-                                image: AssetImage('assets/images/background1.jpg'),
+                                image: AssetImage('assets/images/public_chat_image.jpeg'),
                                 fit: BoxFit.cover,
 
                               ),
@@ -462,8 +462,14 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                               },
                                               keyboardType: TextInputType.multiline,
                                               maxLines: null,
+                                              style: TextStyle(
+                                                  color: AppColors.myWhite
+                                              ),
                                               controller: textMessage,
                                               decoration:  const InputDecoration(
+                                                hintStyle: TextStyle(
+                                                  color: Colors.white
+                                                ),
                                                 border: InputBorder.none,
                                                 hintText: 'Write your message...',
 

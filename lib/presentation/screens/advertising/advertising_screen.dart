@@ -27,31 +27,41 @@ class AdvertisingScreen extends StatelessWidget {
       builder: (context,state){
         var cubit=AdvertisingCubit.get(context);
         return Scaffold(
-            backgroundColor: AppColors.primaryColor1,
-            body: Padding(
-              padding: const EdgeInsets.only(top: 5),
-              child: Stack(
-                children: [
-                  ListView.separated(
-                      itemBuilder: (context,index){
-                        return AdvertisingAreaWidget(index: index,);
-                      },
-                      separatorBuilder: (context,index){
-                        return Column(
-                          children: [
-                            SizedBox(height: 10,),
-                            Divider(
-                              color: Colors.white,
-                              height: 2,
-                            ),
-                            SizedBox(height: 10,),
+            // backgroundColor: AppColors.primaryColor1,
+            body: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/public_chat_image.jpeg')
+                )
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Stack(
+                  children: [
+                    ListView.separated(
+                        itemBuilder: (context,index){
+                          return AdvertisingAreaWidget(index: index,);
+                        },
+                        separatorBuilder: (context,index){
+                          return Column(
+                            children: [
+                              SizedBox(height: 10,),
+                              Divider(
+                                color: Colors.white,
+                                height: 2,
+                              ),
+                              SizedBox(height: 10,),
 
-                          ],
-                        );
-                      },
-                      itemCount: AdvertisingCubit.get(context).advertising.length
-                  ),
-                ],
+                            ],
+                          );
+                        },
+                        itemCount: AdvertisingCubit.get(context).advertising.length
+                    ),
+                  ],
+                ),
               ),
             ),
 

@@ -63,7 +63,7 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: const Color(0xff7895b2).withOpacity(.9),
+                      color: const Color(0xffb1b2ff).withOpacity(.16),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
@@ -104,7 +104,7 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                           vertical: 5
                       ),
                       decoration:  BoxDecoration(
-                        color: const Color(0xff7895b2).withOpacity(.9),
+                        color: const Color(0xffb1b2ff).withOpacity(.16),
                         borderRadius:const  BorderRadius.only(
                           topRight: Radius.circular(10),
                           topLeft: Radius.circular(10),
@@ -163,7 +163,7 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: const Color(0xff7895b2).withOpacity(.9),
+                      color: const Color(0xffb1b2ff).withOpacity(.16),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
@@ -228,7 +228,7 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: const Color(0xff7895b2).withOpacity(.9),
+                      color: const Color(0xffb1b2ff).withOpacity(.16),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),

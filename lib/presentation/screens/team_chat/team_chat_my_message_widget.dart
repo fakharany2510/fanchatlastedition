@@ -87,7 +87,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: const Color(0xffeef1ff).withOpacity(.9),
+                      color: const Color(0xffb1b2ff).withOpacity(.10),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
@@ -101,7 +101,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                           style:  TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 9,
-                              color:  Color(0xff7895b2),
+                              color:  Color(0xfffbf7c2),
                               fontFamily: AppStrings.appFont
                           ),
 
@@ -111,7 +111,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                           style:  const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
-                              color:  Color(0xff7895b2),
+                              color:  Color(0xfffbf7c2),
                               fontFamily: AppStrings.appFont
                           ),
                         )
@@ -127,7 +127,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: const Color(0xffeef1ff).withOpacity(.9),
+                      color: const Color(0xffb1b2ff).withOpacity(.10),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
@@ -141,14 +141,14 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                           style:  TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 9,
-                              color:  Color(0xff7895b2),
+                              color:  Color(0xfffbf7c2),
                               fontFamily: AppStrings.appFont
                           ),
 
                         ),
                         const SizedBox(height: 5,),
                         Material(
-                          shadowColor: const Color(0xffeef1ff).withOpacity(.9),
+                          color: const Color(0xffb1b2ff).withOpacity(.10),
                           elevation: 0,
                           clipBehavior: Clip.antiAliasWithSaveLayer,
 
@@ -192,7 +192,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: const Color(0xffeef1ff).withOpacity(.9),
+                      color: const Color(0xffb1b2ff).withOpacity(.10),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
@@ -205,7 +205,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                           style:  TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 9,
-                              color:  Color(0xff7895b2),
+                              color:  Color(0xfffbf7c2),
                               fontFamily: AppStrings.appFont
                           ),
 
@@ -259,7 +259,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: const Color(0xffeef1ff).withOpacity(.9),
+                      color: const Color(0xffb1b2ff).withOpacity(.10),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
@@ -273,7 +273,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                           style:  TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 9,
-                              color:  Color(0xff7895b2),
+                              color:  Color(0xfffbf7c2),
                               fontFamily: AppStrings.appFont
                           ),
 

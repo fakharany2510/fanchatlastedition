@@ -131,75 +131,121 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
             body: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                      'assets/images/register_image.jpg',
-                  ),
-                )
-              ),
+
               child: Form(
                 key: formKey,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 45, left: 30, right: 30),
-                  child: SingleChildScrollView(
+                child: SingleChildScrollView(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.height,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            'assets/images/register_image.jpg',
+                          ),
+                        )
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children:  [
-                        const Image(image: AssetImage('assets/images/ncolort.png'),width: 180,height: 180,),
-                        SizedBox(height: 30,),
-
-                        textFormFieldWidget(
-                            context: context,
-                            controller: name,
-                            errorMessage: "please enter your name",
-                            inputType: TextInputType.name,
-                            labelText:"Name",
-                            prefixIcon: Icon(Icons.person,color: AppColors.myGrey,)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 40, left: 30, right: 30),
+                          child: Image(image: AssetImage('assets/images/login_image.jpeg'),width: 180,height: 120,),
                         ),
-                        SizedBox(height: size.height*.03,),
-                        Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.fromLTRB(15, 20, 0, 0),
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height*.08,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.myGrey,
-                              width: 1
-                            ),
-                            borderRadius: BorderRadius.circular(15)
+
+                        SizedBox(height: 15,),
+
+                        Padding(
+                          padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
+                          child: Text('Enjoy chatting in special team fans’ chat rooms, public rooms, and  one-to-one chats. Share videos, photos, and voice messges with football fans around the world.Broadcast a cheer to all your team fans in team rooms,and follow match scores and news during',
+                          style: TextStyle(
+                            color: AppColors.myWhite,
+                            fontSize: 14,
+                            fontFamily: AppStrings.appFont
                           ),
-                          child: IntlPhoneField(
-                            dropdownTextStyle: TextStyle(
-                              color: AppColors.myGrey,
+                           textAlign: TextAlign.center,
+                          ),
+                        ),
+
+                        const SizedBox(height: 10,),
+
+                        Text('World Cup, Qatar, 2022',
+                          style: TextStyle(
+                              color: Color(0xfffff560),
+                              fontSize: 16,
+                              fontFamily: AppStrings.appFont
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+
+                        const SizedBox(height: 10,),
+
+                        Text(' Join the fans and don’t lose a moment',
+                          style: TextStyle(
+                              color: AppColors.myWhite,
                               fontSize: 14,
                               fontFamily: AppStrings.appFont
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+
+                        SizedBox(height: 25,),
+
+                        Padding(
+                          padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
+                          child: textFormFieldWidget(
+                              context: context,
+                              controller: name,
+                              errorMessage: "please enter your name",
+                              inputType: TextInputType.name,
+                              labelText:"Name",
+                              prefixIcon: Icon(Icons.person,color: AppColors.myGrey,)
+                          ),
+                        ),
+                        SizedBox(height: size.height*.03,),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
+                          child: Container(
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.fromLTRB(15, 20, 0, 0),
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height*.08,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppColors.myGrey,
+                                width: 1
+                              ),
+                              borderRadius: BorderRadius.circular(15)
                             ),
-                            invalidNumberMessage: 'Invalid Phone Number!',
-                            textAlignVertical: TextAlignVertical.center,
-                            style:  TextStyle(
-                                fontSize: 15,
-                                fontFamily: AppStrings.appFont,
-                                color: AppColors.myGrey
-                            ),
-                            onChanged: (phone) => phoneNumber = phone.completeNumber,
-                            initialCountryCode: 'AF',
-                            flagsButtonPadding: const EdgeInsets.only(right: 10,bottom: 10),
-                            showDropdownIcon: false,
-                            keyboardType: TextInputType.phone,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
+                            child: IntlPhoneField(
+                              dropdownTextStyle: TextStyle(
+                                color: AppColors.myGrey,
+                                fontSize: 14,
+                                fontFamily: AppStrings.appFont
+                              ),
+                              invalidNumberMessage: 'Invalid Phone Number!',
+                              textAlignVertical: TextAlignVertical.center,
+                              style:  TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: AppStrings.appFont,
+                                  color: AppColors.myGrey
+                              ),
+                              onChanged: (phone) => phoneNumber = phone.completeNumber,
+                              initialCountryCode: 'AF',
+                              flagsButtonPadding: const EdgeInsets.only(right: 10,bottom: 10),
+                              showDropdownIcon: false,
+                              keyboardType: TextInputType.phone,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                              ),
                             ),
                           ),
                         ),
-                        SizedBox(height: size.height*.07,),
+                        SizedBox(height: size.height*.04,),
                         defaultButton(
-                            textColor: AppColors.primaryColor1,
+                            textColor: AppColors.myWhite,
                             buttonText: 'LOGIN',
-                            buttonColor: AppColors.myGrey,
+                            buttonColor: Color(0Xffd32330),
                             width: size.width*.9,
                             height: size.height*.06,
                             function: (){
@@ -362,7 +408,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                     ],
-                  ),
+                ),
                       ],
                     ),
                   ),

@@ -28,43 +28,52 @@ class FanScreen extends StatelessWidget {
           var cubit=AppCubit.get(context);
           return Scaffold(
 
-            body: Padding(
-              padding: const EdgeInsets.only(top: 0),
-              child: Stack(
-                children: [
-                  Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      child:Opacity(
-                        child:  Image(
-                          image: AssetImage('assets/images/b3.jpg'),
-                          fit: BoxFit.cover,
+            body: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/public_chat_image.jpeg')
+                  )
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 0),
+                child: Stack(
+                  children: [
+                    Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child:Opacity(
+                          child:  Image(
+                            image: AssetImage('assets/images/public_chat_image.jpeg'),
+                            fit: BoxFit.cover,
 
-                        ),
-                        opacity: 1,
-                      )
-                  ),
-                  // Container(
-                  //   height: MediaQuery.of(context).size.height,
-                  //   width: MediaQuery.of(context).size.width,
-                  //   child:Opacity(
-                  //     child:  Image(
-                  //       image: AssetImage('assets/images/fanback.jpeg'),
-                  //       fit: BoxFit.cover,
-                  //
-                  //     ),
-                  //     opacity: .09,
-                  //   )
-                  // ),
-                  GridView.count(
-                    childAspectRatio: 1/1.23,
-                    crossAxisSpacing: MediaQuery.of(context).size.height*.008,
-                    mainAxisSpacing: MediaQuery.of(context).size.height*.00,
-                    crossAxisCount: 3,
-                    children: List.generate(
-                        AppCubit.get(context).fans.length, (index) => FanAreaWidget(index: index,)),
-                  ),
-                ],
+                          ),
+                          opacity: 1,
+                        )
+                    ),
+                    // Container(
+                    //   height: MediaQuery.of(context).size.height,
+                    //   width: MediaQuery.of(context).size.width,
+                    //   child:Opacity(
+                    //     child:  Image(
+                    //       image: AssetImage('assets/images/fanback.jpeg'),
+                    //       fit: BoxFit.cover,
+                    //
+                    //     ),
+                    //     opacity: .09,
+                    //   )
+                    // ),
+                    GridView.count(
+                      childAspectRatio: 1/1.23,
+                      crossAxisSpacing: MediaQuery.of(context).size.height*.008,
+                      mainAxisSpacing: MediaQuery.of(context).size.height*.00,
+                      crossAxisCount: 3,
+                      children: List.generate(
+                          AppCubit.get(context).fans.length, (index) => FanAreaWidget(index: index,)),
+                    ),
+                  ],
+                ),
               ),
             ),
 
