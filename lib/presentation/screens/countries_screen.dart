@@ -101,7 +101,6 @@ class _CountriesScreenState extends State<CountriesScreen> {
                         child:  Image(
                           image: AssetImage('assets/images/public_chat_image.jpeg'),
                           fit: BoxFit.cover,
-
                         ),
                         opacity: 1,
                       )
