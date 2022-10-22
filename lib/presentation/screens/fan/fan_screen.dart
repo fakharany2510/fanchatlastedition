@@ -65,7 +65,7 @@ class FanScreen extends StatelessWidget {
                     //   )
                     // ),
                     GridView.count(
-                      childAspectRatio: 1/1.23,
+                      childAspectRatio: MediaQuery.of(context).size.height*.0012/1.24,
                       crossAxisSpacing: MediaQuery.of(context).size.height*.008,
                       mainAxisSpacing: MediaQuery.of(context).size.height*.00,
                       crossAxisCount: 3,

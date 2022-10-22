@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import '../../constants/app_strings.dart';
 
@@ -23,6 +24,7 @@ Widget textFormFieldWidget(
       int ?maxLines,
     }
     )=> Container(
+  color: HexColor('#000f2c').withOpacity(.6),
   // height:MediaQuery.of(context).size.height*.07,
   child: TextFormField(
 
@@ -39,15 +41,12 @@ Widget textFormFieldWidget(
       focusColor: AppColors.myGrey,
       fillColor: Colors.white,
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color:AppColors.myGrey),
-        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(color:HexColor('#ffef00')),
       ),
       border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15)
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color:AppColors.myGrey),
-        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(color:HexColor('#ffef00')),
       ),
       hintText: '$labelText',
       hintStyle: TextStyle(

@@ -20,6 +20,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import '../../constants/app_strings.dart';
 import '../layouts/home_layout.dart';
@@ -152,7 +153,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         children:  [
                           Padding(
                             padding: const EdgeInsets.only(top: 40, left: 30, right: 30),
-                            child: Image(image: AssetImage('assets/images/login_image.jpeg'),width: 180,height: 120,),
+                            child: Image(image: AssetImage('assets/images/logo.svg'),width: 180,height: 120,),
                           ),
                           SizedBox(height: 15,),
                           Padding(
@@ -212,10 +213,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: MediaQuery.of(context).size.height*.08,
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: AppColors.myGrey,
+                                  color: HexColor('#ffef00'),
                                   width: 1
                                 ),
-                                borderRadius: BorderRadius.circular(15)
+                                color: HexColor('#000f2c').withOpacity(.6),
                               ),
                               child: IntlPhoneField(
                                 dropdownTextStyle: TextStyle(
@@ -246,7 +247,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               textColor: AppColors.myWhite,
                               buttonText: 'LOGIN',
                               buttonColor: Color(0Xffd32330),
-                              width: size.width*.9,
+                              width: size.width*.6,
                               height: size.height*.06,
                               function: (){
                                 if(name.text == "fanchat"){

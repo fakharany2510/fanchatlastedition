@@ -334,8 +334,8 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                       buttonText: 'Start',
                       fontSize: 15,
                       function: (){
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context)=>HomeLayout()));
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()),
+                                (route) => false);
                       }),
                 ),
                 SizedBox(height:30,),
