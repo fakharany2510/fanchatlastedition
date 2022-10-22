@@ -130,292 +130,293 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 statusBarColor: AppColors.primaryColor1,
               ),
             ),
-            body: Container(
-
-              child: Form(
+            body: Form(
                 key: formKey,
-                child: SingleChildScrollView(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.height,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                            'assets/images/register_image.jpg',
-                          ),
-                        )
+                child: Stack(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'assets/images/register_image.jpg',
+                            ),
+                            fit: BoxFit.cover
+                          )
+                      ),
                     ),
+                  SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children:  [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 40, left: 30, right: 30),
-                          child: Image(image: AssetImage('assets/images/login_image.jpeg'),width: 180,height: 120,),
-                        ),
-
-                        SizedBox(height: 15,),
-
-                        Padding(
-                          padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
-                          child: Text('Enjoy chatting in special team fans’ chat rooms, public rooms, and  one-to-one chats. Share videos, photos, and voice messges with football fans around the world.Broadcast a cheer to all your team fans in team rooms,and follow match scores and news during',
-                          style: TextStyle(
-                            color: AppColors.myWhite,
-                            fontSize: 14,
-                            fontFamily: AppStrings.appFont
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children:  [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 40, left: 30, right: 30),
+                            child: Image(image: AssetImage('assets/images/login_image.jpeg'),width: 180,height: 120,),
                           ),
-                           textAlign: TextAlign.center,
-                          ),
-                        ),
 
-                        const SizedBox(height: 10,),
+                          SizedBox(height: 15,),
 
-                        Text('World Cup, Qatar, 2022',
-                          style: TextStyle(
-                              color: Color(0xfffff560),
-                              fontSize: 16,
-                              fontFamily: AppStrings.appFont
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-
-                        const SizedBox(height: 10,),
-
-                        Text(' Join the fans and don’t lose a moment',
-                          style: TextStyle(
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
+                            child: Text('Enjoy chatting in special team fans’ chat rooms, public rooms, and  one-to-one chats. Share videos, photos, and voice messges with football fans around the world.Broadcast a cheer to all your team fans in team rooms,and follow match scores and news during',
+                            style: TextStyle(
                               color: AppColors.myWhite,
                               fontSize: 14,
                               fontFamily: AppStrings.appFont
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-
-                        SizedBox(height: 25,),
-
-                        Padding(
-                          padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
-                          child: textFormFieldWidget(
-                              context: context,
-                              controller: name,
-                              errorMessage: "please enter your name",
-                              inputType: TextInputType.name,
-                              labelText:"Name",
-                              prefixIcon: Icon(Icons.person,color: AppColors.myGrey,)
-                          ),
-                        ),
-                        SizedBox(height: size.height*.03,),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.fromLTRB(15, 20, 0, 0),
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height*.08,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: AppColors.myGrey,
-                                width: 1
-                              ),
-                              borderRadius: BorderRadius.circular(15)
                             ),
-                            child: IntlPhoneField(
-                              dropdownTextStyle: TextStyle(
-                                color: AppColors.myGrey,
+                             textAlign: TextAlign.center,
+                            ),
+                          ),
+
+                          const SizedBox(height: 10,),
+
+                          Text('World Cup, Qatar, 2022',
+                            style: TextStyle(
+                                color: Color(0xfffff560),
+                                fontSize: 16,
+                                fontFamily: AppStrings.appFont
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+
+                          const SizedBox(height: 10,),
+
+                          Text(' Join the fans and don’t lose a moment',
+                            style: TextStyle(
+                                color: AppColors.myWhite,
                                 fontSize: 14,
                                 fontFamily: AppStrings.appFont
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+
+                          SizedBox(height: 25,),
+
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
+                            child: textFormFieldWidget(
+                                context: context,
+                                controller: name,
+                                errorMessage: "please enter your name",
+                                inputType: TextInputType.name,
+                                labelText:"Name",
+                                prefixIcon: Icon(Icons.person,color: AppColors.myGrey,)
+                            ),
+                          ),
+                          SizedBox(height: size.height*.03,),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.fromLTRB(15, 20, 0, 0),
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height*.08,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppColors.myGrey,
+                                  width: 1
+                                ),
+                                borderRadius: BorderRadius.circular(15)
                               ),
-                              invalidNumberMessage: 'Invalid Phone Number!',
-                              textAlignVertical: TextAlignVertical.center,
-                              style:  TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: AppStrings.appFont,
-                                  color: AppColors.myGrey
-                              ),
-                              onChanged: (phone) => phoneNumber = phone.completeNumber,
-                              initialCountryCode: 'AF',
-                              flagsButtonPadding: const EdgeInsets.only(right: 10,bottom: 10),
-                              showDropdownIcon: false,
-                              keyboardType: TextInputType.phone,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
+                              child: IntlPhoneField(
+                                dropdownTextStyle: TextStyle(
+                                  color: AppColors.myGrey,
+                                  fontSize: 14,
+                                  fontFamily: AppStrings.appFont
+                                ),
+                                invalidNumberMessage: 'Invalid Phone Number!',
+                                textAlignVertical: TextAlignVertical.center,
+                                style:  TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: AppStrings.appFont,
+                                    color: AppColors.myGrey
+                                ),
+                                onChanged: (phone) => phoneNumber = phone.completeNumber,
+                                initialCountryCode: 'AF',
+                                flagsButtonPadding: const EdgeInsets.only(right: 10,bottom: 10),
+                                showDropdownIcon: false,
+                                keyboardType: TextInputType.phone,
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: size.height*.04,),
-                        defaultButton(
-                            textColor: AppColors.myWhite,
-                            buttonText: 'LOGIN',
-                            buttonColor: Color(0Xffd32330),
-                            width: size.width*.9,
-                            height: size.height*.06,
-                            function: (){
-                              if(name.text == "fanchat"){
-                              if(isCheckBoxTrue == true ){
-                                AppStrings.uId = '1832855570382325';
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
-                              }else{
-                                Fluttertoast.showToast(
-                                  msg:"You Must Agree To Privacy Policies First",
-                                  toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.TOP,
-                                  timeInSecForIosWeb: 5,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 18.0,
-                                );
-                              }
-                              }
-                              else if(formKey.currentState!.validate() || isNullOrBlank(phoneNumber)){
-                               if(isCheckBoxTrue == true ){
-                                 CashHelper.saveData(key: 'name',value: name.text);
-                                 CashHelper.saveData(key: 'phone',value: phoneNumber);
-                                 Navigator.push(context,
-                                     MaterialPageRoute
-                                       (builder: (context)=>VerifyPhoneNumberScreen(phoneNumber: phoneNumber,)));
+                          SizedBox(height: size.height*.04,),
+                          defaultButton(
+                              textColor: AppColors.myWhite,
+                              buttonText: 'LOGIN',
+                              buttonColor: Color(0Xffd32330),
+                              width: size.width*.9,
+                              height: size.height*.06,
+                              function: (){
+                                if(name.text == "fanchat"){
+                                if(isCheckBoxTrue == true ){
+                                  AppStrings.uId = '1832855570382325';
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
+                                }else{
+                                  Fluttertoast.showToast(
+                                    msg:"You Must Agree To Privacy Policies First",
+                                    toastLength: Toast.LENGTH_LONG,
+                                    gravity: ToastGravity.TOP,
+                                    timeInSecForIosWeb: 5,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 18.0,
+                                  );
+                                }
+                                }
+                                else if(formKey.currentState!.validate() || isNullOrBlank(phoneNumber)){
+                                 if(isCheckBoxTrue == true ){
+                                   CashHelper.saveData(key: 'name',value: name.text);
+                                   CashHelper.saveData(key: 'phone',value: phoneNumber);
+                                   Navigator.push(context,
+                                       MaterialPageRoute
+                                         (builder: (context)=>VerifyPhoneNumberScreen(phoneNumber: phoneNumber,)));
 
-                                 print('user Name = ${name.text}');
-                                 print('user phone = ${phoneNumber}');
-                               }else{
-                                 Fluttertoast.showToast(
-                                   msg:"You Must Agree To Privacy Policies First",
-                                   toastLength: Toast.LENGTH_LONG,
-                                   gravity: ToastGravity.TOP,
-                                   timeInSecForIosWeb: 5,
-                                   backgroundColor: Colors.red,
-                                   textColor: Colors.white,
-                                   fontSize: 18.0,
-                                 );
-                               }
-                              }
+                                   print('user Name = ${name.text}');
+                                   print('user phone = ${phoneNumber}');
+                                 }else{
+                                   Fluttertoast.showToast(
+                                     msg:"You Must Agree To Privacy Policies First",
+                                     toastLength: Toast.LENGTH_LONG,
+                                     gravity: ToastGravity.TOP,
+                                     timeInSecForIosWeb: 5,
+                                     backgroundColor: Colors.red,
+                                     textColor: Colors.white,
+                                     fontSize: 18.0,
+                                   );
+                                 }
+                                }
 
+                              }
+                          ),
+                          SizedBox(height: size.height*.02,),
+
+                          // SizedBox(height: size.height*.03,),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     Container(
+                          //       height: 1,
+                          //       width: size.width*.3,
+                          //       color: Colors.grey.shade400,
+                          //     ),
+                          //     const SizedBox(width: 5,),
+                          //     Text('or',
+                          //       style: TextStyle(
+                          //           fontSize:16,
+                          //           color: AppColors.myGrey,
+                          //           fontFamily: AppStrings.appFont
+                          //       ),
+                          //     ),
+                          //     const SizedBox(width: 5,),
+                          //     Container(
+                          //       height: 1,
+                          //       width: size.width*.3,
+                          //       color: Colors.grey.shade400,
+                          //     ),
+                          //   ],
+                          // ),
+                          // SizedBox(height: size.height*.03,),
+                          // Row(
+                          //   children: [
+                          //     defaultSocialMediaButton(
+                          //         context: context,
+                          //         function: (){
+                          //          if(isCheckBoxTrue == true){
+                          //            RegisterCubit.get(context).signInWithFacebook();
+                          //          }else{
+                          //            Fluttertoast.showToast(
+                          //              msg:"You Must Agree To Privacy Policies First",
+                          //              toastLength: Toast.LENGTH_LONG,
+                          //              gravity: ToastGravity.TOP,
+                          //              timeInSecForIosWeb: 5,
+                          //              backgroundColor: Colors.red,
+                          //              textColor: Colors.white,
+                          //              fontSize: 18.0,
+                          //            );
+                          //          }
+                          //         },
+                          //         size:size,
+                          //         buttonColor: AppColors.primaryColor1,
+                          //         buttonText: "Facebook",
+                          //         imagePath: 'assets/images/face.png'
+                          //     ),
+                          //     SizedBox(width: MediaQuery.of(context).size.width*.03,),
+                          //     defaultSocialMediaButton(
+                          //         context: context,
+                          //         function: (){
+                          //           if(isCheckBoxTrue == true){
+                          //             RegisterCubit.get(context).loginWithGoogle();
+                          //           }else{
+                          //             Fluttertoast.showToast(
+                          //               msg:"You Must Agree To Privacy Policies First",
+                          //               toastLength: Toast.LENGTH_LONG,
+                          //               gravity: ToastGravity.TOP,
+                          //               timeInSecForIosWeb: 5,
+                          //               backgroundColor: Colors.red,
+                          //               textColor: Colors.white,
+                          //               fontSize: 18.0,
+                          //             );
+                          //           }
+                          //         },
+                          //         size:size,
+                          //           buttonColor: AppColors.primaryColor1,
+                          //         buttonText: "Google",
+                          //         imagePath: 'assets/images/google1.png'
+                          //     ),
+                          //   ],
+                          // ),
+                          SizedBox(height: size.height*.03,),
+                          Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                               Checkbox(
+                            value: isCheckBoxTrue,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(2.0),
+                            ),
+                            side: MaterialStateBorderSide.resolveWith(
+                                  (states) => BorderSide(width: 1.0, color: AppColors.myGrey),
+                            ),
+                            onChanged:(bool? value){
+                          setState((){
+                            isCheckBoxTrue=true;
+                          });
                             }
                         ),
-                        SizedBox(height: size.height*.02,),
-
-                        // SizedBox(height: size.height*.03,),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     Container(
-                        //       height: 1,
-                        //       width: size.width*.3,
-                        //       color: Colors.grey.shade400,
-                        //     ),
-                        //     const SizedBox(width: 5,),
-                        //     Text('or',
-                        //       style: TextStyle(
-                        //           fontSize:16,
-                        //           color: AppColors.myGrey,
-                        //           fontFamily: AppStrings.appFont
-                        //       ),
-                        //     ),
-                        //     const SizedBox(width: 5,),
-                        //     Container(
-                        //       height: 1,
-                        //       width: size.width*.3,
-                        //       color: Colors.grey.shade400,
-                        //     ),
-                        //   ],
-                        // ),
-                        // SizedBox(height: size.height*.03,),
-                        // Row(
-                        //   children: [
-                        //     defaultSocialMediaButton(
-                        //         context: context,
-                        //         function: (){
-                        //          if(isCheckBoxTrue == true){
-                        //            RegisterCubit.get(context).signInWithFacebook();
-                        //          }else{
-                        //            Fluttertoast.showToast(
-                        //              msg:"You Must Agree To Privacy Policies First",
-                        //              toastLength: Toast.LENGTH_LONG,
-                        //              gravity: ToastGravity.TOP,
-                        //              timeInSecForIosWeb: 5,
-                        //              backgroundColor: Colors.red,
-                        //              textColor: Colors.white,
-                        //              fontSize: 18.0,
-                        //            );
-                        //          }
-                        //         },
-                        //         size:size,
-                        //         buttonColor: AppColors.primaryColor1,
-                        //         buttonText: "Facebook",
-                        //         imagePath: 'assets/images/face.png'
-                        //     ),
-                        //     SizedBox(width: MediaQuery.of(context).size.width*.03,),
-                        //     defaultSocialMediaButton(
-                        //         context: context,
-                        //         function: (){
-                        //           if(isCheckBoxTrue == true){
-                        //             RegisterCubit.get(context).loginWithGoogle();
-                        //           }else{
-                        //             Fluttertoast.showToast(
-                        //               msg:"You Must Agree To Privacy Policies First",
-                        //               toastLength: Toast.LENGTH_LONG,
-                        //               gravity: ToastGravity.TOP,
-                        //               timeInSecForIosWeb: 5,
-                        //               backgroundColor: Colors.red,
-                        //               textColor: Colors.white,
-                        //               fontSize: 18.0,
-                        //             );
-                        //           }
-                        //         },
-                        //         size:size,
-                        //           buttonColor: AppColors.primaryColor1,
-                        //         buttonText: "Google",
-                        //         imagePath: 'assets/images/google1.png'
-                        //     ),
-                        //   ],
-                        // ),
-                        SizedBox(height: size.height*.03,),
-                        Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                             Checkbox(
-                          value: isCheckBoxTrue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(2.0),
+                               Container(
+                                 child: Text.rich(
+                                TextSpan(
+                                    text: 'Agree to our ', style: TextStyle(
+                                    fontSize: 16, color:AppColors.myGrey
+                                ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: 'Privacy Policies', style: TextStyle(
+                                        fontSize: 16, color: AppColors.navBarActiveIcon,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>const PrivacyPolicies()));
+                                              // code to open / launch terms of service link here
+                                            }
+                                      ),
+                                    ]
+                                )
+                            ),
                           ),
-                          side: MaterialStateBorderSide.resolveWith(
-                                (states) => BorderSide(width: 1.0, color: AppColors.myGrey),
-                          ),
-                          onChanged:(bool? value){
-                        setState((){
-                          isCheckBoxTrue=true;
-                        });
-                          }
-                      ),
-                             Container(
-                               child: Text.rich(
-                              TextSpan(
-                                  text: 'Agree to our ', style: TextStyle(
-                                  fontSize: 16, color:AppColors.myGrey
-                              ),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: 'Privacy Policies', style: TextStyle(
-                                      fontSize: 16, color: AppColors.navBarActiveIcon,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                        recognizer: TapGestureRecognizer()
-                                          ..onTap = () {
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>const PrivacyPolicies()));
-                                            // code to open / launch terms of service link here
-                                          }
-                                    ),
-                                  ]
-                              )
-                          ),
-                        ),
-                    ],
-                ),
                       ],
-                    ),
                   ),
-                ),
-              ),
+                        ],
+                      ),
             ),
-
+                ]
+                ),
+                ),
           );
 
         },

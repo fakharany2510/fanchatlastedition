@@ -1,7 +1,8 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
-import 'package:fanchat/presentation/paypal/googlepay/googlepay1.dart';
+import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
+import 'package:fanchat/presentation/paypal/googlepay/premium_google_pay.dart';
 import 'package:fanchat/presentation/screens/private_chat/chat_screen.dart';
 
 import 'package:fanchat/presentation/screens/register_screen.dart';
@@ -213,7 +214,7 @@ class MoreScreen extends StatelessWidget {
                                   //     ),
                                   //   ),
                                   //   onTap: (){
-                                  //     Navigator.push(context, MaterialPageRoute(builder: (context)=>PaySampleApp()));
+                                  //     Navigator.push(context, MaterialPageRoute(builder: (context)=>ChoosePayPackage()));
                                   //   },
                                   // ),
                                 ],

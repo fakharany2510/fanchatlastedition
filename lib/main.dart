@@ -23,9 +23,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'business_logic/bloc/bloc_observer.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -76,6 +76,15 @@ class MyApp extends StatelessWidget {
           child: OverlaySupport(
             child: MaterialApp(
               title: 'fanchat',
+              localizationsDelegates: [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              supportedLocales: [
+                const Locale('en', ''),
+                const Locale('es', ''),
+                const Locale('de', ''),
+              ],
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 navigationBarTheme: const NavigationBarThemeData(
