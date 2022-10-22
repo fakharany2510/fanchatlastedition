@@ -33,9 +33,9 @@ class SendVideoPublicChat extends StatelessWidget {
                     (AppCubit.get(context).postVideo4!= null )
                         ?Column(
                           children: [
-                            SizedBox(height: size.height*.2,),
+                            SizedBox(height: size.height*.1,),
                             Container(
-                              height: size.height*.5,
+                              height: size.height*.75,
                               width: size.width,
                               child: AspectRatio(
                                 aspectRatio:AppCubit.get(context).controller!.value.aspectRatio,
