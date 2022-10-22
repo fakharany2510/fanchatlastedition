@@ -1,6 +1,7 @@
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/paypal/advertise.dart';
+import 'package:fanchat/presentation/paypal/googlepay/advertise_google_pay.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -53,7 +54,7 @@ class _AdsNavState extends State<AdsNav> {
                 textColor: AppColors.myWhite,
                 buttonText: 'Buy Advertise Package',
                 function: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Advertise()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>AdvertiseGooglePay()));
                 })
           ],
         ),

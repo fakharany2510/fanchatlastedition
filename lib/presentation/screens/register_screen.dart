@@ -148,10 +148,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           )
                       ),
                     ),
+
                   SingleChildScrollView(
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children:  [
+                          SizedBox(height: MediaQuery.of(context).size.height*.06,),
                           Padding(
                             padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
                             child: SvgPicture.asset(
@@ -214,12 +217,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               alignment: Alignment.center,
                               padding: const EdgeInsets.fromLTRB(15, 20, 0, 0),
                               width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height*.08,
+                              height: MediaQuery.of(context).size.height*.07,
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: HexColor('#ffef00'),
                                   width: 1
                                 ),
+                                borderRadius: BorderRadius.circular(3),
                                 color: HexColor('#000f2c').withOpacity(.6),
                               ),
                               child: IntlPhoneField(

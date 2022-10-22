@@ -310,31 +310,34 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                       ),
                                     ),
                                     const SizedBox(width: 5,),
-                                    Container(
-                                        width:35,
-                                        height: 35,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(50),
-                                          color: const Color(0xff7895b2).withOpacity(.9),
-                                        ),
-                                        child: Center(
-                                          child: IconButton(
-                                              onPressed: (){
-                                                HapticFeedback.vibrate();
-                                                textMessage.text==""
-                                                    ?{
-                                                  recording?stopRecord():startRecord(),
-                                                  AppCubit.get(context).getPublicChat()
-                                                }
-                                                    :AppCubit.get(context).sendPublicChat(
-                                                    dateTime: DateTime.now().toString(),
-                                                    text: textMessage.text);
-                                                textMessage.clear();
-                                              },
-                                              color: AppColors.primaryColor1,
-                                              icon: AppCubit.get(context).isSend? const CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?const Icon(Icons.mic,color: Colors.white,size: 18):const Icon(Icons.send,color: Colors.white,size: 18)
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 10,left: 5),
+                                      child: Container(
+                                          width:37,
+                                          height: 37,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(50),
+                                            color: const Color(0xff7895b2).withOpacity(.9),
                                           ),
-                                        )
+                                          child: Center(
+                                            child: IconButton(
+                                                onPressed: (){
+                                                  HapticFeedback.vibrate();
+                                                  textMessage.text==""
+                                                      ?{
+                                                    recording?stopRecord():startRecord(),
+                                                    AppCubit.get(context).getPublicChat()
+                                                  }
+                                                      :AppCubit.get(context).sendPublicChat(
+                                                      dateTime: DateTime.now().toString(),
+                                                      text: textMessage.text);
+                                                  textMessage.clear();
+                                                },
+                                                color: AppColors.primaryColor1,
+                                                icon: AppCubit.get(context).isSend? const CircularProgressIndicator(color: Colors.white,):  textMessage.text==""?const Icon(Icons.mic,color: Colors.white,size: 18):const Icon(Icons.send,color: Colors.white,size: 18)
+                                            ),
+                                          )
+                                      ),
                                     ),
                                     const SizedBox(width: 5,),
                                   ],

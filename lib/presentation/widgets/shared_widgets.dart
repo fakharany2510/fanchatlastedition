@@ -83,6 +83,7 @@ Widget defaultButton({
     decoration: BoxDecoration(
       color:buttonColor ,
       borderRadius: BorderRadius.circular(raduis),
+      border: Border.all(color:Colors.white,width: 1)
     ),
     child:TextButton(
       onPressed:function,

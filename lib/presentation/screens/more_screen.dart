@@ -296,8 +296,8 @@ class MoreScreen extends StatelessWidget {
                     CashHelper.saveData(key: 'advertise',value: false);
                     CashHelper.saveData(key: 'business',value: false);
                     AppCubit.get(context).signOut();
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context)=>RegisterScreen()));
+                    Navigator.of(context).pushNamedAndRemoveUntil( 'register', (Route<dynamic>route) => false);
+
                   },
                 ),
               ],
