@@ -186,9 +186,9 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                   ):
                   (AppCubit.get(context).teamChat[widget.index!].video != null)
                       ?Container(
-                    width: MediaQuery.of(context).size.width*.74,
+                    width: MediaQuery.of(context).size.width*.68,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
+                        horizontal: 0,
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
@@ -200,22 +200,27 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                       ),
                     ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('${AppCubit.get(context).teamChat[widget.index!].senderName}',
-                          style:  TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 9,
-                              color:  Color(0xfffbf7c2),
-                              fontFamily: AppStrings.appFont
-                          ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text('${AppCubit.get(context).teamChat[widget.index!].senderName}',
+                            style:  TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 9,
+                                color:  Color(0xfffbf7c2),
+                                fontFamily: AppStrings.appFont
+                            ),
 
+                          ),
                         ),
                         const SizedBox(height: 5,),
                         Stack(
                           children: [
                             mymessageController.value.isInitialized
                                 ? Container(
-                              width: 200,
+                              padding: const EdgeInsets.only(left: 10),
+                              width: MediaQuery.of(context).size.width*.65,
                               child: AspectRatio(
                                   aspectRatio:mymessageController.value.size.width/mymessageController.value.size.height,
                                   child: CachedVideoPlayer(mymessageController)),
@@ -223,8 +228,8 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                                 : const Center(child: CircularProgressIndicator()),
 
                             Positioned(
-                                top: MediaQuery.of(context).size.height*.2,
-                                right: MediaQuery.of(context).size.height*.08,
+                                top: MediaQuery.of(context).size.height*.22,
+                                right: MediaQuery.of(context).size.height*.11,
                                 child: InkWell(
                                   onTap: (){
                                     // setState((){

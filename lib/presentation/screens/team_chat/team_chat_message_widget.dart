@@ -157,9 +157,9 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                   ):
                   (AppCubit.get(context).teamChat[widget.index!].video!=null)
                       ?Container(
-                    width: MediaQuery.of(context).size.width*.74,
+                    width: MediaQuery.of(context).size.width*.68,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
+                        horizontal: 0,
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
@@ -173,12 +173,15 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('${AppCubit.get(context).userModel!.username}',
-                          style:  TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 9,
-                              color: AppColors.myWhite,
-                              fontFamily: AppStrings.appFont
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text('${AppCubit.get(context).userModel!.username}',
+                            style:  TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 9,
+                                color: AppColors.myWhite,
+                                fontFamily: AppStrings.appFont
+                            ),
                           ),
                         ),
                         const SizedBox(height: 5,),
@@ -186,7 +189,8 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                           children: [
                             senderController.value.isInitialized
                                 ? Container(
-                              width: 200,
+                              padding: const EdgeInsets.only(left: 10),
+                              width: MediaQuery.of(context).size.width*.65,
                               child: AspectRatio(
                                   aspectRatio:senderController.value.size.width/senderController.value.size.height,
                                   child: CachedVideoPlayer(senderController)),
@@ -194,8 +198,8 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                                 : const Center(child: CircularProgressIndicator()),
 
                             Positioned(
-                                top: MediaQuery.of(context).size.height*.2,
-                                right: MediaQuery.of(context).size.height*.08,
+                                top: MediaQuery.of(context).size.height*.22,
+                                right: MediaQuery.of(context).size.height*.11,
                                 child: InkWell(
                                   onTap: (){
                                     // setState((){

@@ -34,10 +34,10 @@ class SendVideoTeamChat extends StatelessWidget {
                     (AppCubit.get(context).postVideo5!= null )
                         ?Column(
                           children: [
-                            SizedBox(height: size.height*.2,),
+                            SizedBox(height: size.height*.1,),
                             Container(
-                              height: size.height*.5,
                               width: size.width,
+                              height: size.height*.75,
                               child: AspectRatio(
                                 aspectRatio:AppCubit.get(context).controller!.value.aspectRatio,
                                 child: AppCubit.get(context).controller ==null
@@ -48,6 +48,7 @@ class SendVideoTeamChat extends StatelessWidget {
 
                               ),
                             ),
+
                           ],
                         )
                         : Expanded(child: Container(
