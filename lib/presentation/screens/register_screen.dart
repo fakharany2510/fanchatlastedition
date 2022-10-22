@@ -19,6 +19,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -152,8 +153,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children:  [
                           Padding(
-                            padding: const EdgeInsets.only(top: 40, left: 30, right: 30),
-                            child: Image(image: AssetImage('assets/images/logo.svg'),width: 180,height: 120,),
+                            padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
+                            child: SvgPicture.asset(
+                                'assets/images/logo.svg',
+                                height: MediaQuery.of(context).size.height*.16,
+                            )
                           ),
                           SizedBox(height: 15,),
                           Padding(
