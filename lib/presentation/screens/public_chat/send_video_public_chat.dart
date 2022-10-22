@@ -27,7 +27,7 @@ class SendVideoPublicChat extends StatelessWidget {
         return Scaffold(
             backgroundColor: AppColors.myWhite,
             body: Padding(
-                padding:  EdgeInsets.all(20.0),
+                padding:  const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
                     (AppCubit.get(context).postVideo4!= null )
@@ -40,7 +40,7 @@ class SendVideoPublicChat extends StatelessWidget {
                               child: AspectRatio(
                                 aspectRatio:AppCubit.get(context).controller!.value.aspectRatio,
                                 child: AppCubit.get(context).controller ==null
-                                    ?SizedBox(height: 0,)
+                                    ?const SizedBox(height: 0,)
                                     :CachedVideoPlayer(
                                     AppCubit.get(context).controller!
                                 ),

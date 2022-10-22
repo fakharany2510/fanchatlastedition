@@ -298,7 +298,7 @@ class PostWidgetState extends State<PostWidget> {
                         // ),
 
                       Positioned(
-                          top: MediaQuery.of(context).size.height*.012,
+                          top: MediaQuery.of(context).size.height*.12,
                           right: MediaQuery.of(context).size.height*.18,
                           child: InkWell(
                             onTap: (){

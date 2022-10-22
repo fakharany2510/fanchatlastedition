@@ -99,7 +99,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                       width: MediaQuery.of(context).size.width,
                       child:Opacity(
                         child:  Image(
-                          image: AssetImage('assets/images/b3.jpg'),
+                          image: AssetImage('assets/images/public_chat_image.jpeg'),
                           fit: BoxFit.cover,
 
                         ),
@@ -135,11 +135,11 @@ class _CountriesScreenState extends State<CountriesScreen> {
                               width: MediaQuery.of(context).size.width*.5,
                               height: MediaQuery.of(context).size.height*.08,
                               decoration: BoxDecoration(
-                                  color: AppColors.myGrey.withOpacity(.3)
+                                  color: AppColors.myGrey.withOpacity(.1)
                               ),
                               child: Padding(
                                 padding: EdgeInsets.only(
-                                  left: MediaQuery.of(context).size.height*.1,
+                                  left: MediaQuery.of(context).size.height*.01,
                                 ),
                                 child: Align(
                                   alignment: Alignment.center,
@@ -158,15 +158,15 @@ class _CountriesScreenState extends State<CountriesScreen> {
                                     leading: Container(
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                          color: AppColors.primaryColor1.withOpacity(.7),
+                                          color: AppColors.myWhite,
                                           width: 1
                                         )
                                       ),
                                       child: Image(
                                         image: NetworkImage(data['image']),
                                         fit: BoxFit.cover,
-                                        height:MediaQuery.of(context).size.height*.05,
-                                        width:MediaQuery.of(context).size.height*.08,
+                                        height:MediaQuery.of(context).size.height*.04,
+                                        width:MediaQuery.of(context).size.height*.06,
                                       ),
                                     )
                                   ),
