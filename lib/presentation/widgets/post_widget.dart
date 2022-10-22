@@ -243,13 +243,19 @@ class PostWidgetState extends State<PostWidget> {
                         future: intilize,
                         builder: (context,snapshot){
                           if(snapshot.connectionState == ConnectionState.done){
-                            return ClipRect(
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                heightFactor: 0.5,
-                                child: AspectRatio(
-                                  aspectRatio: 1.1/1.1,
-                                  child: VideoPlayer(controller!),
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20
+                              ),
+                              child: ClipRect(
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  heightFactor: 0.5,
+                                  widthFactor: 1,
+                                  child: AspectRatio(
+                                    aspectRatio: controller!.value.aspectRatio,
+                                    child: VideoPlayer(controller!),
+                                  ),
                                 ),
                               ),
                             );
@@ -292,7 +298,7 @@ class PostWidgetState extends State<PostWidget> {
                         // ),
 
                       Positioned(
-                          top: MediaQuery.of(context).size.height*.055,
+                          top: MediaQuery.of(context).size.height*.12,
                           right: MediaQuery.of(context).size.height*.18,
                           child: InkWell(
                             onTap: (){

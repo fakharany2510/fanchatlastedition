@@ -44,7 +44,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
          //  AppCubit.get(context).testLikes();
          //  AppCubit.get(context).testComments();
           Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+              MaterialPageRoute(builder: (context)=>const HomeLayout()), (route) => false);
           AppCubit.get(context).controller!.pause();
           AppCubit.get(context).postVideo=null;
 
@@ -65,7 +65,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
             )),
             elevation: 0,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back,color: Colors.black),
+              icon: const Icon(Icons.arrow_back,color: Colors.black),
               onPressed: ()async{
                 AppCubit.get(context).postVideo=null;
                 Navigator.pop(context);
@@ -138,8 +138,8 @@ class _AddNewVideoState extends State<AddNewVideo> {
               child: Column(
                 children: [
                   if(state is CreatePostLoadingState)
-                    LinearProgressIndicator(),
-                  SizedBox(height: 5,),
+                    const LinearProgressIndicator(),
+                  const SizedBox(height: 5,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children:  [
@@ -147,7 +147,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
                         backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
                         radius: 30,
                       ),
-                      SizedBox(width: 10,),
+                      const SizedBox(width: 10,),
                       Expanded(
                         child:   Text('${AppCubit.get(context).userModel!.username}',
                           style: const TextStyle(
@@ -160,8 +160,8 @@ class _AddNewVideoState extends State<AddNewVideo> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10,),
-                  Expanded(
+                  const SizedBox(height: 10,),
+                  SingleChildScrollView(
                     child: TextFormField(
                       controller: postText,
                       decoration: const InputDecoration(
@@ -171,33 +171,34 @@ class _AddNewVideoState extends State<AddNewVideo> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 40,),
                   ( AppCubit.get(context).postVideo!= null && AppCubit.get(context).controller!.value.isInitialized)
                       ?Expanded(
-                        child: Container(
-                    height: size.height,
-                    width: size.width,
+                       flex: 5,
+                        child: SingleChildScrollView(
+                          child: Container(
+                            height: size.height,
+                            width: size.width,
                     child: AspectRatio(
-                        aspectRatio:AppCubit.get(context).controller!.value.aspectRatio,
-                        child: AppCubit.get(context).controller ==null
-                            ?SizedBox(height: 0,)
-                            :CachedVideoPlayer(
-                            AppCubit.get(context).controller!
+                          aspectRatio:AppCubit.get(context).controller!.value.aspectRatio,
+                          child: AppCubit.get(context).controller ==null
+                              ?const SizedBox(height: 0,)
+                              :CachedVideoPlayer(
+                              AppCubit.get(context).controller!
                     ),
                     ),
                   ),
+                        ),
                       )
-                      : Expanded(child: Container(
-                    child: Center(child: Text('No Video Selected Yet',
-                        style: TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primaryColor1,
-                            fontFamily: AppStrings.appFont
-                        )
-                    )),
-                  )),
-                  Spacer(),
+                      : Expanded(child: Center(child: Text('No Video Selected Yet',
+                          style: TextStyle(
+                              fontSize: 21,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primaryColor1,
+                              fontFamily: AppStrings.appFont
+                          )
+                      ))),
+                  const Spacer(),
 
 
                 ],
