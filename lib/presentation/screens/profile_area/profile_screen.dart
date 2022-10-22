@@ -158,7 +158,7 @@ class ProfileScreen extends StatelessWidget {
                           height: size.height*.06,
                           width: size.width*.68,
                           function: (){
-                            cubit.getUser();
+                            cubit.getUser(context);
                             Navigator.pushNamed(context, 'edit_profile');
                           }
                       ),

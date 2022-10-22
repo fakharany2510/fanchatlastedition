@@ -15,7 +15,8 @@ class UserModel{
   bool ?advertise ;
   bool ?business ;
   int? numberOfPosts;
-
+  bool? payed;
+  int? days;
 
   UserModel({
     this.uId,
@@ -34,6 +35,8 @@ class UserModel{
     this.advertise,
     this.business,
     this.numberOfPosts,
+    this.payed,
+    this.days,
 
   });
 
@@ -54,6 +57,8 @@ class UserModel{
     facebookLink=json['facebookLink'];
     instagramLink=json['instagramLink'];
     numberOfPosts=json['numberOfPosts'];
+    payed=json['payed'];
+    days=json['days'];
 
   }
 
@@ -75,6 +80,8 @@ class UserModel{
       'twitterLink':twitterLink,
       'instagramLink':instagramLink,
       'numberOfPosts':numberOfPosts,
+      'payed':payed,
+      'days':days,
     };
   }
 

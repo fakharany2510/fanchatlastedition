@@ -98,13 +98,13 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: AppCubit.get(context).publicChat[widget.index!].image)));
                     },
                     child: Container(
-                      width: MediaQuery.of(context).size.width*.74,
+                      width: MediaQuery.of(context).size.width*.55,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 5,
                           vertical: 5
                       ),
                       decoration:  BoxDecoration(
-                        color: const Color(0xff7895b2).withOpacity(.9),
+                        color: const Color(0xffb1b2ff).withOpacity(.16),
                         borderRadius:const  BorderRadius.only(
                           topRight: Radius.circular(10),
                           topLeft: Radius.circular(10),
@@ -135,7 +135,7 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                             ),
                             child: Container(
                               height: MediaQuery.of(context).size.height*.28,
-                              width: MediaQuery.of(context).size.width*.70,
+                              width: MediaQuery.of(context).size.width*.55,
                               clipBehavior: Clip.antiAliasWithSaveLayer,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(3),
@@ -146,8 +146,7 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                                 imageUrl: "${AppCubit.get(context).publicChat[widget.index!].image}",
                                 placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
                                 // maxHeightDiskCache:75,
-                                width: 200,
-                                height: MediaQuery.of(context).size.height*.2,
+
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -164,7 +163,7 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: const Color(0xff7895b2).withOpacity(.9),
+                      color: const Color(0xffb1b2ff).withOpacity(.16),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),

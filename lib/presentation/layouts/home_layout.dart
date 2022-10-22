@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/business_logic/register/register_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/data/modles/user_model.dart';
 import 'package:fanchat/presentation/add_ads/add_ads.dart';
 import 'package:fanchat/presentation/paypal/choosepaymentmethod.dart';
 import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
@@ -38,17 +40,35 @@ class _HomeLayoutState extends State<HomeLayout> {
       print(token);
       print("==================================token================================");
     });
-    AppCubit.get(context).getUser().then((value){
+    AppCubit.get(context).getUser(context).then((value){
+      print('nnnnnnnbccccccccccccccccccccccccccccccccccccccc ${AppCubit.get(context).userModel!.days}');
       print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
       print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
-      Future.delayed(const Duration(days: 7),(){
-        if( CashHelper.getData(key: 'business') == true || CashHelper.getData(key: 'advertise') == true){
-          print('payed');
-        }else{
-          showMyDialog2(context);
+      if(AppCubit.get(context).userModel!.days == 7){
+        CashHelper.saveData(key: 'days' , value: 7);
+        print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
 
-        }
-      });
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ChoosePayPackage()), (route) => false);
+
+      }else{
+        Future.delayed(const Duration(minutes: 7),(){
+          FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
+              .update({
+            'days':7,
+          }).then((value){
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ChoosePayPackage()), (route) => false);
+            CashHelper.saveData(key: 'days' , value: 7);
+            print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
+            print('success to update aaccountStates');
+          }).catchError((error){
+            print('success to update aaccountStates${error.toString()}');
+          });
+          ///////////////////////////////////////////////////////////
+          AppCubit.get(context).userModel!.days == 7;
+          print('timeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ${AppCubit.get(context).userModel!.days}');
+        });
+      }
+
     }).catchError((error){
       print('error');
     });
@@ -57,6 +77,7 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   }
   Widget build(BuildContext context) {
+
     List <Widget> screens=[
 
       HomeScreen(pageHeight: MediaQuery.of(context).size.height,pageWidth:MediaQuery.of(context).size.width),
@@ -71,10 +92,11 @@ class _HomeLayoutState extends State<HomeLayout> {
 
     return BlocConsumer<AppCubit,AppState>(
         listener: (context,state){
-
         },
         builder: (context,state){
+
           var cubit=AppCubit.get(context);
+
           return Scaffold(
             appBar: customAppbar(cubit.screensTitles[cubit.currentIndex],context),
             body: screens[cubit.currentIndex],

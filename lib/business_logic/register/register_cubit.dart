@@ -69,6 +69,8 @@ class RegisterCubit extends Cubit<RegisterState>{
         String ?cover,
         bool ?advertise,
         bool ?business,
+        bool ?payed,
+        int ?dayes,
 
 
       })
@@ -83,7 +85,9 @@ class RegisterCubit extends Cubit<RegisterState>{
         twitterLink: twitter??'Enter your twitter link',
         facebookLink: facebook??'Enter your facebook link',
         image: image??'https://firebasestorage.googleapis.com/v0/b/fanchat-7db9e.appspot.com/o/user-svgrepo-com.png?alt=media&token=6a5c33b3-e4e4-4d0c-aef2-4e1dcb6f61cc',
-        cover: cover??'https://firebasestorage.googleapis.com/v0/b/fanchat-7db9e.appspot.com/o/user-svgrepo-com.png?alt=media&token=6a5c33b3-e4e4-4d0c-aef2-4e1dcb6f61cc',
+      cover: cover??'https://firebasestorage.googleapis.com/v0/b/fanchat-7db9e.appspot.com/o/user-svgrepo-com.png?alt=media&token=6a5c33b3-e4e4-4d0c-aef2-4e1dcb6f61cc',
+      payed: false,
+      days: 0,
       accountActive: false,
         advertise:advertise?? false,
         business: business??false,

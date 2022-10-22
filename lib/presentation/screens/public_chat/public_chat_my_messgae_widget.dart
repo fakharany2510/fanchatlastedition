@@ -133,7 +133,7 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                   ):
                   (AppCubit.get(context).publicChat[widget.index!].image !=null) ?
                   Container(
-                    width: MediaQuery.of(context).size.width*.74,
+                    width: MediaQuery.of(context).size.width*.55,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 5,
                         vertical: 5
@@ -174,7 +174,7 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                             },
                             child: Container(
                               height: MediaQuery.of(context).size.height*.28,
-                              width: MediaQuery.of(context).size.width*.70,
+                              width: MediaQuery.of(context).size.width*.55,
                               clipBehavior: Clip.antiAliasWithSaveLayer,
                               decoration: BoxDecoration(
                                 // border: Border.all(color: AppColors.primaryColor1,width: 4),
@@ -185,8 +185,7 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                                 imageUrl: "${AppCubit.get(context).publicChat[widget.index!].image}",
                                 placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                                 // maxHeightDiskCache:75,
-                                width: 200,
-                                height: MediaQuery.of(context).size.height*.2,
+
                                 fit: BoxFit.cover,
                               ),
                             ),

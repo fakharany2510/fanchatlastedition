@@ -365,7 +365,7 @@ class EditProfileScreen extends StatelessWidget {
                             instagramLink:cubit.changeInstagramLinkController.text,
 
                           ).then((value) {
-                            cubit.getUser();
+                            cubit.getUser(context);
                             cubit.getPosts().then((value) {
                               Navigator.pop(context);
                               customToast(title: 'Data Updated', color: AppColors.primaryColor1);

@@ -7,6 +7,7 @@ import 'package:fanchat/data/modles/cheering_model.dart';
 import 'package:fanchat/data/modles/fan_model.dart';
 import 'package:fanchat/data/modles/profile_model.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
+import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/screens/public_chat/public_chat_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -185,7 +186,7 @@ class AppCubit extends Cubit<AppState> {
   }
   //get one user
 
-  Future<void> getUser() async {
+  Future<void> getUser(context) async {
     emit(GetUserDataLoadingState());
    await  FirebaseFirestore.instance
         .collection('users')
@@ -200,8 +201,6 @@ class AppCubit extends Cubit<AppState> {
           changeInstagramLinkController.text='${userModel!.instagramLink}';
           changeTwitterLinkController.text='${userModel!.twitterLink}';
           changeFacebookLinkController.text='${userModel!.facebookLink}';
-
-          //getPosts();
 
           emit(GetUserDataSuccessfulState());
     }).catchError((error){
@@ -360,7 +359,7 @@ class AppCubit extends Cubit<AppState> {
 
 
   Future updateProfile({
-
+    context,
       String ?image,
       String ?cover,
       required String ?name,
@@ -389,7 +388,7 @@ class AppCubit extends Cubit<AppState> {
     FirebaseFirestore.instance.
     collection('users').
     doc(AppStrings.uId).update(model.toMap()).then((value) {
-      getUser();
+      getUser(context);
       emit(UpdateUserSuccessState());
     }).catchError((error){
 

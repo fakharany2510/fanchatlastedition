@@ -95,7 +95,7 @@ class _EditCoverState extends State<EditCover> {
                             bio: cubit.changeUserBioController.text,
                           )
                               .then((value) {
-                            cubit.getUser();
+                            cubit.getUser(context);
                           });
                         },
                         child:  Text('Save Changes',style: TextStyle(

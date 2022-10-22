@@ -18,7 +18,7 @@ class SplashScreen extends StatefulWidget {
   Widget ?widget;
   void selectScreen(context){
     if(AppStrings.uId !=null){
-      AppCubit.get(context).getUser();
+      AppCubit.get(context).getUser(context);
       AppCubit.get(context).getAllUsers();
       AppCubit.get(context).getLastUsers();
       widget = HomeLayout();
@@ -56,15 +56,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
     });
 
-    AppCubit.get(context).getUser().then((value){
+    AppCubit.get(context).getUser(context).then((value){
       print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
       print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
-      Future.delayed(const Duration(days: 7),(){
+      Future.delayed(const Duration(seconds: 7),(){
         if( CashHelper.getData(key: 'business') == true || CashHelper.getData(key: 'advertise') == true){
           print('payed');
         }else{
-
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChoosePaymentMethod()));
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ChoosePaymentMethod()), (route) => false);
+          //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChoosePaymentMethod()));
 
         }
       });

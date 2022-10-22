@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/post_widget.dart';
@@ -21,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
    ScrollController _childScrollController = ScrollController();
 
    ScrollController _parentScrollController = ScrollController();
-
 
   @override
 

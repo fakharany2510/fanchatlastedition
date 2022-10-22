@@ -98,7 +98,7 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: AppCubit.get(context).teamChat[widget.index!].image)));
                     },
                     child: Container(
-                      width: MediaQuery.of(context).size.width*.74,
+                      width: MediaQuery.of(context).size.width*.55,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 5,
                           vertical: 5
@@ -145,8 +145,7 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                                 imageUrl: "${AppCubit.get(context).teamChat[widget.index!].image}",
                                 placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
                                 // maxHeightDiskCache:75,
-                                width: 200,
-                                height: MediaQuery.of(context).size.height*.2,
+
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -157,7 +156,7 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                   ):
                   (AppCubit.get(context).teamChat[widget.index!].video!=null)
                       ?Container(
-                    width: MediaQuery.of(context).size.width*.68,
+                    width: MediaQuery.of(context).size.width*.66,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 0,
                         vertical: 5
@@ -189,7 +188,7 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                           children: [
                             senderController.value.isInitialized
                                 ? Container(
-                              padding: const EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 5),
                               width: MediaQuery.of(context).size.width*.65,
                               child: AspectRatio(
                                   aspectRatio:senderController.value.size.width/senderController.value.size.height,

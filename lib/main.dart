@@ -6,6 +6,7 @@ import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/firebase_options.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
+import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/screens/edit_profie_screen.dart';
 import 'package:fanchat/presentation/screens/fan/fan_full_post.dart';
 import 'package:fanchat/presentation/screens/private_chat/messages_details.dart';
@@ -57,6 +58,8 @@ void main()async {
   AppStrings.uId = CashHelper.getData(key: 'uid');
 
   printMessage('userId is: ${AppStrings.uId}');
+  print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
+
 
 
   Bloc.observer = MyBlocObserver();
@@ -69,7 +72,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
         providers:[
-          BlocProvider(create: (context)=>AppCubit()..getUser()..getCountries()..getProfilePosts()..getPosts()..getAllUsers()..getFanPosts()..periodic()..getLastUsers()),
+          BlocProvider(create: (context)=>AppCubit()..getUser(context)..getCountries()..getProfilePosts()..getPosts()..getAllUsers()..getFanPosts()..periodic()..getLastUsers()),
           BlocProvider(create: (context)=>AdvertisingCubit()..getAdvertisingPosts()),
         ],
         child: FirebasePhoneAuthProvider(
@@ -87,24 +90,26 @@ class MyApp extends StatelessWidget {
               ],
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
-                navigationBarTheme: const NavigationBarThemeData(
-                  elevation: 1000,
-                ),
-                primarySwatch: Colors.blue,
-                appBarTheme: AppBarTheme(
-                  systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarBrightness: Brightness.light,
-                    statusBarColor: AppColors.primaryColor1,
+                  navigationBarTheme: const NavigationBarThemeData(
+                    elevation: 1000,
+                  ),
+                  primarySwatch: Colors.blue,
+                  appBarTheme: AppBarTheme(
+                      systemOverlayStyle: SystemUiOverlayStyle(
+                        statusBarBrightness: Brightness.light,
+                        statusBarColor: AppColors.primaryColor1,
+                      )
                   )
-                )
               ),
-             // initialRoute: 'register',
+              // initialRoute: 'register',
               routes: {
                 '/' :(context)=> (AppStrings.uId != null)
-                ?HomeLayout()
-            :SplashScreen(),
+                    ?CashHelper.getData(key: 'days') ==7
+                    ?ChoosePayPackage()
+                    :HomeLayout()
+                    :SplashScreen(),
                 'home_layout':(context)=> const HomeLayout(),
-               // 'login':(context)=> LoginScreen(),
+                // 'login':(context)=> LoginScreen(),
                 'register':(context)=>RegisterScreen(),
                 'profile':(context)=> const ProfileScreen(),
                 'edit_profile':(context)=>EditProfileScreen(),
@@ -115,7 +120,8 @@ class MyApp extends StatelessWidget {
               },
             ),
           ),
-        ),);
+        ),
+    );
   }
 }
 

@@ -121,7 +121,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                   ):
                   (AppCubit.get(context).teamChat[widget.index!].image !=null) ?
                   Container(
-                    width: MediaQuery.of(context).size.width*.74,
+                    width: MediaQuery.of(context).size.width*.55,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 5,
                         vertical: 5
@@ -162,7 +162,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                             },
                             child: Container(
                             //  height: MediaQuery.of(context).size.height*.28,
-                              width: MediaQuery.of(context).size.width*.70,
+                              width: MediaQuery.of(context).size.width*.55,
                               clipBehavior: Clip.antiAliasWithSaveLayer,
                               decoration: BoxDecoration(
                                 // border: Border.all(color: AppColors.primaryColor1,width: 4),
@@ -173,8 +173,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                                 imageUrl: "${AppCubit.get(context).teamChat[widget.index!].image}",
                                 placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                                 // maxHeightDiskCache:75,
-                                width: 200,
-                                height: MediaQuery.of(context).size.height*.2,
+
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -186,10 +185,10 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                   ):
                   (AppCubit.get(context).teamChat[widget.index!].video != null)
                       ?Container(
-                    width: MediaQuery.of(context).size.width*.68,
+                    width: MediaQuery.of(context).size.width*.66,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 0,
-                        vertical: 5
+                        vertical: 5,
                     ),
                     decoration:  BoxDecoration(
                       color: const Color(0xffb1b2ff).withOpacity(.10),
@@ -219,7 +218,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                           children: [
                             mymessageController.value.isInitialized
                                 ? Container(
-                              padding: const EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 5),
                               width: MediaQuery.of(context).size.width*.65,
                               child: AspectRatio(
                                   aspectRatio:mymessageController.value.size.width/mymessageController.value.size.height,
