@@ -154,9 +154,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             padding: const EdgeInsets.only(top: 40, left: 30, right: 30),
                             child: Image(image: AssetImage('assets/images/login_image.jpeg'),width: 180,height: 120,),
                           ),
-
                           SizedBox(height: 15,),
-
                           Padding(
                             padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
                             child: Text('Enjoy chatting in special team fans’ chat rooms, public rooms, and  one-to-one chats. Share videos, photos, and voice messges with football fans around the world.Broadcast a cheer to all your team fans in team rooms,and follow match scores and news during',
