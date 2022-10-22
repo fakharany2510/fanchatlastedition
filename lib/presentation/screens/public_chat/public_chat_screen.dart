@@ -270,6 +270,8 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                             Padding(
                                 padding: const EdgeInsets.all(8),
                                 child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+
                                   children: [
                                     Container(
                                       width: MediaQuery.of(context).size.width*.70,

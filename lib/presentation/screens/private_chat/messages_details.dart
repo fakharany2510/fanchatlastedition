@@ -274,6 +274,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                             Padding(
                                 padding: const EdgeInsets.all(8),
                                 child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Container(
                                       width: MediaQuery.of(context).size.width*.70,
@@ -288,6 +289,9 @@ class _ChatDetailsState extends State<ChatDetails> {
                                       child: Padding(
                                           padding: const EdgeInsets.only(left: 8),
                                           child: TextFormField(
+                                            style: TextStyle(
+                                              color: Colors.white
+                                            ),
                                             onChanged: (v){
                                               setState((){
                                                 isWriting=true;
