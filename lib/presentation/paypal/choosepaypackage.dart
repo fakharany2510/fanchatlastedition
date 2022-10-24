@@ -20,7 +20,7 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor1,
-      appBar: customAppbar('Profile',context),
+      appBar: customAppbar('payPackage',context),
       body: Padding(
         padding: EdgeInsets.only(bottom: 15,left: 10,top: 25),
         child: Column(

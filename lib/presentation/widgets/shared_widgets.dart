@@ -144,14 +144,17 @@ customAppbar(String title,context){
         color: AppColors.myWhite
     ),
     backgroundColor: AppColors.primaryColor1,
-    leading: IconButton(
+
+    leading: title!= 'payPackage'?
+    IconButton(
       onPressed: (){
              Navigator.push(context, MaterialPageRoute(builder: (_){
                 return MoreScreen();
              }));
       },
       icon:Icon(Icons.menu,size: 30,color: AppColors.myGrey,)
-    ),
+    ) :
+    Container(),
     title: GestureDetector(
       onTap: (){
         AppCubit.get(context).currentIndex=0;
