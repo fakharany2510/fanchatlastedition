@@ -440,6 +440,28 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 //-------------------------------------e;
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+
+  Future<void> pickPostCamera() async {
+    final pickedFile  =
+    await picker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      postImage=File(pickedFile.path);
+      var decodedImage = await decodeImageFromList(postImage!.readAsBytesSync());
+      print(decodedImage.width);
+      print(decodedImage.height);
+      imageWidth=double.parse('${decodedImage.width}');
+      imageHeight=double.parse('${decodedImage.height}');
+      emit(PickPostImageSuccessState());
+    } else {
+      print('no postImage selected');
+      emit(PickPostImageErrorState());
+    }
+  }
+
+
+
   //////////////////////////////////////////////////////
   File? chatImage;
   Future<void> pickChatImage() async {
@@ -458,6 +480,27 @@ class AppCubit extends Cubit<AppState> {
       emit(PickChatImageErrorState());
     }
   }
+
+  //////////////////////////////////////////////
+
+  Future<void> pickChatCamera() async {
+    final pickedFile  =
+    await picker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      chatImage=File(pickedFile.path);
+      var decodedImage = await decodeImageFromList(chatImage!.readAsBytesSync());
+      print(decodedImage.width);
+      print(decodedImage.height);
+      imageWidth=double.parse('${decodedImage.width}');
+      imageHeight=double.parse('${decodedImage.height}');
+      emit(PickChatImageSuccessState());
+    } else {
+      print('no chatImage selected');
+      emit(PickChatImageErrorState());
+    }
+  }
+
+
   /////////////////////////////////////////////////////////////////////
   // change viseo upload
   bool videoButtonTapped = false;
@@ -489,6 +532,24 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  //////////////////
+
+  void pickPostVideoCamera2() async {
+    final pickedFile =
+    await picker.pickVideo(source: ImageSource.camera);
+    if (pickedFile != null) {
+      postVideo = File(pickedFile.path);
+      controller = CachedVideoPlayerController.file(postVideo!)
+        ..initialize().then((value) {
+          controller!.pause();
+
+          emit(PickPostVideoSuccessState());
+        }).catchError((error) {
+          print('error picking video ${error.toString()}');
+        });
+    }
+  }
+
   File? postVideo3;
   void pickPostVideo3() async {
     final pickedFile =
@@ -507,6 +568,29 @@ class AppCubit extends Cubit<AppState> {
         });
     }
   }
+
+  ////////////////////////////
+
+  void pickPostVideoCameraPrivate3() async {
+    final pickedFile =
+    await picker.pickVideo(source: ImageSource.camera);
+    if (pickedFile != null) {
+      postVideo3 = File(pickedFile.path);
+      // var decodedVideo = await decodeImageFromList(postVideo3!.readAsBytesSync());
+      controller = CachedVideoPlayerController.file(postVideo3!)
+        ..initialize().then((value) {
+          controller!.pause();
+          //  videoWidth3=double.parse('${decodedVideo.width}');
+          // videoHeight3=double.parse('${decodedVideo.height}');
+          emit(PickPrivateChatViedoSuccessState());
+        }).catchError((error) {
+          print('error picking video ${error.toString()}');
+        });
+    }
+  }
+
+
+
 /////////////////////////////////////////////////////
 //   void pickPostVideo() async {
 //     final pickedFile =
@@ -2507,10 +2591,28 @@ List<int> commentIndex=[];
     }
   }
 
+  ////////////////////////////////
+  void pickPostVideoCameraPublic4() async {
+    final pickedFile =
+    await picker.pickVideo(source: ImageSource.camera);
+    if (pickedFile != null) {
+      postVideo4 = File(pickedFile.path);
+      controller = CachedVideoPlayerController.file(postVideo4!)
+        ..initialize().then((value) {
+          controller!.pause();
+          emit(PickPrivateChatViedoSuccessState());
+        }).catchError((error) {
+          print('error picking video ${error.toString()}');
+        });
+    }
+  }
+
   void uploadPublicChatVideo({
     required String dateTime,
     required String text,
-    required String senderId
+    required String senderId,
+    required String senderName,
+    required String senderImage,
   }){
     emit(UploadVideoPublicChatLoadingState());
     //كدا انا بكريت instance من ال storage
@@ -2526,7 +2628,9 @@ List<int> commentIndex=[];
         createVideoPublicChat(
             messageViedo: value,
             dateTime: dateTime,
-            senderId: AppStrings.uId
+            senderId: AppStrings.uId,
+            senderName:senderName,
+          senderImage: senderImage
         );
         getPosts();
         emit(UploadVideoPublicChatSuccessState());
@@ -2544,6 +2648,8 @@ List<int> commentIndex=[];
     required String dateTime,
     String? messageViedo,
     String? senderId,
+    String? senderName,
+    String? senderImage,
   }){
     emit(CreateVideoPublicChatLoadingState());
 
@@ -2551,7 +2657,9 @@ List<int> commentIndex=[];
         video:messageViedo,
         text: "",
         dateTime: dateTime,
-        senderId: AppStrings.uId
+        senderId: AppStrings.uId,
+        senderName: senderName,
+        senderImage: senderImage,
     );
 
     //Set My Chat
@@ -2587,10 +2695,29 @@ List<int> commentIndex=[];
     }
   }
 
+  ////////////////////
+
+  void pickPostVideoCamera5() async {
+    final pickedFile =
+    await picker.pickVideo(source: ImageSource.camera);
+    if (pickedFile != null) {
+      postVideo5 = File(pickedFile.path);
+      controller = CachedVideoPlayerController.file(postVideo5!)
+        ..initialize().then((value) {
+          controller!.pause();
+          emit(PickTeamChatVideoSuccessState());
+        }).catchError((error) {
+          print('error picking video ${error.toString()}');
+        });
+    }
+  }
+
   void uploadTeamChatVideo({
     required String dateTime,
     required String text,
     required String senderId,
+    required String senderName,
+    required String senderImage,
     String ?countryName,
   }){
     emit(UploadVideoTeamChatLoadingState());
@@ -2607,6 +2734,8 @@ List<int> commentIndex=[];
         createVideoTeamChat(
             messageViedo: value,
             dateTime: dateTime,
+            senderName: senderName,
+            senderImage: senderImage,
             senderId: AppStrings.uId,
             countryName: countryName
         );
@@ -2626,6 +2755,8 @@ List<int> commentIndex=[];
     required String dateTime,
     String? messageViedo,
     String? senderId,
+    String? senderName,
+    String? senderImage,
     String ? countryName,
   }){
     emit(CreateVideoTeamChatLoadingState());
@@ -2634,7 +2765,9 @@ List<int> commentIndex=[];
         video:messageViedo,
         text: "",
         dateTime: dateTime,
-        senderId: AppStrings.uId
+        senderId: AppStrings.uId,
+        senderName: senderName,
+        senderImage: senderImage,
     );
 
     //Set My Chat

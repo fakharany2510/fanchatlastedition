@@ -536,7 +536,14 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                 onTap: (){
                                   AppCubit.get(context).pickPostVideo5();
                                 },
-                                child: Icon(Icons.video_camera_back,color: Colors.red,size: 22),
+                                child: Icon(Icons.video_collection_sharp,color: Colors.red,size: 22),
+                                backgroundColor: AppColors.myWhite
+                            ),
+                            SpeedDialChild(
+                                onTap: (){
+                                  AppCubit.get(context).pickPostVideoCamera5();
+                                },
+                                child: Icon(Icons.video_camera_back,color: Colors.blue,size: 22),
                                 backgroundColor: AppColors.myWhite
                             ),
                             SpeedDialChild(
@@ -544,6 +551,13 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                            AppCubit.get(context).pickPostImage();
                               },
                               child: Icon(Icons.image,color: Colors.green,size: 22,),
+                              backgroundColor: AppColors.myWhite,
+                            ),
+                            SpeedDialChild(
+                              onTap: (){
+                                AppCubit.get(context).pickPostCamera();
+                              },
+                              child: Icon(Icons.camera_alt,color: AppColors.primaryColor1,size: 22,),
                               backgroundColor: AppColors.myWhite,
                             ),
                           ],

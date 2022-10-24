@@ -84,7 +84,12 @@ class _SendImagePublicChatState extends State<SendImagePublicChat> {
                 :FloatingActionButton(
               onPressed: (){
 
-                AppCubit.get(context).uploadPublicChatImage(dateTime:  DateTime.now().toString(), text: "", senderId:  AppStrings.uId!, senderName: '${AppCubit.get(context).userModel!.username}', senderImage: '${AppCubit.get(context).userModel!.image}');
+                AppCubit.get(context).uploadPublicChatImage(
+                    dateTime:  DateTime.now().toString(),
+                    text: "", senderId:  AppStrings.uId!,
+                    senderName: '${AppCubit.get(context).userModel!.username}',
+                    senderImage: '${AppCubit.get(context).userModel!.image}'
+                );
 
 
               },

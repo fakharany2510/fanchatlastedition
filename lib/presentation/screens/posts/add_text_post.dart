@@ -57,106 +57,191 @@ class _AddTextPostState extends State<AddTextPost> {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: AppColors.myWhite,
-          appBar: AppBar(
-            backgroundColor: AppColors.myWhite,
-            title: Text('Add new post',
-                style: TextStyle(
-                    fontSize: 21,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primaryColor1,
-                    fontFamily: AppStrings.appFont)),
-            elevation: 0,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                setState(() {
-                  AppCubit.get(context).postImage = null;
-                  print('${AppCubit.get(context).postImage}');
-                  Navigator.pop(context);
-                });
-              },
-            ),
-            actions: [
-              state is BrowiseCreateTextPostLoadingState ||
-                      state is BrowiseGetPostsLoadingState
-                  ? Center(
-                      child: CircularProgressIndicator(),
+       //    appBar: AppBar(
+       //      backgroundColor: AppColors.myWhite,
+       //      title: Text('Add new post',
+       //          style: TextStyle(
+       //              fontSize: 21,
+       //              fontWeight: FontWeight.w600,
+       //              color: AppColors.primaryColor1,
+       //              fontFamily: AppStrings.appFont)),
+       //      elevation: 0,
+       //      leading: IconButton(
+       //        icon: const Icon(Icons.arrow_back, color: Colors.black),
+       //        onPressed: () {
+       //          setState(() {
+       //            AppCubit.get(context).postImage = null;
+       //            print('${AppCubit.get(context).postImage}');
+       //            Navigator.pop(context);
+       //          });
+       //        },
+       //      ),
+       //      actions: [
+       //        state is BrowiseCreateTextPostLoadingState ||
+       //                state is BrowiseGetPostsLoadingState
+       //            ? Center(
+       //                child: CircularProgressIndicator(),
+       //              )
+       //            : (textFormFielsChanged == true && postText.text != ""  && AppCubit.get(context).userModel!.numberOfPosts != 12)
+       //        ?Padding(
+       //  padding: const EdgeInsets.all(8.0),
+       //  child: defaultButton(
+       //  textColor: AppColors.myWhite,
+       //  width: size.width*.2,
+       //  height: size.height*.05,
+       //  raduis: 10,
+       //  function: () {
+       //  if(formKey.currentState!.validate()){
+       //  AppCubit.get(context).createTextPost(
+       //  text: postText.text,
+       //  timeSpam: DateTime.now().toString(),
+       //  time: DateFormat.Hm().format(DateTime.now()),
+       //  dateTime: DateFormat.yMMMd().format(DateTime.now()),
+       //  );
+       //  setState(() {
+       //    callFcmApiSendPushNotifications(
+       //      title: 'New Post Added',
+       //      description:postText.text,
+       //      imageUrl: "${AppCubit.get(context).postImage}",
+       //        context: context
+       //      //  token:AppCubit.get(context).userToken
+       //    );
+       //  });
+       //  // callFcmApiSendPushNotifications(
+       //  // title: 'New Post Added',
+       //  // description:postText.text,
+       //  // imageUrl: "",
+       //  // //  token:AppCubit.get(context).userToken
+       //  // );
+       //  // setState((){
+       //  //   increaseNumberOfPosts=increaseNumberOfPosts+1;
+       //  // });
+       // // AppCubit.get(context).increasNumberOfPosts(increaseNumberOfPosts);
+       //  }
+       //  },
+       //
+       //  buttonText: 'post',
+       //  buttonColor: AppColors.primaryColor1,
+       //  ),
+       //  )
+       //        :Padding(
+       //  padding: const EdgeInsets.all(8.0),
+       //  child: defaultButton(
+       //  textColor: AppColors.myWhite,
+       //  width: size.width*.2,
+       //  height: size.height*.05,
+       //  raduis: 10,
+       //  function: () {},
+       //  buttonText: 'post',
+       //  buttonColor: AppColors.primaryColor1.withOpacity(.2),
+       //  ),
+       //  )
+       //      ],
+       //    ),
+          body: SafeArea(
+            child: Stack(
+              children: [
+                Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child:const Opacity(
+                      opacity: 1,
+                      child:  Image(
+                        image: AssetImage('assets/images/imageback.jpg'),
+                        fit: BoxFit.cover,
+                      ),
                     )
-                  : (textFormFielsChanged == true && postText.text != ""  && AppCubit.get(context).userModel!.numberOfPosts != 12)
-              ?Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: defaultButton(
-        textColor: AppColors.myWhite,
-        width: size.width*.2,
-        height: size.height*.05,
-        raduis: 10,
-        function: () {
-        if(formKey.currentState!.validate()){
-        AppCubit.get(context).createTextPost(
-        text: postText.text,
-        timeSpam: DateTime.now().toString(),
-        time: DateFormat.Hm().format(DateTime.now()),
-        dateTime: DateFormat.yMMMd().format(DateTime.now()),
-        );
-        setState(() {
-          callFcmApiSendPushNotifications(
-            title: 'New Post Added',
-            description:postText.text,
-            imageUrl: "${AppCubit.get(context).postImage}",
-              context: context
-            //  token:AppCubit.get(context).userToken
-          );
-        });
-        // callFcmApiSendPushNotifications(
-        // title: 'New Post Added',
-        // description:postText.text,
-        // imageUrl: "",
-        // //  token:AppCubit.get(context).userToken
-        // );
-        // setState((){
-        //   increaseNumberOfPosts=increaseNumberOfPosts+1;
-        // });
-       // AppCubit.get(context).increasNumberOfPosts(increaseNumberOfPosts);
-        }
-        },
+                ),
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back, color: Colors.black),
+                            onPressed: () {
+                              setState(() {
+                                AppCubit.get(context).postImage = null;
+                                print('${AppCubit.get(context).postImage}');
+                                Navigator.pop(context);
+                              });
+                            },
+                          ),
+                          SizedBox(width: 15,),
+                          Text('Add new post',
+                              style: TextStyle(
+                                  fontSize: 21,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primaryColor1,
+                                  fontFamily: AppStrings.appFont)
+                          ),
+                          Spacer(),
+                          state is BrowiseCreateTextPostLoadingState ||
+                              state is BrowiseGetPostsLoadingState
+                              ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                              : (textFormFielsChanged == true && postText.text != ""  && AppCubit.get(context).userModel!.numberOfPosts != 12)
+                              ?Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: defaultButton(
+                              textColor: AppColors.myWhite,
+                              width: size.width*.21,
+                              height: size.height*.06,
+                              raduis: 10,
+                              function: () {
+                                if(formKey.currentState!.validate()){
+                                  AppCubit.get(context).createTextPost(
+                                    text: postText.text,
+                                    timeSpam: DateTime.now().toString(),
+                                    time: DateFormat.Hm().format(DateTime.now()),
+                                    dateTime: DateFormat.yMMMd().format(DateTime.now()),
+                                  );
+                                  setState(() {
+                                    callFcmApiSendPushNotifications(
+                                        title: 'New Post Added',
+                                        description:postText.text,
+                                        imageUrl: "${AppCubit.get(context).postImage}",
+                                        context: context
+                                      //  token:AppCubit.get(context).userToken
+                                    );
+                                  });
+                                  // callFcmApiSendPushNotifications(
+                                  // title: 'New Post Added',
+                                  // description:postText.text,
+                                  // imageUrl: "",
+                                  // //  token:AppCubit.get(context).userToken
+                                  // );
+                                  // setState((){
+                                  //   increaseNumberOfPosts=increaseNumberOfPosts+1;
+                                  // });
+                                  // AppCubit.get(context).increasNumberOfPosts(increaseNumberOfPosts);
+                                }
+                              },
 
-        buttonText: 'post',
-        buttonColor: AppColors.primaryColor1,
-        ),
-        )
-              :Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: defaultButton(
-        textColor: AppColors.myWhite,
-        width: size.width*.2,
-        height: size.height*.05,
-        raduis: 10,
-        function: () {},
-        buttonText: 'post',
-        buttonColor: AppColors.primaryColor1.withOpacity(.2),
-        ),
-        )
-            ],
-          ),
-          body: Stack(
-            children: [
-              Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child:const Opacity(
-                    opacity: 1,
-                    child:  Image(
-                      image: AssetImage('assets/images/imageback.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  )
-              ),
-              SingleChildScrollView(
-                child: Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Column(
-                      children: [
-                        Row(
+                              buttonText: 'post',
+                              buttonColor: AppColors.primaryColor1,
+                            ),
+                          )
+                              :Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: defaultButton(
+                              textColor: AppColors.myWhite,
+                              width: size.width*.21,
+                              height: size.height*.06,
+                              raduis: 10,
+                              function: () {},
+                              buttonText: 'post',
+                              buttonColor: AppColors.primaryColor1.withOpacity(.2),
+                            ),
+                          ),
+                          SizedBox(width: 15,),
+
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 25),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             CircleAvatar(
@@ -177,10 +262,13 @@ class _AddTextPostState extends State<AddTextPost> {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Form(
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 25),
+                        child: Form(
                           key: formKey,
                           child: TextFormField(
                             validator: (value){
@@ -202,24 +290,26 @@ class _AddTextPostState extends State<AddTextPost> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: size.height * .5,
-                        ),
+                      ),
+                      SizedBox(
+                        height: size.height * .5,
+                      ),
 
-                        Align(
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 25),
+                        child: Align(
                           alignment: Alignment.bottomCenter,
                           child: Column(
                             children: [
                               Container(
                                 height: size.height * .001,
                                 width: size.width,
-                                color: Colors.grey,
+                                color: AppColors.primaryColor1,
                               ),
                               TextButton(
                                   onPressed: () {
                                     AppCubit.get(context).pickPostImage();
-                                  },
-                                  child: Row(
+                                  }, child: Row(
                                     children: [
                                       ImageIcon(
                                         AssetImage("assets/images/fanarea.png"),
@@ -242,7 +332,7 @@ class _AddTextPostState extends State<AddTextPost> {
                               Container(
                                 height: size.height * .001,
                                 width: size.width,
-                                color: Colors.grey,
+                                color: AppColors.primaryColor1,
                               ),
                               TextButton(
                                   onPressed: () {
@@ -271,7 +361,7 @@ class _AddTextPostState extends State<AddTextPost> {
                               Container(
                                 height: size.height * .001,
                                 width: size.width,
-                                color: Colors.grey,
+                                color: AppColors.primaryColor1,
                               ),
                               TextButton(
                                   onPressed: () {
@@ -297,13 +387,40 @@ class _AddTextPostState extends State<AddTextPost> {
                                       )
                                     ],
                                   )),
+                              Container(
+                                height: size.height * .001,
+                                width: size.width,
+                                color: AppColors.primaryColor1,
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    AppCubit.get(context).pickPostVideoCamera2();
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.video_camera_back,color: AppColors.primaryColor1,),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Video Camera',
+                                        style: TextStyle(
+                                            color: AppColors.primaryColor1,
+                                            fontFamily: AppStrings.appFont,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ],
+                                  )),
                             ],
                           ),
-                        )
-                      ],
-                    )),
-              ),
-            ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           )
         );
       },

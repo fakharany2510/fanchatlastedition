@@ -199,7 +199,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500
                                   ),),
-                                  SizedBox(height: 10,),
+                                  const SizedBox(height: 10,),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
@@ -302,7 +302,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                               border: InputBorder.none,
                                               hintText: 'Write your message...',
                                               hintStyle: TextStyle(
-                                                    color:  Color(0xffeef1ff).withOpacity(.9),
+                                                    color:  const Color(0xffeef1ff).withOpacity(.9),
 
                                               )
 
@@ -369,14 +369,28 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                               onTap: (){
                                 AppCubit.get(context).pickPostVideo4();
                               },
-                              child: Icon(Icons.video_camera_back,color: Colors.red,size: 22),
+                              child: const Icon(Icons.video_collection_sharp,color: Colors.red,size: 22),
+                              backgroundColor: AppColors.myWhite
+                          ),
+                          SpeedDialChild(
+                              onTap: (){
+                                AppCubit.get(context).pickPostVideoCameraPublic4();
+                              },
+                              child: const Icon(Icons.video_camera_back,color: Colors.blue,size: 22),
                               backgroundColor: AppColors.myWhite
                           ),
                           SpeedDialChild(
                             onTap: (){
                               AppCubit.get(context).pickPostImage();
                             },
-                            child: Icon(Icons.image,color: Colors.green,size: 22,),
+                            child: const Icon(Icons.image,color: Colors.green,size: 22,),
+                            backgroundColor: AppColors.myWhite,
+                          ),
+                          SpeedDialChild(
+                            onTap: (){
+                              AppCubit.get(context).pickPostCamera();
+                            },
+                            child:Icon(Icons.camera_alt,color: AppColors.primaryColor1,size: 22,),
                             backgroundColor: AppColors.myWhite,
                           ),
                         ],

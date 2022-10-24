@@ -98,7 +98,9 @@ class SendVideoPublicChat extends StatelessWidget {
                 AppCubit.get(context).uploadPublicChatVideo(
                     senderId: AppStrings.uId!,
                     dateTime: DateTime.now().toString(),
-                    text: ""
+                    text: "",
+                    senderName: '${AppCubit.get(context).userModel!.username}',
+                    senderImage: '${AppCubit.get(context).userModel!.image}'
                 );
               },
               backgroundColor: AppColors.primaryColor1,

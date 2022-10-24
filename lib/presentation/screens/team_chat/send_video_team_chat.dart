@@ -101,7 +101,10 @@ class SendVideoTeamChat extends StatelessWidget {
                     senderId: AppStrings.uId!,
                     dateTime: DateTime.now().toString(),
                     text: "",
-                    countryName: countryName
+                    countryName: countryName,
+                    senderName: '${AppCubit.get(context).userModel!.username}',
+                    senderImage: '${AppCubit.get(context).userModel!.image}'
+
                 );
               },
               backgroundColor: AppColors.primaryColor1,
