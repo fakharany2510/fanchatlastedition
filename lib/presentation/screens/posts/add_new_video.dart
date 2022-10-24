@@ -121,7 +121,6 @@ class _AddNewVideoState extends State<AddNewVideo> {
                             //  token:AppCubit.get(context).userToken
                           );
 
-
                         } else {
                           customToast(title: 'Video size is too big', color: Colors.red);
                         }
