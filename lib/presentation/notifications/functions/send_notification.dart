@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -8,6 +9,7 @@ Future<void> callFcmApiSendPushNotifications({
   required String title,
   required String imageUrl,
   required String description,
+  context
 })async{
 
   const postUrl ='https://fcm.googleapis.com/fcm/send';
@@ -44,6 +46,7 @@ Future<void> callFcmApiSendPushNotifications({
 
       if (response.statusCode == 200) {
         print('Push Notification Succeded');
+        AppCubit.get(context).getPosts();
       } else {
         print('Push Notification Error');
       }

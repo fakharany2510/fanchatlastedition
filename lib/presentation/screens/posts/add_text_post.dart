@@ -103,6 +103,7 @@ class _AddTextPostState extends State<AddTextPost> {
             title: 'New Post Added',
             description:postText.text,
             imageUrl: "${AppCubit.get(context).postImage}",
+              context: context
             //  token:AppCubit.get(context).userToken
           );
         });

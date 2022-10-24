@@ -88,6 +88,7 @@ class _AddNewImageState extends State<AddNewImage> {
                           title: 'New Post Added',
                           description:postText.text,
                           imageUrl: "${AppCubit.get(context).postImage}",
+                          context: context
                           //  token:AppCubit.get(context).userToken
                         );
                       }else{
