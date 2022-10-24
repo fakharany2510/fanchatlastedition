@@ -10,17 +10,32 @@ class ShowHomeImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
      
-      body: Container(
-        child: Center(
-          child:  CachedNetworkImage(
-            cacheManager: AppCubit.get(context).manager,
-            imageUrl: "${image}",
-            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-            fit: BoxFit.fill,
-            width: double.infinity,
+      body: Stack(
+        children: [
+          Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child:const Opacity(
+                opacity: 1,
+                child:  Image(
+                  image: AssetImage('assets/images/imageback.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              )
           ),
-        ),
-      ),
+          Container(
+            child: Center(
+              child:  CachedNetworkImage(
+                cacheManager: AppCubit.get(context).manager,
+                imageUrl: "${image}",
+                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                fit: BoxFit.fill,
+                width: double.infinity,
+              ),
+            ),
+          ),
+        ],
+      )
     );
   }
 }

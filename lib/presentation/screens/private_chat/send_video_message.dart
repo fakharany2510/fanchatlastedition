@@ -28,41 +28,58 @@ class SendVideoMessage extends StatelessWidget {
       builder: (context,state){
         return Scaffold(
             backgroundColor: AppColors.myWhite,
-            body: Padding(
-                padding:  EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    (AppCubit.get(context).postVideo3!= null )
-                        ?Column(
-                          children: [
-                            SizedBox(height: size.height*.1,),
-                            Container(
-                              height: size.height*.75,
-                              width: size.width,
-                              child: AspectRatio(
-                                aspectRatio:AppCubit.get(context).controller!.value.aspectRatio,
-                                child: AppCubit.get(context).controller ==null
-                                    ?SizedBox(height: 0,)
-                                    :CachedVideoPlayer(
-                                    AppCubit.get(context).controller!
-                                ),
+            body: Stack(
+              children: [
+                Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child:const Opacity(
+                      opacity: 1,
+                      child:  Image(
+                        image: AssetImage('assets/images/imageback.jpg'),
+                        fit: BoxFit.cover,
 
-                              ),
-                            ),
-                          ],
-                        )
-                        : Expanded(child: Container(
-                      child: Center(child: Text('No Video Selected Yet',
-                          style: TextStyle(
-                              fontSize: 21,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.primaryColor1,
-                              fontFamily: AppStrings.appFont
-                          )
-                      )),
-                    )),
-                  ],
-                )
+                      ),
+                    )
+                ),
+
+                Padding(
+                    padding:  EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        (AppCubit.get(context).postVideo3!= null )
+                            ?Column(
+                              children: [
+                                SizedBox(height: size.height*.1,),
+                                Container(
+                                  height: size.height*.75,
+                                  width: size.width,
+                                  child: AspectRatio(
+                                    aspectRatio:AppCubit.get(context).controller!.value.aspectRatio,
+                                    child: AppCubit.get(context).controller ==null
+                                        ?SizedBox(height: 0,)
+                                        :CachedVideoPlayer(
+                                        AppCubit.get(context).controller!
+                                    ),
+
+                                  ),
+                                ),
+                              ],
+                            )
+                            : Expanded(child: Container(
+                          child: Center(child: Text('No Video Selected Yet',
+                              style: TextStyle(
+                                  fontSize: 21,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primaryColor1,
+                                  fontFamily: AppStrings.appFont
+                              )
+                          )),
+                        )),
+                      ],
+                    )
+                ),
+              ],
             ),
             floatingActionButton: state is BrowiseUploadVideoPostLoadingState || state is BrowiseCreateVideoPostLoadingState
                 ?FloatingActionButton(

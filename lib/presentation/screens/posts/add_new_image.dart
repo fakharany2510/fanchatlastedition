@@ -121,47 +121,60 @@ class _AddNewImageState extends State<AddNewImage> {
                   )
             ],
           ),
-          body: Padding(
-              padding:  EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  Row(
-                 mainAxisAlignment: MainAxisAlignment.start,
+          body: Stack(
+            children: [
+              Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child:const Opacity(
+                    opacity: 1,
+                    child:  Image(
+                      image: AssetImage('assets/images/imageback.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  )
+              ),
+              Padding(
+                  padding:  EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
 
-                    children:  [
-                      CircleAvatar(
-                        backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
-                        radius: 30,
+                        children:  [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
+                            radius: 30,
+                          ),
+                          const SizedBox(width: 10,),
+                          Text('${AppCubit.get(context).userModel!.username}',
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: AppStrings.appFont
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 10,),
-                      Text('${AppCubit.get(context).userModel!.username}',
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: AppStrings.appFont
+                      const SizedBox(height: 10,),
+                      Container(
+                        height: MediaQuery.of(context).size.height*.08,
+                        width: MediaQuery.of(context).size.width,
+                        child: TextFormField(
+                          maxLines: 3,
+                          controller: postText,
+                          decoration: const InputDecoration(
+                            hintMaxLines: 1,
+                            hintText: 'Say someting about this photo.....',
+                            border:InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 10,),
-                  Container(
-                    height: MediaQuery.of(context).size.height*.08,
-                    width: MediaQuery.of(context).size.width,
-                    child: TextFormField(
-                      maxLines: 3,
-                      controller: postText,
-                      decoration: const InputDecoration(
-                        hintMaxLines: 1,
-                        hintText: 'Say someting about this photo.....',
-                        border:InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                 const  SizedBox(height: 0,),
-                  (AppCubit.get(context).postImage!= null )
-                      ?Expanded(
+                      const  SizedBox(height: 0,),
+                      (AppCubit.get(context).postImage!= null )
+                          ?Expanded(
                         child: Container(
                           height: size.height,
                           width: size.width,
@@ -175,21 +188,23 @@ class _AddNewImageState extends State<AddNewImage> {
                           ),
                         ),
                       )
-                  :Expanded(child: Container(
-                    child: Center(child: Text('No Photo Selected Yet',
-                        style: TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primaryColor1,
-                            fontFamily: AppStrings.appFont
-                        )
-                    )),
-                  )),
+                          :Expanded(child: Container(
+                        child: Center(child: Text('No Photo Selected Yet',
+                            style: TextStyle(
+                                fontSize: 21,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primaryColor1,
+                                fontFamily: AppStrings.appFont
+                            )
+                        )),
+                      )),
 
 
-                ],
-              )
-          ),
+                    ],
+                  )
+              ),
+            ],
+          )
         );
       },
     );

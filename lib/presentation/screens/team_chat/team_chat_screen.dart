@@ -165,10 +165,11 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                       ),
                       leading: IconButton(
                         onPressed: (){
-                          AppCubit.get(context).currentIndex=0;
-                          Navigator.push(context, MaterialPageRoute(builder: (_){
-                            return const HomeLayout();
-                          }));
+                          // AppCubit.get(context).currentIndex=0;
+                          // Navigator.push(context, MaterialPageRoute(builder: (_){
+                          //   return const HomeLayout();
+                          // }));
+                          Navigator.pop(context);
                         },
                         icon: Icon(
                           Icons.arrow_back_ios,

@@ -452,6 +452,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 
 }
+
 Future<void> showMyDialog(context) async {
   return showDialog<void>(
     context: context,
@@ -525,4 +526,5 @@ Future<void> showMyDialog(context) async {
       );
     },
   );
+
 }

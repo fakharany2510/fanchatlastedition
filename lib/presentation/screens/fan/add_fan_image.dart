@@ -82,61 +82,76 @@ class _AddFanImageState extends State<AddFanImage> {
               )
             ],
           ),
-          body: Padding(
-              padding:  EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-
-                    children:  [
-                      CircleAvatar(
-                        backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
-                        radius: 30,
-                      ),
-                      const SizedBox(width: 10,),
-                      Text('${AppCubit.get(context).userModel!.username}',
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: AppStrings.appFont
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10,),
-                  const  SizedBox(height: 0,),
-                  (AppCubit.get(context).fanPostImage!= null )
-                      ?Expanded(
-                    child: Container(
-                      height: size.height,
-                      width: size.width,
-                      child: Align(
-                        alignment: AlignmentDirectional.bottomCenter,
-                        child: Image(
-                          image: FileImage(AppCubit.get(context).fanPostImage!),
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                      ),
+          body: Stack(
+            children: [
+              Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child:const Opacity(
+                    opacity: 1,
+                    child:  Image(
+                      image: AssetImage('assets/images/imageback.jpg'),
+                      fit: BoxFit.cover,
                     ),
                   )
-                      :Expanded(child: Container(
-                    child: Center(child: Text('No Photo Selected Yet',
-                        style: TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primaryColor1,
-                            fontFamily: AppStrings.appFont
-                        )
-                    )),
-                  )),
+              ),
+              Padding(
+                  padding:  EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //
+                      //   children:  [
+                      //     CircleAvatar(
+                      //       backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
+                      //       radius: 30,
+                      //     ),
+                      //     const SizedBox(width: 10,),
+                      //     Text('${AppCubit.get(context).userModel!.username}',
+                      //       style: const TextStyle(
+                      //           color: Colors.black,
+                      //           fontSize: 16,
+                      //           fontWeight: FontWeight.w500,
+                      //           fontFamily: AppStrings.appFont
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      const SizedBox(height: 10,),
+                      const  SizedBox(height: 0,),
+                      (AppCubit.get(context).fanPostImage!= null )
+                          ?Expanded(
+                        child: Container(
+                          height: size.height,
+                          width: size.width,
+                          child: Align(
+                            alignment: AlignmentDirectional.bottomCenter,
+                            child: Image(
+                              image: FileImage(AppCubit.get(context).fanPostImage!),
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                            ),
+                          ),
+                        ),
+                      )
+                          :Expanded(child: Container(
+                        child: Center(child: Text('No Photo Selected Yet',
+                            style: TextStyle(
+                                fontSize: 21,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primaryColor1,
+                                fontFamily: AppStrings.appFont
+                            )
+                        )),
+                      )),
 
 
-                ],
-              )
-          ),
+                    ],
+                  )
+              ),
+            ],
+          )
         );
       },
     );

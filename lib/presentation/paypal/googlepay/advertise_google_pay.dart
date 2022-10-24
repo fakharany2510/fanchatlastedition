@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:pay/pay.dart';
 
@@ -13,12 +16,25 @@ class _AdvertiseGooglePayState extends State<AdvertiseGooglePay> {
 
   static const _paymentItems = [
     PaymentItem(
-      label: 'Premium package',
-      amount: '99.99',
+      label: 'Advertise package',
+      amount: '1',
       status: PaymentItemStatus.final_price,
     )
   ];
   void onGooglePayResult(paymentResult) {
+    FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
+        .update({
+      'days':0,
+      'payed':true
+    }).then((value){
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+      CashHelper.saveData(key: 'days' , value: 0);
+      print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
+      print('success to update aaccountStates');
+    }).catchError((error){
+      print('success to update aaccountStates${error.toString()}');
+    });
+    debugPrint(paymentResult.toString());
     debugPrint(paymentResult.toString());
   }
 

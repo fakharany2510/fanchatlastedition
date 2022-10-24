@@ -50,50 +50,64 @@ class _OpenFullVideoPrivateChatState extends State<OpenFullVideoPrivateChat> {
       },
       builder: (context,state){
         return  Scaffold(
-          body: Container(
-            color: Colors.white,
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 70,
-                        bottom: 50
+          body: Stack(
+            children: [
+              Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child:const Opacity(
+                    opacity: 1,
+                    child:  Image(
+                      image: AssetImage('assets/images/imageback.jpg'),
+                      fit: BoxFit.cover,
+
                     ),
-                    child: AspectRatio(
-                        aspectRatio:widget.controller!.value.size.width/widget.controller!.value.size.height,
-                        child: CachedVideoPlayer(widget.controller!)),
                   )
+              ),
+
+              Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 70,
+                          bottom: 50
+                      ),
+                      child: AspectRatio(
+                          aspectRatio:widget.controller!.value.size.width/widget.controller!.value.size.height,
+                          child: CachedVideoPlayer(widget.controller!)),
+                    )
+                    ),
+
+
+                  Positioned(
+                      top: MediaQuery.of(context).size.height*.12,
+                      right: MediaQuery.of(context).size.height*.03,
+                      child: InkWell(
+                        onTap: (){
+                          setState((){
+                            if(widget.controller!.value.isPlaying){
+                              widget.controller!.pause();
+                            }else{
+                              widget.controller!.play();
+                            }
+                          });
+                          // Navigator.push(context, MaterialPageRoute(builder: (_){
+                          //   return OpenFullVideoPrivateChat(controller: widget.controller!);
+                          // }));
+                        },
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white.withOpacity(.8),
+                          radius: 30,
+                          child: widget.controller!.value.isPlaying? Icon(Icons.pause,size: 30,color: AppColors.primaryColor1,): Icon(Icons.play_arrow,size: 30,color: AppColors.primaryColor1,),
+                        ),
+                      )
                   ),
 
-
-                Positioned(
-                    top: MediaQuery.of(context).size.height*.12,
-                    right: MediaQuery.of(context).size.height*.03,
-                    child: InkWell(
-                      onTap: (){
-                        setState((){
-                          if(widget.controller!.value.isPlaying){
-                            widget.controller!.pause();
-                          }else{
-                            widget.controller!.play();
-                          }
-                        });
-                        // Navigator.push(context, MaterialPageRoute(builder: (_){
-                        //   return OpenFullVideoPrivateChat(controller: widget.controller!);
-                        // }));
-                      },
-                      child: CircleAvatar(
-                        backgroundColor: Colors.white.withOpacity(.8),
-                        radius: 30,
-                        child: widget.controller!.value.isPlaying? Icon(Icons.pause,size: 30,color: AppColors.primaryColor1,): Icon(Icons.play_arrow,size: 30,color: AppColors.primaryColor1,),
-                      ),
-                    )
-                ),
-
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
         );
       },

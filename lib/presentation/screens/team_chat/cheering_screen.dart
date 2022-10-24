@@ -49,136 +49,153 @@ class _CheeringScreenState extends State<CheeringScreen> {
             return Scaffold(
               appBar: customAppbar('Profile',context),
 
-              body: SingleChildScrollView(
-                child: Container(
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children:  [
-                      SizedBox(height: MediaQuery.of(context).size.height*.15,),
-                      const Image(
-                        height: 90,
-                        width: 90,
-                        image: AssetImage('assets/images/cheers.png'),
-                      ),
-                      const SizedBox(height: 15,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Send a uniform cheer to all your team fans \n and share the fun with every one',
-                            style: TextStyle(
-                                color: AppColors.primaryColor1,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: AppStrings.appFont
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
+              body: Stack(
+                children: [
+                  Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child:const Opacity(
+                        opacity: 1,
+                        child:  Image(
+                          image: AssetImage('assets/images/imageback.jpg'),
+                          fit: BoxFit.cover,
 
+                        ),
+                      )
+                  ),
+
+                  SingleChildScrollView(
+                    child: Container(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children:  [
+                          SizedBox(height: MediaQuery.of(context).size.height*.15,),
+                          const Image(
+                            height: 90,
+                            width: 90,
+                            image: AssetImage('assets/images/cheers.png'),
+                          ),
+                          const SizedBox(height: 15,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Send a uniform cheer to all your team fans \n and share the fun with every one',
+                                style: TextStyle(
+                                    color: AppColors.primaryColor1,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: AppStrings.appFont
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+
+                            ],
+                          ),
+                          SizedBox(height:  MediaQuery.of(context).size.height*.05,),
+                          Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 20
+                            ),
+                            // height:MediaQuery.of(context).size.height*.07,
+                            child: Form(
+                              key: formKey,
+                              onChanged: (){
+                                setState((){
+                                  cheeringControllerChanges=true;
+                                });
+                              },
+                              child: TextFormField(
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(70),
+                                ],
+                                style: TextStyle(
+                                    color:AppColors.primaryColor1,
+                                    fontFamily: AppStrings.appFont,
+                                    fontSize: 17
+                                ),
+                                maxLines: 3,
+                                keyboardType: TextInputType.text,
+                                controller: cheeringController,
+                                decoration: InputDecoration(
+
+                                  focusColor: AppColors.myGrey,
+                                  fillColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color:AppColors.primaryColor1),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5)
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color:AppColors.primaryColor1),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  // hintText: '$labelText',
+                                  // hintStyle: TextStyle(
+                                  //   color: AppColors.myGrey,
+                                  //   fontFamily: AppStrings.appFont,
+                                  // ),
+                                ),
+                                validator: (value){
+                                  if(value!.isEmpty){
+                                    return 'Write uniform cheering';
+                                  }
+                                },
+                              ),
+                            )
+                          ),
+                          SizedBox(height: MediaQuery.of(context).size.height*.05,),
+                          state is CreateCheeringLoadingState?
+                          CircularProgressIndicator(
+                            color: AppColors.primaryColor1,
+                          ):
+                          (cheeringControllerChanges == true) && (cheeringController.text != '')?
+                          defaultButton(
+                              buttonText: 'Post',
+                              textColor: AppColors.myWhite,
+                              buttonColor: Color(0Xffd32330),
+                              width: MediaQuery.of(context).size.width*.6,
+                              height: MediaQuery.of(context).size.height*.06,
+                              function: (){
+                                AppCubit.get(context).count=17;
+                                if(AppCubit.get(context).isWaiting==false){
+                                AppCubit.get(context).createCheeringPost(
+                                    time: DateFormat.Hm().format(DateTime.now()),
+                                    timeSpam: DateTime.now().toString(),
+                                    text: cheeringController.text
+                                );
+                                  AppCubit.get(context).isWaiting=true;
+                                  print('here');
+                                  AppCubit.get(context).updateWaitingCheering();
+                                }
+                                else{
+
+                                  customToast(title: 'Please, Waiting few seconds and try again', color: AppColors.primaryColor1);
+                                  Navigator.pop(context);
+
+                                }
+
+
+                                // AppCubit.get(context).getCheeringPost();
+                                // AppCubit.get(context).isLast=false;
+
+                              }
+                          ): defaultButton(
+                              width: MediaQuery.of(context).size.width*.8,
+                              height: MediaQuery.of(context).size.height*.07,
+                              buttonColor: AppColors.myGrey,
+                              textColor: AppColors.primaryColor1,
+                              buttonText: 'Send',
+                              function: (){
+                              }
+                          )
                         ],
                       ),
-                      SizedBox(height:  MediaQuery.of(context).size.height*.05,),
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 20
-                        ),
-                        // height:MediaQuery.of(context).size.height*.07,
-                        child: Form(
-                          key: formKey,
-                          onChanged: (){
-                            setState((){
-                              cheeringControllerChanges=true;
-                            });
-                          },
-                          child: TextFormField(
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(70),
-                            ],
-                            style: TextStyle(
-                                color:AppColors.primaryColor1,
-                                fontFamily: AppStrings.appFont,
-                                fontSize: 17
-                            ),
-                            maxLines: 3,
-                            keyboardType: TextInputType.text,
-                            controller: cheeringController,
-                            decoration: InputDecoration(
-
-                              focusColor: AppColors.myGrey,
-                              fillColor: Colors.white,
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color:AppColors.primaryColor1),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5)
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color:AppColors.primaryColor1),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              // hintText: '$labelText',
-                              // hintStyle: TextStyle(
-                              //   color: AppColors.myGrey,
-                              //   fontFamily: AppStrings.appFont,
-                              // ),
-                            ),
-                            validator: (value){
-                              if(value!.isEmpty){
-                                return 'Write uniform cheering';
-                              }
-                            },
-                          ),
-                        )
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height*.05,),
-                      state is CreateCheeringLoadingState?
-                      CircularProgressIndicator(
-                        color: AppColors.primaryColor1,
-                      ):
-                      (cheeringControllerChanges == true) && (cheeringController.text != '')?
-                      defaultButton(
-                          width: MediaQuery.of(context).size.width*.8,
-                          height: MediaQuery.of(context).size.height*.07,
-                          buttonColor: AppColors.primaryColor1,
-                          textColor: AppColors.myWhite,
-                          buttonText: 'Post',
-                          function: (){
-                            AppCubit.get(context).count=17;
-                            if(AppCubit.get(context).isWaiting==false){
-                            AppCubit.get(context).createCheeringPost(
-                                time: DateFormat.Hm().format(DateTime.now()),
-                                timeSpam: DateTime.now().toString(),
-                                text: cheeringController.text
-                            );
-                              AppCubit.get(context).isWaiting=true;
-                              print('here');
-                              AppCubit.get(context).updateWaitingCheering();
-                            }
-                            else{
-
-                              customToast(title: 'Please, Waiting few seconds and try again', color: AppColors.primaryColor1);
-                              Navigator.pop(context);
-
-                            }
-
-
-                            // AppCubit.get(context).getCheeringPost();
-                            // AppCubit.get(context).isLast=false;
-
-                          }
-                      ): defaultButton(
-                          width: MediaQuery.of(context).size.width*.8,
-                          height: MediaQuery.of(context).size.height*.07,
-                          buttonColor: AppColors.myGrey,
-                          textColor: AppColors.primaryColor1,
-                          buttonText: 'Send',
-                          function: (){
-                          }
-                      )
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
 
             );

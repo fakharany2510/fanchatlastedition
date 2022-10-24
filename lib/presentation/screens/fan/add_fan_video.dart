@@ -84,65 +84,80 @@ class AddFanVideo extends StatelessWidget {
               ),
             ],
           ),
-          body: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  if(state is CreatePostLoadingState)
-                    LinearProgressIndicator(),
-                  SizedBox(height: 5,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children:  [
-                      CircleAvatar(
-                        backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
-                        radius: 30,
-                      ),
-                      SizedBox(width: 10,),
-                      Expanded(
-                        child:   Text('${AppCubit.get(context).userModel!.username}',
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: AppStrings.appFont
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10,),
-                  ( AppCubit.get(context).fanPostVideo!= null && AppCubit.get(context).videoPlayerController!.value.isInitialized)
-                      ?Expanded(
-                    child: Container(
-                      height: size.height,
-                      width: size.width,
-                      child: AspectRatio(
-                        aspectRatio:AppCubit.get(context).videoPlayerController!.value.aspectRatio,
-                        child: AppCubit.get(context).videoPlayerController ==null
-                            ?SizedBox(height: 0,)
-                            :VideoPlayer(
-                            AppCubit.get(context).videoPlayerController!
-                        ),
-
-                      ),
+          body:Stack(
+            children: [
+              Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child:const Opacity(
+                    opacity: 1,
+                    child:  Image(
+                      image: AssetImage('assets/images/imageback.jpg'),
+                      fit: BoxFit.cover,
                     ),
                   )
-                      : Expanded(child: Container(
-                    child: Center(child: Text('No Video Selected Yet',
-                        style: TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primaryColor1,
-                            fontFamily: AppStrings.appFont
-                        )
-                    )),
-                  )),
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      if(state is CreatePostLoadingState)
+                        LinearProgressIndicator(),
+                      SizedBox(height: 5,),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //   children:  [
+                      //     CircleAvatar(
+                      //       backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
+                      //       radius: 30,
+                      //     ),
+                      //     SizedBox(width: 10,),
+                      //     Expanded(
+                      //       child:   Text('${AppCubit.get(context).userModel!.username}',
+                      //         style: const TextStyle(
+                      //             color: Colors.black,
+                      //             fontSize: 16,
+                      //             fontWeight: FontWeight.w500,
+                      //             fontFamily: AppStrings.appFont
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      const SizedBox(height: 10,),
+                      ( AppCubit.get(context).fanPostVideo!= null && AppCubit.get(context).videoPlayerController!.value.isInitialized)
+                          ?Expanded(
+                        child: Container(
+                          height: size.height,
+                          width: size.width,
+                          child: AspectRatio(
+                            aspectRatio:AppCubit.get(context).videoPlayerController!.value.aspectRatio,
+                            child: AppCubit.get(context).videoPlayerController ==null
+                                ?SizedBox(height: 0,)
+                                :VideoPlayer(
+                                AppCubit.get(context).videoPlayerController!
+                            ),
+
+                          ),
+                        ),
+                      )
+                          : Expanded(child: Container(
+                        child: Center(child: Text('No Video Selected Yet',
+                            style: TextStyle(
+                                fontSize: 21,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primaryColor1,
+                                fontFamily: AppStrings.appFont
+                            )
+                        )),
+                      )),
 
 
-                ],
-              )
-          ),
+                    ],
+                  )
+              ),
+            ],
+          )
         );
       },
     );

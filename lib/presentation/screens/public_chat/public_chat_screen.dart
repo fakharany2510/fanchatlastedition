@@ -89,61 +89,62 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                 }
                 return Scaffold(
                   backgroundColor: Colors.white,
-                  appBar: AppBar(
-                    backgroundColor: AppColors.primaryColor1,
-                    elevation: 0,
-                    titleSpacing: 0.0,
-                    centerTitle: false,
-                    title: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                         Container(
-                           width: 40,
-                           height: 40,
-                           decoration: BoxDecoration(
-                             image: const DecorationImage(
-                               image: AssetImage('assets/images/ncolors.png'),
-                             ),
-                             borderRadius: BorderRadius.circular(2),
-                           ),
-                         ),
-                        const SizedBox(width: 15,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: const [
-                                 Text('Public Chat',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: AppStrings.appFont
-                                  ),
-                                ),
-
-                              ],
-                            ),
-
-                          ],
-                        ),
-
-                      ],
-                    ),
-                    leading: IconButton(
-                      onPressed: (){
-                        AppCubit.get(context).currentIndex=0;
-                        Navigator.push(context, MaterialPageRoute(builder: (_){
-                          return const HomeLayout();
-                        }));
-                      },
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: AppColors.myWhite,
-                      ),
-                    ),
-                  ),
+                  // appBar: AppBar(
+                  //   backgroundColor: AppColors.primaryColor1,
+                  //   elevation: 0,
+                  //   titleSpacing: 0.0,
+                  //   centerTitle: false,
+                  //   title: Row(
+                  //     mainAxisSize: MainAxisSize.min,
+                  //     mainAxisAlignment: MainAxisAlignment.start,
+                  //     children: [
+                  //        Container(
+                  //          width: 40,
+                  //          height: 40,
+                  //          decoration: BoxDecoration(
+                  //            image: const DecorationImage(
+                  //              image: AssetImage('assets/images/ncolors.png'),
+                  //            ),
+                  //            borderRadius: BorderRadius.circular(2),
+                  //          ),
+                  //        ),
+                  //       const SizedBox(width: 15,),
+                  //       Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           Row(
+                  //             children: const [
+                  //                Text('Public Chat',
+                  //                 style: TextStyle(
+                  //                     color: Colors.white,
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.w700,
+                  //                     fontFamily: AppStrings.appFont
+                  //                 ),
+                  //               ),
+                  //
+                  //             ],
+                  //           ),
+                  //
+                  //         ],
+                  //       ),
+                  //
+                  //     ],
+                  //   ),
+                  //   leading: IconButton(
+                  //     onPressed: (){
+                  //       // AppCubit.get(context).currentIndex=0;
+                  //       // Navigator.push(context, MaterialPageRoute(builder: (_){
+                  //       //   return const HomeLayout();
+                  //       // }));
+                  //       Navigator.pop(context);
+                  //     },
+                  //     icon: Icon(
+                  //       Icons.arrow_back_ios,
+                  //       color: AppColors.myWhite,
+                  //     ),
+                  //   ),
+                  // ),
                   body: Stack(
                     children: [
                       Container(

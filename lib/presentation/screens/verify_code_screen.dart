@@ -286,73 +286,79 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: AppColors.myWhite,
+          backgroundColor:Colors.transparent,
           // title: const Text('Aew you sure you want to logout from FanChat'),
-          content: SingleChildScrollView(
-              child:Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children:   [
-                    const CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      radius: 70,
-                      child: Image(image: AssetImage('assets/images/ncolort.png'),
-                        height: 100,
-                        width: 100,
-                      ),
-                    ),
-                    Center(
-                      child:Text(
-                        'Congratulations\nYou are now on a 7-day free trial. Enjoy FAN Chat',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: AppColors.primaryColor1,
-                            fontFamily: AppStrings.appFont,
-                            fontWeight: FontWeight.w600,
-                            height:1.4
-                        ),
-                      ),
-
-                    ),
-                  ],
-                ),
-              )
-          ),
-          actions: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+          content: Container(
+            height: MediaQuery.of(context).size.height*.5,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/paypack.jpg'),
+                    fit: BoxFit.cover
+                )
+            ),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:   [
+                const CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 70,
+                  child: Image(image: AssetImage('assets/images/ncolort.png'),
+                    height: 100,
+                    width: 100,
+                  ),
+                ),
                 Center(
-                  child: defaultButton(
-                      width: MediaQuery.of(context).size.width*.7,
-                      height: MediaQuery.of(context).size.height*.07,
-                      buttonColor: AppColors.primaryColor1,
-                      textColor: AppColors.myWhite,
-                      buttonText: 'Start',
-                      fontSize: 15,
-                      function: (){
-                        Navigator.of(context).pushNamedAndRemoveUntil('home_layout', (Route<dynamic>route) => false);
-                      }),
+                  child:Text(
+                    'Congratulations\nYou are now on a 7-day free trial. Enjoy FAN Chat',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: AppColors.primaryColor1,
+                        fontFamily: AppStrings.appFont,
+                        fontWeight: FontWeight.w600,
+                        height:1.4
+                    ),
+                  ),
+
                 ),
                 SizedBox(height:30,),
-                Center(
-                  child: defaultButton(
-                      width: MediaQuery.of(context).size.width*.7,
-                      height: MediaQuery.of(context).size.height*.07,
-                      buttonColor: AppColors.navBarActiveIcon,
-                      textColor: AppColors.myWhite,
-                      buttonText: 'Get a premium package ',
-                      fontSize: 15,
-                      function: (){
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context)=>ChoosePayPackage()));
-                      }),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: defaultButton(
+                          width: MediaQuery.of(context).size.width*.5,
+                          height: MediaQuery.of(context).size.height*.07,
+                          buttonColor: AppColors.primaryColor1,
+                          textColor: AppColors.myWhite,
+                          buttonText: 'Start',
+                          fontSize: 15,
+                          function: (){
+                            Navigator.of(context).pushNamedAndRemoveUntil('home_layout', (Route<dynamic>route) => false);
+                          }),
+                    ),
+                    SizedBox(height:30,),
+                    Center(
+                      child: defaultButton(
+                          width: MediaQuery.of(context).size.width*.5,
+                          height: MediaQuery.of(context).size.height*.07,
+                          buttonColor: AppColors.navBarActiveIcon,
+                          textColor: AppColors.myWhite,
+                          buttonText: 'Get a premium package ',
+                          fontSize: 15,
+                          function: (){
+                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ChoosePayPackage()),(Route<dynamic>route) => false);
+                          }),
+                    )
+                  ],
                 )
               ],
-            )
+            ),
+          ),
+          actions: <Widget>[
+
           ],
         );
       },

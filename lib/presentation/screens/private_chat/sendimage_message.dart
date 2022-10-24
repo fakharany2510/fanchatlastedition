@@ -34,38 +34,55 @@ class _SendImageState extends State<SendImage> {
       builder: (context,state){
         return Scaffold(
           backgroundColor: AppColors.myWhite,
-          body: Padding(
-              padding:  EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  (AppCubit.get(context).chatImage!= null )
-                      ?Expanded(
-                    child: Container(
-                      height: size.height,
-                      width: size.width,
-                      child: Align(
-                        alignment: AlignmentDirectional.bottomCenter,
-                        child: Image(
-                          image: FileImage(AppCubit.get(context).chatImage!),
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
+          body: Stack(
+            children: [
+              Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child:const Opacity(
+                    opacity: 1,
+                    child:  Image(
+                      image: AssetImage('assets/images/imageback.jpg'),
+                      fit: BoxFit.cover,
+
                     ),
                   )
-                      :Expanded(child: Container(
-                    child: Center(child: Text('No Photo Selected Yet',
-                        style: TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primaryColor1,
-                            fontFamily: AppStrings.appFont
-                        )
-                    )),
-                  )),
-                ],
-              )
+              ),
+
+              Padding(
+                  padding:  EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      (AppCubit.get(context).chatImage!= null )
+                          ?Expanded(
+                        child: Container(
+                          height: size.height,
+                          width: size.width,
+                          child: Align(
+                            alignment: AlignmentDirectional.bottomCenter,
+                            child: Image(
+                              image: FileImage(AppCubit.get(context).chatImage!),
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
+                      )
+                          :Expanded(child: Container(
+                        child: Center(child: Text('No Photo Selected Yet',
+                            style: TextStyle(
+                                fontSize: 21,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primaryColor1,
+                                fontFamily: AppStrings.appFont
+                            )
+                        )),
+                      )),
+                    ],
+                  )
+              ),
+            ],
           ),
           floatingActionButton: state is UploadImagePrivateLoadingState || state is CreateImagePrivateLoadingState
               ?CircularProgressIndicator(color: AppColors.navBarActiveIcon,)

@@ -1,27 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
-import 'package:fanchat/business_logic/register/register_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
-import 'package:fanchat/data/modles/user_model.dart';
-import 'package:fanchat/presentation/add_ads/add_ads.dart';
-import 'package:fanchat/presentation/paypal/choosepaymentmethod.dart';
 import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/screens/advertising/advertising_screen.dart';
 import 'package:fanchat/presentation/screens/countries_screen.dart';
 import 'package:fanchat/presentation/screens/public_chat/public_chat_screen.dart';
+import 'package:fanchat/presentation/should_pay.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
-
-import '../screens/private_chat/chat_screen.dart';
 import '../screens/fan/fan_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/match_details.dart';
-import '../screens/more_screen.dart';
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({Key? key}) : super(key: key);
@@ -41,33 +34,49 @@ class _HomeLayoutState extends State<HomeLayout> {
       print("==================================token================================");
     });
     AppCubit.get(context).getUser(context).then((value){
-      print('nnnnnnnbccccccccccccccccccccccccccccccccccccccc ${AppCubit.get(context).userModel!.days}');
-      print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
-      print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
-      if(AppCubit.get(context).userModel!.days == 7){
-        CashHelper.saveData(key: 'days' , value: 7);
-        print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
-
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ChoosePayPackage()), (route) => false);
-
-      }else{
-        Future.delayed(const Duration(minutes: 7),(){
-          FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
-              .update({
-            'days':7,
-          }).then((value){
-            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ChoosePayPackage()), (route) => false);
-            CashHelper.saveData(key: 'days' , value: 7);
-            print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
-            print('success to update aaccountStates');
-          }).catchError((error){
-            print('success to update aaccountStates${error.toString()}');
-          });
-          ///////////////////////////////////////////////////////////
-          AppCubit.get(context).userModel!.days == 7;
-          print('timeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ${AppCubit.get(context).userModel!.days}');
+      if(CashHelper.getData(key: 'premium')==1){
+        Future.delayed(const Duration(days: 356),(){
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ShouldPay()), (route) => false);
         });
+      }else{
+        print('nnnnnnnbccccccccccccccccccccccccccccccccccccccc ${AppCubit.get(context).userModel!.days}');
+        print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
+        print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
+        if(AppCubit.get(context).userModel!.days == 7 && AppCubit.get(context).userModel!.payed == false){
+          print('llllllllllllllllllllllllllllllllllllllll   if 1');
+          CashHelper.saveData(key: 'days' , value: 7);
+          print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
+
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ShouldPay()), (route) => false);
+
+        }else if(AppCubit.get(context).userModel!.days == 0 && AppCubit.get(context).userModel!.payed == true){
+          print('llllllllllllllllllllllllllllllllllllllll   if 2');
+
+          CashHelper.saveData(key: 'days' , value: 0);
+          print('User Have Take Package ');
+
+        }else{
+          print('llllllllllllllllllllllllllllllllllllllll   if 3');
+          Future.delayed(const Duration(days: 7),(){
+            FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
+                .update({
+              'days':7,
+              'payed':false
+            }).then((value){
+              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ShouldPay()), (route) => false);
+              CashHelper.saveData(key: 'days' , value: 7);
+              print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
+              print('success to update aaccountStates');
+            }).catchError((error){
+              print('success to update aaccountStates${error.toString()}');
+            });
+            ///////////////////////////////////////////////////////////
+            AppCubit.get(context).userModel!.days == 7;
+            print('timeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ${AppCubit.get(context).userModel!.days}');
+          });
+        }
       }
+
 
     }).catchError((error){
       print('error');

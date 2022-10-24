@@ -79,79 +79,96 @@ class AddAdvertisingVideo extends StatelessWidget {
               ),
             ],
           ),
-          body: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  TextFormField(
-                    style: TextStyle(
-                      color:AppColors.primaryColor1,
-                      fontFamily: AppStrings.appFont,
-                    ),
-                    keyboardType: TextInputType.text,
-                    controller: AdvertisingCubit.get(context).advertingVideoLink,
-                    onChanged: (value){
-                    },
-                    decoration: InputDecoration(
-                      focusColor: AppColors.myGrey,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color:AppColors.myGrey),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color:AppColors.myGrey),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      hintText: 'Enter Advertising Link',
-                      hintStyle: TextStyle(
-                        color: AppColors.myGrey,
-                        fontFamily: AppStrings.appFont,
-                      ),
-                    ),
-                    validator: (value){
-                      if(value!.isEmpty){
-                        return'enter advertising link';
-                      }
-                    },
-                  ),
-                  SizedBox(height: 10,),
-                  if(state is CreatePostLoadingState)
-                    LinearProgressIndicator(),
-                  const SizedBox(height: 10,),
-                  ( AdvertisingCubit.get(context).AdvertisingPostVideo!= null && AdvertisingCubit.get(context).videoPlayerController!.value.isInitialized)
-                      ?Expanded(
-                    child: Container(
-                      height: size.height,
-                      width: size.width,
-                      child: AspectRatio(
-                        aspectRatio:AdvertisingCubit.get(context).videoPlayerController!.value.aspectRatio,
-                        child: AdvertisingCubit.get(context).videoPlayerController ==null
-                            ?SizedBox(height: 0,)
-                            :VideoPlayer(
-                            AdvertisingCubit.get(context).videoPlayerController!
-                        ),
+          body: Stack(
+            children: [
+              Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child:const Opacity(
+                    opacity: 1,
+                    child:  Image(
+                      image: AssetImage('assets/images/imageback.jpg'),
+                      fit: BoxFit.cover,
 
-                      ),
                     ),
                   )
-                      : Expanded(child: Container(
-                    child: Center(child: Text('No Video Selected Yet',
+              ),
+
+              Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      TextFormField(
                         style: TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primaryColor1,
-                            fontFamily: AppStrings.appFont
-                        )
-                    )),
-                  )),
+                          color:AppColors.primaryColor1,
+                          fontFamily: AppStrings.appFont,
+                        ),
+                        keyboardType: TextInputType.text,
+                        controller: AdvertisingCubit.get(context).advertingVideoLink,
+                        onChanged: (value){
+                        },
+                        decoration: InputDecoration(
+                          focusColor: AppColors.myGrey,
+                          fillColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color:AppColors.myGrey),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15)
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color:AppColors.myGrey),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          hintText: 'Enter Advertising Link',
+                          hintStyle: TextStyle(
+                            color: AppColors.myGrey,
+                            fontFamily: AppStrings.appFont,
+                          ),
+                        ),
+                        validator: (value){
+                          if(value!.isEmpty){
+                            return'enter advertising link';
+                          }
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      if(state is CreatePostLoadingState)
+                        LinearProgressIndicator(),
+                      const SizedBox(height: 10,),
+                      ( AdvertisingCubit.get(context).AdvertisingPostVideo!= null && AdvertisingCubit.get(context).videoPlayerController!.value.isInitialized)
+                          ?Expanded(
+                        child: Container(
+                          height: size.height,
+                          width: size.width,
+                          child: AspectRatio(
+                            aspectRatio:AdvertisingCubit.get(context).videoPlayerController!.value.aspectRatio,
+                            child: AdvertisingCubit.get(context).videoPlayerController ==null
+                                ?SizedBox(height: 0,)
+                                :VideoPlayer(
+                                AdvertisingCubit.get(context).videoPlayerController!
+                            ),
+
+                          ),
+                        ),
+                      )
+                          : Expanded(child: Container(
+                        child: Center(child: Text('No Video Selected Yet',
+                            style: TextStyle(
+                                fontSize: 21,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primaryColor1,
+                                fontFamily: AppStrings.appFont
+                            )
+                        )),
+                      )),
 
 
-                ],
-              )
+                    ],
+                  )
+              ),
+            ],
           ),
         );
       },

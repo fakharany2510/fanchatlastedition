@@ -16,6 +16,7 @@ import 'package:fanchat/presentation/screens/posts/add_text_post.dart';
 import 'package:fanchat/presentation/screens/profile_area/profile_screen.dart';
 import 'package:fanchat/presentation/screens/register_screen.dart';
 import 'package:fanchat/presentation/screens/splash_screen.dart';
+import 'package:fanchat/presentation/should_pay.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
@@ -105,7 +106,7 @@ class MyApp extends StatelessWidget {
               routes: {
                 '/' :(context)=> (AppStrings.uId != null)
                     ?CashHelper.getData(key: 'days') ==7
-                    ?ChoosePayPackage()
+                    ?ShouldPay()
                     :HomeLayout()
                     :SplashScreen(),
                 'home_layout':(context)=> const HomeLayout(),

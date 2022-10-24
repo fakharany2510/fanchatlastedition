@@ -43,69 +43,83 @@ class _OpenFullVideoState extends State<OpenFullVideo> {
         },
        builder: (context,state){
           return  Scaffold(
-            body: Container(
-              color: Colors.white,
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        top: 70,
-                        bottom: 50
+            body: Stack(
+              children: [
+                Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child:const Opacity(
+                      opacity: 1,
+                      child:  Image(
+                        image: AssetImage('assets/images/imageback.jpg'),
+                        fit: BoxFit.cover,
                       ),
-                      child: FutureBuilder(
-                        future: widget.intilize,
-                        builder: (context,snapshot){
-                          if(snapshot.connectionState == ConnectionState.done){
-                            return AspectRatio(
-                              aspectRatio:widget.controller!.value.aspectRatio,
-                              child: VideoPlayer(widget.controller!),
-                            );
-                          }
-                          else{
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        },
+                    )
+                ),
+                Container(
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 70,
+                              bottom: 50
+                          ),
+                          child: FutureBuilder(
+                            future: widget.intilize,
+                            builder: (context,snapshot){
+                              if(snapshot.connectionState == ConnectionState.done){
+                                return AspectRatio(
+                                  aspectRatio:widget.controller!.value.aspectRatio,
+                                  child: VideoPlayer(widget.controller!),
+                                );
+                              }
+                              else{
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            },
 
 
 
-                      ),
-                    ),
-                  ),
-
-                  Positioned(
-                      top: MediaQuery.of(context).size.height*.12,
-                      right: MediaQuery.of(context).size.height*.03,
-                      child: InkWell(
-                        onTap: (){
-                          print('hhfhds');
-                          setState((){
-                            print('hhfhds 5653');
-                            if(widget.controller!.value.isPlaying){
-                              widget.controller!.pause();
-                              isPostPlaying=true;
-                            }else{
-                              widget.controller!.play();
-                              isPostPlaying=false;
-
-                            }
-                          });
-
-                        },
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white.withOpacity(.8),
-                          radius: 30,
-                          child: widget.controller!.value.isPlaying?Icon(Icons.pause,size: 30,color: AppColors.primaryColor1,): Icon(Icons.play_arrow,size: 30, color:AppColors.primaryColor1),
+                          ),
                         ),
-                      )
-                  ),
+                      ),
 
-                ],
-              ),
-            ),
+                      Positioned(
+                          top: MediaQuery.of(context).size.height*.12,
+                          right: MediaQuery.of(context).size.height*.03,
+                          child: InkWell(
+                            onTap: (){
+                              print('hhfhds');
+                              setState((){
+                                print('hhfhds 5653');
+                                if(widget.controller!.value.isPlaying){
+                                  widget.controller!.pause();
+                                  isPostPlaying=true;
+                                }else{
+                                  widget.controller!.play();
+                                  isPostPlaying=false;
+
+                                }
+                              });
+
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white.withOpacity(.8),
+                              radius: 30,
+                              child: widget.controller!.value.isPlaying?Icon(Icons.pause,size: 30,color: AppColors.primaryColor1,): Icon(Icons.play_arrow,size: 30, color:AppColors.primaryColor1),
+                            ),
+                          )
+                      ),
+
+                    ],
+                  ),
+                ),
+              ],
+            )
           );
        },
     );

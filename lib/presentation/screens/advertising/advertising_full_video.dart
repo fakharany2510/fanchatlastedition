@@ -83,61 +83,78 @@ class _AdvertisingFullVideoState extends State<AdvertisingFullVideo> {
               ),
             ),
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                SizedBox(height: 20,),
+          body: Stack(
+            children: [
+              Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child:const Opacity(
+                    opacity: 1,
+                    child:  Image(
+                      image: AssetImage('assets/images/imageback.jpg'),
+                      fit: BoxFit.cover,
 
-                Container(
-                  height: MediaQuery.of(context).size.height*.6,
-                  width: double.infinity,
-                  child: Stack(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height*.6,
-                        width: double.infinity,
-                        child: FutureBuilder(
-                          future: intilize,
-                          builder: (context,snapshot){
-                            if(snapshot.connectionState == ConnectionState.done){
-                              return AspectRatio(
-                                aspectRatio: videoPlayerController!.value.aspectRatio,
-                                child: VideoPlayer(videoPlayerController!),
-                              );
-                            }
-                            else{
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                          },
+                    ),
+                  )
+              ),
 
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    SizedBox(height: 20,),
 
-
-                        ),
-                      ),
-                      Positioned(
-                          top: 10,
-                          right: 10,
-                          child: InkWell(
-                            onTap: (){
-                              setState((){
-                                if(videoPlayerController!.value.isPlaying){
-                                  videoPlayerController!.pause();
-                                }else{
-                                  videoPlayerController!.play();
+                    Container(
+                      height: MediaQuery.of(context).size.height*.6,
+                      width: double.infinity,
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: MediaQuery.of(context).size.height*.6,
+                            width: double.infinity,
+                            child: FutureBuilder(
+                              future: intilize,
+                              builder: (context,snapshot){
+                                if(snapshot.connectionState == ConnectionState.done){
+                                  return AspectRatio(
+                                    aspectRatio: videoPlayerController!.value.aspectRatio,
+                                    child: VideoPlayer(videoPlayerController!),
+                                  );
                                 }
-                              });
-                            },
-                            child: videoPlayerController!.value.isPlaying?  CircleAvatar(radius: 15, child: Icon(Icons.pause,color: AppColors.primaryColor1,size: 15,)): CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: AppColors.primaryColor1,size: 15,)),
-                          )
+                                else{
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              },
+
+
+
+                            ),
+                          ),
+                          Positioned(
+                              top: 10,
+                              right: 10,
+                              child: InkWell(
+                                onTap: (){
+                                  setState((){
+                                    if(videoPlayerController!.value.isPlaying){
+                                      videoPlayerController!.pause();
+                                    }else{
+                                      videoPlayerController!.play();
+                                    }
+                                  });
+                                },
+                                child: videoPlayerController!.value.isPlaying?  CircleAvatar(radius: 15, child: Icon(Icons.pause,color: AppColors.primaryColor1,size: 15,)): CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: AppColors.primaryColor1,size: 15,)),
+                              )
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+                    )
+                  ],
+                ),
+              ),
+            ],
           ),
         );
       },

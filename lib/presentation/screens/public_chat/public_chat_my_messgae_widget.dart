@@ -186,7 +186,7 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                                 placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                                 // maxHeightDiskCache:75,
 
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),

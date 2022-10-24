@@ -130,158 +130,173 @@ class _AddTextPostState extends State<AddTextPost> {
         )
             ],
           ),
-          body: SingleChildScrollView(
-            child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+          body: Stack(
+            children: [
+              Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child:const Opacity(
+                    opacity: 1,
+                    child:  Image(
+                      image: AssetImage('assets/images/imageback.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  )
+              ),
+              SingleChildScrollView(
+                child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Column(
                       children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              '${AppCubit.get(context).userModel!.image}'),
-                          radius: 30,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  '${AppCubit.get(context).userModel!.image}'),
+                              radius: 30,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              '${AppCubit.get(context).userModel!.username}',
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: AppStrings.appFont),
+                            ),
+                          ],
                         ),
                         const SizedBox(
-                          width: 10,
+                          height: 10,
                         ),
-                        Text(
-                          '${AppCubit.get(context).userModel!.username}',
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: AppStrings.appFont),
+                        Form(
+                          key: formKey,
+                          child: TextFormField(
+                            validator: (value){
+                              if(value!.isEmpty){
+                                return 'please write your post';
+                              }
+                            },
+                            onChanged: (String s){
+                              setState((){
+                                textFormFielsChanged = true;
+                              });
+                            },
+                            controller: postText,
+                            decoration: const InputDecoration(
+                              hintMaxLines: 1,
+                              hintText: 'what is on your mind.....',
+                              border: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                            ),
+                          ),
                         ),
+                        SizedBox(
+                          height: size.height * .5,
+                        ),
+
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: size.height * .001,
+                                width: size.width,
+                                color: Colors.grey,
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    AppCubit.get(context).pickPostImage();
+                                  },
+                                  child: Row(
+                                    children: [
+                                      ImageIcon(
+                                        AssetImage("assets/images/fanarea.png"),
+                                        color:Colors.green,
+
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Photo',
+                                        style: TextStyle(
+                                            color: AppColors.primaryColor1,
+                                            fontFamily: AppStrings.appFont,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ],
+                                  )),
+                              Container(
+                                height: size.height * .001,
+                                width: size.width,
+                                color: Colors.grey,
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    AppCubit.get(context).pickPostVideo2();
+                                  },
+                                  child: Row(
+                                    children: [
+                                      ImageIcon(
+                                        AssetImage("assets/images/video.png"),
+                                        color:Colors.red,
+
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Video',
+                                        style: TextStyle(
+                                            color: AppColors.primaryColor1,
+                                            fontFamily: AppStrings.appFont,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ],
+                                  )),
+                              Container(
+                                height: size.height * .001,
+                                width: size.width,
+                                color: Colors.grey,
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    AppCubit.get(context).pickPostImageFromCamera();
+                                  },
+                                  child: Row(
+                                    children: [
+                                      ImageIcon(
+                                        AssetImage("assets/images/camera.png"),
+                                        color:AppColors.navBarActiveIcon,
+
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Camera',
+                                        style: TextStyle(
+                                            color: AppColors.primaryColor1,
+                                            fontFamily: AppStrings.appFont,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ],
+                                  )),
+                            ],
+                          ),
+                        )
                       ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Form(
-                      key: formKey,
-                      child: TextFormField(
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return 'please write your post';
-                          }
-                        },
-                        onChanged: (String s){
-                          setState((){
-                            textFormFielsChanged = true;
-                          });
-                        },
-                        controller: postText,
-                        decoration: const InputDecoration(
-                          hintMaxLines: 1,
-                          hintText: 'what is on your mind.....',
-                          border: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * .5,
-                    ),
-
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Column(
-                        children: [
-                          Container(
-                            height: size.height * .001,
-                            width: size.width,
-                            color: AppColors.myGrey,
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                AppCubit.get(context).pickPostImage();
-                              },
-                              child: Row(
-                                children: [
-                                    ImageIcon(
-                                      AssetImage("assets/images/fanarea.png"),
-                                      color:Colors.green,
-
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    'Photo',
-                                    style: TextStyle(
-                                        color: AppColors.primaryColor1,
-                                        fontFamily: AppStrings.appFont,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500),
-                                  )
-                                ],
-                              )),
-                          Container(
-                            height: size.height * .001,
-                            width: size.width,
-                            color: AppColors.myGrey,
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                AppCubit.get(context).pickPostVideo2();
-                              },
-                              child: Row(
-                                children: [
-                                  ImageIcon(
-                                    AssetImage("assets/images/video.png"),
-                                    color:Colors.red,
-
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    'Video',
-                                    style: TextStyle(
-                                        color: AppColors.primaryColor1,
-                                        fontFamily: AppStrings.appFont,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500),
-                                  )
-                                ],
-                              )),
-                          Container(
-                            height: size.height * .001,
-                            width: size.width,
-                            color: AppColors.myGrey,
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                AppCubit.get(context).pickPostImageFromCamera();
-                              },
-                              child: Row(
-                                children: [
-                                  ImageIcon(
-                                    AssetImage("assets/images/camera.png"),
-                                    color:AppColors.navBarActiveIcon,
-
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    'Camera',
-                                    style: TextStyle(
-                                        color: AppColors.primaryColor1,
-                                        fontFamily: AppStrings.appFont,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500),
-                                  )
-                                ],
-                              )),
-                        ],
-                      ),
-                    )
-                  ],
-                )),
-          ),
+                    )),
+              ),
+            ],
+          )
         );
       },
     );

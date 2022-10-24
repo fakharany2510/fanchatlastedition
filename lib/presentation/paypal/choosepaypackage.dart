@@ -144,9 +144,9 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
             Center(
 
               child: defaultButton(width: MediaQuery.of(context).size.width*.7,
-                  height: MediaQuery.of(context).size.height*.05,
-                  buttonColor: AppColors.myGrey,
-                  textColor:AppColors.primaryColor1,
+                  height: MediaQuery.of(context).size.height*.06,
+                  buttonColor: Color(0Xffd32330),
+                  textColor:AppColors.myWhite,
                   buttonText: 'Pay',
                   function: (){
                     if(_value==1){

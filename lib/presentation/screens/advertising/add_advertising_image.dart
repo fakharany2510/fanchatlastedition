@@ -84,75 +84,92 @@ class _AddAdvertisingImageState extends State<AddAdvertisingImage> {
               )
             ],
           ),
-          body: Padding(
-              padding:  EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  TextFormField(
-                    style: TextStyle(
-                      color:AppColors.primaryColor1,
-                      fontFamily: AppStrings.appFont,
-                    ),
-                    keyboardType: TextInputType.text,
-                    controller: AdvertisingCubit.get(context).advertingImageLink,
-                    onChanged: (value){
-                    },
-                    decoration: InputDecoration(
-                      focusColor: AppColors.myGrey,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color:AppColors.myGrey),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color:AppColors.myGrey),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      hintText: 'Enter Advertising Link',
-                      hintStyle: TextStyle(
-                        color: AppColors.myGrey,
-                        fontFamily: AppStrings.appFont,
-                      ),
-                    ),
-                    validator: (value){
-                      if(value!.isEmpty){
-                        return'enter advertising link';
-                      }
-                    },
-                  ),
-                  SizedBox(height: 10,),
-                  (AdvertisingCubit.get(context).AdvertisingPostImage!= null )
-                      ?Expanded(
-                    child: Container(
-                      height: size.height,
-                      width: size.width,
-                      child: Align(
-                        alignment: AlignmentDirectional.bottomCenter,
-                        child: Image(
-                          image: FileImage(AdvertisingCubit.get(context).AdvertisingPostImage!),
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                      ),
+          body: Stack(
+            children: [
+              Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child:const Opacity(
+                    opacity: 1,
+                    child:  Image(
+                      image: AssetImage('assets/images/imageback.jpg'),
+                      fit: BoxFit.cover,
+
                     ),
                   )
-                      :Expanded(child: Container(
-                    child: Center(child: Text('No Photo Selected Yet',
+              ),
+
+              Padding(
+                  padding:  EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      TextFormField(
                         style: TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primaryColor1,
-                            fontFamily: AppStrings.appFont
-                        )
-                    )),
-                  )),
+                          color:AppColors.primaryColor1,
+                          fontFamily: AppStrings.appFont,
+                        ),
+                        keyboardType: TextInputType.text,
+                        controller: AdvertisingCubit.get(context).advertingImageLink,
+                        onChanged: (value){
+                        },
+                        decoration: InputDecoration(
+                          focusColor: AppColors.myGrey,
+                          fillColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color:AppColors.myGrey),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15)
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color:AppColors.myGrey),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          hintText: 'Enter Advertising Link',
+                          hintStyle: TextStyle(
+                            color: AppColors.myGrey,
+                            fontFamily: AppStrings.appFont,
+                          ),
+                        ),
+                        validator: (value){
+                          if(value!.isEmpty){
+                            return'enter advertising link';
+                          }
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      (AdvertisingCubit.get(context).AdvertisingPostImage!= null )
+                          ?Expanded(
+                        child: Container(
+                          height: size.height,
+                          width: size.width,
+                          child: Align(
+                            alignment: AlignmentDirectional.bottomCenter,
+                            child: Image(
+                              image: FileImage(AdvertisingCubit.get(context).AdvertisingPostImage!),
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                            ),
+                          ),
+                        ),
+                      )
+                          :Expanded(child: Container(
+                        child: Center(child: Text('No Photo Selected Yet',
+                            style: TextStyle(
+                                fontSize: 21,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primaryColor1,
+                                fontFamily: AppStrings.appFont
+                            )
+                        )),
+                      )),
 
 
-                ],
-              )
+                    ],
+                  )
+              ),
+            ],
           ),
         );
       },

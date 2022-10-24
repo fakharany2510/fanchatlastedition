@@ -96,9 +96,9 @@ class AppCubit extends Cubit<AppState> {
 
     currentIndex=index;
     if(currentIndex==4){
-      Navigator.push(context, MaterialPageRoute(builder: (_){
-        return PublicChatScreen();
-      }));
+      // Navigator.push(context, MaterialPageRoute(builder: (_){
+      //   return PublicChatScreen();
+      // }));
     }
     if(currentIndex==3){
       getAllUsers();

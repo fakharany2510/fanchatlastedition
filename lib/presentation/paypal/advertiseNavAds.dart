@@ -18,44 +18,55 @@ class _AdsNavState extends State<AdsNav> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: (){
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back,color: AppColors.primaryColor1),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-      ),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: SafeArea(
+        child: Stack(
           children: [
-            Center(
-              child: Lottie.asset('assets/images/lockedfan.json',),
+
+            
+            Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child:const Opacity(
+                  opacity: 1,
+                  child:  Image(
+                    image: AssetImage('assets/images/imageback.jpg'),
+                    fit: BoxFit.cover,
+
+                  ),
+                )
             ),
-            Text('Only Advertisers Can Add Their Ads',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  height: 1.5,
-                  color: AppColors.myGrey,
-                  fontFamily: AppStrings.appFont,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600
+
+            Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Lottie.asset('assets/images/lockedfan.json',),
+                  ),
+                  Text('Only Advertisers Can Add Their Ads',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        height: 1.5,
+                        color: AppColors.primaryColor1,
+                        fontFamily: AppStrings.appFont,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600
+                    ),
+                  ),
+                  const SizedBox(height:25,),
+                  defaultButton(
+                      textColor: AppColors.myWhite,
+                      buttonColor: const Color(0Xffd32330),
+                      width: MediaQuery.of(context).size.width*.6,
+                      height: MediaQuery.of(context).size.height*.06,
+                      buttonText: 'Buy Advertise Package',
+                      function: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>AdvertiseGooglePay()));
+                      })
+                ],
               ),
             ),
-            SizedBox(height:25,),
-            defaultButton(
-                width:MediaQuery.of(context).size.width*.8,
-                height: MediaQuery.of(context).size.width*.12,
-                buttonColor: AppColors.primaryColor1,
-                textColor: AppColors.myWhite,
-                buttonText: 'Buy Advertise Package',
-                function: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>AdvertiseGooglePay()));
-                })
           ],
         ),
       ),

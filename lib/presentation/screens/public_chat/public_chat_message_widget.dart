@@ -147,7 +147,7 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                                 placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
                                 // maxHeightDiskCache:75,
 
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           )

@@ -27,24 +27,41 @@ class AdvertisingFullPost extends StatelessWidget {
         return Scaffold(
           backgroundColor:Colors.white,
           appBar: customAppbar('fan Post',context),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
+          body: Stack(
+            children: [
+              Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child:const Opacity(
+                    opacity: 1,
+                    child:  Image(
+                      image: AssetImage('assets/images/imageback.jpg'),
+                      fit: BoxFit.cover,
 
-                SizedBox(height: 20,),
-                Expanded(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      child:  CachedNetworkImage(
-                        cacheManager: AdvertisingCubit.get(context).manager,
-                        imageUrl: "${image}",
-                        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                      ),
+                    ),
+                  )
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+
+                    SizedBox(height: 20,),
+                    Expanded(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          child:  CachedNetworkImage(
+                            cacheManager: AdvertisingCubit.get(context).manager,
+                            imageUrl: "${image}",
+                            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                          ),
+                        )
                     )
-                )
-              ],
-            ),
+                  ],
+                ),
+              ),
+            ],
           ),
         );
       },

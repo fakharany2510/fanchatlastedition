@@ -41,271 +41,283 @@ class _MatchDetailsState extends State<MatchDetails> {
       builder: (context,state){
         return Scaffold(
           backgroundColor: AppColors.myWhite,
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 5),
-              child: Container(
-                color: AppColors.myWhite,
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      child: Material(
-                          color: Colors.white,
-                          elevation: 5,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: double.infinity,
-                                height: MediaQuery.of(context).size.height*.09,
-                                child: ListView.separated(
-                                    scrollDirection:Axis.horizontal,
+          body: Stack(
+            children: [
+              Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child:const Opacity(
+                    opacity: 1,
+                    child:  Image(
+                      image: AssetImage('assets/images/imageback.jpg'),
+                      fit: BoxFit.cover,
+
+                    ),
+                  )
+              ),
+
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Container(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Material(
+                            elevation: 5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: double.infinity,
+                                  height: MediaQuery.of(context).size.height*.09,
+                                  child: ListView.separated(
+                                      scrollDirection:Axis.horizontal,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context,index){
+                                        return InkWell(
+                                          onTap: (){
+                                            setState(() {
+                                              isDay= List.generate(28, (index) => false);
+                                              isDay[index]=!isDay[index];
+                                            });
+                                            if(dateMatchs[index]=='20 Nov'){
+                                              setState(() {
+                                                dateMatch='Sun 20 Nov 2022';
+                                                MatchScaduele.realTeamMatchesRight=MatchScaduele.teamMatches21Right;
+                                                MatchScaduele.realImagesMatchesRight=MatchScaduele.imageMatches21Right;
+                                                MatchScaduele.realTeamMatchesLeft=MatchScaduele.teamMatches21Left;
+                                                MatchScaduele.realImagesMatchesLeft=MatchScaduele.imageMatches21Left;
+                                              });
+                                            }
+                                            else if (dateMatchs[index]=='21 Nov'){
+                                              setState(() {
+                                                dateMatch='Mon 21 Nov 2022';
+                                                MatchScaduele.realTeamMatchesRight=MatchScaduele.teamMatches22Right;
+                                                MatchScaduele.realImagesMatchesRight=MatchScaduele.imageMatches22Right;
+                                                MatchScaduele.realTeamMatchesLeft=MatchScaduele.teamMatches22Left;
+                                                MatchScaduele.realImagesMatchesLeft=MatchScaduele.imageMatches22Left;
+                                              });
+                                            }
+                                            else{
+                                              MatchScaduele.realTeamMatchesRight=[];
+                                              MatchScaduele.realImagesMatchesRight=[];
+                                              MatchScaduele.realTeamMatchesLeft=[];
+                                              MatchScaduele.realImagesMatchesLeft=[];
+                                            }
+                                            // Navigator.push(context, MaterialPageRoute(builder: (_){
+                                            //   return const SingleMatch();
+                                            // }));
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 10,
+                                                vertical: 10
+                                            ),
+                                            padding: const EdgeInsets.only(
+                                               right: 10
+                                            ),
+
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(15),
+                                                // color: isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                // Container(
+                                                //   width: 1,
+                                                //   height: 25,
+                                                //   color: AppColors.myGrey,
+                                                // ),
+                                                // SizedBox(width: 10,),
+                                                Column(
+                                                  children: [
+                                                    Text(dayMatchs[index],style: TextStyle(
+                                                        color: isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey,
+                                                        fontSize: 10,
+                                                        fontFamily: AppStrings.appFont
+                                                    ),),
+                                                    const SizedBox(height: 10,),
+                                                    Text(dateMatchs[index],style: TextStyle(
+                                                        color: isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey,
+                                                        fontSize: 16,
+                                                        fontFamily: AppStrings.appFont
+                                                    ),),
+                                                  ],
+                                                ),
+                                                 const SizedBox(width: 15,),
+                                                Container(
+                                                  width: 1,
+                                                  height: 25,
+                                                  color: AppColors.myGrey,
+                                                ),
+                                                // SizedBox(width: 10,),
+                                                // const SizedBox(height: 25,),
+                                                // Text(dayMatchs[index],style: TextStyle(
+                                                //     color: Colors.grey.shade300,
+                                                //     fontSize: 13,
+                                                //     fontFamily: AppStrings.appFont
+                                                // ),),
+                                                const SizedBox(height: 5,),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      separatorBuilder: (context,index){
+                                        return  const SizedBox(width: 0,);
+                                      },
+                                      itemCount:dateMatchs.length
+                                  ),
+                                ),
+
+                                const SizedBox(height: 0,),
+                                ListView.separated(
                                     shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
                                     itemBuilder: (context,index){
                                       return InkWell(
                                         onTap: (){
-                                          setState(() {
-                                            isDay= List.generate(28, (index) => false);
-                                            isDay[index]=!isDay[index];
-                                          });
-                                          if(dateMatchs[index]=='20 Nov'){
-                                            setState(() {
-                                              dateMatch='Sun 20 Nov 2022';
-                                              MatchScaduele.realTeamMatchesRight=MatchScaduele.teamMatches21Right;
-                                              MatchScaduele.realImagesMatchesRight=MatchScaduele.imageMatches21Right;
-                                              MatchScaduele.realTeamMatchesLeft=MatchScaduele.teamMatches21Left;
-                                              MatchScaduele.realImagesMatchesLeft=MatchScaduele.imageMatches21Left;
-                                            });
-                                          }
-                                          else if (dateMatchs[index]=='21 Nov'){
-                                            setState(() {
-                                              dateMatch='Mon 21 Nov 2022';
-                                              MatchScaduele.realTeamMatchesRight=MatchScaduele.teamMatches22Right;
-                                              MatchScaduele.realImagesMatchesRight=MatchScaduele.imageMatches22Right;
-                                              MatchScaduele.realTeamMatchesLeft=MatchScaduele.teamMatches22Left;
-                                              MatchScaduele.realImagesMatchesLeft=MatchScaduele.imageMatches22Left;
-                                            });
-                                          }
-                                          else{
-                                            MatchScaduele.realTeamMatchesRight=[];
-                                            MatchScaduele.realImagesMatchesRight=[];
-                                            MatchScaduele.realTeamMatchesLeft=[];
-                                            MatchScaduele.realImagesMatchesLeft=[];
-                                          }
-                                          // Navigator.push(context, MaterialPageRoute(builder: (_){
-                                          //   return const SingleMatch();
-                                          // }));
+                                          Navigator.push(context, MaterialPageRoute(builder: (_){
+                                            return const SingleMatch();
+                                          }));
                                         },
                                         child: Container(
                                           margin: const EdgeInsets.symmetric(
                                               horizontal: 10,
                                               vertical: 10
                                           ),
-                                          padding: const EdgeInsets.only(
-                                             right: 10
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 20,
                                           ),
-
+                                          width: double.infinity,
                                           decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(15),
-                                              // color: isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey
+                                              borderRadius: BorderRadius.circular(7),
+                                              color: AppColors.primaryColor1
                                           ),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
+                                          child: Column(
                                             children: [
-                                              // Container(
-                                              //   width: 1,
-                                              //   height: 25,
-                                              //   color: AppColors.myGrey,
-                                              // ),
-                                              // SizedBox(width: 10,),
-                                              Column(
-                                                children: [
-                                                  Text(dayMatchs[index],style: TextStyle(
-                                                      color: isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey,
-                                                      fontSize: 10,
-                                                      fontFamily: AppStrings.appFont
-                                                  ),),
-                                                  const SizedBox(height: 10,),
-                                                  Text(dateMatchs[index],style: TextStyle(
-                                                      color: isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey,
-                                                      fontSize: 16,
-                                                      fontFamily: AppStrings.appFont
-                                                  ),),
-                                                ],
-                                              ),
-                                               const SizedBox(width: 15,),
-                                              Container(
-                                                width: 1,
-                                                height: 25,
-                                                color: AppColors.myGrey,
-                                              ),
-                                              // SizedBox(width: 10,),
-                                              // const SizedBox(height: 25,),
-                                              // Text(dayMatchs[index],style: TextStyle(
+                                              const SizedBox(height: 10,),
+                                              Text(dateMatch!,style: TextStyle(
+                                                  color: AppColors.myWhite,
+                                                  fontSize: 16,
+                                                  fontFamily: AppStrings.appFont
+                                              ),),
+                                              const SizedBox(height: 5,),
+                                              // Text('GROUP 5',style: TextStyle(
                                               //     color: Colors.grey.shade300,
                                               //     fontSize: 13,
                                               //     fontFamily: AppStrings.appFont
                                               // ),),
-                                              const SizedBox(height: 5,),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Column(
+                                                    children: [
+                                                      CircleAvatar(
+                                                        radius: 25,
+                                                        backgroundImage:  NetworkImage(MatchScaduele.realImagesMatchesRight[index]),
+                                                      ),
+                                                      const  SizedBox(height: 5,),
+                                                      Text(MatchScaduele.realTeamMatchesRight[index],style: TextStyle(
+                                                          color: AppColors.myWhite,
+                                                          fontSize: 13,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontFamily: AppStrings.appFont
+                                                      ),),
+                                                    ],
+                                                  ),
+
+                                                  const SizedBox(width: 25,),
+                                                  Column(
+                                                    children: [
+                                                      Container(
+                                                        width: 120,
+                                                        height: 50,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(5),
+                                                            border: Border.all(
+                                                                color: AppColors.myWhite
+                                                            ),
+                                                            color: AppColors.primaryColor1
+                                                        ),
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          children: [
+                                                            // Text('4',style: TextStyle(
+                                                            //     color: AppColors.myWhite,
+                                                            //     fontSize: 25,
+                                                            //     fontWeight: FontWeight.w500,
+                                                            //     fontFamily: AppStrings.appFont
+                                                            // ),
+                                                            //   textAlign: TextAlign.center,
+                                                            // ),
+                                                            const SizedBox(width: 10,),
+                                                            Text('Not Start',style: TextStyle(
+                                                                color: AppColors.myWhite,
+                                                                fontSize: 17,
+                                                                fontWeight: FontWeight.w500,
+                                                                fontFamily: AppStrings.appFont
+                                                            ),
+                                                              textAlign: TextAlign.center,
+                                                            ),
+                                                            const SizedBox(width: 10,),
+                                                            // Text('3',style: TextStyle(
+                                                            //     color: AppColors.myWhite,
+                                                            //     fontSize: 25,
+                                                            //     fontWeight: FontWeight.w500,
+                                                            //     fontFamily: AppStrings.appFont
+                                                            // ),
+                                                            //   textAlign: TextAlign.center,
+                                                            // ),
+                                                          ],
+                                                        ),
+                                                      ),
+
+                                                    ],
+                                                  ),
+
+                                                  const SizedBox(width: 25,),
+                                                  Column(
+                                                    children: [
+
+                                                      CircleAvatar(
+                                                        radius: 25,
+                                                        backgroundImage:  NetworkImage(MatchScaduele.realImagesMatchesLeft[index]),
+                                                      ),
+                                                      const SizedBox(height: 5,),
+                                                      Text(MatchScaduele.realTeamMatchesLeft[index],style: TextStyle(
+                                                          color: AppColors.myWhite,
+                                                          fontSize: 13,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontFamily: AppStrings.appFont
+                                                      ),),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(height: 20,),
                                             ],
                                           ),
                                         ),
                                       );
                                     },
                                     separatorBuilder: (context,index){
-                                      return  const SizedBox(width: 0,);
+                                      return  const SizedBox(height: 0,);
                                     },
-                                    itemCount:dateMatchs.length
+                                    itemCount:MatchScaduele.realTeamMatchesLeft.length
                                 ),
-                              ),
-
-                              const SizedBox(height: 0,),
-                              ListView.separated(
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context,index){
-                                    return InkWell(
-                                      onTap: (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (_){
-                                          return const SingleMatch();
-                                        }));
-                                      },
-                                      child: Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 10,
-                                            vertical: 10
-                                        ),
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 20,
-                                        ),
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(7),
-                                            color: AppColors.primaryColor1
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            const SizedBox(height: 10,),
-                                            Text(dateMatch!,style: TextStyle(
-                                                color: AppColors.myWhite,
-                                                fontSize: 16,
-                                                fontFamily: AppStrings.appFont
-                                            ),),
-                                            const SizedBox(height: 5,),
-                                            // Text('GROUP 5',style: TextStyle(
-                                            //     color: Colors.grey.shade300,
-                                            //     fontSize: 13,
-                                            //     fontFamily: AppStrings.appFont
-                                            // ),),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Column(
-                                                  children: [
-                                                    CircleAvatar(
-                                                      radius: 25,
-                                                      backgroundImage:  NetworkImage(MatchScaduele.realImagesMatchesRight[index]),
-                                                    ),
-                                                    const  SizedBox(height: 5,),
-                                                    Text(MatchScaduele.realTeamMatchesRight[index],style: TextStyle(
-                                                        color: AppColors.myWhite,
-                                                        fontSize: 13,
-                                                        fontWeight: FontWeight.bold,
-                                                        fontFamily: AppStrings.appFont
-                                                    ),),
-                                                  ],
-                                                ),
-
-                                                const SizedBox(width: 25,),
-                                                Column(
-                                                  children: [
-                                                    Container(
-                                                      width: 120,
-                                                      height: 50,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          border: Border.all(
-                                                              color: AppColors.myWhite
-                                                          ),
-                                                          color: AppColors.primaryColor1
-                                                      ),
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        children: [
-                                                          // Text('4',style: TextStyle(
-                                                          //     color: AppColors.myWhite,
-                                                          //     fontSize: 25,
-                                                          //     fontWeight: FontWeight.w500,
-                                                          //     fontFamily: AppStrings.appFont
-                                                          // ),
-                                                          //   textAlign: TextAlign.center,
-                                                          // ),
-                                                          const SizedBox(width: 10,),
-                                                          Text('Not Start',style: TextStyle(
-                                                              color: AppColors.myWhite,
-                                                              fontSize: 17,
-                                                              fontWeight: FontWeight.w500,
-                                                              fontFamily: AppStrings.appFont
-                                                          ),
-                                                            textAlign: TextAlign.center,
-                                                          ),
-                                                          const SizedBox(width: 10,),
-                                                          // Text('3',style: TextStyle(
-                                                          //     color: AppColors.myWhite,
-                                                          //     fontSize: 25,
-                                                          //     fontWeight: FontWeight.w500,
-                                                          //     fontFamily: AppStrings.appFont
-                                                          // ),
-                                                          //   textAlign: TextAlign.center,
-                                                          // ),
-                                                        ],
-                                                      ),
-                                                    ),
-
-                                                  ],
-                                                ),
-
-                                                const SizedBox(width: 25,),
-                                                Column(
-                                                  children: [
-
-                                                    CircleAvatar(
-                                                      radius: 25,
-                                                      backgroundImage:  NetworkImage(MatchScaduele.realImagesMatchesLeft[index]),
-                                                    ),
-                                                    const SizedBox(height: 5,),
-                                                    Text(MatchScaduele.realTeamMatchesLeft[index],style: TextStyle(
-                                                        color: AppColors.myWhite,
-                                                        fontSize: 13,
-                                                        fontWeight: FontWeight.bold,
-                                                        fontFamily: AppStrings.appFont
-                                                    ),),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 20,),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  separatorBuilder: (context,index){
-                                    return  const SizedBox(height: 0,);
-                                  },
-                                  itemCount:MatchScaduele.realTeamMatchesLeft.length
-                              ),
-                            ],
-                          )
-                      ),
-                    )
-                  ],
+                              ],
+                            )
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         );
       },
