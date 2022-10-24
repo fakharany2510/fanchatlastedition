@@ -35,7 +35,7 @@ class ProfileScreen extends StatelessWidget {
                   //profile
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
+                    child: SizedBox(
                       height: 200,
                       child: Stack(
                         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -154,7 +154,7 @@ class ProfileScreen extends StatelessWidget {
                       defaultButton(
                           textColor: Colors.white,
                           buttonText: 'Edit Profile',
-                          buttonColor: Color(0Xffd32330),
+                          buttonColor: const Color(0Xffd32330),
                           height: size.height*.06,
                           width: size.width*.68,
                           function: (){
@@ -200,7 +200,7 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         GridView.count(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           childAspectRatio: 1/1.3,
                           crossAxisSpacing: 2,
                           mainAxisSpacing: 2,
@@ -227,14 +227,14 @@ class ProfileScreen extends StatelessWidget {
                       onTap: (){
                         AppCubit.get(context).pickProfilePostVideo();
                       },
-                      child: Icon(Icons.video_camera_back,color: Colors.red),
+                      child: const Icon(Icons.video_camera_back,color: Colors.red),
                       backgroundColor: AppColors.myWhite
                   ),
                   SpeedDialChild(
                     onTap: (){
                       AppCubit.get(context).pickProfilePostImage();
                     },
-                    child: Icon(Icons.image,color: Colors.green,),
+                    child: const Icon(Icons.image,color: Colors.green,),
                     backgroundColor: AppColors.myWhite,
                   ),
                 ],

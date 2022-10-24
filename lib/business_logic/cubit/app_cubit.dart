@@ -2652,7 +2652,7 @@ List<int> commentIndex=[];
   }
 
   void saveToken(String token){
-    FirebaseFirestore.instance.collection('tokens').add(
+    FirebaseFirestore.instance.collection('tokens').doc('${AppStrings.uId}').set(
         {"token":token}
     ).then((value){
       emit(SaveTokenSuccessState());

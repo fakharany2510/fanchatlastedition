@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/screens/private_chat/send_notification_chat.dart';
 import 'package:fanchat/presentation/screens/private_chat/send_video_message.dart';
 import 'package:fanchat/presentation/screens/private_chat/sendimage_message.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
@@ -328,13 +329,22 @@ class _ChatDetailsState extends State<ChatDetails> {
                                                       ?{
                                                     recording?stopRecord():startRecord(),
                                                     AppCubit.get(context).getMessages(recevierId:widget.userId!)
-                                                  }
-                                                      :AppCubit.get(context).sendMessage(
-                                                      recevierId: widget.userId!,
-                                                      recevierImage:widget.userImage!,
-                                                      recevierName: widget.userName!,
-                                                      dateTime: DateTime.now().toString(),
-                                                      text: textMessage.text);
+                                                  } :
+                                                  AppCubit.get(context).sendMessage(recevierId: widget.userId!, recevierImage:widget.userImage!, recevierName: widget.userName!, dateTime: DateTime.now().toString(), text: textMessage.text);
+                                                  setState(() {
+                                                     FirebaseFirestore.instance.collection('tokens').doc(widget.userId!).get().then((value) {
+
+                                                       callFcmApiSendPushNotificationsChat(
+                                                         token: value.data()!['token'],
+                                                         title: 'Check Your message',
+                                                         description:textMessage.text,
+                                                         imageUrl: widget.userImage!,
+                                                         //  token:AppCubit.get(context).userToken
+                                                       );
+
+                                                     });
+                                                  });
+
                                                   textMessage.clear();
                                                 },
                                                 color: const Color(0xff7895b2).withOpacity(.9),
