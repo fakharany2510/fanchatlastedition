@@ -6,6 +6,7 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class CheeringScreen extends StatefulWidget {
@@ -71,12 +72,12 @@ class _CheeringScreenState extends State<CheeringScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children:  [
                           SizedBox(height: MediaQuery.of(context).size.height*.15,),
-                          const Image(
-                            height: 90,
-                            width: 90,
-                            image: AssetImage('assets/images/cheers.png'),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SvgPicture.asset('assets/images/uninform_cheer_icon.svg',
+                              fit: BoxFit.contain,height: 70,width: 70,color: AppColors.primaryColor1,),
                           ),
-                          const SizedBox(height: 15,),
+                          const SizedBox(height: 30,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

@@ -20,6 +20,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -110,12 +111,8 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                        Padding(
                          padding: const EdgeInsets.all(10.0),
                          child: InkWell(
-                           child:Image(
-                             color: Colors.white,
-                               height:40 ,
-                               width: 40,
-                               image: AssetImage('assets/images/cheeringIcon.png')
-                           ),
+                           child:SvgPicture.asset('assets/images/uninform_cheer_icon.svg',
+                             fit: BoxFit.contain,height: 25,width: 25,),
                            onTap: (){
                              Navigator.push(context, MaterialPageRoute(builder: (_){
 
@@ -244,7 +241,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                                               children: [
                                                                 Text('${AppCubit.get(context).cheering[0].username}',
                                                                   style: TextStyle(
-                                                                      color: AppColors.primaryColor1,
+                                                                      color: AppColors.myWhite,
                                                                       fontSize: 15,
                                                                       fontWeight: FontWeight.w500,
                                                                       fontFamily: AppStrings.appFont
@@ -261,7 +258,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                                     const SizedBox(height: 5,),
                                                     Text('${AppCubit.get(context).cheering[0].text}',
                                                       style: TextStyle(
-                                                          color: AppColors.primaryColor1,
+                                                          color: AppColors.myWhite,
                                                           fontSize: 18,
                                                           fontWeight: FontWeight.w500,
                                                           fontFamily: AppStrings.appFont
