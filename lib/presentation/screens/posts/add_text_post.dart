@@ -98,6 +98,14 @@ class _AddTextPostState extends State<AddTextPost> {
         time: DateFormat.Hm().format(DateTime.now()),
         dateTime: DateFormat.yMMMd().format(DateTime.now()),
         );
+        setState(() {
+          callFcmApiSendPushNotifications(
+            title: 'New Post Added',
+            description:postText.text,
+            imageUrl: "${AppCubit.get(context).postImage}",
+            //  token:AppCubit.get(context).userToken
+          );
+        });
         // callFcmApiSendPushNotifications(
         // title: 'New Post Added',
         // description:postText.text,
@@ -110,7 +118,6 @@ class _AddTextPostState extends State<AddTextPost> {
        // AppCubit.get(context).increasNumberOfPosts(increaseNumberOfPosts);
         }
         },
-
 
         buttonText: 'post',
         buttonColor: AppColors.primaryColor1,
