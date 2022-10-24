@@ -306,63 +306,8 @@ class _AddTextPostState extends State<AddTextPost> {
                                 width: size.width,
                                 color: AppColors.primaryColor1,
                               ),
-                              TextButton(
-                                  onPressed: () {
-                                    AppCubit.get(context).pickPostImage();
-                                  }, child: Row(
-                                    children: [
-                                      ImageIcon(
-                                        AssetImage("assets/images/fanarea.png"),
-                                        color:Colors.green,
 
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        'Photo',
-                                        style: TextStyle(
-                                            color: AppColors.primaryColor1,
-                                            fontFamily: AppStrings.appFont,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500),
-                                      )
-                                    ],
-                                  )),
-                              Container(
-                                height: size.height * .001,
-                                width: size.width,
-                                color: AppColors.primaryColor1,
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    AppCubit.get(context).pickPostVideo2();
-                                  },
-                                  child: Row(
-                                    children: [
-                                      ImageIcon(
-                                        AssetImage("assets/images/video.png"),
-                                        color:Colors.red,
-
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        'Video',
-                                        style: TextStyle(
-                                            color: AppColors.primaryColor1,
-                                            fontFamily: AppStrings.appFont,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500),
-                                      )
-                                    ],
-                                  )),
-                              Container(
-                                height: size.height * .001,
-                                width: size.width,
-                                color: AppColors.primaryColor1,
-                              ),
+                              // image
                               TextButton(
                                   onPressed: () {
                                     AppCubit.get(context).pickPostImageFromCamera();
@@ -412,6 +357,66 @@ class _AddTextPostState extends State<AddTextPost> {
                                       )
                                     ],
                                   )),
+                              Container(
+                                height: size.height * .001,
+                                width: size.width,
+                                color: AppColors.primaryColor1,
+                              ),
+
+                              TextButton(
+                                  onPressed: () {
+                                    AppCubit.get(context).pickPostImage();
+                                  }, child: Row(
+                                    children: [
+                                      ImageIcon(
+                                        AssetImage("assets/images/fanarea.png"),
+                                        color:Colors.green,
+
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Photo',
+                                        style: TextStyle(
+                                            color: AppColors.primaryColor1,
+                                            fontFamily: AppStrings.appFont,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ],
+                                  )),
+                              Container(
+                                height: size.height * .001,
+                                width: size.width,
+                                color: AppColors.primaryColor1,
+                              ),
+
+                              TextButton(
+                                  onPressed: () {
+                                    AppCubit.get(context).pickPostVideo2();
+                                  },
+                                  child: Row(
+                                    children: [
+                                      ImageIcon(
+                                        AssetImage("assets/images/video.png"),
+                                        color:Colors.red,
+
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Video',
+                                        style: TextStyle(
+                                            color: AppColors.primaryColor1,
+                                            fontFamily: AppStrings.appFont,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ],
+                                  )),
+
                             ],
                           ),
                         ),

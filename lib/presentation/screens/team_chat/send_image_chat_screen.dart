@@ -1,6 +1,7 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -84,11 +85,27 @@ class _SendImageTeamChatState extends State<SendImageTeamChat> {
             floatingActionButton: state is BrowiseUploadImagePostLoadingState || state is BrowiseCreatePostLoadingState
                 ?CircularProgressIndicator(color: AppColors.navBarActiveIcon,)
                 :FloatingActionButton(
-              onPressed: (){
+              onPressed: ()async{
 
-                AppCubit.get(context).uploadTeamChatImage(
-                    countryName:widget.countryName ,
-                    dateTime:  DateTime.now().toString(), text: "", senderId:  AppStrings.uId!, senderName: '${AppCubit.get(context).userModel!.username}', senderImage: '${AppCubit.get(context).userModel!.image}');
+
+                final filesizeLimit = 30000000;  // in bytes // 30 Mega
+                final filesize = await AppCubit.get(context).postImage!.length(); // in bytes
+                final isValidFilesize = filesize < filesizeLimit;
+                if (isValidFilesize) {
+
+
+                  AppCubit.get(context).uploadTeamChatImage(
+                      countryName:widget.countryName ,
+                      dateTime:  DateTime.now().toString(), text: "", senderId:  AppStrings.uId!, senderName: '${AppCubit.get(context).userModel!.username}', senderImage: '${AppCubit.get(context).userModel!.image}'
+                  );
+
+
+
+                } else {
+                  customToast(title: 'Max Image size is 30 Mb', color: Colors.red);
+                }
+
+
 
 
               },

@@ -3,6 +3,7 @@ import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/user_model.dart';
+import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -96,16 +97,36 @@ class SendVideoTeamChat extends StatelessWidget {
               ,
             )
                 :FloatingActionButton(
-              onPressed: (){
-                AppCubit.get(context).uploadTeamChatVideo(
-                    senderId: AppStrings.uId!,
-                    dateTime: DateTime.now().toString(),
-                    text: "",
-                    countryName: countryName,
-                    senderName: '${AppCubit.get(context).userModel!.username}',
-                    senderImage: '${AppCubit.get(context).userModel!.image}'
+              onPressed: ()async{
 
-                );
+                final filesizeLimit = 30000000;  // in bytes // 30 Mega
+                final filesize = await AppCubit.get(context).postVideo5!.length(); // in bytes
+                final isValidFilesize = filesize < filesizeLimit;
+                if (isValidFilesize) {
+
+                  AppCubit.get(context).uploadTeamChatVideo(
+                      senderId: AppStrings.uId!,
+                      dateTime: DateTime.now().toString(),
+                      text: "",
+                      countryName: countryName,
+                      senderName: '${AppCubit.get(context).userModel!.username}',
+                      senderImage: '${AppCubit.get(context).userModel!.image}'
+
+                  );
+                  // callFcmApiSendPushNotifications(
+                  //     title: 'New Post Added',
+                  //     description:postText.text,
+                  //     imageUrl: "",
+                  //     context: context
+                  //
+                  //   //  token:AppCubit.get(context).userToken
+                  // );
+
+                } else {
+                  customToast(title: 'Max Video size is 30 Mb', color: Colors.red);
+                }
+
+
               },
               backgroundColor: AppColors.primaryColor1,
               child: const Icon(

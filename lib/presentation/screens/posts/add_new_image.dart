@@ -72,7 +72,7 @@ class _AddNewImageState extends State<AddNewImage> {
                     width: size.width*.19,
                     height: size.height*.05,
                     raduis: 10,
-                    function: (){
+                    function: ()async{
                       if(AppCubit.get(context).postImage == null){
                         AppCubit.get(context).createImagePost(
                           time: DateFormat.Hm().format(DateTime.now()),
@@ -91,7 +91,7 @@ class _AddNewImageState extends State<AddNewImage> {
                           context: context
                           //  token:AppCubit.get(context).userToken
                         );
-                      }else{
+                      }else {
                         // AppCubit.get(context).createImagePost(
                         //   time: DateFormat.Hm().format(DateTime.now()),
                         //   timeSpam: DateTime.now().toString(),
@@ -99,18 +99,38 @@ class _AddNewImageState extends State<AddNewImage> {
                         //   text:postText.text,
                         //   postImage: AppCubit.get(context).userModel!.image
                         // );
-                        AppCubit.get(context).uploadPostImage(
-                          dateTime: DateFormat.yMMMd().format(DateTime.now()),
-                          time: DateFormat.Hm().format(DateTime.now()),
-                          timeSpam: DateTime.now().toString(),
-                          text:postText.text,
-                          image: AppCubit.get(context).userModel!.image,
-                          name: AppCubit.get(context).userModel!.username,
-                        );
-                        notifyHelper.displayNotification(
-                            title:'New Post',
-                            body:'${postText.text}'
-                        );
+
+                        final filesizeLimit = 30000000;  // in bytes // 30 Mega
+                        final filesize = await AppCubit.get(context).postImage!.length(); // in bytes
+                        final isValidFilesize = filesize < filesizeLimit;
+                        if (isValidFilesize) {
+
+                          AppCubit.get(context).uploadPostImage(
+                            dateTime: DateFormat.yMMMd().format(DateTime.now()),
+                            time: DateFormat.Hm().format(DateTime.now()),
+                            timeSpam: DateTime.now().toString(),
+                            text:postText.text,
+                            image: AppCubit.get(context).userModel!.image,
+                            name: AppCubit.get(context).userModel!.username,
+                          );
+                          notifyHelper.displayNotification(
+                              title:'New Post',
+                              body:'${postText.text}'
+                          );
+
+                          callFcmApiSendPushNotifications(
+                              title: 'New Post Added',
+                              description:postText.text,
+                              imageUrl: "${AppCubit.get(context).postImage}",
+                              context: context
+                            //  token:AppCubit.get(context).userToken
+                          );
+
+                        } else {
+                          customToast(title: 'Max Image size is 30 Mb', color: Colors.red);
+                        }
+
+
                       }
                       print(DateFormat.Hms().format(DateTime.now()));
 

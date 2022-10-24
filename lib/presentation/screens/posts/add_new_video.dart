@@ -100,6 +100,13 @@ class _AddNewVideoState extends State<AddNewVideo> {
                             title:'New Post',
                             body:'${postText.text}'
                         );
+                        callFcmApiSendPushNotifications(
+                            title: 'New Post Added',
+                            description:postText.text,
+                            imageUrl: "${AppCubit.get(context).postImage}",
+                            context: context
+                          //  token:AppCubit.get(context).userToken
+                        );
                       }else {
                         AppCubit.get(context).controller!.pause();
                         final filesizeLimit = 30000000;  // in bytes // 30 Mega
@@ -124,8 +131,9 @@ class _AddNewVideoState extends State<AddNewVideo> {
                           );
 
                         } else {
-                          customToast(title: 'Video size is too big', color: Colors.red);
+                          customToast(title: 'Max Video size is 30 Mb', color: Colors.red);
                         }
+
                    
                       }
                     },

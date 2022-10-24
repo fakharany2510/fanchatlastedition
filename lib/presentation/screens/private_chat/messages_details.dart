@@ -378,26 +378,22 @@ class _ChatDetailsState extends State<ChatDetails> {
                       overlayOpacity: 0.0001,
                       children: [
                         SpeedDialChild(
-                            onTap: (){
-                              AppCubit.get(context).pickPostVideo3();
-                            },
-                            child: Icon(Icons.video_collection_sharp,color: Colors.red,size: 22),
-                            backgroundColor: AppColors.myWhite
-                        ),
-                        SpeedDialChild(
-                            onTap: (){
-                              AppCubit.get(context).pickPostVideoCameraPrivate3();
-                            },
-                            child: Icon(Icons.video_camera_back,color: Colors.blue,size: 22),
-                            backgroundColor: AppColors.myWhite
-                        ),
-                        SpeedDialChild(
                           onTap: (){
                             AppCubit.get(context).pickChatImage();
                           },
                           child: Icon(Icons.image,color: Colors.green,size: 22,),
                           backgroundColor: AppColors.myWhite,
                         ),
+
+
+                        SpeedDialChild(
+                            onTap: (){
+                              AppCubit.get(context).pickPostVideo3();
+                            },
+                            child: Icon(Icons.video_collection_sharp,color: Colors.red,size: 22),
+                            backgroundColor: AppColors.myWhite
+                        ),
+
                         SpeedDialChild(
                           onTap: (){
                             AppCubit.get(context).pickChatCamera();
@@ -405,6 +401,15 @@ class _ChatDetailsState extends State<ChatDetails> {
                           child: Icon(Icons.camera_alt,color: AppColors.primaryColor1,size: 22,),
                           backgroundColor: AppColors.myWhite,
                         ),
+
+                        SpeedDialChild(
+                            onTap: (){
+                              AppCubit.get(context).pickPostVideoCameraPrivate3();
+                            },
+                            child: Icon(Icons.video_camera_back,color: Colors.blue,size: 22),
+                            backgroundColor: AppColors.myWhite
+                        ),
+
                       ],
                 ),
                     ),

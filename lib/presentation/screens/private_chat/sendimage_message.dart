@@ -1,5 +1,6 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../constants/app_strings.dart';
@@ -87,15 +88,31 @@ class _SendImageState extends State<SendImage> {
           floatingActionButton: state is UploadImagePrivateLoadingState || state is CreateImagePrivateLoadingState
               ?CircularProgressIndicator(color: AppColors.navBarActiveIcon,)
                 :FloatingActionButton(
-            onPressed: (){
-          AppCubit.get(context).uploadMessageImage(
-              senderId: AppStrings.uId!,
-              dateTime: DateTime.now().toString(),
-              recevierId:widget.userId!,
-              recevierImage:widget.userImage!,
-              recevierName: widget.userName!,
-              text: ""
-          );
+            onPressed: ()async{
+
+
+              final filesizeLimit = 30000000;  // in bytes // 30 Mega
+              final filesize = await AppCubit.get(context).chatImage!.length(); // in bytes
+              final isValidFilesize = filesize < filesizeLimit;
+              if (isValidFilesize) {
+
+                AppCubit.get(context).uploadMessageImage(
+                    senderId: AppStrings.uId!,
+                    dateTime: DateTime.now().toString(),
+                    recevierId:widget.userId!,
+                    recevierImage:widget.userImage!,
+                    recevierName: widget.userName!,
+                    text: ""
+                );
+
+
+
+              } else {
+                customToast(title: 'Max Image size is 30 Mb', color: Colors.red);
+              }
+
+
+
         },
         backgroundColor: AppColors.primaryColor1,
         child: const Icon(

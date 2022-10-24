@@ -199,7 +199,7 @@ customToast(
       msg: title,
       textColor: AppColors.myWhite,
       backgroundColor: color,
-      gravity: ToastGravity.BOTTOM
+      gravity: ToastGravity.TOP
   );
 
 }

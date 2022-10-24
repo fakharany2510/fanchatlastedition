@@ -6,6 +6,8 @@ import 'package:fanchat/data/modles/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../widgets/shared_widgets.dart';
+
 class SendVideoMessage extends StatelessWidget {
   String ?userId;
   String ?userImage;
@@ -96,15 +98,35 @@ class SendVideoMessage extends StatelessWidget {
               ,
             )
                 :FloatingActionButton(
-              onPressed: (){
-                AppCubit.get(context).uploadPrivateVideo(
-                    senderId: AppStrings.uId!,
-                    dateTime: DateTime.now().toString(),
-                    recevierId:userId!,
-                    recevierImage:userImage!,
-                    recevierName:userName!,
-                    text: ""
-                );
+              onPressed: ()async{
+
+                final filesizeLimit = 30000000;  // in bytes // 30 Mega
+                final filesize = await AppCubit.get(context).postVideo3!.length(); // in bytes
+                final isValidFilesize = filesize < filesizeLimit;
+                if (isValidFilesize) {
+
+                  AppCubit.get(context).uploadPrivateVideo(
+                      senderId: AppStrings.uId!,
+                      dateTime: DateTime.now().toString(),
+                      recevierId:userId!,
+                      recevierImage:userImage!,
+                      recevierName:userName!,
+                      text: ""
+                  );
+                  // callFcmApiSendPushNotifications(
+                  //     title: 'New Post Added',
+                  //     description:postText.text,
+                  //     imageUrl: "",
+                  //     context: context
+                  //
+                  //   //  token:AppCubit.get(context).userToken
+                  // );
+
+                } else {
+                  customToast(title: 'Max Video size is 30 Mb', color: Colors.red);
+                }
+
+
               },
               backgroundColor: AppColors.primaryColor1,
               child: const Icon(
