@@ -80,17 +80,17 @@ class _AddNewImageState extends State<AddNewImage> {
                           dateTime: DateFormat.yMMMd().format(DateTime.now()),
                           text:postText.text,
                         );
-                        notifyHelper.displayNotification(
-                            title:'New Post',
-                            body:'${postText.text}'
-                        );
-                        callFcmApiSendPushNotifications(
-                          title: 'New Post Added',
-                          description:postText.text,
-                          imageUrl: "${AppCubit.get(context).postImage}",
-                          context: context
-                          //  token:AppCubit.get(context).userToken
-                        );
+                        // notifyHelper.displayNotification(
+                        //     title:'New Post',
+                        //     body:'${postText.text}'
+                        // );
+                        // callFcmApiSendPushNotifications(
+                        //   title: 'New Post Added',
+                        //   description:postText.text,
+                        //   imageUrl: "${AppCubit.get(context).postImage}",
+                        //   context: context
+                        //   //  token:AppCubit.get(context).userToken
+                        // );
                       }else {
                         // AppCubit.get(context).createImagePost(
                         //   time: DateFormat.Hm().format(DateTime.now()),
@@ -113,18 +113,18 @@ class _AddNewImageState extends State<AddNewImage> {
                             image: AppCubit.get(context).userModel!.image,
                             name: AppCubit.get(context).userModel!.username,
                           );
-                          notifyHelper.displayNotification(
-                              title:'New Post',
-                              body:'${postText.text}'
-                          );
-
-                          callFcmApiSendPushNotifications(
-                              title: 'New Post Added',
-                              description:postText.text,
-                              imageUrl: "${AppCubit.get(context).postImage}",
-                              context: context
-                            //  token:AppCubit.get(context).userToken
-                          );
+                          // notifyHelper.displayNotification(
+                          //     title:'New Post',
+                          //     body:'${postText.text}'
+                          // );
+                          //
+                          // callFcmApiSendPushNotifications(
+                          //     title: 'New Post Added',
+                          //     description:postText.text,
+                          //     imageUrl: "${AppCubit.get(context).postImage}",
+                          //     context: context
+                          //   //  token:AppCubit.get(context).userToken
+                          // );
 
                         } else {
                           customToast(title: 'Max Image size is 30 Mb', color: Colors.red);

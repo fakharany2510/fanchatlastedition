@@ -100,13 +100,13 @@ class _AddNewVideoState extends State<AddNewVideo> {
                             title:'New Post',
                             body:'${postText.text}'
                         );
-                        callFcmApiSendPushNotifications(
-                            title: 'New Post Added',
-                            description:postText.text,
-                            imageUrl: "${AppCubit.get(context).postImage}",
-                            context: context
-                          //  token:AppCubit.get(context).userToken
-                        );
+                        // callFcmApiSendPushNotifications(
+                        //     title: 'New Post Added',
+                        //     description:postText.text,
+                        //     imageUrl: "${AppCubit.get(context).postImage}",
+                        //     context: context
+                        //   //  token:AppCubit.get(context).userToken
+                        // );
                       }else {
                         AppCubit.get(context).controller!.pause();
                         final filesizeLimit = 30000000;  // in bytes // 30 Mega
@@ -121,19 +121,19 @@ class _AddNewVideoState extends State<AddNewVideo> {
                             text:postText.text,
                             name: AppCubit.get(context).userModel!.username,
                           );
-                          callFcmApiSendPushNotifications(
-                            title: 'New Post Added',
-                            description:postText.text,
-                            imageUrl: "",
-                              context: context
 
-                            //  token:AppCubit.get(context).userToken
-                          );
 
                         } else {
                           customToast(title: 'Max Video size is 30 Mb', color: Colors.red);
                         }
-
+                        // callFcmApiSendPushNotifications(
+                        //     title: 'New Post Added',
+                        //     description:postText.text,
+                        //     imageUrl: "",
+                        //     context: context
+                        //
+                        //   //  token:AppCubit.get(context).userToken
+                        // );
                    
                       }
                     },
