@@ -23,7 +23,6 @@ class _EditCoverState extends State<EditCover> {
     return BlocConsumer<AppCubit,AppState>(
         listener: (context,state){
           if(state is UpdateUserSuccessState){
-            Navigator.pop(context);
           }
         },
       builder: (context,state){
@@ -87,18 +86,10 @@ class _EditCoverState extends State<EditCover> {
                       ):
                       TextButton(
                         onPressed: (){
-                          cubit
-                              .uploadUserCover(
-                            name: cubit.changeUserNameController.text,
-                            phone:
-                            cubit.changeUserPhoneController.text,
-                            bio: cubit.changeUserBioController.text,
-                          )
-                              .then((value) {
-                            cubit.getUser(context);
-                          });
+                          Navigator.pop(context);
+
                         },
-                        child:  Text('Save Changes',style: TextStyle(
+                        child:  Text('Ok',style: TextStyle(
                             color: AppColors.primaryColor1,
                             fontFamily: AppStrings.appFont,
                             fontWeight: FontWeight.w700,

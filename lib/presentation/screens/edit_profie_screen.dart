@@ -353,25 +353,47 @@ class EditProfileScreen extends StatelessWidget {
                         width: size.width * .9,
                         function: () {
 
-                          cubit.updateProfile(
-                            image: cubit.profilePath,
-                            cover: cubit.coverPath,
+                          cubit.uploadUserCover(
                             name: cubit.changeUserNameController.text,
-                            phone: cubit.changeUserPhoneController.text,
+                            phone:
+                            cubit.changeUserPhoneController.text,
                             bio: cubit.changeUserBioController.text,
-                            youtubeLink: cubit.changeYoutubeLinkController.text,
-                            facebookLink: cubit.changeFacebookLinkController.text,
-                            twitterLink:cubit.changeTwitterLinkController.text,
-                            instagramLink:cubit.changeInstagramLinkController.text,
-
                           ).then((value) {
-                            cubit.getUser(context);
-                            cubit.getPosts().then((value) {
-                              Navigator.pop(context);
+                            customToast(title: 'Data Updated', color: AppColors.primaryColor1);
+
+                            cubit.uploadUserImage(
+                              name: cubit.changeUserNameController.text,
+                              phone:
+                              cubit.changeUserPhoneController.text,
+                              bio: cubit.changeUserBioController.text,
+                            ).then((value) {
                               customToast(title: 'Data Updated', color: AppColors.primaryColor1);
 
+                              cubit.updateProfile(
+                                image: cubit.profilePath,
+                                cover: cubit.coverPath,
+                                name: cubit.changeUserNameController.text,
+                                phone: cubit.changeUserPhoneController.text,
+                                bio: cubit.changeUserBioController.text,
+                                youtubeLink: cubit.changeYoutubeLinkController.text,
+                                facebookLink: cubit.changeFacebookLinkController.text,
+                                twitterLink:cubit.changeTwitterLinkController.text,
+                                instagramLink:cubit.changeInstagramLinkController.text,
+
+                              ).then((value) {
+                                customToast(title: 'Data Updated', color: AppColors.primaryColor1);
+
+                                cubit.getUser(context);
+                                cubit.getPosts().then((value) {
+                                  Navigator.pop(context);
+                                  customToast(title: 'Data Updated', color: AppColors.primaryColor1);
+
+                                });
+                              });
                             });
                           });
+
+
 
                           printMessage(cubit.changeUserNameController.text);
                           // Navigator.pushNamed(context, 'edit_profile');

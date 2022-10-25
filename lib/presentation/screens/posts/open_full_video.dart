@@ -29,7 +29,7 @@ class _OpenFullVideoState extends State<OpenFullVideo> {
     // controller!.setVolume(1.0);
     widget.controller!.pause();
     widget.intilize=widget.controller!.initialize();
-    widget.controller!.setLooping(true);
+    widget.controller!.setLooping(false);
     widget.controller!.setVolume(1.0);
     super.initState();
   }

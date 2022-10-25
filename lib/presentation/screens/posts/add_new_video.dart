@@ -200,10 +200,9 @@ class _AddNewVideoState extends State<AddNewVideo> {
                         flex: 5,
                         child: SingleChildScrollView(
                           child: Container(
-                            height: size.height,
-                            width: size.width,
+
                             child: AspectRatio(
-                              aspectRatio:AppCubit.get(context).controller!.value.aspectRatio,
+                              aspectRatio:AppCubit.get(context).controller!.value.aspectRatio*1.5,
                               child: AppCubit.get(context).controller ==null
                                   ?const SizedBox(height: 0,)
                                   :CachedVideoPlayer(

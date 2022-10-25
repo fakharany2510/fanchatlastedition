@@ -30,7 +30,7 @@ class _OpenFullVideoPrivateChatState extends State<OpenFullVideoPrivateChat> {
 
     widget.controller!.initialize().then((value) {
       widget.controller!.play();
-      widget.controller!.setLooping(true);
+      widget.controller!.setLooping(false);
       widget.controller!.setVolume(1.0);
       setState(() {
         widget.controller!.pause();

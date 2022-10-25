@@ -343,9 +343,11 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                       height: MediaQuery.of(context).size.height*.05,
 
                       child: SpeedDial(
-                        backgroundColor: const Color(0xff7895b2).withOpacity(.9),
+                        backgroundColor:recording==false? const Color(0xff7895b2).withOpacity(.9):AppColors.primaryColor1,
                         animatedIcon: AnimatedIcons.menu_close,
                         elevation: 1,
+                        visible: recording==false?true:false,
+
                         overlayColor: AppColors.myWhite,
                         overlayOpacity: 0.0001,
                         children: [

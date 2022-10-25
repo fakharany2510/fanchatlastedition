@@ -82,7 +82,7 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                           ),
                         ),
                         const SizedBox(height: 5,),
-                        Text('${AppCubit.get(context).publicChat[widget.index!].text}',
+                        Text(' ${AppCubit.get(context).publicChat[widget.index!].text}',
                           style:  TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 17,
@@ -257,7 +257,7 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                         vertical: 5
                     ),
                     decoration:  BoxDecoration(
-                      color: const Color(0xff7895b2).withOpacity(.9),
+                      color:  const Color(0xffb1b2ff).withOpacity(.16),
                       borderRadius:const  BorderRadius.only(
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),

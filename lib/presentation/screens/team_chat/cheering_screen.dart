@@ -38,7 +38,9 @@ class _CheeringScreenState extends State<CheeringScreen> {
            if(state is CreateCheeringSuccessState){
              AppCubit.get(context).getCheeringPost().then((value) {
                // AppCubit.get(context).getWaitingPost();
-               Navigator.push(context, MaterialPageRoute(builder: (_){
+               // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+               // const HomeLayout()), (Route<dynamic> route) => false);
+               Navigator.pushReplacement(context, MaterialPageRoute(builder: (_){
                  return TeamChatScreen(countryName: widget.countryName!, countryImage: widget.countryImage!);
                }));
              });

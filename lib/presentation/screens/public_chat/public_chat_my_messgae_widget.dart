@@ -118,7 +118,7 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
 
                           ),
                           const SizedBox(height: 5,),
-                          Text('${AppCubit.get(context).publicChat[widget.index!].text}',
+                          Text(' ${AppCubit.get(context).publicChat[widget.index!].text}',
                             style:  const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18,

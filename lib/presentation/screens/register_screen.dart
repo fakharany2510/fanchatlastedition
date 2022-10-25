@@ -1,16 +1,11 @@
 import 'package:country_pickers/country.dart';
-import 'package:fanchat/business_logic/cubit/app_cubit.dart';
-
-
 import 'package:fanchat/business_logic/register/register_cubit.dart';
 import 'package:fanchat/business_logic/register/register_states.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/screens/privacy_policies.dart';
-
 import 'package:fanchat/presentation/screens/verify_code_screen.dart';
-import 'package:fanchat/presentation/screens/welcome_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:fanchat/utils/helpers.dart';
 import 'package:flutter/gestures.dart';
@@ -261,7 +256,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 if(name.text == "fanchat"){
                                 if(isCheckBoxTrue == true ){
                                   AppStrings.uId = '1832855570382325';
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
+                                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                                  const HomeLayout()), (Route<dynamic> route) => false);
+                                  // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
                                 }else{
                                   Fluttertoast.showToast(
                                     msg:"You Must Agree To Privacy Policies First",
@@ -278,9 +275,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                  if(isCheckBoxTrue == true ){
                                    CashHelper.saveData(key: 'name',value: name.text);
                                    CashHelper.saveData(key: 'phone',value: phoneNumber);
-                                   Navigator.push(context,
-                                       MaterialPageRoute
-                                         (builder: (context)=>VerifyPhoneNumberScreen(phoneNumber: phoneNumber,)));
+
+                                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                                       VerifyPhoneNumberScreen(phoneNumber: phoneNumber,)), (Route<dynamic> route) => false);
+                                   // Navigator.push(context,
+                                   //     MaterialPageRoute
+                                   //       (builder: (context)=>VerifyPhoneNumberScreen(phoneNumber: phoneNumber,)));
 
                                    print('user Name = ${name.text}');
                                    print('user phone = ${phoneNumber}');

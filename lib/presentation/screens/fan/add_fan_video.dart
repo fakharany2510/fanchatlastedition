@@ -21,6 +21,7 @@ class AddFanVideo extends StatelessWidget {
           AppCubit.get(context).videoPlayerController!.pause();
           AppCubit.get(context).postVideo=null;
           AppCubit.get(context).currentIndex=2;
+          AppCubit.get(context).getFanPosts();
 
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
         }

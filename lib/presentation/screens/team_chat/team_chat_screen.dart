@@ -527,9 +527,11 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                         height: MediaQuery.of(context).size.height*.05,
 
                         child: SpeedDial(
-                          backgroundColor: const Color(0xff7895b2).withOpacity(.9),                          animatedIcon: AnimatedIcons.menu_close,
+                          backgroundColor:recording==false? const Color(0xff7895b2).withOpacity(.9):AppColors.primaryColor1,
+                          animatedIcon: AnimatedIcons.menu_close,
+                          visible: recording==false?true:false,
                           elevation: 1,
-                          overlayColor: AppColors.myWhite,
+                          overlayColor: recording==false? AppColors.myWhite:AppColors.primaryColor1,
                           overlayOpacity: 0.0001,
                           children: [
 
