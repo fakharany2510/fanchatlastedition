@@ -1705,7 +1705,7 @@ List<int> commentIndex=[];
           .update({
         'postId':AppStrings.postUid
       }).then((value){
-        emit(FanCreateVideoPostSuccessState());
+        // emit(FanCreateVideoPostSuccessState());
       });
       emit(FanCreateVideoPostSuccessState());
     })
@@ -1731,7 +1731,7 @@ List<int> commentIndex=[];
         .ref()
     //كدا بقةله هتحرك ازاي جوا ال storage
     //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
-        .child('fan/${Uri.file(fanPostVideo!.path).pathSegments.last}')
+        .child('fanVideo/${Uri.file(fanPostVideo!.path).pathSegments.last}')
     //كدا بعمل رفع للصوره
         .putFile(fanPostVideo!).then((value){
       value.ref.getDownloadURL().then((value){
@@ -1769,6 +1769,10 @@ List<int> commentIndex=[];
       fans=[];
       value.docs.forEach((element) async{
         fans.add(FanModel.fromJson(element.data()));
+        print('================================ link fan ============================');
+        print(element.data()['postVideo']);
+        print('================================ link fan ============================');
+
         // Delete a record
         // await database?.rawDelete('DELETE * FROM Posts');
         emit(BrowiseGetFanPostsSuccessState());

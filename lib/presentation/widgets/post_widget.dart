@@ -28,8 +28,6 @@ class PostWidget extends StatefulWidget {
 
 class PostWidgetState extends State<PostWidget> {
 
-
-
   VideoPlayerController? controller;
   Future <void> ?intilize;
 
@@ -250,7 +248,7 @@ class PostWidgetState extends State<PostWidget> {
                               child: ClipRect(
                                 child: Align(
                                   alignment: Alignment.centerRight,
-                                  heightFactor: 0.5,
+                                  heightFactor: 0.7,
                                   widthFactor: 1,
                                   child: AspectRatio(
                                     aspectRatio: controller!.value.aspectRatio,
