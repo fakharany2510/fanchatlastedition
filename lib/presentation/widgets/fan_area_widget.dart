@@ -31,7 +31,7 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
         AppCubit.get(context).fans[widget.index!].postVideo!
     );
     intilize=fanVideoPlayerController!.initialize();
-    fanVideoPlayerController!.setLooping(true);
+    fanVideoPlayerController!.setLooping(false);
     fanVideoPlayerController!.setVolume(1.0);
     super.initState();
   }
@@ -59,15 +59,15 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
                       //   image:
                       //   NetworkImage('${AppCubit.get(context).fans[widget.index!].postImage}') as ImageProvider,
                       // ),
-          CachedNetworkImage(
-          cacheManager: AppCubit.get(context).manager,
-          imageUrl: "${AppCubit.get(context).fans[widget.index!].postImage}",
-          placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-         // maxHeightDiskCache:75,
-              width: 200,
-              height: MediaQuery.of(context).size.height*.18,
-            fit: BoxFit.cover,
-          ),
+                       CachedNetworkImage(
+                        cacheManager: AppCubit.get(context).manager,
+                        imageUrl: "${AppCubit.get(context).fans[widget.index!].postImage}",
+                        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                       // maxHeightDiskCache:75,
+                            width: 200,
+                            height: MediaQuery.of(context).size.height*.18,
+                          fit: BoxFit.cover,
+                        ),
                       // Positioned(
                       //   top: 0,
                       //   right: 0,

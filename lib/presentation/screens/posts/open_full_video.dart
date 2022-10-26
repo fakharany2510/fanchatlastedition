@@ -17,10 +17,8 @@ class OpenFullVideo extends StatefulWidget {
 class _OpenFullVideoState extends State<OpenFullVideo> {
 
 
-
   @override
   void initState() {
-
     // controller = CachedVideoPlayerController.network(
     //     AppCubit.get(context).posts[widget.index!].postVideo!);
     // controller!.initialize();

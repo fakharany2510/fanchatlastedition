@@ -45,6 +45,7 @@ class AppCubit extends Cubit<AppState> {
    final manager=CacheManager(Config(
     'customCacheKey',
     stalePeriod: const Duration(days: 15),maxNrOfCacheObjects: 100,));
+
   List screensTitles=[
 
     'Home Screen',
@@ -105,7 +106,7 @@ class AppCubit extends Cubit<AppState> {
       getLastUsers();
     }
     if(currentIndex==2){
-     // getFanPosts();
+     getFanPosts();
     }
     if(currentIndex==0){
       String getTimeDifferenceFromNow(DateTime dateTime) {
@@ -1765,6 +1766,7 @@ List<int> commentIndex=[];
         .orderBy('timeSmap',descending: true)
         .get()
         .then((value) {
+      fans=[];
       value.docs.forEach((element) async{
         fans.add(FanModel.fromJson(element.data()));
         // Delete a record

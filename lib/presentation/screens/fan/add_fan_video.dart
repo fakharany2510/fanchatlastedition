@@ -17,8 +17,8 @@ class AddFanVideo extends StatelessWidget {
 
         if(state is FanCreateVideoPostSuccessState){
          // AppCubit.get(context).videoPlayerController!.dispose();
-          AppCubit.get(context).videoPlayerController==null;
-          AppCubit.get(context).videoPlayerController!.pause();
+         //  AppCubit.get(context).videoPlayerController==null;
+         //  AppCubit.get(context).videoPlayerController!.pause();
           AppCubit.get(context).postVideo=null;
           AppCubit.get(context).currentIndex=2;
           AppCubit.get(context).getFanPosts();

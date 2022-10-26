@@ -9,8 +9,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
-class FanScreen extends StatelessWidget {
+class FanScreen extends StatefulWidget {
   const FanScreen({Key? key}) : super(key: key);
+
+  @override
+  State<FanScreen> createState() => _FanScreenState();
+}
+
+class _FanScreenState extends State<FanScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    AppCubit.get(context).getFanPosts();
+  }
 
   @override
   Widget build(BuildContext context) {
