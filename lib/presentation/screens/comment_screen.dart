@@ -180,11 +180,15 @@ class _CommentScreenState extends State<CommentScreen> {
                                           return 'please write your comment';
                                         }
                                       },
+                                      onSaved: (v){
+                                        setState((){
+                                          commentControllerChanges = true;
+                                        });
+                                      },
                                        onChanged: (v){
+                                         commentControllerChanges = true;
+
                                          AppCubit.get(context).changeIconColor();
-                                         setState((){
-                                           commentControllerChanges = true;
-                                         });
                                        },
                                       keyboardType: TextInputType.multiline,
                                       maxLines: null,

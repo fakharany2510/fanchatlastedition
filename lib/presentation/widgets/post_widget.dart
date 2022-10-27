@@ -246,77 +246,21 @@ class PostWidgetState extends State<PostWidget> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 20
                   ),
-            child: ClipRect(
-              child: Align(
-                alignment: Alignment.centerRight,
-                heightFactor: 0.7,
-                widthFactor: 1,
-                child: AspectRatio(
-                  aspectRatio: controller!.value.aspectRatio,
-                  child: VideoPlayer(controller!),
-                ),
-              ),
-            ),
-          ),
-                      //   controller!.value.isInitialized
-                      //       ? AspectRatio(
-                      //       aspectRatio: controller!.value.aspectRatio,
-                      //       child: CachedVideoPlayer(controller!))
-                      //       : const Center(child: CircularProgressIndicator())
-                      // ),
-
-          // FutureBuilder(
-                        //   future: intilize,
-                        //   builder: (context,snapshot){
-                        //     if(snapshot.connectionState == ConnectionState.done){
-                        //       return AspectRatio(
-                        //         aspectRatio: videoPlayerController!.value.aspectRatio,
-                        //         child: VideoPlayer(videoPlayerController!),
-                        //       );
-                        //     }
-                        //     else{
-                        //       return const Center(
-                        //         child: CircularProgressIndicator(),
-                        //       );
-                        //     }
-                        //   },
-                        //
-                        //
-                        //
-                        // ),
-
-                      Positioned(
-                          top: MediaQuery.of(context).size.height*.12,
-                          right: MediaQuery.of(context).size.height*.18,
-                          child: InkWell(
-                            onTap: (){
-                              // print('hhfhds');
-                              // setState((){
-                              //   print('hhfhds 5653');
-                              //   if(controller!.value.isPlaying){
-                              //     controller!.pause();
-                              //     isPostPlaying=true;
-                              //   }else{
-                              //     controller!.play();
-                              //     isPostPlaying=false;
-                              //
-                              //   }
-                              // });
-                              Navigator.push(context, MaterialPageRoute(builder: (_){
-                                 return OpenFullVideo(
-                                   controller: controller,
-                                   intilize: controller!.initialize(),
-                                 );
-                              }));
-
-                            },
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white.withOpacity(.2),
-                              radius: 50,
-                              child: controller!.value.isPlaying?  Icon(Icons.pause,size: 50,color: Colors.white.withOpacity(.4),): Icon(Icons.play_arrow,size: 50, color:Colors.white.withOpacity(.4)),
-                            ),
-                          )
+                  child: ClipRect(
+                    child: Align(
+                      alignment: Alignment.center,
+                      heightFactor: 0.6,
+                      widthFactor: 1,
+                      child: AspectRatio(
+                        aspectRatio: controller!.value.aspectRatio,
+                        child: VideoPlayer(controller!),
                       ),
+                    ),
+                  ),
+                ),
+
+
+
                     ],
                   )
                       :const SizedBox(width: 0,),
