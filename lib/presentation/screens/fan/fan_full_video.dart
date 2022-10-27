@@ -117,7 +117,7 @@ videoPlayerController!.initialize();
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 0),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Row(
                         children: [
                           GestureDetector(
@@ -141,41 +141,71 @@ videoPlayerController!.initialize();
                           ),
                           const SizedBox(width: 7,),
                           Expanded(
-                            child: Text('${widget.userName}',
-                              overflow: TextOverflow.ellipsis,
-                              style:  TextStyle(
-                                  color: AppColors.primaryColor1,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: AppStrings.appFont
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text('${widget.userName}',
+                                        overflow: TextOverflow.ellipsis,
+                                        style:  TextStyle(
+                                            color: AppColors.primaryColor1,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: AppStrings.appFont
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-
+                          // Spacer(),
+                          // IconButton(
+                          //   onPressed: (){},
+                          //   padding: EdgeInsets.zero,
+                          //   constraints: BoxConstraints(),
+                          //   icon:Icon(Icons.favorite_outline,color: AppColors.navBarActiveIcon,size: 20),)
                         ],
                       ),
                     ),
+                    SizedBox(height: 20,),
 
-                    Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        child: Container(
-                          width: double.infinity,
-                          child:chewieController!=null?Padding(
-                              padding: EdgeInsets.all(0),
-                          child: Chewie(
-                            controller: chewieController!,
+                    Container(
+                      height: MediaQuery.of(context).size.height*.6,
+                      width: double.infinity,
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: MediaQuery.of(context).size.height*.6,
+                            width: double.infinity,
+                            child: AspectRatio(
+                              aspectRatio: videoPlayerController!.value.aspectRatio,
+                                child: VideoPlayer(videoPlayerController!)),
+
+
                           ),
-                          ):Center(
-                            child: CircularProgressIndicator(),
-                          )
-
-
-                          // AspectRatio(
-                          //   aspectRatio: videoPlayerController!.value.aspectRatio,
-                          //   child: VideoPlayer(videoPlayerController!),
-                          // ),
-                        ),
+                          Positioned(
+                              top: 10,
+                              right: 10,
+                              child: InkWell(
+                                onTap: (){
+                                  setState((){
+                                    if(videoPlayerController!.value.isPlaying){
+                                      videoPlayerController!.pause();
+                                    }else{
+                                      videoPlayerController!.play();
+                                    }
+                                  });
+                                },
+                                child: videoPlayerController!.value.isPlaying?
+                                CircleAvatar(radius: 15, child: Icon(
+                                  Icons.pause,color: AppColors.myWhite,size: 15,)): CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: AppColors.myWhite,size: 15,)),
+                              )
+                          ),
+                        ],
                       ),
                     )
                   ],

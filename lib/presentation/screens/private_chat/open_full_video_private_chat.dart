@@ -29,11 +29,11 @@ class _OpenFullVideoPrivateChatState extends State<OpenFullVideoPrivateChat> {
     // controller!.setVolume(1.0);
 
     widget.controller!.initialize().then((value) {
-      widget.controller!.play();
+     // widget.controller!.play();
       widget.controller!.setLooping(false);
       widget.controller!.setVolume(1.0);
       setState(() {
-        widget.controller!.pause();
+        //widget.controller!.pause();
       });
     }).catchError((error){
       print('error while initializing video ${error.toString()}');
@@ -42,7 +42,10 @@ class _OpenFullVideoPrivateChatState extends State<OpenFullVideoPrivateChat> {
   }
 @override
 
-
+void dispose() {
+    widget.controller!.pause();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(

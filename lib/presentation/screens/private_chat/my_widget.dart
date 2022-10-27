@@ -127,7 +127,7 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
                         //     mymessageController.play();
                         //   }
                         // });
-                        mymessageController.play();
+                        //mymessageController.play();
                         isPostPlaying=false;
                         Navigator.push(context, MaterialPageRoute(builder: (_){
                           return OpenFullVideoPrivateChat(controller: mymessageController);
