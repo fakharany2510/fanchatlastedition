@@ -192,17 +192,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => Column(
                             children: [
-                              const SizedBox(height:10,),
+                              const SizedBox(height:0,),
                               PostWidget(index: index),
                             ],
                           ),
-                          separatorBuilder: (context,index)=>Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 0),
-                            child: Container(
-                              height: MediaQuery.of(context).size.height*.01,
-                              width: double.infinity,
-                              color: AppColors.myGrey.withOpacity(.1),
-                            ),
+                          separatorBuilder: (context,index)=>Container(
+                            height: MediaQuery.of(context).size.height*.01,
+                            width: double.infinity,
+                            color: AppColors.myGrey.withOpacity(.1),
                           ),
                           itemCount: AppCubit.get(context).posts.length)
                           :const Padding(

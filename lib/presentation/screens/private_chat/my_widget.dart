@@ -9,6 +9,7 @@ import 'package:fanchat/presentation/screens/private_chat/open_full_video_privat
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:video_player/video_player.dart';
 import 'package:voice_message_package/voice_message_package.dart';
 
 class MyMessageWidget extends StatefulWidget {
@@ -22,15 +23,15 @@ class MyMessageWidget extends StatefulWidget {
 
 class _MyMessageWidgetState extends State<MyMessageWidget> {
 
-  late CachedVideoPlayerController mymessageController;
+  late VideoPlayerController mymessageController;
 
   @override
   void initState() {
-    mymessageController = CachedVideoPlayerController.network(
+    mymessageController = VideoPlayerController.network(
         "${AppCubit.get(context).messages[widget.index!].video}");
     mymessageController.initialize().then((value) {
       mymessageController.play();
-      mymessageController.setLooping(true);
+      mymessageController.setLooping(false);
       mymessageController.setVolume(1.0);
       setState(() {
         mymessageController.pause();
@@ -40,7 +41,11 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
     });
     super.initState();
   }
-
+@override
+  void dispose() {
+  mymessageController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
@@ -106,7 +111,7 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
                   width: 200,
                       child: AspectRatio(
                       aspectRatio:mymessageController.value.size.width/mymessageController.value.size.height,
-                      child: CachedVideoPlayer(mymessageController)),
+                      child: VideoPlayer(mymessageController)),
                     )
                     : const Center(child: CircularProgressIndicator()),
 

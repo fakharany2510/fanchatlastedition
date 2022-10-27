@@ -10,6 +10,7 @@ import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:fanchat/presentation/screens/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:video_player/video_player.dart';
 import 'package:voice_message_package/voice_message_package.dart';
 
 class MyMessagePublicChatWidget extends StatefulWidget {
@@ -23,11 +24,11 @@ class MyMessagePublicChatWidget extends StatefulWidget {
 
 class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
 
-  late CachedVideoPlayerController mymessageController;
+  late VideoPlayerController mymessageController;
 
   @override
   void initState() {
-    mymessageController = CachedVideoPlayerController.network(
+    mymessageController = VideoPlayerController.network(
         "${AppCubit.get(context).publicChat[widget.index!].video}");
     mymessageController.initialize().then((value) {
       mymessageController.play();
@@ -41,7 +42,11 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
     });
     super.initState();
   }
-
+@override
+  void dispose() {
+  mymessageController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
@@ -133,7 +138,7 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                   ):
                   (AppCubit.get(context).publicChat[widget.index!].image !=null) ?
                   Container(
-                    width: MediaQuery.of(context).size.width*.55,
+                    width: MediaQuery.of(context).size.width*.74,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 5,
                         vertical: 5
@@ -146,53 +151,48 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                         bottomRight: Radius.circular(10),
                       ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('${AppCubit.get(context).publicChat[widget.index!].senderName}',
-                          style:  TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 9,
-                              color:  Color(0xfffbf7c2),
-                              fontFamily: AppStrings.appFont
-                          ),
-
-                        ),
-                        const SizedBox(height: 5,),
-                        Material(
-                          color: const Color(0xffb1b2ff).withOpacity(.10),
-                          elevation: 100,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(3),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('${AppCubit.get(context).publicChat[widget.index!].senderName}',
+                            style:  TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 9,
+                                color:  Color(0xfffbf7c2),
+                                fontFamily: AppStrings.appFont
+                            ),
 
                           ),
-                          child: GestureDetector(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: AppCubit.get(context).publicChat[widget.index!].image)));
-                            },
-                            child: Container(
-                              height: MediaQuery.of(context).size.height*.28,
-                              width: MediaQuery.of(context).size.width*.55,
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              decoration: BoxDecoration(
-                                // border: Border.all(color: AppColors.primaryColor1,width: 4),
-                                borderRadius: BorderRadius.circular(3),
-                              ),
-                              child:CachedNetworkImage(
+                          const SizedBox(height: 5,),
+                          Material(
+                            color: const Color(0xffb1b2ff).withOpacity(.10),
+                            elevation: 100,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(3),
+
+                            ),
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: AppCubit.get(context).publicChat[widget.index!].image)));
+                              },
+                              child: CachedNetworkImage(
+                                //height: MediaQuery.of(context).size.height*.4,
                                 cacheManager: AppCubit.get(context).manager,
                                 imageUrl: "${AppCubit.get(context).publicChat[widget.index!].image}",
                                 placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                                 // maxHeightDiskCache:75,
 
-                                fit: BoxFit.contain,
+                                fit: BoxFit.cover,
                               ),
                             ),
-                          ),
-                        )
+                          )
 
-                      ],
+                        ],
+                      ),
                     ),
                   ):
                   (AppCubit.get(context).publicChat[widget.index!].video != null)
@@ -237,7 +237,7 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                                 child: mymessageController.value.isInitialized
                                     ? AspectRatio(
                                     aspectRatio:mymessageController.value.size.width/mymessageController.value.size.height,
-                                    child: CachedVideoPlayer(mymessageController))
+                                    child: VideoPlayer(mymessageController))
                                     : const Center(child: CircularProgressIndicator())
                             ),
 
@@ -262,8 +262,8 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                             // ),
 
                       Positioned(
-                          top: MediaQuery.of(context).size.height*.2,
-                          right: MediaQuery.of(context).size.height*.08,
+                          top: MediaQuery.of(context).size.height*.27,
+                          right: MediaQuery.of(context).size.height*.11,
                           child: InkWell(
                             onTap: (){
                               // setState((){

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
+import 'package:fanchat/presentation/should_pay.dart';
 import 'package:flutter/material.dart';
 import 'package:pay/pay.dart';
 
@@ -27,13 +28,27 @@ class _AdvertiseGooglePayState extends State<AdvertiseGooglePay> {
       'days':0,
       'payed':true
     }).then((value){
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ShouldPay()), (route) => false);
       CashHelper.saveData(key: 'days' , value: 0);
       print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
+      print('resullllllllllllllllllllllllllllllt :');
       print('success to update aaccountStates');
     }).catchError((error){
       print('success to update aaccountStates${error.toString()}');
     });
+    ////////////////////////////////////////////////////////////
+    CashHelper.saveData(key: 'advertise' , value: true);
+     FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
+        .update({
+      'advertise':true,
+    }).then((value){
+       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+
+      print('success to update aaccountStates');
+    }).catchError((error){
+      print('success to update aaccountStates${error.toString()}');
+    });
+    ////////////////////////////////////////////////////////////
     debugPrint(paymentResult.toString());
     debugPrint(paymentResult.toString());
   }

@@ -23,6 +23,8 @@ class _FanScreenState extends State<FanScreen> {
     // TODO: implement initState
     super.initState();
     AppCubit.get(context).getFanPosts();
+    AppCubit.get(context).getPosts();
+
   }
 
   @override

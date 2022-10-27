@@ -14,16 +14,16 @@ class AddFanVideo extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
-
-        if(state is FanCreateVideoPostSuccessState){
+        if(state is FanCreateVideoPostLoadingState){
+          AppCubit.get(context).getPosts();
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context)=>const HomeLayout()), (route) => false);
          // AppCubit.get(context).videoPlayerController!.dispose();
          //  AppCubit.get(context).videoPlayerController==null;
          //  AppCubit.get(context).videoPlayerController!.pause();
-          AppCubit.get(context).postVideo=null;
+         // AppCubit.get(context).postVideo=null;
           AppCubit.get(context).currentIndex=2;
-          AppCubit.get(context).getFanPosts();
-
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+       // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
         }
       },
       builder: (context,state){
@@ -58,8 +58,8 @@ class AddFanVideo extends StatelessWidget {
                   :Padding(
                 padding: const EdgeInsets.all(8.0),
                 child:(state is FanCreateVideoPostSuccessState)||
-        (state is FanUploadVideoPostLoadingState)||
-        ( state is FanUploadVideoPostSuccessState)?
+                (state is FanUploadVideoPostLoadingState)||
+                    ( state is FanUploadVideoPostSuccessState)?
                     CircularProgressIndicator(backgroundColor: AppColors.navBarActiveIcon,)
                 :defaultButton(
                     textColor: AppColors.myWhite,
@@ -77,7 +77,9 @@ class AddFanVideo extends StatelessWidget {
                           text:"",
                           name: AppCubit.get(context).userModel!.username,
                         );
+                        //AppCubit.get(context).getFanPosts();
                       }
+
                     },
                     buttonText: 'add',
                     buttonColor: AppColors.primaryColor1

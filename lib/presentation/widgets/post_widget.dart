@@ -29,7 +29,7 @@ class PostWidget extends StatefulWidget {
 class PostWidgetState extends State<PostWidget> {
 
   VideoPlayerController? controller;
-  Future <void> ?intilize;
+  //Future <void> ?intilize;
 
   @override
   void initState() {
@@ -42,10 +42,15 @@ class PostWidgetState extends State<PostWidget> {
     // controller!.setVolume(1.0);
     controller=VideoPlayerController.network(
         AppCubit.get(context).posts[widget.index!].postVideo!);
-    intilize=controller!.initialize();
-    controller!.setLooping(true);
+    controller!.initialize();
+    controller!.setLooping(false);
     controller!.setVolume(1.0);
     super.initState();
+  }
+  @override
+  void dispose() {
+    controller!.dispose();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -237,37 +242,22 @@ class PostWidgetState extends State<PostWidget> {
                       : (AppCubit.get(context).posts[widget.index!].postVideo !="")
                       ?Stack(
                     children: [
-                      FutureBuilder(
-                        future: intilize,
-                        builder: (context,snapshot){
-                          if(snapshot.connectionState == ConnectionState.done){
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20
-                              ),
-                              child: ClipRect(
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  heightFactor: 0.7,
-                                  widthFactor: 1,
-                                  child: AspectRatio(
-                                    aspectRatio: controller!.value.aspectRatio,
-                                    child: VideoPlayer(controller!),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          else{
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        },
-
-
-
-                      ),
+                  Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20
+                  ),
+            child: ClipRect(
+              child: Align(
+                alignment: Alignment.centerRight,
+                heightFactor: 0.7,
+                widthFactor: 1,
+                child: AspectRatio(
+                  aspectRatio: controller!.value.aspectRatio,
+                  child: VideoPlayer(controller!),
+                ),
+              ),
+            ),
+          ),
                       //   controller!.value.isInitialized
                       //       ? AspectRatio(
                       //       aspectRatio: controller!.value.aspectRatio,
@@ -315,7 +305,7 @@ class PostWidgetState extends State<PostWidget> {
                               Navigator.push(context, MaterialPageRoute(builder: (_){
                                  return OpenFullVideo(
                                    controller: controller,
-                                   intilize: intilize,
+                                   intilize: controller!.initialize(),
                                  );
                               }));
 

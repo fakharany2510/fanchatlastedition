@@ -105,7 +105,7 @@ class MyApp extends StatelessWidget {
               // initialRoute: 'register',
               routes: {
                 '/' :(context)=> (AppStrings.uId != null)
-                    ?CashHelper.getData(key: 'days') ==7
+                ? CashHelper.getData(key: 'days') ==7
                     ?ShouldPay()
                     :HomeLayout()
                     :SplashScreen(),

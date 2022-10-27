@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:chewie/chewie.dart';
 
 
 class FanAreaWidget extends StatefulWidget {
@@ -23,17 +23,25 @@ class FanAreaWidget extends StatefulWidget {
 
 class _FanAreaWidgetState extends State<FanAreaWidget> {
   VideoPlayerController ?fanVideoPlayerController;
-  Future <void> ?intilize;
-
+  //Future <void> ?intilize;
   @override
   void initState() {
     fanVideoPlayerController=VideoPlayerController.network(
         AppCubit.get(context).fans[widget.index!].postVideo!
     );
-    intilize=fanVideoPlayerController!.initialize();
-    fanVideoPlayerController!.setLooping(false);
-    fanVideoPlayerController!.setVolume(1.0);
+
+     fanVideoPlayerController!.initialize();
+
+
+    // fanVideoPlayerController!.setLooping(false);
+    // fanVideoPlayerController!.setVolume(1.0);
     super.initState();
+
+  }
+  @override
+  void dispose() {
+    fanVideoPlayerController!.dispose();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -149,25 +157,10 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
                       Container(
                         height: MediaQuery.of(context).size.height*.18,
                         width: double.infinity,
-                        child: FutureBuilder(
-                          future: intilize,
-                          builder: (context,snapshot){
-                            if(snapshot.connectionState == ConnectionState.done){
-                              return AspectRatio(
-                                aspectRatio: fanVideoPlayerController!.value.aspectRatio,
-                                child: VideoPlayer(fanVideoPlayerController!),
-                              );
-                            }
-                            else{
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                          },
-
-
-
-                        ),
+                        child: AspectRatio(
+                          aspectRatio: fanVideoPlayerController!.value.aspectRatio,
+                          child: VideoPlayer(fanVideoPlayerController!),
+                        )
                       ),
                       Positioned(
                           top: 7,

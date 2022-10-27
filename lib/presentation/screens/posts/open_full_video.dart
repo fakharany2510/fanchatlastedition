@@ -32,7 +32,6 @@ class _OpenFullVideoState extends State<OpenFullVideo> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(

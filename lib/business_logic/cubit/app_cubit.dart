@@ -1686,7 +1686,7 @@ List<int> commentIndex=[];
         userId:userModel!.uId,
         dateTime:dateTime,
         postImage:'',
-        postVideo: postVideo??'',
+        postVideo: postVideo??'https://firebasestorage.googleapis.com/v0/b/fanchat-7db9e.appspot.com/o/fanvideo%2F2022-10-27%2012%3A18%3A53.634007%2FVRQI86oYZSZgh7Mh3xXqQDX9dxR2?alt=media&token=2c4850fd-e48f-4b7d-a90f-9eff05450531',
         time: time  ,
         timeSmap: timeSpam,
         likes: 0,
@@ -1715,7 +1715,52 @@ List<int> commentIndex=[];
   }
 ///////////////////////////////////////////////
 //upload fan post video to storage
-  void uploadFanPostVideo({
+  firebase_storage.SettableMetadata metadata =
+  firebase_storage.SettableMetadata(
+    contentType: 'video/mp4'
+  );
+  // void uploadFanPostVideo({
+  //   String? userId,
+  //   String? name,
+  //   String? video,
+  //   required String dateTime,
+  //   required String time,
+  //   required String timeSpam,
+  //   required String? text,
+  // }){
+  //   emit(FanUploadVideoPostLoadingState());
+  //   //كدا انا بكريت instance من ال storage
+  //   firebase_storage.FirebaseStorage.instance
+  //   //كدا بقوله انا فين في الstorage
+  //       .ref()
+  //   //كدا بقةله هتحرك ازاي جوا ال storage
+  //   //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
+  //       .child('fanVideo').child(timeSpam).child('${AppStrings.uId}')
+  //   //كدا بعمل رفع للصوره
+  //       .putFile(fanPostVideo!,metadata).then((value){
+  //     value.ref.getDownloadURL().then((value){
+  //       createFanVideoPost(
+  //         dateTime:dateTime,
+  //         postVideo: value,
+  //         text: text,
+  //         time: time,
+  //         timeSpam:timeSpam,
+  //       );
+  //       getFanPosts();
+  //       emit(FanUploadVideoPostSuccessState());
+  //
+  //     }).catchError((error){
+  //       emit(FanUploadVideoPostErrorState());
+  //     });
+  //   }).catchError((error){
+  //     emit(FanUploadVideoPostErrorState());
+  //   });
+  // }
+////////////////////////////////////////////////////
+
+  //get Posts
+  Future uploadFanPostVideo(
+  {
     String? userId,
     String? name,
     String? video,
@@ -1723,38 +1768,53 @@ List<int> commentIndex=[];
     required String time,
     required String timeSpam,
     required String? text,
-  }){
-    emit(FanUploadVideoPostLoadingState());
-    //كدا انا بكريت instance من ال storage
-    firebase_storage.FirebaseStorage.instance
-    //كدا بقوله انا فين في الstorage
-        .ref()
-    //كدا بقةله هتحرك ازاي جوا ال storage
-    //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
-        .child('fanVideo/${Uri.file(fanPostVideo!.path).pathSegments.last}')
-    //كدا بعمل رفع للصوره
-        .putFile(fanPostVideo!).then((value){
-      value.ref.getDownloadURL().then((value){
+}
+      ) async {
+    try {
+      emit(FanUploadVideoPostLoadingState());
+      print('1');
+      firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
+          .ref().child("fanvideo").child(timeSpam).child('${AppStrings.uId}');
+      print('2');
+      firebase_storage.UploadTask uploadTask = ref.putFile(
+          fanPostVideo!,metadata); //<- this content type does the trick
+      print('3');
+
+      uploadTask.then((res) async{
+
+        Uri downloadUrl = Uri.parse(await res.ref.getDownloadURL());
         createFanVideoPost(
-          dateTime:dateTime,
-          postVideo: value,
+          dateTime: dateTime,
+          postVideo: '${downloadUrl}',
           text: text,
           time: time,
-          timeSpam:timeSpam,
+          timeSpam: timeSpam,
         );
-        getFanPosts();
+        print('p');
+        // res.ref.getDownloadURL().then((value) {
+        //
+        //   print(value);
+        // });
+       //getFanPosts();
+
         emit(FanUploadVideoPostSuccessState());
-
-      }).catchError((error){
+      }).catchError((error) {
         emit(FanUploadVideoPostErrorState());
+        print(error);
       });
-    }).catchError((error){
-      emit(FanUploadVideoPostErrorState());
-    });
-  }
-////////////////////////////////////////////////////
+      // Uri downloadUrl = (await uploadTask).downloadUrl;
+      print('4');
 
-  //get Posts
+      //final String url = downloadUrl.toString();
+
+
+      // print(url);
+      //
+      } catch (error) {
+      print('error while uploading video ${error}');
+      }
+
+  }
   List<FanModel> fans=[];
   void getFanPosts(){
     fans=[];
@@ -1763,7 +1823,7 @@ List<int> commentIndex=[];
     emit(BrowiseGetFanPostsLoadingState());
     FirebaseFirestore.instance
         .collection('fan')
-        .orderBy('timeSmap',descending: true)
+        .orderBy('time',descending: true)
         .get()
         .then((value) {
       fans=[];
@@ -2528,11 +2588,11 @@ List<int> commentIndex=[];
 
       const Duration(seconds: 1),
       (Timer time){
-        print("time ${time.tick}");
+        //print("time ${time.tick}");
          timerCheering=time.tick;
         if(time.tick==5){
           time.cancel();
-          print("Timer Cancelled");
+          //print("Timer Cancelled");
         }
       }
 

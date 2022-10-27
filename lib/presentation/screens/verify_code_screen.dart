@@ -290,12 +290,15 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
           // title: const Text('Aew you sure you want to logout from FanChat'),
           content: Container(
             height: MediaQuery.of(context).size.height*.5,
+            width: MediaQuery.of(context).size.height*.7,
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
                     image: AssetImage('assets/images/paypack.jpg'),
                     fit: BoxFit.cover
                 )
             ),
+             
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -310,10 +313,10 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                 ),
                 Center(
                   child:Text(
-                    'Congratulations\nYou are now on a 7-day free trial. Enjoy FAN Chat',
+                    'Congratulations\nYou are now on a 7-day\n free trial.\n Enjoy FAN Chat',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         color: AppColors.primaryColor1,
                         fontFamily: AppStrings.appFont,
                         fontWeight: FontWeight.w600,
@@ -330,8 +333,8 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                     Center(
                       child: defaultButton(
                           width: MediaQuery.of(context).size.width*.5,
-                          height: MediaQuery.of(context).size.height*.07,
-                          buttonColor: AppColors.primaryColor1,
+                          height: MediaQuery.of(context).size.height*.06,
+                          buttonColor: Color(0Xffd32330),
                           textColor: AppColors.myWhite,
                           buttonText: 'Start',
                           fontSize: 15,
@@ -341,12 +344,12 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                             // Navigator.of(context).pushNamedAndRemoveUntil('home_layout', (Route<dynamic>route) => false);
                           }),
                     ),
-                    SizedBox(height:30,),
+                    SizedBox(height:20,),
                     Center(
                       child: defaultButton(
                           width: MediaQuery.of(context).size.width*.5,
-                          height: MediaQuery.of(context).size.height*.07,
-                          buttonColor: AppColors.navBarActiveIcon,
+                          height: MediaQuery.of(context).size.height*.06,
+                          buttonColor: AppColors.primaryColor1,
                           textColor: AppColors.myWhite,
                           buttonText: 'Get a premium package ',
                           fontSize: 15,

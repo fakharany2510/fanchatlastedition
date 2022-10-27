@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
 class OpenFullVideoPrivateChat extends StatefulWidget {
-  CachedVideoPlayerController ?controller;
+  VideoPlayerController ?controller;
   OpenFullVideoPrivateChat({Key? key,required this.controller}) : super(key: key);
 
   @override
@@ -40,6 +40,7 @@ class _OpenFullVideoPrivateChatState extends State<OpenFullVideoPrivateChat> {
     });
     super.initState();
   }
+@override
 
 
   @override
@@ -76,7 +77,7 @@ class _OpenFullVideoPrivateChatState extends State<OpenFullVideoPrivateChat> {
                       ),
                       child: AspectRatio(
                           aspectRatio:widget.controller!.value.size.width/widget.controller!.value.size.height,
-                          child: CachedVideoPlayer(widget.controller!)),
+                          child: VideoPlayer(widget.controller!)),
                     )
                     ),
 

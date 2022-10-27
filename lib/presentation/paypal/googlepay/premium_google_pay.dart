@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
+import 'package:fanchat/presentation/paypal/googlepay/success_pay.dart';
 import 'package:flutter/material.dart';
 import 'package:pay/pay.dart';
 
@@ -17,17 +18,19 @@ class _PremiumGooglePayState extends State<PremiumGooglePay> {
   static const _paymentItems = [
     PaymentItem(
       label: 'Premium package',
-      amount: '1',
+      amount: '20',
       status: PaymentItemStatus.final_price,
     )
   ];
   void onGooglePayResult(paymentResult) {
+    print('resullllllllllllllllllllllllllllllt :${paymentResult}');
+
     FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
         .update({
       'days':0,
       'payed':true
     }).then((value){
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>SuccessPay()), (route) => false);
       CashHelper.saveData(key: 'days' , value: 0);
       CashHelper.saveData(key: 'premium' , value: 1);
       print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');

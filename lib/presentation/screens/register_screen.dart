@@ -160,7 +160,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           SizedBox(height: 15,),
                           Padding(
                             padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
-                            child: Text('Enjoy chatting in special team fans’ chat rooms, public rooms, and  one-to-one chats. Share videos, photos, and voice messges with football fans around the world.Broadcast a cheer to all your team fans in team rooms,and follow match scores and news during',
+                            child: Text('Enjoy chatting in special team fans’ rooms, public rooms, '
+                                'and one-to-one chats. Share videos, photos, and voice notes with '
+                                'football fans around the world. Broadcast a cheer to all your team '
+                                'fans rooms,and follow match scores and news during',
                             style: TextStyle(
                               color: AppColors.myWhite,
                               fontSize: 14,

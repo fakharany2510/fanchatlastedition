@@ -1,3 +1,4 @@
+import 'package:chewie/chewie.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
@@ -20,7 +21,9 @@ class FanFullVideo extends StatefulWidget {
 
 class _FanFullVideoState extends State<FanFullVideo> {
   VideoPlayerController ?videoPlayerController;
-  Future <void> ?intilize;
+  //Future <void> ?intilize;
+  ChewieController? chewieController;
+
   @override
   void initState() {
     // AppCubit.get(context).insertTOdatabase(
@@ -38,9 +41,21 @@ class _FanFullVideoState extends State<FanFullVideo> {
     videoPlayerController=VideoPlayerController.network(
         widget.video!
     );
-    intilize=videoPlayerController!.initialize();
-    videoPlayerController!.setLooping(true);
-    videoPlayerController!.setVolume(1.0);    super.initState();
+videoPlayerController!.initialize();
+    chewieController = ChewieController(
+      videoPlayerController: videoPlayerController!,
+      autoPlay: true,
+      looping: false,
+    );
+    // videoPlayerController!.setLooping(false);
+    // videoPlayerController!.setVolume(1.0);
+    super.initState();
+  }
+  @override
+  void dispose() {
+    videoPlayerController!.dispose();
+    chewieController!.dispose();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -61,25 +76,16 @@ class _FanFullVideoState extends State<FanFullVideo> {
             ),
             backgroundColor: AppColors.primaryColor1,
             title:Container(
-              height: MediaQuery.of(context).size.height*02,
-              width: MediaQuery.of(context).size.width*.4,
+              height: MediaQuery.of(context).size.height*1,
+              width: MediaQuery.of(context).size.width*.25,
               child: Image(
-                image: AssetImage('assets/images/ncolort.png'),
+                image: AssetImage('assets/images/ncolors.png'),
 
               ),
             ),
             centerTitle: true,
             elevation: 0.0,
-            actions: [
-              IconButton(onPressed: (){}, constraints: BoxConstraints(),
-                padding: EdgeInsets.only(right: 20),
-                icon: ImageIcon(
-                  AssetImage("assets/images/notification.png"),
-                  color:AppColors.navBarActiveIcon,
 
-                ),),
-
-            ],
             leading: IconButton(
               onPressed: (){
                 setState((){
@@ -111,7 +117,7 @@ class _FanFullVideoState extends State<FanFullVideo> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
                       child: Row(
                         children: [
                           GestureDetector(
@@ -135,85 +141,41 @@ class _FanFullVideoState extends State<FanFullVideo> {
                           ),
                           const SizedBox(width: 7,),
                           Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text('${widget.userName}',
-                                        overflow: TextOverflow.ellipsis,
-                                        style:  TextStyle(
-                                            color: AppColors.primaryColor1,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: AppStrings.appFont
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            child: Text('${widget.userName}',
+                              overflow: TextOverflow.ellipsis,
+                              style:  TextStyle(
+                                  color: AppColors.primaryColor1,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: AppStrings.appFont
+                              ),
                             ),
                           ),
-                          // Spacer(),
-                          // IconButton(
-                          //   onPressed: (){},
-                          //   padding: EdgeInsets.zero,
-                          //   constraints: BoxConstraints(),
-                          //   icon:Icon(Icons.favorite_outline,color: AppColors.navBarActiveIcon,size: 20),)
+
                         ],
                       ),
                     ),
-                    SizedBox(height: 20,),
 
-                    Container(
-                      height: MediaQuery.of(context).size.height*.6,
-                      width: double.infinity,
-                      child: Stack(
-                        children: [
-                          Container(
-                            height: MediaQuery.of(context).size.height*.6,
-                            width: double.infinity,
-                            child: FutureBuilder(
-                              future: intilize,
-                              builder: (context,snapshot){
-                                if(snapshot.connectionState == ConnectionState.done){
-                                  return AspectRatio(
-                                    aspectRatio: videoPlayerController!.value.aspectRatio,
-                                    child: VideoPlayer(videoPlayerController!),
-                                  );
-                                }
-                                else{
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-                              },
-
-
-
-                            ),
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        child: Container(
+                          width: double.infinity,
+                          child:chewieController!=null?Padding(
+                              padding: EdgeInsets.all(0),
+                          child: Chewie(
+                            controller: chewieController!,
                           ),
-                          Positioned(
-                              top: 10,
-                              right: 10,
-                              child: InkWell(
-                                onTap: (){
-                                  setState((){
-                                    if(videoPlayerController!.value.isPlaying){
-                                      videoPlayerController!.pause();
-                                    }else{
-                                      videoPlayerController!.play();
-                                    }
-                                  });
-                                },
-                                child: videoPlayerController!.value.isPlaying?
-                                CircleAvatar(radius: 15, child: Icon(
-                                  Icons.pause,color: AppColors.myWhite,size: 15,)): CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: AppColors.myWhite,size: 15,)),
-                              )
-                          ),
-                        ],
+                          ):Center(
+                            child: CircularProgressIndicator(),
+                          )
+
+
+                          // AspectRatio(
+                          //   aspectRatio: videoPlayerController!.value.aspectRatio,
+                          //   child: VideoPlayer(videoPlayerController!),
+                          // ),
+                        ),
                       ),
                     )
                   ],

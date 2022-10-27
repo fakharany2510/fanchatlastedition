@@ -27,36 +27,36 @@ class _HomeLayoutState extends State<HomeLayout> {
   @override
   void initState(){
     super.initState();
-    print("==================================token================================");
-    FirebaseMessaging.instance.getToken().then((token){
-      AppCubit.get(context).saveToken(token!);
-      print(token);
-      print("==================================token================================");
-    });
+    // print("==================================token================================");
+    // FirebaseMessaging.instance.getToken().then((token){
+    //   AppCubit.get(context).saveToken(token!);
+    //   print(token);
+    //   print("==================================token================================");
+    // });
     AppCubit.get(context).getUser(context).then((value){
       if(CashHelper.getData(key: 'premium')==1){
-        Future.delayed(const Duration(days: 356),(){
+        Future.delayed(const Duration(days: 365),(){
           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ShouldPay()), (route) => false);
+         CashHelper.saveData(key: 'premium' , value: 0);
         });
       }else{
-        print('nnnnnnnbccccccccccccccccccccccccccccccccccccccc ${AppCubit.get(context).userModel!.days}');
-        print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
-        print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
+        // print('nnnnnnnbccccccccccccccccccccccccccccccccccccccc ${AppCubit.get(context).userModel!.days}');
+        // print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
+        // print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
         if(AppCubit.get(context).userModel!.days == 7 && AppCubit.get(context).userModel!.payed == false){
-          print('llllllllllllllllllllllllllllllllllllllll   if 1');
+          // print('llllllllllllllllllllllllllllllllllllllll   if 1');
           CashHelper.saveData(key: 'days' , value: 7);
-          print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
+          // print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
 
           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ShouldPay()), (route) => false);
 
         }else if(AppCubit.get(context).userModel!.days == 0 && AppCubit.get(context).userModel!.payed == true){
-          print('llllllllllllllllllllllllllllllllllllllll   if 2');
+          // print('llllllllllllllllllllllllllllllllllllllll   if 2');
 
           CashHelper.saveData(key: 'days' , value: 0);
-          print('User Have Take Package ');
-
+          // print('User Have Take Package ');
         }else{
-          print('llllllllllllllllllllllllllllllllllllllll   if 3');
+          // print('llllllllllllllllllllllllllllllllllllllll   if 3');
           Future.delayed(const Duration(days: 7),(){
             FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
                 .update({
@@ -65,25 +65,20 @@ class _HomeLayoutState extends State<HomeLayout> {
             }).then((value){
               Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ShouldPay()), (route) => false);
               CashHelper.saveData(key: 'days' , value: 7);
-              print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
+              // print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
               print('success to update aaccountStates');
             }).catchError((error){
               print('success to update aaccountStates${error.toString()}');
             });
             ///////////////////////////////////////////////////////////
             AppCubit.get(context).userModel!.days == 7;
-            print('timeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ${AppCubit.get(context).userModel!.days}');
+            // print('timeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ${AppCubit.get(context).userModel!.days}');
           });
         }
       }
-
-
     }).catchError((error){
       print('error');
     });
-
-
-
   }
   Widget build(BuildContext context) {
 
@@ -111,7 +106,6 @@ class _HomeLayoutState extends State<HomeLayout> {
             body: screens[cubit.currentIndex],
 
             bottomNavigationBar:Container(
-
               decoration: BoxDecoration(
                 //border: Border.symmetric(horizontal: BorderSide(width: 1,color: AppColors.navBarActiveIcon)),
                 boxShadow: [

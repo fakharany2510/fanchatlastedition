@@ -20,14 +20,14 @@ class _AddNewVideoState extends State<AddNewVideo> {
   //const AddNewVideo({Key? key}) : super(key: key);
 
 
-  var notifyHelper;
+ // var notifyHelper;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    notifyHelper = NotifyHelper();
-    notifyHelper.initializeNotification();
-    notifyHelper.requestIOSPermissions();
+    // notifyHelper = NotifyHelper();
+    // notifyHelper.initializeNotification();
+    // notifyHelper.requestIOSPermissions();
   }
   @override
   TextEditingController postText=TextEditingController();
@@ -46,7 +46,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context)=>const HomeLayout()), (route) => false);
           AppCubit.get(context).controller!.pause();
-          AppCubit.get(context).postVideo=null;
+          // AppCubit.get(context).postVideo=null;
 
         }
         if(state is PickPostVideoSuccessState){AppCubit.get(context).controller!.pause();}
@@ -96,10 +96,10 @@ class _AddNewVideoState extends State<AddNewVideo> {
                             dateTime: DateFormat.yMMMd().format(DateTime.now()),
                             text:postText.text
                         );
-                        notifyHelper.displayNotification(
-                            title:'New Post',
-                            body:'${postText.text}'
-                        );
+                        // notifyHelper.displayNotification(
+                        //     title:'New Post',
+                        //     body:'${postText.text}'
+                        // );
                         // callFcmApiSendPushNotifications(
                         //     title: 'New Post Added',
                         //     description:postText.text,

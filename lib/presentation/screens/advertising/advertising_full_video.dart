@@ -20,7 +20,7 @@ class AdvertisingFullVideo extends StatefulWidget {
 
 class _AdvertisingFullVideoState extends State<AdvertisingFullVideo> {
   VideoPlayerController ?videoPlayerController;
-  Future <void> ?intilize;
+ // Future <void> ?intilize;
   @override
   void initState() {
 
@@ -28,9 +28,14 @@ class _AdvertisingFullVideoState extends State<AdvertisingFullVideo> {
     videoPlayerController=VideoPlayerController.network(
         widget.video!
     );
-    intilize=videoPlayerController!.initialize();
-    videoPlayerController!.setLooping(true);
+    videoPlayerController!.initialize();
+    videoPlayerController!.setLooping(false);
     videoPlayerController!.setVolume(1.0);    super.initState();
+  }
+  @override
+  void dispose() {
+    videoPlayerController!.dispose();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -112,24 +117,9 @@ class _AdvertisingFullVideoState extends State<AdvertisingFullVideo> {
                           Container(
                             height: MediaQuery.of(context).size.height*.6,
                             width: double.infinity,
-                            child: FutureBuilder(
-                              future: intilize,
-                              builder: (context,snapshot){
-                                if(snapshot.connectionState == ConnectionState.done){
-                                  return AspectRatio(
-                                    aspectRatio: videoPlayerController!.value.aspectRatio,
-                                    child: VideoPlayer(videoPlayerController!),
-                                  );
-                                }
-                                else{
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-                              },
-
-
-
+                            child:AspectRatio(
+                              aspectRatio: videoPlayerController!.value.aspectRatio,
+                              child: VideoPlayer(videoPlayerController!),
                             ),
                           ),
                           Positioned(

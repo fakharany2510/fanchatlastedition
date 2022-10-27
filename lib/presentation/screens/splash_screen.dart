@@ -56,21 +56,21 @@ class _SplashScreenState extends State<SplashScreen> {
 
     });
 
-    AppCubit.get(context).getUser(context).then((value){
-      print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
-      print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
-      Future.delayed(const Duration(seconds: 7),(){
-        if( CashHelper.getData(key: 'business') == true || CashHelper.getData(key: 'advertise') == true){
-          print('payed');
-        }else{
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ChoosePaymentMethod()), (route) => false);
-          //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChoosePaymentMethod()));
-
-        }
-      });
-    }).catchError((error){
-      print('error');
-    });
+    // AppCubit.get(context).getUser(context).then((value){
+    //   print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
+    //   print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
+    //   Future.delayed(const Duration(seconds: 7),(){
+    //     if( CashHelper.getData(key: 'business') == true || CashHelper.getData(key: 'advertise') == true){
+    //       print('payed');
+    //     }else{
+    //       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ChoosePaymentMethod()), (route) => false);
+    //       //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ChoosePaymentMethod()));
+    //
+    //     }
+    //   });
+    // }).catchError((error){
+    //   print('error');
+    // });
     super.initState();
   }
 

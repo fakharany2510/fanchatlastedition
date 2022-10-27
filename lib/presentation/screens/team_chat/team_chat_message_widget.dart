@@ -8,6 +8,7 @@ import 'package:fanchat/presentation/screens/private_chat/open_full_video_privat
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:video_player/video_player.dart';
 import 'package:voice_message_package/voice_message_package.dart';
 
 class SenderTeamChatWidget extends StatefulWidget {
@@ -21,11 +22,11 @@ class SenderTeamChatWidget extends StatefulWidget {
 
 class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
 
-  late CachedVideoPlayerController senderController;
+  late VideoPlayerController senderController;
 
   @override
   void initState() {
-    senderController = CachedVideoPlayerController.network(
+    senderController = VideoPlayerController.network(
         "${AppCubit.get(context).teamChat[widget.index!].video}");
     senderController.initialize().then((value) {
       senderController.play();
@@ -39,7 +40,11 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
     });
     super.initState();
   }
-
+  @override
+  void dispose() {
+    senderController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
@@ -98,7 +103,7 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: AppCubit.get(context).teamChat[widget.index!].image)));
                     },
                     child: Container(
-                      width: MediaQuery.of(context).size.width*.55,
+                      width: MediaQuery.of(context).size.width*.74,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 5,
                           vertical: 5
@@ -111,34 +116,28 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                           bottomLeft: Radius.circular(10),
                         ),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('${AppCubit.get(context).userModel!.username}',
-                            style:  TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 9,
-                                color: AppColors.myWhite,
-                                fontFamily: AppStrings.appFont
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('${AppCubit.get(context).userModel!.username}',
+                              style:  TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 9,
+                                  color: AppColors.myWhite,
+                                  fontFamily: AppStrings.appFont
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 5,),
-                          Material(
-                            elevation: 0,
-                            shadowColor: AppColors.myGrey,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(3),
-
-                            ),
-                            child: Container(
-                              height: MediaQuery.of(context).size.height*.28,
-                              width: MediaQuery.of(context).size.width*.70,
+                            const SizedBox(height: 5,),
+                            Material(
+                              elevation: 0,
+                              shadowColor: AppColors.myGrey,
                               clipBehavior: Clip.antiAliasWithSaveLayer,
-                              decoration: BoxDecoration(
+
+                              shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(3),
-                                // border: Border.all(color: AppColors.myGrey,width: 4),
+
                               ),
                               child: CachedNetworkImage(
                                 cacheManager: AppCubit.get(context).manager,
@@ -148,9 +147,9 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
 
                                 fit: BoxFit.cover,
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ):
@@ -192,7 +191,7 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                               width: MediaQuery.of(context).size.width*.65,
                               child: AspectRatio(
                                   aspectRatio:senderController.value.size.width/senderController.value.size.height,
-                                  child: CachedVideoPlayer(senderController)),
+                                  child: VideoPlayer(senderController)),
                             )
                                 : const Center(child: CircularProgressIndicator()),
 

@@ -27,16 +27,21 @@ class AdvertisingAreaWidget extends StatefulWidget {
 
 class _AdvertisingAreaWidgetState extends State<AdvertisingAreaWidget> {
   VideoPlayerController ?videoPlayerController;
-  Future <void> ?intilize;
+  //Future <void> ?intilize;
 
   @override
   void initState() {
     videoPlayerController=VideoPlayerController.network(
         AdvertisingCubit.get(context).advertising[widget.index!].postVideo!
     );
-    intilize=videoPlayerController!.initialize();
-    videoPlayerController!.setLooping(true);
+    videoPlayerController!.initialize();
+    videoPlayerController!.setLooping(false);
     videoPlayerController!.setVolume(1.0);    super.initState();
+  }
+  @override
+  void dispose() {
+    videoPlayerController!.dispose();
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -106,24 +111,9 @@ class _AdvertisingAreaWidgetState extends State<AdvertisingAreaWidget> {
                       Container(
                         height: MediaQuery.of(context).size.height*.24,
                         width: double.infinity,
-                        child: FutureBuilder(
-                          future: intilize,
-                          builder: (context,snapshot){
-                            if(snapshot.connectionState == ConnectionState.done){
-                              return AspectRatio(
-                                aspectRatio: videoPlayerController!.value.aspectRatio,
-                                child: VideoPlayer(videoPlayerController!),
-                              );
-                            }
-                            else{
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                          },
-
-
-
+                        child: AspectRatio(
+                          aspectRatio: videoPlayerController!.value.aspectRatio,
+                          child: VideoPlayer(videoPlayerController!),
                         ),
                       ),
                       Positioned(
