@@ -36,6 +36,8 @@ class _FanFullVideoState extends State<FanFullVideo> {
     // );
     //////////////////////////////////
     videoPlayerController=VideoPlayerController.network(
+
+
         widget.video!
     );
     intilize=videoPlayerController!.initialize();
