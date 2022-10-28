@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chewie/chewie.dart';
+import 'package:media_cache_manager/media_cache_manager.dart';
 
 
 class FanAreaWidget extends StatefulWidget {
@@ -22,21 +22,24 @@ class FanAreaWidget extends StatefulWidget {
 }
 
 class _FanAreaWidgetState extends State<FanAreaWidget> {
+
+  //bool isLoading = true;
   VideoPlayerController ?fanVideoPlayerController;
   //Future <void> ?intilize;
   @override
   void initState() {
-    fanVideoPlayerController=VideoPlayerController.network(
-        AppCubit.get(context).fans[widget.index!].postVideo!
-    );
+    Future.delayed(Duration(seconds: 1),()async{
+      fanVideoPlayerController=VideoPlayerController.network(
+          AppCubit.get(context).fans[widget.index!].postVideo!
+      );
+      await fanVideoPlayerController!.initialize().then((value){
+        setState((){
+        //  isLoading=false;
+        });
+      });
+    });
 
-     fanVideoPlayerController!.initialize();
-
-
-    // fanVideoPlayerController!.setLooping(false);
-    // fanVideoPlayerController!.setVolume(1.0);
     super.initState();
-
   }
   @override
   void dispose() {
@@ -157,92 +160,110 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
                       Container(
                         height: MediaQuery.of(context).size.height*.18,
                         width: double.infinity,
-                        child: AspectRatio(
-                          aspectRatio: fanVideoPlayerController!.value.aspectRatio,
-                          child: VideoPlayer(fanVideoPlayerController!),
-                        )
-                      ),
-                      Positioned(
-                          top: 7,
-                          right: 5,
-                          child: InkWell(
-                            onTap: (){
-                              setState((){
-                                if(fanVideoPlayerController!.value.isPlaying){
-                                  fanVideoPlayerController!.pause();
-                                }else{
-                                  fanVideoPlayerController!.play();
-                                }
-                              });
-                            },
-                            child: fanVideoPlayerController!.value.isPlaying?  Material(elevation: 20,color: Colors.transparent,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),child: CircleAvatar(radius: 15, child: Icon(Icons.pause,color: Colors.white,size: 15,),backgroundColor: Colors.white.withOpacity(.4))): Material(elevation: 20,color:Colors.transparent,shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(20) ),child: CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: Colors.white,size: 15,),backgroundColor: Colors.white.withOpacity(.4))),
-                          )
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 5,
-                        child: Row(
-                          children: [
-                            Text('${AppCubit.get(context).fans[widget.index!].likes}',
-                              style: TextStyle(
-                                  color: AppColors.myWhite,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: AppStrings.appFont
-                              ),),
-                            IconButton(
-                                padding:EdgeInsets.zero,
-                                constraints: BoxConstraints(),
-                                onPressed:(){
-                                  AppCubit.get(context).likePosts('${AppCubit.get(context).fans[widget.index!].postId}',AppCubit.get(context).fans[widget.index!].likes!);
-
-                                  if(CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==null || CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==false){
-                                    setState(() {
-                                      AppCubit.get(context).fans[widget.index!].likes=AppCubit.get(context).fans[widget.index!].likes!+1;
-                                    });
-                                    AppCubit.get(context).isLikeFan[widget.index!]=true;
-                                    CashHelper.saveData(key: '${AppCubit.get(context).fans[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
-                                    setState(() {
-                                      FirebaseFirestore.instance
-                                          .collection('fan')
-                                          .doc('${AppCubit.get(context).fans[widget.index!].postId}')
-                                          .update({
-                                        'likes':AppCubit.get(context).fans[widget.index!].likes
-                                      }).then((value){
-                                        print('Siiiiiiiiiiiiiiiiiiiiiiii');
-
-                                      });
-                                    });
-
-                                  }
-                                  else{
-                                    setState(() {
-                                      AppCubit.get(context).fans[widget.index!].likes=AppCubit.get(context).fans[widget.index!].likes!-1;
-
-                                    });
-                                    AppCubit.get(context).isLikeFan[widget.index!]=false;
-                                    CashHelper.saveData(key: '${AppCubit.get(context).fans[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
-                                    setState(() {
-                                      FirebaseFirestore.instance
-                                          .collection('fan')
-                                          .doc('${AppCubit.get(context).fans[widget.index!].postId}')
-                                          .update({
-                                        'likes':AppCubit.get(context).fans[widget.index!].likes
-                                      }).then((value){
-                                        printMessage('This is right ${AppCubit.get(context).fans[widget.index!].likes}');
-                                        print('Siiiiiiiiiiiiiiiiiiiiiiii');
-
-                                      });
-                                    });
-
-                                  }
-                                },
-                                icon: CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==null ?
-                                Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20):CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}') ?Icon(Icons.favorite,color: Colors.red,size: 20):
-                                Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20)),
-                          ],
+                        child: DownloadMediaBuilder(
+                          url: AppCubit.get(context).fans[widget.index!].postVideo!,
+                          builder: (context, snapshot) {
+                            if (snapshot.status == DownloadMediaStatus.loading) {
+                              return Image(image:AssetImage('assets/images/load.png'));
+                            }
+                            if (snapshot.status == DownloadMediaStatus.success) {
+                              return fanVideoPlayerController==null
+                              ?Image(image:AssetImage('assets/images/load.png'))
+                              :AspectRatio(
+                                aspectRatio: fanVideoPlayerController!.value.aspectRatio,
+                                child: VideoPlayer(fanVideoPlayerController!),
+                              );
+                            }
+                            return Image(image:AssetImage('assets/images/nonet.jpg'),fit: BoxFit.cover,);
+                          },
                         ),
+
+
+
+
+
                       ),
+                      // Positioned(
+                      //     top: 7,
+                      //     right: 5,
+                      //     child: InkWell(
+                      //       onTap: (){
+                      //         setState((){
+                      //           if(fanVideoPlayerController!.value.isPlaying){
+                      //             fanVideoPlayerController!.pause();
+                      //           }else{
+                      //             fanVideoPlayerController!.play();
+                      //           }
+                      //         });
+                      //       },
+                      //       child: fanVideoPlayerController!.value.isPlaying?  Material(elevation: 20,color: Colors.transparent,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),child: CircleAvatar(radius: 15, child: Icon(Icons.pause,color: Colors.white,size: 15,),backgroundColor: Colors.white.withOpacity(.4))): Material(elevation: 20,color:Colors.transparent,shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(20) ),child: CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: Colors.white,size: 15,),backgroundColor: Colors.white.withOpacity(.4))),
+                      //     )
+                      // ),
+                      // Positioned(
+                      //   bottom: 0,
+                      //   right: 5,
+                      //   child: Row(
+                      //     children: [
+                      //       Text('${AppCubit.get(context).fans[widget.index!].likes}',
+                      //         style: TextStyle(
+                      //             color: AppColors.myWhite,
+                      //             fontSize: 13,
+                      //             fontWeight: FontWeight.w500,
+                      //             fontFamily: AppStrings.appFont
+                      //         ),),
+                      //       IconButton(
+                      //           padding:EdgeInsets.zero,
+                      //           constraints: BoxConstraints(),
+                      //           onPressed:(){
+                      //             AppCubit.get(context).likePosts('${AppCubit.get(context).fans[widget.index!].postId}',AppCubit.get(context).fans[widget.index!].likes!);
+                      //
+                      //             if(CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==null || CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==false){
+                      //               setState(() {
+                      //                 AppCubit.get(context).fans[widget.index!].likes=AppCubit.get(context).fans[widget.index!].likes!+1;
+                      //               });
+                      //               AppCubit.get(context).isLikeFan[widget.index!]=true;
+                      //               CashHelper.saveData(key: '${AppCubit.get(context).fans[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
+                      //               setState(() {
+                      //                 FirebaseFirestore.instance
+                      //                     .collection('fan')
+                      //                     .doc('${AppCubit.get(context).fans[widget.index!].postId}')
+                      //                     .update({
+                      //                   'likes':AppCubit.get(context).fans[widget.index!].likes
+                      //                 }).then((value){
+                      //                   print('Siiiiiiiiiiiiiiiiiiiiiiii');
+                      //
+                      //                 });
+                      //               });
+                      //
+                      //             }
+                      //             else{
+                      //               setState(() {
+                      //                 AppCubit.get(context).fans[widget.index!].likes=AppCubit.get(context).fans[widget.index!].likes!-1;
+                      //
+                      //               });
+                      //               AppCubit.get(context).isLikeFan[widget.index!]=false;
+                      //               CashHelper.saveData(key: '${AppCubit.get(context).fans[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
+                      //               setState(() {
+                      //                 FirebaseFirestore.instance
+                      //                     .collection('fan')
+                      //                     .doc('${AppCubit.get(context).fans[widget.index!].postId}')
+                      //                     .update({
+                      //                   'likes':AppCubit.get(context).fans[widget.index!].likes
+                      //                 }).then((value){
+                      //                   printMessage('This is right ${AppCubit.get(context).fans[widget.index!].likes}');
+                      //                   print('Siiiiiiiiiiiiiiiiiiiiiiii');
+                      //
+                      //                 });
+                      //               });
+                      //
+                      //             }
+                      //           },
+                      //           icon: CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==null ?
+                      //           Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20):CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}') ?Icon(Icons.favorite,color: Colors.red,size: 20):
+                      //           Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20)),
+                      //     ],
+                      //   ),
+                      // ),
 
                     ],
                   )

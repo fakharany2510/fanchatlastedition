@@ -23,6 +23,7 @@ import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:media_cache_manager/core/download_cache_manager.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'business_logic/bloc/bloc_observer.dart';
 import 'firebase_options.dart';
@@ -30,6 +31,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DownloadCacheManager.setExpireDate(daysToExpire: 1);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

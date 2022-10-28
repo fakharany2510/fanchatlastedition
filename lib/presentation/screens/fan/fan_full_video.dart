@@ -1,3 +1,4 @@
+import 'package:better_player/better_player.dart';
 import 'package:chewie/chewie.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
@@ -7,6 +8,8 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:media_cache_manager/enums/download_media_status.dart';
+import 'package:media_cache_manager/widgets/download_media_builder.dart';
 import 'package:video_player/video_player.dart';
 
 class FanFullVideo extends StatefulWidget {
@@ -23,32 +26,27 @@ class _FanFullVideoState extends State<FanFullVideo> {
   VideoPlayerController ?videoPlayerController;
   //Future <void> ?intilize;
   ChewieController? chewieController;
+  //bool isLoading = true;
 
   @override
   void initState() {
-    // AppCubit.get(context).insertTOdatabase(
-    //     postId: AppCubit.get(context).posts[widget.index!].postId!,
-    //     userId: AppCubit.get(context).posts[widget.index!].userId!,
-    //     image: AppCubit.get(context).posts[widget.index!].image!,
-    //     name:  AppCubit.get(context).posts[widget.index!].name!,
-    //     postImage:AppCubit.get(context).posts[widget.index!].postImage!,
-    //     postVideo: AppCubit.get(context).posts[widget.index!].postVideo!,
-    //     postText: AppCubit.get(context).posts[widget.index!].text!,
-    //     time: AppCubit.get(context).posts[widget.index!].time!,
-    //     timeSamp: AppCubit.get(context).posts[widget.index!].timeSmap!
-    // );
-    //////////////////////////////////
-    videoPlayerController=VideoPlayerController.network(
-        widget.video!
-    );
-videoPlayerController!.initialize();
-    chewieController = ChewieController(
-      videoPlayerController: videoPlayerController!,
-      autoPlay: true,
-      looping: false,
-    );
-    // videoPlayerController!.setLooping(false);
-    // videoPlayerController!.setVolume(1.0);
+    Future.delayed(Duration(seconds: 1),()async{
+      videoPlayerController=VideoPlayerController.network(
+          widget.video!
+      );
+      await videoPlayerController!.initialize().then((value){
+        chewieController = ChewieController(
+          videoPlayerController: videoPlayerController!,
+          autoPlay: true,
+          looping: false,
+        );
+      });
+      setState((){
+       // isLoading=false;
+      });
+    });
+
+
     super.initState();
   }
   @override
@@ -99,7 +97,7 @@ videoPlayerController!.initialize();
               ),
             ),
           ),
-          body: Stack(
+          body:Stack(
             children: [
               Container(
                   height: MediaQuery.of(context).size.height,
@@ -179,32 +177,37 @@ videoPlayerController!.initialize();
                       child: Stack(
                         children: [
                           Container(
-                            height: MediaQuery.of(context).size.height*.6,
-                            width: double.infinity,
-                            child: AspectRatio(
-                              aspectRatio: videoPlayerController!.value.aspectRatio,
-                                child: VideoPlayer(videoPlayerController!)),
+                              height: MediaQuery.of(context).size.height*.6,
+                              width: double.infinity,
+                              child: DownloadMediaBuilder(
+                                url: widget.video!,
+                                builder: (context, snapshot) {
+                                  if (snapshot.status == DownloadMediaStatus.loading) {
+                                    return Image(image:AssetImage('assets/images/load.png'));
+                                  }
+                                  if (snapshot.status == DownloadMediaStatus.success) {
+                                    return chewieController == null
+                                        ?Image(image:AssetImage('assets/images/load.png'))
+                                        :Chewie(
+                                        controller:chewieController!
+                                    );
 
-
-                          ),
-                          Positioned(
-                              top: 10,
-                              right: 10,
-                              child: InkWell(
-                                onTap: (){
-                                  setState((){
-                                    if(videoPlayerController!.value.isPlaying){
-                                      videoPlayerController!.pause();
-                                    }else{
-                                      videoPlayerController!.play();
-                                    }
-                                  });
+                                  }
+                                  return const Text('Error!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
                                 },
-                                child: videoPlayerController!.value.isPlaying?
-                                CircleAvatar(radius: 15, child: Icon(
-                                  Icons.pause,color: AppColors.myWhite,size: 15,)): CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: AppColors.myWhite,size: 15,)),
-                              )
+                              ),
+
+                              // Chewie(
+                              //   controller: chewieController!,
+                              // )
+
+                            // AspectRatio(
+                            //   aspectRatio: videoPlayerController!.value.aspectRatio,
+                            //     child: VideoPlayer(videoPlayerController!)),
+
+
                           ),
+
                         ],
                       ),
                     )
