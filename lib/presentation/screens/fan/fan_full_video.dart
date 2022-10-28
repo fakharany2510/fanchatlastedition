@@ -9,8 +9,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:media_cache_manager/enums/download_media_status.dart';
-import 'package:media_cache_manager/widgets/download_media_builder.dart';
 import 'package:video_player/video_player.dart';
 
 class FanFullVideo extends StatefulWidget {
