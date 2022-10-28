@@ -106,7 +106,7 @@ class AppCubit extends Cubit<AppState> {
       getLastUsers();
     }
     if(currentIndex==2){
-     getFanPosts();
+     //getFanPosts();
     }
     if(currentIndex==0){
       String getTimeDifferenceFromNow(DateTime dateTime) {
@@ -1565,14 +1565,12 @@ List<int> commentIndex=[];
 /////////////////////////////////////
 //pick fan post video
   File? fanPostVideo;
-
   void pickFanPostVideo() async {
-    final pickedFile =
-    await picker.pickVideo(source: ImageSource.gallery,);
+    final pickedFile = await picker.pickVideo(source: ImageSource.gallery,);
     if (pickedFile != null) {
       fanPostVideo = File(pickedFile.path);
-      videoPlayerController = VideoPlayerController.file(fanPostVideo!)
-        ..initialize().then((value) {
+      videoPlayerController = VideoPlayerController.file(fanPostVideo!);
+      await videoPlayerController!.initialize().then((value) {
           videoPlayerController!.pause();
           emit(PickFanPostVideoSuccessState());
         }).catchError((error) {
@@ -1798,8 +1796,10 @@ List<int> commentIndex=[];
        //getFanPosts();
 
         emit(FanUploadVideoPostSuccessState());
+        videoPlayerController!.dispose();
       }).catchError((error) {
         emit(FanUploadVideoPostErrorState());
+        videoPlayerController!.dispose();
         print(error);
       });
       // Uri downloadUrl = (await uploadTask).downloadUrl;
@@ -1823,7 +1823,7 @@ List<int> commentIndex=[];
     emit(BrowiseGetFanPostsLoadingState());
     FirebaseFirestore.instance
         .collection('fan')
-        .orderBy('time',descending: true)
+        .orderBy('timeSmap',descending: true)
         .get()
         .then((value) {
       fans=[];
@@ -3094,7 +3094,7 @@ List<int> commentIndex=[];
     });
   }
 //////////////////////////////////////////////
-  //pick fan post video
+
   File? ProfilePostVideo;
 
   void pickProfilePostVideo() async {

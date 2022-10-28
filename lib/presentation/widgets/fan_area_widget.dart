@@ -28,16 +28,22 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
   //Future <void> ?intilize;
   @override
   void initState() {
+    print('before initializeddddddddddddddddddddddddddddddddddd 11111111111111111111111111111');
     Future.delayed(Duration(seconds: 1),()async{
+      print('before initializeddddddddddddddddddddddddddddddddddd 222222222222222222222222222222222222');
+
       fanVideoPlayerController=VideoPlayerController.network(
           AppCubit.get(context).fans[widget.index!].postVideo!
       );
+      print('before initializeddddddddddddddddddddddddddddddddddd 3333333333333333333333333333333');
+
       await fanVideoPlayerController!.initialize().then((value){
         setState((){
-        //  isLoading=false;
+        print('Video has been initialized ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd');
         });
       });
     });
+    print('after initializeddddddddddddddddddddddddddddddddddd 44444444444444444444444444444444444');
 
     super.initState();
   }
@@ -183,87 +189,91 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
 
 
                       ),
-                      // Positioned(
-                      //     top: 7,
-                      //     right: 5,
-                      //     child: InkWell(
-                      //       onTap: (){
-                      //         setState((){
-                      //           if(fanVideoPlayerController!.value.isPlaying){
-                      //             fanVideoPlayerController!.pause();
-                      //           }else{
-                      //             fanVideoPlayerController!.play();
-                      //           }
-                      //         });
-                      //       },
-                      //       child: fanVideoPlayerController!.value.isPlaying?  Material(elevation: 20,color: Colors.transparent,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),child: CircleAvatar(radius: 15, child: Icon(Icons.pause,color: Colors.white,size: 15,),backgroundColor: Colors.white.withOpacity(.4))): Material(elevation: 20,color:Colors.transparent,shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(20) ),child: CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: Colors.white,size: 15,),backgroundColor: Colors.white.withOpacity(.4))),
-                      //     )
-                      // ),
-                      // Positioned(
-                      //   bottom: 0,
-                      //   right: 5,
-                      //   child: Row(
-                      //     children: [
-                      //       Text('${AppCubit.get(context).fans[widget.index!].likes}',
-                      //         style: TextStyle(
-                      //             color: AppColors.myWhite,
-                      //             fontSize: 13,
-                      //             fontWeight: FontWeight.w500,
-                      //             fontFamily: AppStrings.appFont
-                      //         ),),
-                      //       IconButton(
-                      //           padding:EdgeInsets.zero,
-                      //           constraints: BoxConstraints(),
-                      //           onPressed:(){
-                      //             AppCubit.get(context).likePosts('${AppCubit.get(context).fans[widget.index!].postId}',AppCubit.get(context).fans[widget.index!].likes!);
-                      //
-                      //             if(CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==null || CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==false){
-                      //               setState(() {
-                      //                 AppCubit.get(context).fans[widget.index!].likes=AppCubit.get(context).fans[widget.index!].likes!+1;
-                      //               });
-                      //               AppCubit.get(context).isLikeFan[widget.index!]=true;
-                      //               CashHelper.saveData(key: '${AppCubit.get(context).fans[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
-                      //               setState(() {
-                      //                 FirebaseFirestore.instance
-                      //                     .collection('fan')
-                      //                     .doc('${AppCubit.get(context).fans[widget.index!].postId}')
-                      //                     .update({
-                      //                   'likes':AppCubit.get(context).fans[widget.index!].likes
-                      //                 }).then((value){
-                      //                   print('Siiiiiiiiiiiiiiiiiiiiiiii');
-                      //
-                      //                 });
-                      //               });
-                      //
-                      //             }
-                      //             else{
-                      //               setState(() {
-                      //                 AppCubit.get(context).fans[widget.index!].likes=AppCubit.get(context).fans[widget.index!].likes!-1;
-                      //
-                      //               });
-                      //               AppCubit.get(context).isLikeFan[widget.index!]=false;
-                      //               CashHelper.saveData(key: '${AppCubit.get(context).fans[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
-                      //               setState(() {
-                      //                 FirebaseFirestore.instance
-                      //                     .collection('fan')
-                      //                     .doc('${AppCubit.get(context).fans[widget.index!].postId}')
-                      //                     .update({
-                      //                   'likes':AppCubit.get(context).fans[widget.index!].likes
-                      //                 }).then((value){
-                      //                   printMessage('This is right ${AppCubit.get(context).fans[widget.index!].likes}');
-                      //                   print('Siiiiiiiiiiiiiiiiiiiiiiii');
-                      //
-                      //                 });
-                      //               });
-                      //
-                      //             }
-                      //           },
-                      //           icon: CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==null ?
-                      //           Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20):CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}') ?Icon(Icons.favorite,color: Colors.red,size: 20):
-                      //           Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20)),
-                      //     ],
-                      //   ),
-                      // ),
+                      fanVideoPlayerController==null
+                      ?Text('')
+                      :Positioned(
+                          top: 7,
+                          right: 5,
+                          child: InkWell(
+                            onTap: (){
+                              setState((){
+                                if(fanVideoPlayerController!.value.isPlaying){
+                                  fanVideoPlayerController!.pause();
+                                }else{
+                                  fanVideoPlayerController!.play();
+                                }
+                              });
+                            },
+                            child: fanVideoPlayerController!.value.isPlaying?  Material(elevation: 20,color: Colors.transparent,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),child: CircleAvatar(radius: 15, child: Icon(Icons.pause,color: Colors.white,size: 15,),backgroundColor: Colors.white.withOpacity(.4))): Material(elevation: 20,color:Colors.transparent,shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(20) ),child: CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: Colors.white,size: 15,),backgroundColor: Colors.white.withOpacity(.4))),
+                          )
+                      ),
+                      fanVideoPlayerController==null
+                      ?Text('')
+                      :Positioned(
+                        bottom: 0,
+                        right: 5,
+                        child: Row(
+                          children: [
+                            Text('${AppCubit.get(context).fans[widget.index!].likes}',
+                              style: TextStyle(
+                                  color: AppColors.myWhite,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: AppStrings.appFont
+                              ),),
+                            IconButton(
+                                padding:EdgeInsets.zero,
+                                constraints: BoxConstraints(),
+                                onPressed:(){
+                                  AppCubit.get(context).likePosts('${AppCubit.get(context).fans[widget.index!].postId}',AppCubit.get(context).fans[widget.index!].likes!);
+
+                                  if(CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==null || CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==false){
+                                    setState(() {
+                                      AppCubit.get(context).fans[widget.index!].likes=AppCubit.get(context).fans[widget.index!].likes!+1;
+                                    });
+                                    AppCubit.get(context).isLikeFan[widget.index!]=true;
+                                    CashHelper.saveData(key: '${AppCubit.get(context).fans[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
+                                    setState(() {
+                                      FirebaseFirestore.instance
+                                          .collection('fan')
+                                          .doc('${AppCubit.get(context).fans[widget.index!].postId}')
+                                          .update({
+                                        'likes':AppCubit.get(context).fans[widget.index!].likes
+                                      }).then((value){
+                                        print('Siiiiiiiiiiiiiiiiiiiiiiii');
+
+                                      });
+                                    });
+
+                                  }
+                                  else{
+                                    setState(() {
+                                      AppCubit.get(context).fans[widget.index!].likes=AppCubit.get(context).fans[widget.index!].likes!-1;
+
+                                    });
+                                    AppCubit.get(context).isLikeFan[widget.index!]=false;
+                                    CashHelper.saveData(key: '${AppCubit.get(context).fans[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
+                                    setState(() {
+                                      FirebaseFirestore.instance
+                                          .collection('fan')
+                                          .doc('${AppCubit.get(context).fans[widget.index!].postId}')
+                                          .update({
+                                        'likes':AppCubit.get(context).fans[widget.index!].likes
+                                      }).then((value){
+                                        printMessage('This is right ${AppCubit.get(context).fans[widget.index!].likes}');
+                                        print('Siiiiiiiiiiiiiiiiiiiiiiii');
+
+                                      });
+                                    });
+
+                                  }
+                                },
+                                icon: CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==null ?
+                                Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20):CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}') ?Icon(Icons.favorite,color: Colors.red,size: 20):
+                                Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20)),
+                          ],
+                        ),
+                      ),
 
                     ],
                   )

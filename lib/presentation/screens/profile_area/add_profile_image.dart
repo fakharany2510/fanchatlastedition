@@ -20,7 +20,7 @@ class _AddProfileImageState extends State<AddProfileImage> {
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
         if(state is ProfileCreatePostSuccessState){
-          AppCubit.get(context).currentIndex=2;
+         // AppCubit.get(context).currentIndex=2;
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>ProfileScreen()), (route) => false);
           //Navigator.pop(context);
         }

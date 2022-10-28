@@ -18,7 +18,7 @@ class AddProfileVideo extends StatelessWidget {
           // AppCubit.get(context).videoPlayerController!.dispose();
           AppCubit.get(context).videoPlayerController==null;
           AppCubit.get(context).postVideo=null;
-          AppCubit.get(context).currentIndex=2;
+         // AppCubit.get(context).currentIndex=2;
 
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>ProfileScreen()), (route) => false);
         }

@@ -102,11 +102,8 @@ dependencies:
   cached_network_image: ^3.2.1
   flutter_cache_manager: ^3.3.0
   cached_video_player:
-  fijkplayer: ^0.10.0
-  video_thumbnail: ^0.5.3
   media_cache_manager: ^0.0.2+1
-  better_player:
-  video_trimmer: ^1.1.3
+
 
 
 
