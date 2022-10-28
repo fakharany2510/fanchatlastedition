@@ -28,8 +28,10 @@ class PostWidget extends StatefulWidget {
 
 class PostWidgetState extends State<PostWidget> {
 
+
+
   VideoPlayerController? controller;
-  //Future <void> ?intilize;
+  Future <void> ?intilize;
 
   @override
   void initState() {
@@ -42,13 +44,15 @@ class PostWidgetState extends State<PostWidget> {
     // controller!.setVolume(1.0);
     controller=VideoPlayerController.network(
         AppCubit.get(context).posts[widget.index!].postVideo!);
-    controller!.initialize();
+    intilize=controller!.initialize();
     controller!.setLooping(false);
     controller!.setVolume(1.0);
     super.initState();
   }
+
   @override
   void dispose() {
+    // TODO: implement dispose
     controller!.dispose();
     super.dispose();
   }
@@ -57,7 +61,7 @@ class PostWidgetState extends State<PostWidget> {
     return BlocConsumer<AppCubit,AppState>(listener: (context,state){
       if(state is NavigateScreenState){
         controller!.pause();
-       // videoPlayerController!.pause();
+        // videoPlayerController!.pause();
       }
       if(state is PauseVideoState){
         controller!.pause();
@@ -162,38 +166,38 @@ class PostWidgetState extends State<PostWidget> {
                           // ),
                           const SizedBox(width: 5,),
                           if(AppCubit.get(context).userModel!.uId==AppCubit.get(context).posts[widget.index!].userId)
-                          PopupMenuButton(
-                              padding: EdgeInsets.zero,
-                              icon: const Icon(
-                                Icons.more_horiz,
-                                color: Colors.white,
-                              ),
-                              itemBuilder: (BuildContext context) => [
-                                PopupMenuItem(
-                                  height: 10,
-                                  value: 2,
-                                  padding: EdgeInsets.zero,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: Text('Delete',
-                                          style:  TextStyle(
-                                              fontSize: 13,
-                                              color: AppColors.primaryColor1,
-                                              fontFamily: AppStrings.appFont
+                            PopupMenuButton(
+                                padding: EdgeInsets.zero,
+                                icon: const Icon(
+                                  Icons.more_horiz,
+                                  color: Colors.white,
+                                ),
+                                itemBuilder: (BuildContext context) => [
+                                  PopupMenuItem(
+                                    height: 10,
+                                    value: 2,
+                                    padding: EdgeInsets.zero,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: Text('Delete',
+                                            style:  TextStyle(
+                                                fontSize: 13,
+                                                color: AppColors.primaryColor1,
+                                                fontFamily: AppStrings.appFont
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
+                                    onTap: (){
+                                      AppCubit.get(context).deletePost(postId: '${AppCubit.get(context).posts[widget.index!].postId}');
+                                    },
                                   ),
-                                  onTap: (){
-                                    AppCubit.get(context).deletePost(postId: '${AppCubit.get(context).posts[widget.index!].postId}');
-                                  },
-                                ),
-                              ]
-                          )
+                                ]
+                            )
 
                         ],
                       ),
@@ -217,14 +221,14 @@ class PostWidgetState extends State<PostWidget> {
                   const SizedBox(height: 0,),
                   (AppCubit.get(context).posts[widget.index!].postImage!="")
                       ?InkWell(
-                        onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (_){
-                              return ShowHomeImage(image: "${AppCubit.get(context).posts[widget.index!].postImage}");
-                            }));
-                        },
-                        child: Material(
-                    elevation: 1000,
-                    child: Padding(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (_){
+                        return ShowHomeImage(image: "${AppCubit.get(context).posts[widget.index!].postImage}");
+                      }));
+                    },
+                    child: Material(
+                      elevation: 1000,
+                      child: Padding(
                         padding: const EdgeInsets.all(0),
                         child: Container(
                           height: MediaQuery.of(context).size.height*.25,
@@ -236,31 +240,91 @@ class PostWidgetState extends State<PostWidget> {
                             fit: BoxFit.fitWidth,
                           ),
                         ),
+                      ),
                     ),
-                  ),
-                      )
+                  )
                       : (AppCubit.get(context).posts[widget.index!].postVideo !="")
                       ?Stack(
                     children: [
-                  Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20
-                  ),
-                  child: ClipRect(
-                    child: Align(
-                      alignment: Alignment.center,
-                      heightFactor: 0.6,
-                      widthFactor: 1,
-                      child: AspectRatio(
-                        aspectRatio: controller!.value.aspectRatio,
-                        child: VideoPlayer(controller!),
+                      FutureBuilder(
+                        future: intilize,
+                        builder: (context,snapshot){
+                          if(snapshot.connectionState == ConnectionState.done){
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20
+                              ),
+                              child: Container(
+                                height: MediaQuery.of(context).size.height*.45,
+                                width: MediaQuery.of(context).size.width,
+                                child: Align(
+
+                                  child: AspectRatio(
+                                    aspectRatio: controller!.value.size.width/controller!.value.size.height*1.6,
+                                    child: VideoPlayer(controller!),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                          else{
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
+
+
+
                       ),
-                    ),
-                  ),
-                ),
+                      //   controller!.value.isInitialized
+                      //       ? AspectRatio(
+                      //       aspectRatio: controller!.value.aspectRatio,
+                      //       child: CachedVideoPlayer(controller!))
+                      //       : const Center(child: CircularProgressIndicator())
+                      // ),
 
+                      // FutureBuilder(
+                      //   future: intilize,
+                      //   builder: (context,snapshot){
+                      //     if(snapshot.connectionState == ConnectionState.done){
+                      //       return AspectRatio(
+                      //         aspectRatio: videoPlayerController!.value.aspectRatio,
+                      //         child: VideoPlayer(videoPlayerController!),
+                      //       );
+                      //     }
+                      //     else{
+                      //       return const Center(
+                      //         child: CircularProgressIndicator(),
+                      //       );
+                      //     }
+                      //   },
+                      //
+                      //
+                      //
+                      // ),
 
+                      Positioned(
+                          top: MediaQuery.of(context).size.height*.15,
+                          right: MediaQuery.of(context).size.height*.18,
+                          child: InkWell(
+                            onTap: (){
 
+                              Navigator.push(context, MaterialPageRoute(builder: (_){
+                                return OpenFullVideo(
+                                  controller: controller,
+                                  intilize: intilize,
+                                );
+                              }));
+
+                            },
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white.withOpacity(.2),
+                              radius: 50,
+                              child: controller!.value.isPlaying?  Icon(Icons.pause,size: 50,color: Colors.white.withOpacity(.4),): Icon(Icons.play_arrow,size: 50, color:Colors.white.withOpacity(.4)),
+                            ),
+                          )
+                      ),
                     ],
                   )
                       :const SizedBox(width: 0,),
@@ -280,67 +344,67 @@ class PostWidgetState extends State<PostWidget> {
                                   fontFamily: AppStrings.appFont
                               ),),
                             IconButton(
-                              padding:EdgeInsets.zero,
-                              constraints: const BoxConstraints(),
-                              onPressed:(){
-                                AppCubit.get(context).likePosts('${AppCubit.get(context).posts[widget.index!].postId}',AppCubit.get(context).posts[widget.index!].likes!);
+                                padding:EdgeInsets.zero,
+                                constraints: const BoxConstraints(),
+                                onPressed:(){
+                                  AppCubit.get(context).likePosts('${AppCubit.get(context).posts[widget.index!].postId}',AppCubit.get(context).posts[widget.index!].likes!);
 
-                                if(CashHelper.getData(key: '${AppCubit.get(context).posts[widget.index!].postId}')==null || CashHelper.getData(key: '${AppCubit.get(context).posts[widget.index!].postId}')==false){
-                                  setState(() {
-                                    AppCubit.get(context).posts[widget.index!].likes=AppCubit.get(context).posts[widget.index!].likes!+1;
-                                  });
-                                  AppCubit.get(context).isLike[widget.index!]=true;
-                                  CashHelper.saveData(key: '${AppCubit.get(context).posts[widget.index!].postId}',value:AppCubit.get(context).isLike[widget.index!] );
-                                  setState(() {
-                                    FirebaseFirestore.instance
-                                        .collection('posts')
-                                        .doc('${AppCubit.get(context).posts[widget.index!].postId}')
-                                        .update({
-                                      'likes':AppCubit.get(context).posts[widget.index!].likes
-                                    }).then((value){
-                                      print('Siiiiiiiiiiiiiiiiiiiiiiii');
+                                  if(CashHelper.getData(key: '${AppCubit.get(context).posts[widget.index!].postId}')==null || CashHelper.getData(key: '${AppCubit.get(context).posts[widget.index!].postId}')==false){
+                                    setState(() {
+                                      AppCubit.get(context).posts[widget.index!].likes=AppCubit.get(context).posts[widget.index!].likes!+1;
+                                    });
+                                    AppCubit.get(context).isLike[widget.index!]=true;
+                                    CashHelper.saveData(key: '${AppCubit.get(context).posts[widget.index!].postId}',value:AppCubit.get(context).isLike[widget.index!] );
+                                    setState(() {
+                                      FirebaseFirestore.instance
+                                          .collection('posts')
+                                          .doc('${AppCubit.get(context).posts[widget.index!].postId}')
+                                          .update({
+                                        'likes':AppCubit.get(context).posts[widget.index!].likes
+                                      }).then((value){
+                                        print('Siiiiiiiiiiiiiiiiiiiiiiii');
+
+                                      });
+                                    });
+
+                                  }
+                                  else{
+                                    setState(() {
+                                      AppCubit.get(context).posts[widget.index!].likes=AppCubit.get(context).posts[widget.index!].likes!-1;
 
                                     });
-                                  });
+                                    AppCubit.get(context).isLike[widget.index!]=false;
+                                    CashHelper.saveData(key: '${AppCubit.get(context).posts[widget.index!].postId}',value:AppCubit.get(context).isLike[widget.index!] );
+                                    setState(() {
+                                      FirebaseFirestore.instance
+                                          .collection('posts')
+                                          .doc('${AppCubit.get(context).posts[widget.index!].postId}')
+                                          .update({
+                                        'likes':AppCubit.get(context).posts[widget.index!].likes
+                                      }).then((value){
+                                        printMessage('This is right ${AppCubit.get(context).posts[widget.index!].likes}');
+                                        print('Siiiiiiiiiiiiiiiiiiiiiiii');
 
-                                }
-                                else{
-                                  setState(() {
-                                    AppCubit.get(context).posts[widget.index!].likes=AppCubit.get(context).posts[widget.index!].likes!-1;
-
-                                  });
-                                  AppCubit.get(context).isLike[widget.index!]=false;
-                                  CashHelper.saveData(key: '${AppCubit.get(context).posts[widget.index!].postId}',value:AppCubit.get(context).isLike[widget.index!] );
-                                  setState(() {
-                                    FirebaseFirestore.instance
-                                        .collection('posts')
-                                        .doc('${AppCubit.get(context).posts[widget.index!].postId}')
-                                        .update({
-                                      'likes':AppCubit.get(context).posts[widget.index!].likes
-                                    }).then((value){
-                                      printMessage('This is right ${AppCubit.get(context).posts[widget.index!].likes}');
-                                      print('Siiiiiiiiiiiiiiiiiiiiiiii');
-
+                                      });
                                     });
-                                  });
 
-                                }
-                              },
-                              icon: CashHelper.getData(key: '${AppCubit.get(context).posts[widget.index!].postId}')==null ?
-                              Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20):CashHelper.getData(key: '${AppCubit.get(context).posts[widget.index!].postId}') ?Icon(Icons.favorite,color: AppColors.myGrey,size: 20):
-                              Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20)),
+                                  }
+                                },
+                                icon: CashHelper.getData(key: '${AppCubit.get(context).posts[widget.index!].postId}')==null ?
+                                Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20):CashHelper.getData(key: '${AppCubit.get(context).posts[widget.index!].postId}') ?Icon(Icons.favorite,color: AppColors.myGrey,size: 20):
+                                Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20)),
                           ],
                         ),
                         const SizedBox(width: 15,),
                         Row(
                           children: [
-                             Text('${AppCubit.get(context).posts[widget.index!].comments}',
-                             style: TextStyle(
-                            color: AppColors.myWhite,
-                            fontSize: 13,
-                                 fontWeight: FontWeight.w500,
-                                 fontFamily: AppStrings.appFont
-                            ),),
+                            Text('${AppCubit.get(context).posts[widget.index!].comments}',
+                              style: TextStyle(
+                                  color: AppColors.myWhite,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: AppStrings.appFont
+                              ),),
                             IconButton(
                               padding:EdgeInsets.zero,
                               constraints: const BoxConstraints(),

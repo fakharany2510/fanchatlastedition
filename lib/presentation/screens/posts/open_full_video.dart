@@ -32,6 +32,12 @@ class _OpenFullVideoState extends State<OpenFullVideo> {
     super.initState();
   }
 
+  // @override
+  // void dispose() {
+  //   widget.controller!.dispose();
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
