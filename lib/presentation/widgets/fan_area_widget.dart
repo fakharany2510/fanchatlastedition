@@ -25,7 +25,7 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
 
   //bool isLoading = true;
   VideoPlayerController ?fanVideoPlayerController;
-  //Future <void> ?intilize;
+  Future <void> ?intilize;
   @override
   void initState() {
     print('before initializeddddddddddddddddddddddddddddddddddd 11111111111111111111111111111');
@@ -35,9 +35,13 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
       fanVideoPlayerController=VideoPlayerController.network(
           AppCubit.get(context).fans[widget.index!].postVideo!
       );
+      print('========================== controller =====================');
+      print(fanVideoPlayerController);
+      print('========================== controller =====================');
+
       print('before initializeddddddddddddddddddddddddddddddddddd 3333333333333333333333333333333');
 
-      await fanVideoPlayerController!.initialize().then((value){
+     intilize = await fanVideoPlayerController!.initialize().then((value){
         setState((){
         print('Video has been initialized ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd');
         });
@@ -63,9 +67,28 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
                     (AppCubit.get(context).fans[widget.index!].postImage!="")?
                     Navigator.push(context, MaterialPageRoute(builder: (_){
                       return FanFullPost(image: '${AppCubit.get(context).fans[widget.index!].postImage}',userImage: '${AppCubit.get(context).fans[widget.index!].image}',userName: '${AppCubit.get(context).fans[widget.index!].name}',userId: '${AppCubit.get(context).fans[widget.index!].userId}',);
-                    })):Navigator.push(context, MaterialPageRoute(builder: (_){
-                      return FanFullVideo(video: '${AppCubit.get(context).fans[widget.index!].postVideo}',userImage: '${AppCubit.get(context).fans[widget.index!].image}',userName: '${AppCubit.get(context).fans[widget.index!].name}',userId: '${AppCubit.get(context).fans[widget.index!].userId}',);
-                    }));
+                    })): {
+                     setState((){
+
+                       Navigator.push(context, MaterialPageRoute(builder: (_){
+                         return FanFullVideo(
+                           index: widget.index!,
+                         );
+                       }));
+
+                       FirebaseFirestore.instance.collection('singleVideo').doc('${widget.index}')
+                           .set(
+                           {
+                             'video':AppCubit.get(context).fans[widget.index!].postVideo!
+                           }
+                       ).then((value) {
+
+
+                       });
+
+                     })
+
+                    };
                   },
                   child: (AppCubit.get(context).fans[widget.index!].postImage!="")
                       ?Stack(

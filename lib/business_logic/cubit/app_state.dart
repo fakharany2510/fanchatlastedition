@@ -268,3 +268,7 @@ class UpdateWaitingSuccessState extends AppState {}
 
 class ChangeCheckBoxSuccessState extends AppState {}
 class PauseVideoState extends AppState {}
+
+class GetSingleVideoLoadingState extends AppState {}
+class GetSingleVideoSuccessState extends AppState {}
+class GetSingleVideoErrorState extends AppState {}

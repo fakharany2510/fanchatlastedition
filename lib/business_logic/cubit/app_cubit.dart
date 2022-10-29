@@ -3266,5 +3266,30 @@ List<int> commentIndex=[];
     value = true;
     emit(ChangeCheckBoxSuccessState());
   }
+
+  String ?singleViedo;
+  Future<void> getSingleVideo({
+
+  required int index,
+
+})async{
+
+    print('');
+    emit(GetSingleVideoLoadingState());
+
+    await FirebaseFirestore.instance.collection('singleVideo').doc('$index').get().then((value) {
+
+      singleViedo=value.data()!['video'];
+      emit(GetSingleVideoSuccessState());
+
+    }).catchError((error){
+      print('============================= error================');
+      print(error.toString());
+      print('============================= error================');
+      emit(GetSingleVideoErrorState());
+
+    });
+  }
+
 }
 
