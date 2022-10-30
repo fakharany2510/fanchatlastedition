@@ -28,59 +28,57 @@ class SendVideoTeamChat extends StatelessWidget {
       builder: (context,state){
         return Scaffold(
             backgroundColor: AppColors.myWhite,
-            body: Stack(
-              children: [
-                Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child:const Opacity(
-                      opacity: 1,
-                      child:  Image(
-                        image: AssetImage('assets/images/imageback.jpg'),
-                        fit: BoxFit.cover,
-
-                      ),
-                    )
-                ),
-
-                Padding(
-                    padding:  EdgeInsets.all(20.0),
-                    child: Column(
-                      children: [
-                        (AppCubit.get(context).postVideo5!= null )
-                            ?Column(
-                              children: [
-                                SizedBox(height: size.height*.1,),
-                                Container(
-                                  width: size.width,
-                                  height: size.height*.75,
-                                  child: AspectRatio(
-                                    aspectRatio:AppCubit.get(context).controller!.value.aspectRatio,
-                                    child: AppCubit.get(context).controller ==null
-                                        ?SizedBox(height: 0,)
-                                        :CachedVideoPlayer(
-                                        AppCubit.get(context).controller!
-                                    ),
-
+            body: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/imageback.jpg'),
+                    fit: BoxFit.cover,
+                  )
+              ),
+              child: Padding(
+                  padding:  EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      (AppCubit.get(context).postVideo5!= null )
+                          ?Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(height: size.height*.1,),
+                              Container(
+                                width: size.width,
+                                child: AspectRatio(
+                                  aspectRatio:AppCubit.get(context).controller!.value.aspectRatio,
+                                  child: AppCubit.get(context).controller ==null
+                                      ?SizedBox(height: 0,)
+                                      :CachedVideoPlayer(
+                                      AppCubit.get(context).controller!
                                   ),
-                                ),
 
-                              ],
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                      )
+                          : Expanded(child: Container(
+                        child: Center(child: Text('No Video Selected Yet',
+                            style: TextStyle(
+                                fontSize: 21,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primaryColor1,
+                                fontFamily: AppStrings.appFont
                             )
-                            : Expanded(child: Container(
-                          child: Center(child: Text('No Video Selected Yet',
-                              style: TextStyle(
-                                  fontSize: 21,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.primaryColor1,
-                                  fontFamily: AppStrings.appFont
-                              )
-                          )),
                         )),
-                      ],
-                    )
-                ),
-              ],
+                      )),
+                    ],
+                  )
+              ),
             ),
             floatingActionButton: state is UploadVideoTeamChatLoadingState || state is CreateVideoTeamChatLoadingState
                 ?FloatingActionButton(

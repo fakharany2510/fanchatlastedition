@@ -40,6 +40,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
   void initState() {
     scrollController = ScrollController();
     WidgetsBinding.instance.addObserver(this);
+
     super.initState();
   }
 
@@ -77,9 +78,15 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
       child: BlocProvider(
         create: (context)=>RegisterCubit(),
         child: BlocConsumer<RegisterCubit , RegisterState>(
-          listener: (context, state){
+          listener: (context, state)async{
             if (state is UserDataSuccessState){
-              showMyDialog(context);
+              if(await CashHelper.getData(key: 'Advertise')==1 || await CashHelper.getData(key: 'premium')==1 ){
+                print('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj');
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+              }else {
+                print('kkkkkkkkkkkkkkkkkkkkkkkkkkklkkkkkkkkkkkkkkkkk');
+                showMyDialog(context);
+              }
               // Navigator.pushReplacement(context,
               //     MaterialPageRoute
               //       (builder: (context)=>HomeLayout()));

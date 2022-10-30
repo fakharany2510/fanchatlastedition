@@ -30,6 +30,7 @@ class _AdvertiseGooglePayState extends State<AdvertiseGooglePay> {
     }).then((value){
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ShouldPay()), (route) => false);
       CashHelper.saveData(key: 'days' , value: 0);
+      CashHelper.saveData(key: 'Advertise' , value: 1);
       print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
       print('resullllllllllllllllllllllllllllllt :');
       print('success to update aaccountStates');

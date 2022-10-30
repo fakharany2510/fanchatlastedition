@@ -1,173 +1,237 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:developer';
+import 'package:flick_video_player/flick_video_player.dart';
+import 'package:fijkplayer/fijkplayer.dart';
+
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
-import 'package:fanchat/presentation/screens/home_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/presentation/screens/user_profile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
 class FanFullVideo extends StatefulWidget {
-  int index;
-
-  FanFullVideo({Key? key,required this.index}) : super(key: key);
+  FanFullVideo({
+    Key? key,
+    required this.video,
+    this.userImage,
+    this.userName,
+    this.userId,
+  }) : super(key: key);
+  String? userImage;
+  String? userName;
+  String? userId;
+  String video;
 
   @override
   State<FanFullVideo> createState() => _FanFullVideoState();
 }
 
 class _FanFullVideoState extends State<FanFullVideo> {
+  final FijkPlayer player = FijkPlayer();
+  Object? error;
 
-  VideoPlayerController ?controller;
-  Future <void> ?intilize;
-  bool isLoading=false;
+  //bool isLoading = true;
+
+  Future<void> init() async {
+    try {
+    } catch (e, st) {
+      error = e;
+      log('max $e \n $st');
+    } finally {
+      setState(() {});
+    }
+  }
 
   @override
   void initState() {
-
-    // AppCubit.get(context).singleViedo='';
-    AppCubit.get(context).getSingleVideo(
-      index: widget.index,
-    ).then((value) {
-      controller=VideoPlayerController.network(
-          AppCubit.get(context).singleViedo!
-      );
-      print(controller==null);
-      print('============================= controller ================');
-      print( controller);
-      print('============================= controller ================');
-
-      intilize=controller!.initialize();
-      controller!.setLooping(false);
-      controller!.setVolume(1.0);
-      controller!.pause();
-    });
-     // setState(() {
-     //   FirebaseFirestore.instance.collection('singleVideo').doc('${widget.index}').get().then((value) {
-     //     print('============================= Success ================');
-     //     print(value.data()!['video']);
-     //
-     //
-     //   }).catchError((error){
-     //     print('============================= error================');
-     //     print(error.toString());
-     //     print('============================= error================');
-     //
-     //   });
-     // });
-
-
-    // controller = CachedVideoPlayerController.network(
-    //     AppCubit.get(context).posts[widget.index!].postVideo!);
-    // controller!.initialize();
-    // controller!.pause();
-    // controller!.setLooping(true);
-    // controller!.setVolume(1.0);
-    // widget.controller!.pause();
-    // widget.intilize=widget.controller!.initialize();
-    // widget.controller!.setLooping(false);
-    // widget.controller!.setVolume(1.0);
-
+    init();
     super.initState();
-
+    player.setDataSource(widget.video, autoPlay: true,showCover: true);
   }
 
   @override
   void dispose() {
-
-    controller!.dispose();
+    //player.pause();
+    player.release();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(controller==null);
-    return BlocConsumer<AppCubit,AppState>(
-      listener: (context,state){
-
-      },
-      builder: (context,state){
-        return  Scaffold(
-            body: state is GetSingleVideoLoadingState ?const Center(
-              child: CircularProgressIndicator(),
-            ):Stack(
+    log('max ${widget.video}');
+    return BlocConsumer<AppCubit, AppState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              systemOverlayStyle: SystemUiOverlayStyle(
+                statusBarIconBrightness: Brightness.light,
+                statusBarColor: AppColors.primaryColor1,
+              ),
+              iconTheme: IconThemeData(color: AppColors.myWhite),
+              backgroundColor: AppColors.primaryColor1,
+              title: Container(
+                height: MediaQuery.of(context).size.height * 1,
+                width: MediaQuery.of(context).size.width * .25,
+                child: Image(
+                  image: AssetImage('assets/images/ncolors.png'),
+                ),
+              ),
+              centerTitle: true,
+              elevation: 0.0,
+              leading: IconButton(
+                onPressed: () {
+                  setState(() {
+                    player.dispose();
+                   // videoPlayerController!.pause();
+                  });
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back_ios),
+              ),
+            ),
+            body: Stack(
               children: [
                 Container(
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    child:const Opacity(
+                    child: const Opacity(
                       opacity: 1,
-                      child:  Image(
+                      child: Image(
                         image: AssetImage('assets/images/imageback.jpg'),
                         fit: BoxFit.cover,
                       ),
-                    )
-                ),
-                Container(
-                  child: Stack(
+                    )),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
                     children: [
-                      Align(
-                        alignment: Alignment.center,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 70,
-                              bottom: 50
-                          ),
-                          child: FutureBuilder(
-                            future:intilize,
-                            builder: (context,snapshot){
-                              if(snapshot.connectionState == ConnectionState.done){
-                                return AspectRatio(
-                                  aspectRatio:controller!.value.aspectRatio,
-                                  child: VideoPlayer(controller!),
-                                );
-                              }
-                              else{
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                            },
-
-
-
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                AppCubit.get(context)
+                                    .getUserProfilePosts(id: '${widget.userId}')
+                                    .then((value) {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (_) {
+                                        return UserProfile(
+                                          userId: '${widget.userId}',
+                                          userImage: '${widget.userImage}',
+                                          userName: '${widget.userName}',
+                                        );
+                                      }));
+                                });
+                              },
+                              child: CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                  '${widget.userImage}',
+                                ),
+                                radius: 18,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 7,
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          '${widget.userName}',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              color: AppColors.primaryColor1,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: AppStrings.appFont),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // Spacer(),
+                            // IconButton(
+                            //   onPressed: (){},
+                            //   padding: EdgeInsets.zero,
+                            //   constraints: BoxConstraints(),
+                            //   icon:Icon(Icons.favorite_outline,color: AppColors.navBarActiveIcon,size: 20),)
+                          ],
                         ),
                       ),
-
-                      Positioned(
-                          top: MediaQuery.of(context).size.height*.12,
-                          right: MediaQuery.of(context).size.height*.03,
-                          child: InkWell(
-                            onTap: (){
-                              print('hhfhds');
-                              setState((){
-                                print('hhfhds 5653');
-                                if(controller!.value.isPlaying){
-                                  controller!.pause();
-                                  isPostPlaying=true;
-                                }else{
-                                  controller!.play();
-                                  isPostPlaying=false;
-
-                                }
-                              });
-
-                            },
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white.withOpacity(.8),
-                              radius: 30,
-                              child:controller!.value.isPlaying?Icon(Icons.pause,size: 30,color: AppColors.primaryColor1,): Icon(Icons.play_arrow,size: 30, color:AppColors.primaryColor1),
-                            ),
-                          )
+                      SizedBox(
+                        height: 20,
                       ),
+                      Container(
+                        height: MediaQuery.of(context).size.height * .6,
+                        width: double.infinity,
 
+                        child: Stack(
+                          children: [
+                            // Container(
+                            //   height: MediaQuery.of(context).size.height * .6,
+                            //   width: double.infinity,
+                            //   child: DownloadMediaBuilder(
+                            //     url: widget.video!,
+                            //     builder: (context, snapshot) {
+                            //       if (snapshot.status ==
+                            //           DownloadMediaStatus.loading) {
+                            //         return Image(
+                            //             image: AssetImage(
+                            //                 'assets/images/load.png'));
+                            //       }
+                            //       if (snapshot.status ==
+                            //           DownloadMediaStatus.success) {
+                            //         return chewieController == null
+                            //             ? Image(
+                            //                 image: AssetImage(
+                            //                     'assets/images/load.png'))
+                            //             : Chewie(controller: chewieController!);
+                            //       }
+                            //       return Image(
+                            //         image:
+                            //             AssetImage('assets/images/nonet.jpg'),
+                            //         fit: BoxFit.contain,
+                            //       );
+                            //     },
+                            //   ),
+                            if (error != null)
+                              Center(child: Text(error.toString()))
+                            else if (player == null)
+                              Center(child: CupertinoActivityIndicator())
+                            else  Padding(
+                              padding: const EdgeInsets.all(0),
+                              child: FijkView(
+                                  player: player,
+                                  fit: FijkFit.contain,
+                                  color: Colors.transparent,
+
+                                ),
+                            ),
+
+                            // AspectRatio(
+                            //   aspectRatio: videoPlayerController!.value.aspectRatio,
+                            //     child: VideoPlayer(videoPlayerController!)),
+                            // ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
               ],
-            )
-        );
+            ));
       },
     );
   }

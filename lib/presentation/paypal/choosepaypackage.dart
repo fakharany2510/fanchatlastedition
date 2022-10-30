@@ -1,3 +1,4 @@
+import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/paypal/advertise.dart';
@@ -23,7 +24,8 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
       appBar: customAppbar('payPackage',context),
       body: Padding(
         padding: EdgeInsets.only(bottom: 15,left: 10,top: 25),
-        child: Column(
+        child: CashHelper.getData(key: 'Advertise')==1 || CashHelper.getData(key: 'premium')==1?
+        Column(
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 15,bottom: 15),
@@ -42,6 +44,7 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
               ),
             ),
             SizedBox(height: 20,),
+            CashHelper.getData(key: 'premium')==1?
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children:  [
@@ -89,8 +92,10 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
                   ],
                 ),
               ],
-            ),
+            )
+            :SizedBox(),
             SizedBox(height: 20,),
+            CashHelper.getData(key: 'Advertise')==1?
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children:  [
@@ -139,7 +144,8 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
                   ],
                 ),
               ],
-            ),
+            )
+            :SizedBox(),
             Spacer(),
             Center(
 
@@ -158,7 +164,23 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
                   }),
             )
           ],
-        ),
+        )
+            :Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'No Packages to choose you are pay all packages',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.myWhite,
+                height: 2,
+                fontSize: 22,
+                fontFamily: AppStrings.appFont,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        )
       ),
     );
   }

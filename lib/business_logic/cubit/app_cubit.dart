@@ -24,6 +24,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:video_player/video_player.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 import '../../data/modles/comment_model.dart';
 import '../../data/modles/create_post_model.dart';
 import '../../data/modles/message_model.dart';
@@ -1674,6 +1675,7 @@ List<int> commentIndex=[];
     required String? text,
     required String time,
     required String? timeSpam,
+    String? thumbnailImage,
     String? postVideo,
   }){
     emit(FanCreateVideoPostLoadingState());
@@ -1684,6 +1686,7 @@ List<int> commentIndex=[];
         userId:userModel!.uId,
         dateTime:dateTime,
         postImage:'',
+        thumbnailImage: thumbnailImage??"",
         postVideo: postVideo??'https://firebasestorage.googleapis.com/v0/b/fanchat-7db9e.appspot.com/o/fanvideo%2F2022-10-27%2012%3A18%3A53.634007%2FVRQI86oYZSZgh7Mh3xXqQDX9dxR2?alt=media&token=2c4850fd-e48f-4b7d-a90f-9eff05450531',
         time: time  ,
         timeSmap: timeSpam,
@@ -1781,6 +1784,15 @@ List<int> commentIndex=[];
       uploadTask.then((res) async{
 
         Uri downloadUrl = Uri.parse(await res.ref.getDownloadURL());
+        ///////////////////////////////////////////////////////////
+
+        // final uint8list = await VideoThumbnail.thumbnailData(
+        //   video: fanPostVideo!.path,
+        //   imageFormat: ImageFormat.JPEG,
+        //   timeMs: 1,
+        //   maxWidth: 128, // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
+        //   quality: 25,
+        // );
         createFanVideoPost(
           dateTime: dateTime,
           postVideo: '${downloadUrl}',

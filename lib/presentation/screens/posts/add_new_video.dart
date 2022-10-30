@@ -124,7 +124,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
 
 
                         } else {
-                          customToast(title: 'Max Video size is 30 Mb', color: Colors.red);
+                          customToast(title: 'Max Video size is 15 Mb', color: Colors.red);
                         }
                         // callFcmApiSendPushNotifications(
                         //     title: 'New Post Added',

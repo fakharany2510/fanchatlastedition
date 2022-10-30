@@ -18,89 +18,96 @@ class AddFanVideo extends StatelessWidget {
           AppCubit.get(context).getPosts();
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context)=>const HomeLayout()), (route) => false);
-         // AppCubit.get(context).videoPlayerController!.dispose();
-         //  AppCubit.get(context).videoPlayerController==null;
-         //  AppCubit.get(context).videoPlayerController!.pause();
-         // AppCubit.get(context).postVideo=null;
+          // AppCubit.get(context).videoPlayerController!.dispose();
+          //  AppCubit.get(context).videoPlayerController==null;
+          //  AppCubit.get(context).videoPlayerController!.pause();
+          // AppCubit.get(context).postVideo=null;
           AppCubit.get(context).currentIndex=2;
-       // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+          // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
         }
       },
       builder: (context,state){
         return Scaffold(
-          backgroundColor: AppColors.myWhite,
-          appBar:AppBar(
             backgroundColor: AppColors.myWhite,
-            title: Text('Add Video',style: TextStyle(
-                fontSize: 21,
-                fontWeight: FontWeight.w600,
-                color: AppColors.primaryColor1,
-                fontFamily: AppStrings.appFont
-            )),
-            elevation: 0,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back,color: Colors.black),
-              onPressed: ()async{
-                AppCubit.get(context).postVideo=null;
-                Navigator.pop(context);
-                await  AppCubit.get(context).videoPlayerController!.pause();
-              },
-            ),
-            actions: [
-              state is BrowiseCreateVideoPostLoadingState||state is BrowiseGetPostsLoadingState || state is BrowiseUploadVideoPostLoadingState
-                  ? Center(
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primaryColor1,
-                  ),
-                ),
-              )
-                  :Padding(
-                padding: const EdgeInsets.all(8.0),
-                child:(state is FanCreateVideoPostSuccessState)||
-                (state is FanUploadVideoPostLoadingState)||
-                    ( state is FanUploadVideoPostSuccessState)?
-                    CircularProgressIndicator(backgroundColor: AppColors.navBarActiveIcon,)
-                :defaultButton(
-                    textColor: AppColors.myWhite,
-                    width: size.width*.2,
-                    height: size.height*.05,
-                    raduis: 10,
-                    function: (){
-                      if(AppCubit.get(context).fanPostVideo == null){
-                        print('fan video null');
-                      }else{
-                        AppCubit.get(context).uploadFanPostVideo(
-                          timeSpam: DateTime.now().toString(),
-                          time: DateFormat.Hm().format(DateTime.now()),
-                          dateTime:DateFormat.yMMMd().format(DateTime.now()),
-                          text:"",
-                          name: AppCubit.get(context).userModel!.username,
-                        );
-                        //AppCubit.get(context).getFanPosts();
-                      }
-
-                    },
-                    buttonText: 'add',
-                    buttonColor: AppColors.primaryColor1
-                )
+            appBar:AppBar(
+              backgroundColor: AppColors.myWhite,
+              title: Text('Add Video',style: TextStyle(
+                  fontSize: 21,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primaryColor1,
+                  fontFamily: AppStrings.appFont
+              )),
+              elevation: 0,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back,color: Colors.black),
+                onPressed: ()async{
+                  AppCubit.get(context).postVideo=null;
+                  Navigator.pop(context);
+                  await  AppCubit.get(context).videoPlayerController!.pause();
+                },
               ),
-            ],
-          ),
-          body:Stack(
-            children: [
-              Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child:const Opacity(
-                    opacity: 1,
-                    child:  Image(
-                      image: AssetImage('assets/images/imageback.jpg'),
-                      fit: BoxFit.cover,
+              actions: [
+                state is BrowiseCreateVideoPostLoadingState||state is BrowiseGetPostsLoadingState || state is BrowiseUploadVideoPostLoadingState
+                    ? Center(
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor1,
                     ),
+                  ),
+                )
+                    :Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child:(state is FanCreateVideoPostSuccessState)||
+                        (state is FanUploadVideoPostLoadingState)||
+                        ( state is FanUploadVideoPostSuccessState)?
+                    CircularProgressIndicator(backgroundColor: AppColors.navBarActiveIcon,)
+                        :defaultButton(
+                        textColor: AppColors.myWhite,
+                        width: size.width*.2,
+                        height: size.height*.05,
+                        raduis: 10,
+                        function: ()async{
+                          if(AppCubit.get(context).fanPostVideo == null){
+                            print('fan video null');
+                          }
+                          else{
+                            final filesizeLimit = 15000000;  // in bytes // 30 Mega
+                            final filesize = await AppCubit.get(context).fanPostVideo!.length(); // in bytes
+                            final isValidFilesize = filesize < filesizeLimit;
+                            if (isValidFilesize) {
+
+                              AppCubit.get(context).uploadFanPostVideo(
+                                timeSpam: DateTime.now().toString(),
+                                time: DateFormat.Hm().format(DateTime.now()),
+                                dateTime:DateFormat.yMMMd().format(DateTime.now()),
+                                text:"",
+                                name: AppCubit.get(context).userModel!.username,
+                              );
+
+
+                            } else {
+                              customToast(title: 'Max Video size is 30 Mb', color: Colors.red);
+                            }
+
+                            //AppCubit.get(context).getFanPosts();
+                          }
+                        },
+                        buttonText: 'add',
+                        buttonColor: AppColors.primaryColor1
+                    )
+                ),
+              ],
+            ),
+            body: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/imageback.jpg'),
+                    fit: BoxFit.cover,
                   )
               ),
-              Padding(
+              child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
@@ -130,17 +137,24 @@ class AddFanVideo extends StatelessWidget {
                       const SizedBox(height: 10,),
                       ( AppCubit.get(context).fanPostVideo!= null && AppCubit.get(context).videoPlayerController!.value.isInitialized)
                           ?Expanded(
-                        child: Container(
-                          height: size.height,
-                          width: size.width,
-                          child: AspectRatio(
-                            aspectRatio:AppCubit.get(context).videoPlayerController!.value.aspectRatio,
-                            child: AppCubit.get(context).videoPlayerController ==null
-                                ?SizedBox(height: 0,)
-                                :VideoPlayer(
-                                AppCubit.get(context).videoPlayerController!
-                            ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: size.width,
+                                child: AspectRatio(
+                                  aspectRatio:AppCubit.get(context).videoPlayerController!.value.aspectRatio,
+                                  child: AppCubit.get(context).videoPlayerController ==null
+                                      ?SizedBox(height: 0,)
+                                      :VideoPlayer(
+                                      AppCubit.get(context).videoPlayerController!
+                                  ),
 
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       )
@@ -159,8 +173,7 @@ class AddFanVideo extends StatelessWidget {
                     ],
                   )
               ),
-            ],
-          )
+            )
         );
       },
     );
