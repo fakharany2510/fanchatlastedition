@@ -255,7 +255,7 @@ class PostWidgetState extends State<PostWidget> {
                                   horizontal: 20
                               ),
                               child: Container(
-                                height: MediaQuery.of(context).size.height*.45,
+                                height: MediaQuery.of(context).size.height*.3,
                                 width: MediaQuery.of(context).size.width,
                                 child: Align(
 
@@ -305,8 +305,8 @@ class PostWidgetState extends State<PostWidget> {
                       // ),
 
                       Positioned(
-                          top: MediaQuery.of(context).size.height*.15,
-                          right: MediaQuery.of(context).size.height*.18,
+                          top: MediaQuery.of(context).size.height*.08,
+                          right: MediaQuery.of(context).size.height*.185,
                           child: InkWell(
                             onTap: (){
 
