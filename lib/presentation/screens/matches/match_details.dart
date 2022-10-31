@@ -174,6 +174,8 @@ class _MatchDetailsState extends State<MatchDetails> {
                                           ),
                                           child: Column(
                                             children: [
+
+
                                               const SizedBox(height: 10,),
                                               Text(AppCubit.get(context).allMatches[index].date!,style: TextStyle(
                                                   color: AppColors.myWhite,
