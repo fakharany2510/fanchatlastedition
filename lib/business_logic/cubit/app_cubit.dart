@@ -5,6 +5,7 @@ import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/data/modles/advertising_model.dart';
 import 'package:fanchat/data/modles/cheering_model.dart';
 import 'package:fanchat/data/modles/fan_model.dart';
+import 'package:fanchat/data/modles/matches_model.dart';
 import 'package:fanchat/data/modles/profile_model.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
 import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
@@ -3326,11 +3327,50 @@ List<int> commentIndex=[];
       emit(GetUserIdsErrorState());
 
     });
+  }
 
 
+  List<MatchesModel> allMatches=[];
 
+  Future<void> getAllMatches({
+
+   required String doc
+
+  })async{
+
+    emit(GetAllMatchesLoadingState());
+    FirebaseFirestore.instance
+        .collection('matches')
+        .doc(doc)
+        .collection('matches')
+        .get().then((value){
+        allMatches=[];
+
+          value.docs.forEach((element) {
+
+            allMatches.add(MatchesModel.fromJson(element.data()));
+
+          });
+
+          print('============== lenght ===============');
+          print(allMatches.length);
+
+          emit(GetAllMatchesSuccessState());
+
+
+    }).catchError((error){
+
+      print('Error is ${error.toString()}');
+      emit(GetAllMatchesErrorState());
+
+    });
+    
 
   }
+  
+  
+  
+  
 
 }
 

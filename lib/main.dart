@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
         providers:[
-          BlocProvider(create: (context)=>AppCubit()..getUser(context)..getCountries()..getProfilePosts()..getPosts()..getAllUsers()..getFanPosts()..periodic()..getLastUsers()..getUserIds()),
+          BlocProvider(create: (context)=>AppCubit()..getUser(context)..getCountries()..getProfilePosts()..getPosts()..getAllUsers()..getFanPosts()..periodic()..getLastUsers()..getUserIds()..getAllMatches(doc: '20 Nov')),
           BlocProvider(create: (context)=>AdvertisingCubit()..getAdvertisingPosts()),
         ],
         child: FirebasePhoneAuthProvider(

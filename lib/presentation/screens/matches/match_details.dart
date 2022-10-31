@@ -82,33 +82,8 @@ class _MatchDetailsState extends State<MatchDetails> {
                                               isDay= List.generate(28, (index) => false);
                                               isDay[index]=!isDay[index];
                                             });
-                                            if(dateMatchs[index]=='20 Nov'){
-                                              setState(() {
-                                                dateMatch='Sun 20 Nov 2022';
-                                                MatchScaduele.realTeamMatchesRight=MatchScaduele.teamMatches21Right;
-                                                MatchScaduele.realImagesMatchesRight=MatchScaduele.imageMatches21Right;
-                                                MatchScaduele.realTeamMatchesLeft=MatchScaduele.teamMatches21Left;
-                                                MatchScaduele.realImagesMatchesLeft=MatchScaduele.imageMatches21Left;
-                                              });
-                                            }
-                                            else if (dateMatchs[index]=='21 Nov'){
-                                              setState(() {
-                                                dateMatch='Mon 21 Nov 2022';
-                                                MatchScaduele.realTeamMatchesRight=MatchScaduele.teamMatches22Right;
-                                                MatchScaduele.realImagesMatchesRight=MatchScaduele.imageMatches22Right;
-                                                MatchScaduele.realTeamMatchesLeft=MatchScaduele.teamMatches22Left;
-                                                MatchScaduele.realImagesMatchesLeft=MatchScaduele.imageMatches22Left;
-                                              });
-                                            }
-                                            else{
-                                              MatchScaduele.realTeamMatchesRight=[];
-                                              MatchScaduele.realImagesMatchesRight=[];
-                                              MatchScaduele.realTeamMatchesLeft=[];
-                                              MatchScaduele.realImagesMatchesLeft=[];
-                                            }
-                                            // Navigator.push(context, MaterialPageRoute(builder: (_){
-                                            //   return const SingleMatch();
-                                            // }));
+
+                                            AppCubit.get(context).getAllMatches(doc: dateMatchs[index]);
                                           },
                                           child: Container(
                                             margin: const EdgeInsets.symmetric(
@@ -200,7 +175,7 @@ class _MatchDetailsState extends State<MatchDetails> {
                                           child: Column(
                                             children: [
                                               const SizedBox(height: 10,),
-                                              Text(dateMatch!,style: TextStyle(
+                                              Text(AppCubit.get(context).allMatches[index].date!,style: TextStyle(
                                                   color: AppColors.myWhite,
                                                   fontSize: 16,
                                                   fontFamily: AppStrings.appFont
@@ -218,10 +193,10 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                     children: [
                                                       CircleAvatar(
                                                         radius: 25,
-                                                        backgroundImage:  NetworkImage(MatchScaduele.realImagesMatchesRight[index]),
+                                                        backgroundImage:  NetworkImage(AppCubit.get(context).allMatches[index].firstImage!),
                                                       ),
                                                       const  SizedBox(height: 5,),
-                                                      Text(MatchScaduele.realTeamMatchesRight[index],style: TextStyle(
+                                                      Text(AppCubit.get(context).allMatches[index].firstTeam!,style: TextStyle(
                                                           color: AppColors.myWhite,
                                                           fontSize: 13,
                                                           fontWeight: FontWeight.bold,
@@ -285,10 +260,10 @@ class _MatchDetailsState extends State<MatchDetails> {
 
                                                       CircleAvatar(
                                                         radius: 25,
-                                                        backgroundImage:  NetworkImage(MatchScaduele.realImagesMatchesLeft[index]),
+                                                        backgroundImage:  NetworkImage(AppCubit.get(context).allMatches[index].secondImage!),
                                                       ),
                                                       const SizedBox(height: 5,),
-                                                      Text(MatchScaduele.realTeamMatchesLeft[index],style: TextStyle(
+                                                      Text(AppCubit.get(context).allMatches[index].secondTeam!,style: TextStyle(
                                                           color: AppColors.myWhite,
                                                           fontSize: 13,
                                                           fontWeight: FontWeight.bold,
@@ -307,7 +282,7 @@ class _MatchDetailsState extends State<MatchDetails> {
                                     separatorBuilder: (context,index){
                                       return  const SizedBox(height: 0,);
                                     },
-                                    itemCount:MatchScaduele.realTeamMatchesLeft.length
+                                    itemCount:AppCubit.get(context).allMatches.length
                                 ),
                               ],
                             )

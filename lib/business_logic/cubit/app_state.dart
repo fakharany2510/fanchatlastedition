@@ -275,3 +275,7 @@ class GetSingleVideoErrorState extends AppState {}
 
 class GetUserIdsSuccessState extends AppState{}
 class  GetUserIdsErrorState extends AppState{}
+
+class GetAllMatchesLoadingState extends AppState {}
+class GetAllMatchesSuccessState extends AppState {}
+class GetAllMatchesErrorState extends AppState {}
