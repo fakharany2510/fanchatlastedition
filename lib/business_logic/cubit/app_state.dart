@@ -272,3 +272,6 @@ class PauseVideoState extends AppState {}
 class GetSingleVideoLoadingState extends AppState {}
 class GetSingleVideoSuccessState extends AppState {}
 class GetSingleVideoErrorState extends AppState {}
+
+class GetUserIdsSuccessState extends AppState{}
+class  GetUserIdsErrorState extends AppState{}

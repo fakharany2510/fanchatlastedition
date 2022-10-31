@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:flick_video_player/flick_video_player.dart';
 import 'package:fijkplayer/fijkplayer.dart';
 
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';

@@ -7,8 +7,6 @@ import 'package:fanchat/presentation/screens/verify_code_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(InitialState());

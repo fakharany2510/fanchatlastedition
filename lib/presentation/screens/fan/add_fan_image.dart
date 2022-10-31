@@ -59,20 +59,31 @@ class _AddFanImageState extends State<AddFanImage> {
                     width: size.width*.2,
                     height: size.height*.05,
                     raduis: 10,
-                    function: (){
+                    function: ()async{
                       if(AppCubit.get(context).fanPostImage == null){
-                        print('no image chossen');
-                      }else{
-                        AppCubit.get(context).uploadFanPostImage(
-                          dateTime: DateFormat.yMMMd().format(DateTime.now()),
-                          time: DateFormat.Hm().format(DateTime.now()),
-                          timeSpam: DateTime.now().toString(),
-                          image: AppCubit.get(context).userModel!.image,
-                          name: AppCubit.get(context).userModel!.username,
-                          text: ""
-                        );
+                        print('fan image null');
                       }
-                      print(DateFormat.Hms().format(DateTime.now()));
+                      else{
+                        final filesizeLimit = 	5000000 ;  // in bytes // 30 Mega
+                        final filesize = await AppCubit.get(context).fanPostImage!.length(); // in bytes
+                        final isValidFilesize = filesize < filesizeLimit;
+                        if (isValidFilesize) {
+
+                          AppCubit.get(context).uploadFanPostImage(
+                              dateTime: DateFormat.yMMMd().format(DateTime.now()),
+                              time: DateFormat.Hm().format(DateTime.now()),
+                              timeSpam: DateTime.now().toString(),
+                              image: AppCubit.get(context).userModel!.image,
+                              name: AppCubit.get(context).userModel!.username,
+                              text: ""
+                          );
+
+                        } else {
+                          customToast(title: 'Max Image size is 5 Mb', color: Colors.red);
+                        }
+
+                        //AppCubit.get(context).getFanPosts();
+                      }
 
                     },
 

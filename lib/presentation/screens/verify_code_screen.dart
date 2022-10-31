@@ -1,3 +1,4 @@
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/register/register_cubit.dart';
 import 'package:fanchat/business_logic/register/register_states.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
@@ -121,6 +122,8 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                  AppStrings.uId=userCredential.user!.uid;
                  //RegisterCubit.get(context).userModel!.uId=userCredential.user!.uid;
                // CashHelper.saveData(key: 'uid' , value:AppStrings.uId );
+
+
                 CashHelper.saveData(key: 'uid' , value:userCredential.user!.uid );
                 print('AppStrings.uId => ${AppStrings.uId}');
                 print('userCredential.user!.uid=> ${userCredential.user!.uid}');
@@ -305,7 +308,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                     fit: BoxFit.cover
                 )
             ),
-             
+
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,

@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:country_pickers/country_pickers.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -33,7 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
   //RegisterScreen({Key? key}) : super(key: key);
   Map<String,dynamic>? _userData;
-  AccessToken? _accessToken;
+  //AccessToken? _accessToken;
   bool _checking=true;
 
   var formKey =GlobalKey<FormState>();

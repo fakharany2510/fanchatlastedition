@@ -183,22 +183,29 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                             const SizedBox(height: 5,),
                             Stack(
                     children: [
-                            Container(
-                                decoration:  BoxDecoration(
-                                  borderRadius:const  BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (_){
+                                  return OpenFullVideoPrivateChat(controller: senderController);
+                                }));
+                              },
+                              child: Container(
+                                  decoration:  BoxDecoration(
+                                    borderRadius:const  BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10),
+                                    ),
                                   ),
-                                ),
-                               /// height: MediaQuery.of(context).size.height*.25,
-                                width: MediaQuery.of(context).size.width*.74,
-                                child: senderController.value.isInitialized
-                                    ? AspectRatio(
-                                    aspectRatio:senderController.value.size.width/senderController.value.size.height,
-                                    child: VideoPlayer(senderController))
-                                    : const Center(child: CircularProgressIndicator())
+                                 /// height: MediaQuery.of(context).size.height*.25,
+                                  width: MediaQuery.of(context).size.width*.74,
+                                  child: senderController.value.isInitialized
+                                      ? AspectRatio(
+                                      aspectRatio:senderController.value.size.width/senderController.value.size.height,
+                                      child: VideoPlayer(senderController))
+                                      : const Center(child: CircularProgressIndicator())
 
+                              ),
                             ),
 
                             // FutureBuilder(
@@ -222,8 +229,8 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                             // ),
 
                       Positioned(
-                          top: MediaQuery.of(context).size.height*.2,
-                          right: MediaQuery.of(context).size.height*.08,
+                          top: MediaQuery.of(context).size.height*.01,
+                          right: MediaQuery.of(context).size.height*.01,
                           child: InkWell(
                             onTap: (){
                               // setState((){
@@ -238,9 +245,9 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> {
                               }));
                             },
                             child: CircleAvatar(
-                              backgroundColor: Colors.white.withOpacity(.2),
-                              radius: 40,
-                              child: senderController.value.isPlaying? Icon(Icons.pause,size: 40,color: Colors.white.withOpacity(.5),): Icon(Icons.play_arrow,size: 40,color: Colors.white.withOpacity(.5),),
+                              backgroundColor: Colors.white.withOpacity(.5),
+                              radius: 25,
+                              child: senderController.value.isPlaying? Icon(Icons.pause,size: 40,color:AppColors.primaryColor1.withOpacity(.8),): Icon(Icons.play_arrow,size: 40,color: AppColors.primaryColor1.withOpacity(.8),),
                             ),
                           )
                       ),

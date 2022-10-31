@@ -97,7 +97,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                     leading: IconButton(
                       onPressed: (){
                          // controllerPrivate!.pause();
-                         // Navigator.pop(context);
+                          Navigator.pop(context);
                       },
                       icon: Icon(
                         Icons.arrow_back_ios_outlined,

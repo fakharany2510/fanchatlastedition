@@ -88,7 +88,7 @@ class _SendImageTeamChatState extends State<SendImageTeamChat> {
               onPressed: ()async{
 
 
-                final filesizeLimit = 30000000;  // in bytes // 30 Mega
+                final filesizeLimit = 5000000;  // in bytes // 30 Mega
                 final filesize = await AppCubit.get(context).postImage!.length(); // in bytes
                 final isValidFilesize = filesize < filesizeLimit;
                 if (isValidFilesize) {
@@ -102,7 +102,7 @@ class _SendImageTeamChatState extends State<SendImageTeamChat> {
 
 
                 } else {
-                  customToast(title: 'Max Image size is 30 Mb', color: Colors.red);
+                  customToast(title: 'Max Image size is 5 Mb', color: Colors.red);
                 }
 
 

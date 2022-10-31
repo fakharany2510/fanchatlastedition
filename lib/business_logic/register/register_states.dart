@@ -34,3 +34,4 @@ class GoogleLoginSuccessState extends RegisterState{
   GoogleLoginSuccessState(this.uId);
 }
 class GoogleLoginErrorState extends RegisterState{}
+

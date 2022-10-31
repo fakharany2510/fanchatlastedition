@@ -7,6 +7,7 @@ import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/screens/advertising/advertising_screen.dart';
 import 'package:fanchat/presentation/screens/countries_screen.dart';
 import 'package:fanchat/presentation/screens/public_chat/public_chat_screen.dart';
+import 'package:fanchat/presentation/screens/register_screen.dart';
 import 'package:fanchat/presentation/should_pay.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -14,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../screens/fan/fan_screen.dart';
 import '../screens/home_screen.dart';
-import '../screens/match_details.dart';
+import '../screens/matches/match_details.dart';
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({Key? key}) : super(key: key);
@@ -33,6 +34,10 @@ class _HomeLayoutState extends State<HomeLayout> {
     //   print(token);
     //   print("==================================token================================");
     // });
+
+
+
+
     AppCubit.get(context).getUser(context).then((value){
       if(CashHelper.getData(key: 'premium')==1){
         Future.delayed(const Duration(days: 365),(){
@@ -50,12 +55,14 @@ class _HomeLayoutState extends State<HomeLayout> {
 
           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ShouldPay()), (route) => false);
 
-        }else if(AppCubit.get(context).userModel!.days == 0 && AppCubit.get(context).userModel!.payed == true){
+        }
+        else if(AppCubit.get(context).userModel!.days == 0 && AppCubit.get(context).userModel!.payed == true){
           // print('llllllllllllllllllllllllllllllllllllllll   if 2');
 
           CashHelper.saveData(key: 'days' , value: 0);
           // print('User Have Take Package ');
-        }else{
+        }
+        else{
           // print('llllllllllllllllllllllllllllllllllllllll   if 3');
           Future.delayed(const Duration(days: 7),(){
             FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)

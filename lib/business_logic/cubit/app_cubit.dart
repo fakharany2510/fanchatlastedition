@@ -3303,5 +3303,34 @@ List<int> commentIndex=[];
     });
   }
 
+
+  List<String> userIds=[];
+
+  void getUserIds(){
+
+    FirebaseFirestore.instance.collection('users')
+        .get().then((value) {
+
+      for (var element in value.docs) {
+
+        userIds.add(element.data()['uId']);
+        print(userIds.first);
+
+      }
+      print('============================== all user here========================');
+      print('Get All User Is');
+      emit(GetUserIdsSuccessState());
+    }).catchError((error){
+
+      print('Error is ${error.toString()}');
+      emit(GetUserIdsErrorState());
+
+    });
+
+
+
+
+  }
+
 }
 

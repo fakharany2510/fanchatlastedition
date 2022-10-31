@@ -224,21 +224,28 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                             const SizedBox(height: 5,),
                             Stack(
                     children: [
-                            Container(
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (_){
+                                  return OpenFullVideoPrivateChat(controller: mymessageController);
+                                }));
+                              },
+                              child: Container(
+                                  decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                      topLeft: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10),
+                                    ),
                                   ),
-                                ),
-                               // height: MediaQuery.of(context).size.height*.25,
-                                width: MediaQuery.of(context).size.width*.74,
-                                child: mymessageController.value.isInitialized
-                                    ? AspectRatio(
-                                    aspectRatio:mymessageController.value.size.width/mymessageController.value.size.height,
-                                    child: VideoPlayer(mymessageController))
-                                    : const Center(child: CircularProgressIndicator())
+                                 // height: MediaQuery.of(context).size.height*.25,
+                                  width: MediaQuery.of(context).size.width*.74,
+                                  child: mymessageController.value.isInitialized
+                                      ? AspectRatio(
+                                      aspectRatio:mymessageController.value.size.width/mymessageController.value.size.height,
+                                      child: VideoPlayer(mymessageController))
+                                      : const Center(child: CircularProgressIndicator())
+                              ),
                             ),
 
                             // FutureBuilder(
@@ -262,8 +269,8 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                             // ),
 
                       Positioned(
-                          top: MediaQuery.of(context).size.height*.27,
-                          right: MediaQuery.of(context).size.height*.11,
+                          top: MediaQuery.of(context).size.height*.01,
+                          right: MediaQuery.of(context).size.height*.01,
                           child: InkWell(
                             onTap: (){
                               // setState((){
@@ -280,9 +287,9 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> {
                               }));
                             },
                             child: CircleAvatar(
-                              backgroundColor: Colors.white.withOpacity(.2),
-                              radius: 40,
-                              child: mymessageController.value.isPlaying? Icon(Icons.pause,size: 40,color: Colors.white.withOpacity(.5),): Icon(Icons.play_arrow,size: 40,color: Colors.white.withOpacity(.5),),
+                              backgroundColor: Colors.white.withOpacity(.5),
+                              radius: 25,
+                              child: mymessageController.value.isPlaying? Icon(Icons.pause,size: 40,color:AppColors.primaryColor1.withOpacity(.8),): Icon(Icons.play_arrow,size: 40,color: AppColors.primaryColor1.withOpacity(.8),),
                             ),
                           )
                       ),

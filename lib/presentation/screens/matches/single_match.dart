@@ -4,7 +4,7 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../constants/app_strings.dart';
+import '../../../constants/app_strings.dart';
 
 class SingleMatch extends StatelessWidget {
   const SingleMatch({Key? key}) : super(key: key);

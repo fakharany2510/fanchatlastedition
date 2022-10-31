@@ -109,7 +109,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
                         // );
                       }else {
                         AppCubit.get(context).controller!.pause();
-                        final filesizeLimit = 30000000;  // in bytes // 30 Mega
+                        final filesizeLimit = 15000000;  // in bytes // 30 Mega
                         final filesize = await AppCubit.get(context).postVideo!.length(); // in bytes
                         final isValidFilesize = filesize < filesizeLimit;
                         if (isValidFilesize) {

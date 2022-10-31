@@ -1,12 +1,12 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/matech_scedule.dart';
-import 'package:fanchat/presentation/screens/single_match.dart';
+import 'package:fanchat/presentation/screens/matches/single_match.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../constants/app_strings.dart';
+import '../../../constants/app_strings.dart';
 
 class MatchDetails extends StatefulWidget {
   MatchDetails({Key? key}) : super(key: key);

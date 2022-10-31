@@ -107,17 +107,24 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
                 ?Stack(
               children: [
                 mymessageController.value.isInitialized
-                    ? Container(
+                    ? InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (_){
+                      return OpenFullVideoPrivateChat(controller: mymessageController);
+                    }));
+                  },
+                      child: Container(
                   width: 200,
-                      child: AspectRatio(
-                      aspectRatio:mymessageController.value.size.width/mymessageController.value.size.height,
-                      child: VideoPlayer(mymessageController)),
+                        child: AspectRatio(
+                        aspectRatio:mymessageController.value.size.width/mymessageController.value.size.height,
+                        child: VideoPlayer(mymessageController)),
+                      ),
                     )
                     : const Center(child: CircularProgressIndicator()),
 
                 Positioned(
-                    top: MediaQuery.of(context).size.height*.2,
-                    right: MediaQuery.of(context).size.height*.08,
+                    top: MediaQuery.of(context).size.height*.01,
+                    right: MediaQuery.of(context).size.height*.01,
                     child: InkWell(
                       onTap: (){
                         // setState((){
@@ -134,9 +141,9 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
                         }));
                       },
                       child: CircleAvatar(
-                        backgroundColor: Colors.white.withOpacity(.2),
-                        radius: 40,
-                        child: mymessageController.value.isPlaying? Icon(Icons.pause,size: 40,color: Colors.white.withOpacity(.5),): Icon(Icons.play_arrow,size: 40,color: Colors.white.withOpacity(.5),),
+                        backgroundColor: Colors.white.withOpacity(.5),
+                        radius: 25,
+                        child: mymessageController.value.isPlaying? Icon(Icons.pause,size: 40,color: AppColors.primaryColor1.withOpacity(.5),): Icon(Icons.play_arrow,size: 40,color: AppColors.primaryColor1.withOpacity(.8),),
                       ),
                     )
                 ),

@@ -8,6 +8,7 @@ import 'package:fanchat/presentation/widgets/fan_area_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:get/state_manager.dart';
 
 class FanScreen extends StatefulWidget {
   const FanScreen({Key? key}) : super(key: key);
@@ -17,6 +18,8 @@ class FanScreen extends StatefulWidget {
 }
 
 class _FanScreenState extends State<FanScreen> {
+  var isLoading = true.obs;
+  var isAdding = true.obs;
 
   @override
   void initState() {

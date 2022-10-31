@@ -186,18 +186,25 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                         Stack(
                           children: [
                             senderController.value.isInitialized
-                                ? Container(
+                                ? InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (_){
+                                  return OpenFullVideoPrivateChat(controller: senderController);
+                                }));
+                              },
+                                  child: Container(
                               padding: const EdgeInsets.only(left: 5),
                               width: MediaQuery.of(context).size.width*.65,
                               child: AspectRatio(
-                                  aspectRatio:senderController.value.size.width/senderController.value.size.height,
-                                  child: VideoPlayer(senderController)),
-                            )
+                                    aspectRatio:senderController.value.size.width/senderController.value.size.height,
+                                    child: VideoPlayer(senderController)),
+                            ),
+                                )
                                 : const Center(child: CircularProgressIndicator()),
 
                             Positioned(
-                                top: MediaQuery.of(context).size.height*.22,
-                                right: MediaQuery.of(context).size.height*.11,
+                                top: MediaQuery.of(context).size.height*.01,
+                                right: MediaQuery.of(context).size.height*.01,
                                 child: InkWell(
                                   onTap: (){
                                     // setState((){
@@ -212,9 +219,9 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
                                     }));
                                   },
                                   child: CircleAvatar(
-                                    backgroundColor: Colors.white.withOpacity(.2),
-                                    radius: 40,
-                                    child: senderController.value.isPlaying? Icon(Icons.pause,size: 40,color: Colors.white.withOpacity(.5),): Icon(Icons.play_arrow,size: 40,color: Colors.white.withOpacity(.5),),
+                                    backgroundColor: Colors.white.withOpacity(.5),
+                                    radius: 25,
+                                    child: senderController.value.isPlaying? Icon(Icons.pause,size: 40,color: AppColors.primaryColor1.withOpacity(.8),): Icon(Icons.play_arrow,size: 40,color: AppColors.primaryColor1.withOpacity(.8),),
                                   ),
                                 )
                             ),

@@ -24,8 +24,24 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
       appBar: customAppbar('payPackage',context),
       body: Padding(
         padding: EdgeInsets.only(bottom: 15,left: 10,top: 25),
-        child: CashHelper.getData(key: 'Advertise')==1 || CashHelper.getData(key: 'premium')==1?
-        Column(
+        child: CashHelper.getData(key: 'Advertise')==1 && CashHelper.getData(key: 'premium')==1?
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'No Packages to choose you are pay all packages',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.myWhite,
+                height: 2,
+                fontSize: 22,
+                fontFamily: AppStrings.appFont,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        )
+            :Column(
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 15,bottom: 15),
@@ -34,69 +50,71 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Please select your package',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: AppStrings.appFont,
-                    color: AppColors.myGrey
-                  ),
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: AppStrings.appFont,
+                        color: AppColors.myGrey
+                    ),
                   ),
                 ],
               ),
             ),
             SizedBox(height: 20,),
             CashHelper.getData(key: 'premium')==1?
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children:  [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20,right: 10),
-                  child: Container(
-                    height: 20,
-                    width:20,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(50)
-                    ),
-                    child:Radio(
-                        value: 1,
-                        groupValue: _value,
-                        onChanged: (value){
-                          setState((){
-                            _value=1;
-                          });
-                        }),
-                  ),
-                ),
-                const Image(image: AssetImage('assets/images/premium.webp'),
-                  height: 50,
-                  width: 50,
-                ),
-                SizedBox(width: 20,),
-                Column(
-                  children: [
-                    Text('Premium Package',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: AppStrings.appFont,
-                          color: AppColors.myWhite
-                      ),
-                    ),
-                    SizedBox(height:5,),
-                    Text('20 \$ for 1 year',
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontFamily: AppStrings.appFont,
-                          color: AppColors.myGrey
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            )
-            :SizedBox(),
+            SizedBox()
+            :Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children:  [
+    Padding(
+    padding: const EdgeInsets.only(left: 20,right: 10),
+    child: Container(
+    height: 20,
+    width:20,
+    decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(50)
+    ),
+    child:Radio(
+    value: 1,
+    groupValue: _value,
+    onChanged: (value){
+    setState((){
+    _value=1;
+    });
+    }),
+    ),
+    ),
+    const Image(image: AssetImage('assets/images/premium.webp'),
+    height: 50,
+    width: 50,
+    ),
+    SizedBox(width: 20,),
+    Column(
+    children: [
+    Text('Premium Package',
+    style: TextStyle(
+    fontSize: 18,
+    fontFamily: AppStrings.appFont,
+    color: AppColors.myWhite
+    ),
+    ),
+    SizedBox(height:5,),
+    Text('20 \$ for 1 year',
+    style: TextStyle(
+    fontSize: 15,
+    fontFamily: AppStrings.appFont,
+    color: AppColors.myGrey
+    ),
+    ),
+    ],
+    ),
+    ],
+    ),
             SizedBox(height: 20,),
             CashHelper.getData(key: 'Advertise')==1?
-            Row(
+
+                SizedBox()
+            :Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children:  [
                 Padding(
@@ -144,8 +162,7 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
                   ],
                 ),
               ],
-            )
-            :SizedBox(),
+            ),
             Spacer(),
             Center(
 
@@ -164,22 +181,6 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
                   }),
             )
           ],
-        )
-            :Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'No Packages to choose you are pay all packages',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColors.myWhite,
-                height: 2,
-                fontSize: 22,
-                fontFamily: AppStrings.appFont,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
         )
       ),
     );

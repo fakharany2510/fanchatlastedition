@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:fanchat/business_logic/advertising_cubit/advertising_cubit.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/business_logic/register/register_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
@@ -76,7 +77,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
         providers:[
-          BlocProvider(create: (context)=>AppCubit()..getUser(context)..getCountries()..getProfilePosts()..getPosts()..getAllUsers()..getFanPosts()..periodic()..getLastUsers()),
+          BlocProvider(create: (context)=>AppCubit()..getUser(context)..getCountries()..getProfilePosts()..getPosts()..getAllUsers()..getFanPosts()..periodic()..getLastUsers()..getUserIds()),
           BlocProvider(create: (context)=>AdvertisingCubit()..getAdvertisingPosts()),
         ],
         child: FirebasePhoneAuthProvider(

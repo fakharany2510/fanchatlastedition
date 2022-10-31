@@ -95,7 +95,7 @@ class SendVideoPublicChat extends StatelessWidget {
                 :FloatingActionButton(
               onPressed: ()async{
 
-                final filesizeLimit = 30000000;  // in bytes // 30 Mega
+                final filesizeLimit = 15000000;  // in bytes // 30 Mega
                 final filesize = await AppCubit.get(context).postVideo4!.length(); // in bytes
                 final isValidFilesize = filesize < filesizeLimit;
                 if (isValidFilesize) {
@@ -117,7 +117,7 @@ class SendVideoPublicChat extends StatelessWidget {
                   // );
 
                 } else {
-                  customToast(title: 'Max Video size is 30 Mb', color: Colors.red);
+                  customToast(title: 'Max Video size is 15 Mb', color: Colors.red);
                 }
 
               },
