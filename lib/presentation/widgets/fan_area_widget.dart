@@ -23,7 +23,7 @@ class FanAreaWidget extends StatefulWidget {
   State<FanAreaWidget> createState() => _FanAreaWidgetState();
 }
 
-class _FanAreaWidgetState extends State<FanAreaWidget> {
+class _FanAreaWidgetState extends State<FanAreaWidget>  with AutomaticKeepAliveClientMixin {
   final FijkPlayer player = FijkPlayer();
 
   //bool isLoading = true;
@@ -360,4 +360,7 @@ class _FanAreaWidgetState extends State<FanAreaWidget> {
       }
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

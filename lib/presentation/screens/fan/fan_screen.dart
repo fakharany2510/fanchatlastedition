@@ -83,6 +83,7 @@ class _FanScreenState extends State<FanScreen> {
                     //   )
                     // ),
                     GridView.count(
+                      addAutomaticKeepAlives: true,
                       childAspectRatio: MediaQuery.of(context).size.height*.0012/1.24,
                       crossAxisSpacing: MediaQuery.of(context).size.height*.008,
                       mainAxisSpacing: MediaQuery.of(context).size.height*.00,

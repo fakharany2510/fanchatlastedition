@@ -21,7 +21,7 @@ class MyMessageWidget extends StatefulWidget {
   State<MyMessageWidget> createState() => _MyMessageWidgetState();
 }
 
-class _MyMessageWidgetState extends State<MyMessageWidget> {
+class _MyMessageWidgetState extends State<MyMessageWidget> with AutomaticKeepAliveClientMixin{
 
   late VideoPlayerController mymessageController;
 
@@ -163,4 +163,8 @@ class _MyMessageWidgetState extends State<MyMessageWidget> {
       },
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

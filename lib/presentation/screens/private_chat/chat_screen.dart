@@ -90,6 +90,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                           child: CircularProgressIndicator(),
                         )
                             : ListView.separated(
+                            addAutomaticKeepAlives: true,
                           shrinkWrap: true,
                             separatorBuilder: (context,index)=>Padding(
                               padding: EdgeInsets.symmetric(horizontal: 0,vertical: 0),

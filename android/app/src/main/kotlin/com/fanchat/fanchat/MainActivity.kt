@@ -1,4 +1,4 @@
-package com.fanchat.fanchat
+package com.fan.fan
 
 import io.flutter.embedding.android.FlutterActivity
 

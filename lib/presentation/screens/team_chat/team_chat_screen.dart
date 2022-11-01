@@ -219,6 +219,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                         width:MediaQuery.of(context).size.width*.9 ,
                                         height: MediaQuery.of(context).size.height*.18,
                                         child:  ListView.separated(
+                                            addAutomaticKeepAlives: true,
                                             itemBuilder: (context,index){
                                               return Padding(
                                                 padding: const EdgeInsets.all(4.0),

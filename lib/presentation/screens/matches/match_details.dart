@@ -155,9 +155,9 @@ class _MatchDetailsState extends State<MatchDetails> {
                                     itemBuilder: (context,index){
                                       return InkWell(
                                         onTap: (){
-                                          Navigator.push(context, MaterialPageRoute(builder: (_){
-                                            return const SingleMatch();
-                                          }));
+                                          // Navigator.push(context, MaterialPageRoute(builder: (_){
+                                          //   return const SingleMatch();
+                                          // }));
                                         },
                                         child: Container(
                                           margin: const EdgeInsets.symmetric(
