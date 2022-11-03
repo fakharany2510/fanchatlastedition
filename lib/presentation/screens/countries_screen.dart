@@ -121,6 +121,8 @@ class _CountriesScreenState extends State<CountriesScreen> {
                                           onTap: (){
                                             AppCubit.get(context).deleteCheeringPost().then((value) {
                                               AppCubit.get(context).isLast=true;
+                                              AppCubit.get(context).isWaiting=false;
+                                              AppCubit.get(context).updateWaitingCheering();
                                               Navigator.push(context, MaterialPageRoute(builder: (context)=>
                                                   TeamChatScreen(countryName:data['name'],countryImage: data['image'],)
                                               ));
