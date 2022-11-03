@@ -1,4 +1,6 @@
-class FanModel{
+import 'package:flutter/material.dart';
+
+class FanModel {
   String? userId;
   String? name;
   String? image;

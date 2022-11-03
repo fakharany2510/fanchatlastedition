@@ -20,7 +20,7 @@ class SenderTeamChatWidget extends StatefulWidget {
   State<SenderTeamChatWidget> createState() => _SenderTeamChatWidgetState();
 }
 
-class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
+class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> with AutomaticKeepAliveClientMixin {
 
   late VideoPlayerController senderController;
 
@@ -288,4 +288,8 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> {
       },
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

@@ -22,7 +22,7 @@ class MyMessageTeamChatWidget extends StatefulWidget {
   State<MyMessageTeamChatWidget> createState() => _MyMessageTeamChatWidgetState();
 }
 
-class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
+class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> with AutomaticKeepAliveClientMixin {
 
   late VideoPlayerController mymessageController;
 
@@ -125,7 +125,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
                   ):
                   (AppCubit.get(context).teamChat[widget.index!].image !=null) ?
                   Container(
-                    width: MediaQuery.of(context).size.width*.74,
+                    width: MediaQuery.of(context).size.width*.60,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 5,
                         vertical: 5
@@ -311,4 +311,8 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> {
       },
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

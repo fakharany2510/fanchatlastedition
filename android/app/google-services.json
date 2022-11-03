@@ -8,6 +8,50 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:148742212571:android:b93edd43fcaffcdd3275fe",
+        "android_client_info": {
+          "package_name": "com.fan.fan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "148742212571-tgckubo40bpurgo9nc1mcqnkhlaj8b24.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fan.fan",
+            "certificate_hash": "57eddf61085a8e62b1155d3651b80ede2c949001"
+          }
+        },
+        {
+          "client_id": "148742212571-apbgjeq5dq6fr36vg7vl70cl4umidivc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXT-cvU96og5GmHSYfohMW6QpRaFcS6MY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "148742212571-apbgjeq5dq6fr36vg7vl70cl4umidivc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "148742212571-jm877td9o7mh5e80oos7aukvti1psj5p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fanchat"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:148742212571:android:290183b18385d7a83275fe",
         "android_client_info": {
           "package_name": "com.fanchat.fanchat"
@@ -15,11 +59,35 @@
       },
       "oauth_client": [
         {
-          "client_id": "148742212571-714ba1ekn48sildohaul97m0imjkarpv.apps.googleusercontent.com",
+          "client_id": "148742212571-6g21bre8b1rhi6k5mao6uisg56chg45g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fanchat.fanchat",
+            "certificate_hash": "f0e0f8a9fcdc318b90a2d6b2fd6a545d8944eeaa"
+          }
+        },
+        {
+          "client_id": "148742212571-6hprfh96v36rhfh8f5ks7ep66c590asb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.fanchat.fanchat",
             "certificate_hash": "57eddf61085a8e62b1155d3651b80ede2c949001"
+          }
+        },
+        {
+          "client_id": "148742212571-di64qhdu5tr6oj08h179e5n1sn4kl8g8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fanchat.fanchat",
+            "certificate_hash": "200cb79d99ece7e317a921d2f3f237eb68564cee"
+          }
+        },
+        {
+          "client_id": "148742212571-h8s6hn452i9gnlsincro0lbm3bgu51au.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fanchat.fanchat",
+            "certificate_hash": "1e79707aca17d026a4c60c68b9ae9c50fc8b258a"
           }
         },
         {

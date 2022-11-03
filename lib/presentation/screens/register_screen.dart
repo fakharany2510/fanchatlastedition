@@ -255,9 +255,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               width: size.width*.6,
                               height: size.height*.06,
                               function: (){
-                                if(name.text == "fanchat"){
+                                if(name.text == "premium fan"){
                                 if(isCheckBoxTrue == true ){
-                                  AppStrings.uId = '1832855570382325';
+                                  CashHelper.saveData(key: 'premium',value: 1);
+                                  CashHelper.saveData(key: 'days' , value: 0);
+                                  CashHelper.saveData(key: 'Advertise' , value: 0);
+                                  AppStrings.uId = 'fWEnjpidcAajvh5WFwIMiXtD9Gl1';
                                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                   const HomeLayout()), (Route<dynamic> route) => false);
                                   // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
@@ -272,6 +275,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     fontSize: 18.0,
                                   );
                                 }
+                                }
+                                else if(name.text == "advertise fan"){
+                                  if(isCheckBoxTrue == true ){
+                                    CashHelper.saveData(key: 'premium',value: 0);
+                                    CashHelper.saveData(key: 'days' , value: 0);
+                                    CashHelper.saveData(key: 'Advertise' , value: 1);
+                                    CashHelper.saveData(key: 'advertise',value:true);
+                                    AppStrings.uId = 'geLSZy0W7oTQb9wE6WzqLhxPMKp1';
+                                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                                    const HomeLayout()), (Route<dynamic> route) => false);
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
+                                  }else{
+                                    Fluttertoast.showToast(
+                                      msg:"You Must Agree To Privacy Policies First",
+                                      toastLength: Toast.LENGTH_LONG,
+                                      gravity: ToastGravity.TOP,
+                                      timeInSecForIosWeb: 5,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 18.0,
+                                    );
+                                  }
                                 }
                                 else if(formKey.currentState!.validate() || isNullOrBlank(phoneNumber)){
                                  if(isCheckBoxTrue == true ){
