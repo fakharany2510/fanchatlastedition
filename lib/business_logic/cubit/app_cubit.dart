@@ -2441,7 +2441,7 @@ List<int> commentIndex=[];
   void getCountries(){
 
     FirebaseFirestore.instance
-        .collection('countries')
+        .collection('countries').orderBy('name')
         .get().then((value) {
 
           value.docs.forEach((element) {
@@ -2527,9 +2527,9 @@ List<int> commentIndex=[];
     await picker.pickVideo(source: ImageSource.gallery);
     if (pickedFile != null) {
       postVideo4 = File(pickedFile.path);
-      videoPlayerController = VideoPlayerController.file(postVideo4!)
+      controller = CachedVideoPlayerController.file(postVideo4!)
         ..initialize().then((value) {
-          videoPlayerController!.pause();
+          controller!.pause();
           emit(PickPrivateChatViedoSuccessState());
         }).catchError((error) {
           print('error picking video ${error.toString()}');

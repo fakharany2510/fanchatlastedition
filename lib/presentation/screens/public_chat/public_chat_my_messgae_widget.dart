@@ -88,29 +88,35 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> w
                           bottomRight: Radius.circular(10),
                         ),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('${AppCubit.get(context).publicChat[widget.index!].senderName}',
-                            style:  TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 9,
-                                color:  Color(0xfffbf7c2),
-                                fontFamily: AppStrings.appFont
-                            ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Text('${AppCubit.get(context).publicChat[widget.index!].senderName}',
+                                style:  TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 9,
+                                    color:  Color(0xfffbf7c2),
+                                    fontFamily: AppStrings.appFont
+                                ),
 
-                          ),
-                          const SizedBox(height: 5,),
-                          Text(' ${AppCubit.get(context).publicChat[widget.index!].text}',
-                            style:  const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18,
-                                color:  Color(0xfffbf7c2),
-                                fontFamily: AppStrings.appFont
+                              ),
                             ),
-                          )
+                            const SizedBox(height: 5,),
+                            Text(' ${AppCubit.get(context).publicChat[widget.index!].text}',
+                              style:  const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                  color:  Color(0xfffbf7c2),
+                                  fontFamily: AppStrings.appFont
+                              ),
+                            )
 
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ):
@@ -130,45 +136,53 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> w
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(5),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('${AppCubit.get(context).publicChat[widget.index!].senderName}',
-                            style:  TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 9,
-                                color:  Color(0xfffbf7c2),
-                                fontFamily: AppStrings.appFont
-                            ),
+                          Padding(
+                            padding: const EdgeInsets.only(left:0),
+                            child: Text('${AppCubit.get(context).publicChat[widget.index!].senderName}',
+                              style:  TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 9,
+                                  color:  Color(0xfffbf7c2),
+                                  fontFamily: AppStrings.appFont
+                              ),
 
+                            ),
                           ),
                           const SizedBox(height: 5,),
-                          Material(
-                            color: const Color(0xffb1b2ff).withOpacity(.10),
-                            elevation: 100,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                          Stack(
+                            children: [
+                              InkWell(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: AppCubit.get(context).publicChat[widget.index!].image)));
 
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(3),
+                                  },
+                                  child:Material(
+                                    elevation: 100,
+                                    shadowColor:  const Color(0xffb1b2ff).withOpacity(.16),
 
-                            ),
-                            child: GestureDetector(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowHomeImage(image: AppCubit.get(context).publicChat[widget.index!].image)));
-                              },
-                              child: CachedNetworkImage(
-                                //height: MediaQuery.of(context).size.height*.4,
-                                cacheManager: AppCubit.get(context).manager,
-                                imageUrl: "${AppCubit.get(context).publicChat[widget.index!].image}",
-                                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                                // maxHeightDiskCache:75,
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
 
-                                fit: BoxFit.cover,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(3),
+
+                                    ),
+                                    child: CachedNetworkImage(
+                                      cacheManager: AppCubit.get(context).manager,
+                                      imageUrl: "${AppCubit.get(context).publicChat[widget.index!].image}",
+                                      placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
+                                      // maxHeightDiskCache:75,
+
+                                      fit: BoxFit.contain,
+                                    ),
+                                  )
                               ),
-                            ),
-                          )
 
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -188,66 +202,73 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> w
                             bottomRight: Radius.circular(10),
                           ),
                         ),
-                        child: Column(
-                          children: [
-                            Text('${AppCubit.get(context).publicChat[widget.index!].senderName}',
-                              style:  TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 9,
-                                  color:  Color(0xfffbf7c2),
-                                  fontFamily: AppStrings.appFont
-                              ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left:0),
+                                child: Text('${AppCubit.get(context).publicChat[widget.index!].senderName}',
+                                  style:  TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 9,
+                                      color:  Color(0xfffbf7c2),
+                                      fontFamily: AppStrings.appFont
+                                  ),
 
-                            ),
-                            const SizedBox(height: 5,),
-                            Stack(
+                                ),
+                              ),
+                              const SizedBox(height: 5,),
+                              Stack(
                     children: [
                       InkWell(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (_){
-                            return OpenFullVideoPrivateChat(controller: AppCubit.get(context).publicChat[widget.index!].video);
-                          }));
-                        },
-                        child:Material(
-                          elevation: 100,
-                          shadowColor:  const Color(0xffb1b2ff).withOpacity(.16),
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (_){
+                              return OpenFullVideoPrivateChat(controller: AppCubit.get(context).publicChat[widget.index!].video);
+                            }));
+                          },
+                          child:Material(
+                            elevation: 100,
+                            shadowColor:  const Color(0xffb1b2ff).withOpacity(.16),
 
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
 
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(3),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(3),
 
-                          ),
-                          child: CachedNetworkImage(
-                            cacheManager: AppCubit.get(context).manager,
-                            imageUrl: "${AppCubit.get(context).publicChat[widget.index!].publicChatThumbnail}",
-                            placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
-                            // maxHeightDiskCache:75,
+                            ),
+                            child: CachedNetworkImage(
+                              cacheManager: AppCubit.get(context).manager,
+                              imageUrl: "${AppCubit.get(context).publicChat[widget.index!].publicChatThumbnail}",
+                              placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
+                              // maxHeightDiskCache:75,
 
-                            fit: BoxFit.contain,
-                          ),
-                        )
-                      ),
-
-                      Positioned(
-                          top: MediaQuery.of(context).size.height*.01,
-                          right: MediaQuery.of(context).size.height*.01,
-                          child: InkWell(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (_){
-                                return OpenFullVideoPrivateChat(controller: AppCubit.get(context).publicChat[widget.index!].video);
-                              }));
-                            },
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white.withOpacity(.5),
-                              radius: 25,
-                              child: Icon(Icons.play_arrow,size: 40,color: AppColors.primaryColor1.withOpacity(.8),),
+                              fit: BoxFit.contain,
                             ),
                           )
                       ),
+
+                      Positioned(
+                            top: MediaQuery.of(context).size.height*.01,
+                            right: MediaQuery.of(context).size.height*.01,
+                            child: InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (_){
+                                  return OpenFullVideoPrivateChat(controller: AppCubit.get(context).publicChat[widget.index!].video);
+                                }));
+                              },
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white.withOpacity(.5),
+                                radius: 25,
+                                child: Icon(Icons.play_arrow,size: 40,color: AppColors.primaryColor1.withOpacity(.8),),
+                              ),
+                            )
+                      ),
                     ],
                   ),
-                          ],
+                            ],
+                          ),
                         ),
                       ):
                       Container(

@@ -1,14 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cached_video_player/cached_video_player.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
-import 'package:fanchat/data/modles/message_model.dart';
 import 'package:fanchat/presentation/screens/private_chat/open_full_video_private_chat.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:video_player/video_player.dart';
 import 'package:voice_message_package/voice_message_package.dart';
 
 class SenderTeamChatWidget extends StatefulWidget {
@@ -241,7 +238,9 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget> with Automa
                           audioSrc: '${AppCubit.get(context).teamChat[widget.index!].voice}',
                           played: true, // To show played badge or not.
                           me: false, // Set message side.
-                          onPlay: () {}, // Do something when voice played.
+                          onPlay: () {
+
+                          }, // Do something when voice played.
                         ),
                       ],
                     ),

@@ -1,12 +1,9 @@
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
-import 'package:fanchat/data/services/notification_helper.dart';
-import 'package:fanchat/presentation/notifications/functions/send_notification.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:video_player/video_player.dart';
 import 'package:intl/intl.dart';
 import '../../../constants/app_strings.dart';
 import '../../layouts/home_layout.dart';
@@ -40,9 +37,6 @@ class _AddNewVideoState extends State<AddNewVideo> {
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
         if(state is BrowiseCreateVideoPostLoadingState){
-         // Navigator.of(context).popAndPushNamed('home_layout');
-         //  AppCubit.get(context).testLikes();
-         //  AppCubit.get(context).testComments();
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context)=>const HomeLayout()), (route) => false);
           AppCubit.get(context).videoPlayerController!.pause();
@@ -96,19 +90,8 @@ class _AddNewVideoState extends State<AddNewVideo> {
                             dateTime: DateFormat.yMMMd().format(DateTime.now()),
                             text:postText.text
                         );
-                        // notifyHelper.displayNotification(
-                        //     title:'New Post',
-                        //     body:'${postText.text}'
-                        // );
-                        // callFcmApiSendPushNotifications(
-                        //     title: 'New Post Added',
-                        //     description:postText.text,
-                        //     imageUrl: "${AppCubit.get(context).postImage}",
-                        //     context: context
-                        //   //  token:AppCubit.get(context).userToken
-                        // );
                       }else {
-                        AppCubit.get(context).videoPlayerController!.pause();
+                        AppCubit.get(context).controller!.pause();
                         final filesizeLimit = 15000000;  // in bytes // 30 Mega
                         final filesize = await AppCubit.get(context).postVideo!.length(); // in bytes
                         final isValidFilesize = filesize < filesizeLimit;
@@ -126,15 +109,6 @@ class _AddNewVideoState extends State<AddNewVideo> {
                         } else {
                           customToast(title: 'Max Video size is 15 Mb', color: Colors.red);
                         }
-                        // callFcmApiSendPushNotifications(
-                        //     title: 'New Post Added',
-                        //     description:postText.text,
-                        //     imageUrl: "",
-                        //     context: context
-                        //
-                        //   //  token:AppCubit.get(context).userToken
-                        // );
-                   
                       }
                     },
                     buttonText: 'post',
@@ -195,7 +169,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
                         ),
                       ),
                       const SizedBox(height: 40,),
-                      ( AppCubit.get(context).postVideo!= null && AppCubit.get(context).videoPlayerController!.value.isInitialized)
+                      ( AppCubit.get(context).postVideo!= null && AppCubit.get(context).controller!.value.isInitialized)
                           ?Container(
                             height: MediaQuery.of(context).size.height*.55,
                             child: Align(
@@ -203,11 +177,11 @@ class _AddNewVideoState extends State<AddNewVideo> {
                               heightFactor: 1,
                               widthFactor: 1,
                               child: AspectRatio(
-                                aspectRatio:AppCubit.get(context).videoPlayerController!.value.aspectRatio*1,
-                                child: AppCubit.get(context).videoPlayerController ==null
+                                aspectRatio:AppCubit.get(context).controller!.value.aspectRatio*1,
+                                child: AppCubit.get(context).controller ==null
                                     ?const SizedBox(height: 0,)
-                                    :VideoPlayer(
-                                    AppCubit.get(context).videoPlayerController!
+                                    :CachedVideoPlayer(
+                                    AppCubit.get(context).controller!
                                 ),
                               ),
                             ),

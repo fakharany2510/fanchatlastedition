@@ -10,7 +10,6 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
-import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:fanchat/presentation/screens/team_chat/cheering_screen.dart';
 import 'package:fanchat/presentation/screens/team_chat/send_image_chat_screen.dart';
@@ -62,9 +61,6 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
   void initState() {
     AppCubit.get(context).getTeamChat(widget.countryName);
     super.initState();
-    // if(scrollController.hasClients){
-    //   scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
-    // }
     isWriting = false;
 
     Timer(const Duration(seconds: 1), () {
@@ -100,9 +96,9 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                   }
                 },
                 builder: (context,state){
-                  if(scrollController.hasClients){
-                    scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
-                  }
+                  // if(scrollController.hasClients){
+                  //   scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+                  // }
 
                   return Scaffold(
                     backgroundColor: Colors.white,

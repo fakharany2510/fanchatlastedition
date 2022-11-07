@@ -220,10 +220,19 @@ class _FanAreaWidgetState extends State<FanAreaWidget>  with AutomaticKeepAliveC
                   Container(
                     height: MediaQuery.of(context).size.height * .18,
                     width: double.infinity,
-                    child: Image(
-                      image: NetworkImage(AppCubit.get(context).fans[widget.index!].thumbnailFanPosts!),
-                   fit: BoxFit.cover,
-                    )
+                    child:CachedNetworkImage(
+                      cacheManager: AppCubit.get(context).manager,
+                      imageUrl: "${AppCubit.get(context).fans[widget.index!].thumbnailFanPosts!}",
+                      placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
+                      // maxHeightDiskCache:75,
+
+                      fit: BoxFit.cover,
+                    ),
+
+                   //  Image(
+                   //    image: NetworkImage(AppCubit.get(context).fans[widget.index!].thumbnailFanPosts!),
+                   // fit: BoxFit.cover,
+                   //  )
 
                   ),
                 //  player==null ?Text('') :

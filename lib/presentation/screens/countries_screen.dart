@@ -101,144 +101,138 @@ class _CountriesScreenState extends State<CountriesScreen> {
                         }
                         return true;
                       },
-                      child: StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance.collection('countries').orderBy('name').snapshots(),
-                        builder: (context, snapshots) {
-                          return (snapshots.connectionState == ConnectionState.waiting)
-                              ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                              : ListView.builder(
-                                  controller: _childScrollController,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: snapshots.data!.docs.length,
-                                  itemBuilder: (context, index) {
-                                    var data = snapshots.data!.docs[index].data()
-                                    as Map<String, dynamic>;
+                      child:AppCubit.get(context).countries.isNotEmpty? ListView.builder(
+                          controller: _childScrollController,
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: AppCubit.get(context).countries.length,
+                          itemBuilder: (context, index) {
+                            var data = AppCubit.get(context).countries[index]
+                            as Map<String, dynamic>;
 
-                                    if (name.isEmpty) {
-                                      return InkWell(
-                                          onTap: (){
-                                            AppCubit.get(context).deleteCheeringPost().then((value) {
-                                              AppCubit.get(context).isLast=true;
-                                              AppCubit.get(context).isWaiting=false;
-                                              AppCubit.get(context).updateWaitingCheering();
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                                                  TeamChatScreen(countryName:data['name'],countryImage: data['image'],)
-                                              ));
-                                            });
+                            if (name.isEmpty) {
+                              return InkWell(
+                                  onTap: (){
+                                    AppCubit.get(context).deleteCheeringPost().then((value) {
+                                      AppCubit.get(context).isLast=true;
+                                      AppCubit.get(context).isWaiting=false;
+                                      AppCubit.get(context).updateWaitingCheering();
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                          TeamChatScreen(countryName:data['name'],countryImage: data['image'],)
+                                      ));
+                                    });
 
-                                            // AppCubit.get(context).deleteWaitingPost().then((value) {
-                                            //
-                                            // });
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(left:13,right: 13,bottom: 5),
-                                            child: Container(
-                                              width: MediaQuery.of(context).size.width*.5,
-                                              height: MediaQuery.of(context).size.height*.08,
-                                              decoration: BoxDecoration(
-                                                  color: AppColors.myGrey.withOpacity(.1)
+                                    // AppCubit.get(context).deleteWaitingPost().then((value) {
+                                    //
+                                    // });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left:13,right: 13,bottom: 5),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width*.5,
+                                      height: MediaQuery.of(context).size.height*.08,
+                                      decoration: BoxDecoration(
+                                          color: AppColors.myGrey.withOpacity(.1)
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          left: MediaQuery.of(context).size.height*.01,
+                                        ),
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: ListTile(
+                                              title: Text(
+                                                data['name'],
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontFamily: AppStrings.appFont,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold),
                                               ),
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                  left: MediaQuery.of(context).size.height*.01,
-                                                ),
-                                                child: Align(
-                                                  alignment: Alignment.center,
-                                                  child: ListTile(
-                                                      title: Text(
-                                                        data['name'],
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: const TextStyle(
-                                                            color: Colors.white,
-                                                            fontFamily: AppStrings.appFont,
-                                                            fontSize: 16,
-                                                            fontWeight: FontWeight.bold),
-                                                      ),
 
-                                                      leading: Container(
-                                                        decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                                color: AppColors.myWhite,
-                                                                width: 1
-                                                            )
-                                                        ),
-                                                        child:CachedNetworkImage(
-                                                          cacheManager: AppCubit.get(context).manager,
-                                                          imageUrl: "${data['image']}",
-                                                          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                                                          fit: BoxFit.cover,
-                                                            height:MediaQuery.of(context).size.height*.04,
-                                                            width:MediaQuery.of(context).size.height*.06,
-
-                                                        )
-
-                                                        // Image(
-                                                        //   image: NetworkImage(data['image']),
-                                                        //   fit: BoxFit.cover,
-                                                        //   height:MediaQuery.of(context).size.height*.04,
-                                                        //   width:MediaQuery.of(context).size.height*.06,
-                                                        // ),
+                                              leading: Container(
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: AppColors.myWhite,
+                                                          width: 1
                                                       )
                                                   ),
-                                                ),
-                                              ),
+                                                  child:CachedNetworkImage(
+                                                    cacheManager: AppCubit.get(context).manager,
+                                                    imageUrl: "${data['image']}",
+                                                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                                                    fit: BoxFit.cover,
+                                                    height:MediaQuery.of(context).size.height*.04,
+                                                    width:MediaQuery.of(context).size.height*.06,
+
+                                                  )
+
+                                                // Image(
+                                                //   image: NetworkImage(data['image']),
+                                                //   fit: BoxFit.cover,
+                                                //   height:MediaQuery.of(context).size.height*.04,
+                                                //   width:MediaQuery.of(context).size.height*.06,
+                                                // ),
+                                              )
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                              );
+                            }
+                            if (data['name']
+                                .toString()
+                                .toLowerCase()
+                                .startsWith(name.toLowerCase())) {
+                              return  InkWell(
+                                  onTap: (){
+                                    // CashHelper.saveData(key: 'country',value:data['name'] ).then((value){
+                                    //   //AppCubit.get(context).getTeamChat(data['name']);
+                                    //
+                                    // });
+                                    AppCubit.get(context).isLast=true;
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                        TeamChatScreen(countryName:data['name'],countryImage: data['image'],)
+                                    ));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left:13,right: 13,bottom: 5),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width*.5,
+                                      height: MediaQuery.of(context).size.height*.08,
+                                      decoration: BoxDecoration(
+                                          color: AppColors.myGrey.withOpacity(.3)
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: ListTile(
+                                          title: Text(
+                                            data['name'],
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16,
+                                                fontFamily: AppStrings.appFont,
+                                                fontWeight: FontWeight.bold
                                             ),
-                                          )
-                                      );
-                                    }
-                                    if (data['name']
-                                        .toString()
-                                        .toLowerCase()
-                                        .startsWith(name.toLowerCase())) {
-                                      return  InkWell(
-                                          onTap: (){
-                                            // CashHelper.saveData(key: 'country',value:data['name'] ).then((value){
-                                            //   //AppCubit.get(context).getTeamChat(data['name']);
-                                            //
-                                            // });
-                                            AppCubit.get(context).isLast=true;
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                                                TeamChatScreen(countryName:data['name'],countryImage: data['image'],)
-                                            ));
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(left:13,right: 13,bottom: 5),
-                                            child: Container(
-                                              width: MediaQuery.of(context).size.width*.5,
-                                              height: MediaQuery.of(context).size.height*.08,
-                                              decoration: BoxDecoration(
-                                                  color: AppColors.myGrey.withOpacity(.3)
-                                              ),
-                                              child: Align(
-                                                alignment: Alignment.center,
-                                                child: ListTile(
-                                                  title: Text(
-                                                    data['name'],
-                                                    maxLines: 1,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 16,
-                                                        fontFamily: AppStrings.appFont,
-                                                        fontWeight: FontWeight.bold
-                                                    ),
-                                                  ),
-                                                  leading: CircleAvatar(
-                                                    backgroundImage: NetworkImage(data['image']),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                      );
-                                    }
-                                    return Container();
-                                  });
-                        },
+                                          ),
+                                          leading: CircleAvatar(
+                                            backgroundImage: NetworkImage(data['image']),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                              );
+                            }
+                            return Container();
+                          })
+                          :const Center(
+                            child: CircularProgressIndicator(),
                       ),
                     ),
                   ],

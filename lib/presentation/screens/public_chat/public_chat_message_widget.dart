@@ -123,7 +123,6 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> with Au
                                 imageUrl: "${AppCubit.get(context).publicChat[widget.index!].image}",
                                 placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
                                 // maxHeightDiskCache:75,
-
                                 fit: BoxFit.contain,
                               ),
                             )

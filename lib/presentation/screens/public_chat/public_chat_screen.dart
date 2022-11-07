@@ -84,7 +84,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
               },
               builder: (context,state){
                 if(scrollController.hasClients){
-                  scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+                  scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
                 }
                 return Scaffold(
                   backgroundColor: Colors.white,
@@ -120,7 +120,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                       var publicChat =AppCubit.get(context).publicChat[index];
                                       if(AppCubit.get(context).userModel!.uId == publicChat.senderId)
                                         //send message
-                                        return SenderPublicChatWidget(index: index);
+                                        return  SenderPublicChatWidget(index: index);
                                       //receive message
                                       return MyMessagePublicChatWidget(index: index,);
                                     },
