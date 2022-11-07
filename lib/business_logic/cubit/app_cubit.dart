@@ -93,12 +93,40 @@ class AppCubit extends Cubit<AppState> {
     'https://images.netdirector.co.uk/gforces-auto/image/upload/w_1349,h_450,q_auto,c_fill,f_auto,fl_lossy/auto-client/07057d0e6193c6b928e53a2ec37e91ef/mg_hs_cover.png'
   ];
 
+  ScrollController publicChatController = ScrollController();
 
   int currentIndex=0;
   void navigateScreen(int index,context){
 
     currentIndex=index;
     if(currentIndex==4){
+      if(AppCubit.get(context).publicChatController.hasClients){
+        AppCubit.get(context).publicChatController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
+        emit(UploadVideoPublicChatLoadingState());
+      }
+
+      Future.delayed(const Duration(milliseconds: 500),(){
+        if(AppCubit.get(context).publicChatController.hasClients){
+          AppCubit.get(context).publicChatController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
+          emit(UploadProfileImageSuccessState());
+        }
+      });
+
+      Future.delayed(const Duration(milliseconds: 1500),(){
+        if(AppCubit.get(context).publicChatController.hasClients){
+          AppCubit.get(context).publicChatController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
+          emit(UploadProfileImageSuccessState());
+        }
+      });
+
+      Future.delayed(const Duration(milliseconds: 2500),(){
+        if(AppCubit.get(context).publicChatController.hasClients){
+          AppCubit.get(context).publicChatController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
+          emit(UploadProfileImageSuccessState());
+        }
+      });
+
+
     }
     if(currentIndex==3){
       getAllUsers();
@@ -296,9 +324,6 @@ class AppCubit extends Cubit<AppState> {
     }
 
 }
-
-
-
 
   String ?profilePath;
 

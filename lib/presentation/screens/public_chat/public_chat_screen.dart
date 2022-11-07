@@ -51,14 +51,13 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
   bool recording=false;
   bool? isComplete;
   bool? uploadingRecord = false;
-  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
 
     super.initState();
-    if(scrollController.hasClients){
-      scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+    if(AppCubit.get(context).publicChatController.hasClients){
+      AppCubit.get(context).publicChatController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
     }
     isWriting = false;
   }
@@ -68,8 +67,8 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
     return ConditionalBuilder(
       builder: (context)=>Builder(
           builder: (context) {
-            if(scrollController.hasClients){
-              scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+            if(AppCubit.get(context).publicChatController.hasClients){
+              AppCubit.get(context).publicChatController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
             }
             AppCubit.get(context).getPublicChat();
             return BlocConsumer<AppCubit,AppState>(
@@ -83,8 +82,8 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                 }
               },
               builder: (context,state){
-                if(scrollController.hasClients){
-                  scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
+                if(AppCubit.get(context).publicChatController.hasClients){
+                  AppCubit.get(context).publicChatController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
                 }
                 return Scaffold(
                   backgroundColor: Colors.white,
@@ -113,7 +112,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                 child: ListView.separated(
 
                                     addAutomaticKeepAlives: true,
-                                    controller: scrollController,
+                                    controller: AppCubit.get(context).publicChatController,
                                     physics: const BouncingScrollPhysics(),
                                     itemBuilder: (context , index)
                                     {
@@ -193,8 +192,8 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                                 AppCubit.get(context).isSend=true;
                                               });
                                               stopRecord();
-                                              scrollController.animateTo(
-                                                scrollController.position.maxScrollExtent,
+                                              AppCubit.get(context).publicChatController.animateTo(
+                                                AppCubit.get(context).publicChatController.position.maxScrollExtent,
                                                 duration: const Duration(milliseconds: 300),
                                                 curve: Curves.easeOut,
                                               );

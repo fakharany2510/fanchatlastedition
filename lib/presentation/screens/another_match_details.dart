@@ -65,6 +65,8 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
     super.initState();
 
     isWriting = false;
+    AppCubit.get(context).getMessages(recevierId: widget.userId!);
+
   }
   @override
   Widget build(BuildContext context) {
@@ -74,7 +76,6 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
             if(scrollController.hasClients){
               scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
             }
-            AppCubit.get(context).getMessages(recevierId: widget.userId!);
             return BlocConsumer<AppCubit,AppState>(
               listener: (context,state){
                 if(state is PickChatImageSuccessState ){
