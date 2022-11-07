@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/matech_scedule.dart';
@@ -193,9 +194,18 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                 children: [
                                                   Column(
                                                     children: [
-                                                      CircleAvatar(
-                                                        radius: 25,
-                                                        backgroundImage:  NetworkImage(AppCubit.get(context).allMatches[index].firstImage!),
+                                                      Container(
+                                                        height: 50,
+                                                        width: 50,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(50)
+                                                        ),
+                                                        child: CachedNetworkImage(
+                                                          cacheManager: AppCubit.get(context).manager,
+                                                          imageUrl: "${AppCubit.get(context).allMatches[index].firstImage!}",
+                                                          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                                                          fit: BoxFit.fitWidth,
+                                                        ) ,
                                                       ),
                                                       const  SizedBox(height: 5,),
                                                       Text(AppCubit.get(context).allMatches[index].firstTeam!,style: TextStyle(
@@ -232,7 +242,7 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                             //   textAlign: TextAlign.center,
                                                             // ),
                                                             const SizedBox(width: 10,),
-                                                            Text('Not Start',style: TextStyle(
+                                                            Text('Not Started',style: TextStyle(
                                                                 color: AppColors.myWhite,
                                                                 fontSize: 17,
                                                                 fontWeight: FontWeight.w500,
@@ -259,11 +269,20 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                   const SizedBox(width: 25,),
                                                   Column(
                                                     children: [
-
-                                                      CircleAvatar(
-                                                        radius: 25,
-                                                        backgroundImage:  NetworkImage(AppCubit.get(context).allMatches[index].secondImage!),
+                                                      Container(
+                                                        height: 50,
+                                                        width: 50,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(50)
+                                                        ),
+                                                        child: CachedNetworkImage(
+                                                          cacheManager: AppCubit.get(context).manager,
+                                                          imageUrl: "${AppCubit.get(context).allMatches[index].secondImage!}",
+                                                          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                                                          fit: BoxFit.fitWidth,
+                                                        ) ,
                                                       ),
+
                                                       const SizedBox(height: 5,),
                                                       Text(AppCubit.get(context).allMatches[index].secondTeam!,style: TextStyle(
                                                           color: AppColors.myWhite,

@@ -53,8 +53,9 @@ class _FanFullVideoState extends State<FanFullVideo> {
 
   @override
   void dispose() {
-    //player.pause();
+     player.pause();
     player.release();
+   // player.dispose();
     super.dispose();
   }
 
@@ -178,33 +179,6 @@ class _FanFullVideoState extends State<FanFullVideo> {
 
                         child: Stack(
                           children: [
-                            // Container(
-                            //   height: MediaQuery.of(context).size.height * .6,
-                            //   width: double.infinity,
-                            //   child: DownloadMediaBuilder(
-                            //     url: widget.video!,
-                            //     builder: (context, snapshot) {
-                            //       if (snapshot.status ==
-                            //           DownloadMediaStatus.loading) {
-                            //         return Image(
-                            //             image: AssetImage(
-                            //                 'assets/images/load.png'));
-                            //       }
-                            //       if (snapshot.status ==
-                            //           DownloadMediaStatus.success) {
-                            //         return chewieController == null
-                            //             ? Image(
-                            //                 image: AssetImage(
-                            //                     'assets/images/load.png'))
-                            //             : Chewie(controller: chewieController!);
-                            //       }
-                            //       return Image(
-                            //         image:
-                            //             AssetImage('assets/images/nonet.jpg'),
-                            //         fit: BoxFit.contain,
-                            //       );
-                            //     },
-                            //   ),
                             if (error != null)
                               Center(child: Text(error.toString()))
                             else if (player == null)

@@ -6,6 +6,7 @@ class BrowisePostModel{
   String? text;
   String? postImage;
   String? postVideo;
+  String? thumbnail;
   String? time;
   String? timeSmap;
   int ?likes=0;
@@ -20,6 +21,7 @@ class BrowisePostModel{
     this.text,
     this.postImage,
     this.postVideo,
+    this.thumbnail,
     this.time,
     this.timeSmap,
     this.likes,
@@ -34,6 +36,7 @@ class BrowisePostModel{
     text=json['text'];
     postImage=json['postImage'];
     postVideo=json['postVideo'];
+    thumbnail=json['thumbnail'];
     time=json['time'];
     timeSmap=json['timeSmap'];
     likes=json['likes'];
@@ -51,6 +54,7 @@ class BrowisePostModel{
       'text':text,
       'postImage':postImage,
       'postVideo':postVideo,
+      'thumbnail':thumbnail,
       'time':time,
       'timeSmap':timeSmap,
       'likes':likes,

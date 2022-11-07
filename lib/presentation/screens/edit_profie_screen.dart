@@ -79,9 +79,10 @@ class EditProfileScreen extends StatelessWidget {
                                       child: IconButton(
                                           onPressed: () {
                                             // isEdit=false;
+                                            cubit.getCoverImage();
                                             Navigator.push(context, MaterialPageRoute(builder: (_){
 
-                                              return EditCover(cover: '${cubit.userModel!.cover}',);
+                                              return EditCover();
 
                                             }));
                                           },
@@ -112,8 +113,8 @@ class EditProfileScreen extends StatelessWidget {
                                   radius: 20,
                                   child: IconButton(
                                       onPressed: () {
+                                        cubit.getProfileImage();
                                         Navigator.push(context, MaterialPageRoute(builder: (_){
-
                                           return EditImage();
 
                                         }));
@@ -352,44 +353,44 @@ class EditProfileScreen extends StatelessWidget {
                         height: size.height * .06,
                         width: size.width * .9,
                         function: () {
-
-                          cubit.uploadUserCover(
-                            name: cubit.changeUserNameController.text,
-                            phone:
-                            cubit.changeUserPhoneController.text,
-                            bio: cubit.changeUserBioController.text,
-                          ).then((value) {
-                            customToast(title: 'Data Updated', color: AppColors.primaryColor1);
-
-                            cubit.uploadUserImage(
+                          if(cubit.coverImage != null){
+                            cubit.uploadUserCover(
                               name: cubit.changeUserNameController.text,
-                              phone:
-                              cubit.changeUserPhoneController.text,
                               bio: cubit.changeUserBioController.text,
                             ).then((value) {
                               customToast(title: 'Data Updated', color: AppColors.primaryColor1);
+                            });
+                          }
 
-                              cubit.updateProfile(
-                                image: cubit.profilePath,
-                                cover: cubit.coverPath,
-                                name: cubit.changeUserNameController.text,
-                                phone: cubit.changeUserPhoneController.text,
-                                bio: cubit.changeUserBioController.text,
-                                youtubeLink: cubit.changeYoutubeLinkController.text,
-                                facebookLink: cubit.changeFacebookLinkController.text,
-                                twitterLink:cubit.changeTwitterLinkController.text,
-                                instagramLink:cubit.changeInstagramLinkController.text,
+                          //////////////////////////////////
+                          if(cubit.profileImage != null){
+                            cubit.uploadUserImage(
+                              name: cubit.changeUserNameController.text,
+                              bio: cubit.changeUserBioController.text,
+                            ).then((value) {
+                              customToast(title: 'Data Updated', color: AppColors.primaryColor1);
+                            });
+                          }
 
-                              ).then((value) {
-                                customToast(title: 'Data Updated', color: AppColors.primaryColor1);
+                          ///////////////////////////
+                          cubit.updateProfile(
+                            image: cubit.profilePath,
+                            cover: cubit.coverPath,
+                            name: cubit.changeUserNameController.text,
+                            bio: cubit.changeUserBioController.text,
+                            youtubeLink: cubit.changeYoutubeLinkController.text,
+                            facebookLink: cubit.changeFacebookLinkController.text,
+                            twitterLink:cubit.changeTwitterLinkController.text,
+                            instagramLink:cubit.changeInstagramLinkController.text,
 
-                                cubit.getUser(context);
-                                cubit.getPosts().then((value) {
-                                  Navigator.pop(context);
-                                  customToast(title: 'Data Updated', color: AppColors.primaryColor1);
+                          ).then((value) {
+                            customToast(title: 'Data Updated', color: AppColors.primaryColor1);
 
-                                });
-                              });
+                            cubit.getUser(context);
+                            cubit.getPosts().then((value) {
+                              Navigator.pop(context);
+                              customToast(title: 'Data Updated', color: AppColors.primaryColor1);
+
                             });
                           });
 

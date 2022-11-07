@@ -40,9 +40,10 @@ class _CheeringScreenState extends State<CheeringScreen> {
                // AppCubit.get(context).getWaitingPost();
                // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                // const HomeLayout()), (Route<dynamic> route) => false);
-               Navigator.pushReplacement(context, MaterialPageRoute(builder: (_){
-                 return TeamChatScreen(countryName: widget.countryName!, countryImage: widget.countryImage!);
-               }));
+               // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_){
+               //   return TeamChatScreen(countryName: widget.countryName!, countryImage: widget.countryImage!);
+               // }));
+               Navigator.pop(context);
              });
            }
         },
@@ -175,7 +176,7 @@ class _CheeringScreenState extends State<CheeringScreen> {
                                 }
                                 else{
 
-                                  customToast(title: 'Please, Waiting few seconds and try again', color: AppColors.primaryColor1);
+                                  customToast(title: 'Please, Wait few seconds and try again', color: AppColors.primaryColor1);
                                   Navigator.pop(context);
 
                                 }

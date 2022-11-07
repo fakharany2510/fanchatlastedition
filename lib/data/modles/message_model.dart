@@ -10,6 +10,7 @@ class MessageModel{
   String? image;
   String? voice;
   String? video;
+  String? privateChatSumbnail;
 
 
   MessageModel({
@@ -21,7 +22,8 @@ class MessageModel{
     this.text,
     this.image,
     this.voice,
-    this.video
+    this.video,
+    this.privateChatSumbnail,
   });
   MessageModel.fromJson(Map<String , dynamic> json){
     senderId=json['senderId'];
@@ -33,6 +35,7 @@ class MessageModel{
     image=json['image'];
     voice=json['voice'];
     video=json['video'];
+    privateChatSumbnail=json['privateChatSumbnail'];
   }
 
   Map <String , dynamic> toMap(){
@@ -46,6 +49,7 @@ class MessageModel{
       'image':image,
       'voice':voice,
       'video':video,
+      'privateChatSumbnail':privateChatSumbnail,
     };
   }
 }

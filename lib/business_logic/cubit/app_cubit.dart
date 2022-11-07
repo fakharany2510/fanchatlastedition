@@ -2,14 +2,13 @@ import 'dart:async';
 import 'dart:io';
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
-import 'package:fanchat/data/modles/advertising_model.dart';
 import 'package:fanchat/data/modles/cheering_model.dart';
 import 'package:fanchat/data/modles/fan_model.dart';
 import 'package:fanchat/data/modles/matches_model.dart';
 import 'package:fanchat/data/modles/profile_model.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
-import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
-import 'package:fanchat/presentation/screens/public_chat/public_chat_screen.dart';
+import 'package:fanchat/data/modles/teamchat.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,9 +20,9 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import '../../data/modles/comment_model.dart';
@@ -99,9 +98,6 @@ class AppCubit extends Cubit<AppState> {
 
     currentIndex=index;
     if(currentIndex==4){
-      // Navigator.push(context, MaterialPageRoute(builder: (_){
-      //   return PublicChatScreen();
-      // }));
     }
     if(currentIndex==3){
       getAllUsers();
@@ -286,7 +282,6 @@ class AppCubit extends Cubit<AppState> {
         printMessage('Upload Success');
         profilePath = value;
         updateProfile(name: name,
-            phone: phone,
             bio: bio,
             image: profilePath,
             facebookLink: facebookLink??'Enter your facebook link',
@@ -314,7 +309,6 @@ class AppCubit extends Cubit<AppState> {
   Future uploadUserCover(
       {
          String ?name,
-         String ?phone,
          String ?bio,
          String ?youtubeLink,
          String ?facebookLink,
@@ -334,7 +328,6 @@ class AppCubit extends Cubit<AppState> {
         coverPath = value;
         updateProfile(
             name: name,
-            phone: phone,
             bio: bio,
             cover: coverPath,
             facebookLink: facebookLink??'Enter your facebook link',
@@ -366,7 +359,6 @@ class AppCubit extends Cubit<AppState> {
       String ?image,
       String ?cover,
       required String ?name,
-      required String ?phone,
       required String ?bio,
       required String ?youtubeLink,
       required String ?instagramLink,
@@ -381,7 +373,6 @@ class AppCubit extends Cubit<AppState> {
       uId: AppStrings.uId,
       image: image?? userModel!.image,
       cover: cover?? userModel!.cover,
-      phone: phone,
       facebookLink: facebookLink??'Enter your facebook link',
       instagramLink: instagramLink??'Enter your instagram link',
       twitterLink: twitterLink??'Enter your twitter link',
@@ -445,7 +436,6 @@ class AppCubit extends Cubit<AppState> {
 //-------------------------------------e;
 
   ///////////////////////////////////////////////////////////////////////////////////////////////
-
   Future<void> pickPostCamera() async {
     final pickedFile  =
     await picker.pickImage(source: ImageSource.camera);
@@ -462,9 +452,6 @@ class AppCubit extends Cubit<AppState> {
       emit(PickPostImageErrorState());
     }
   }
-
-
-
   //////////////////////////////////////////////////////
   File? chatImage;
   Future<void> pickChatImage() async {
@@ -483,9 +470,7 @@ class AppCubit extends Cubit<AppState> {
       emit(PickChatImageErrorState());
     }
   }
-
   //////////////////////////////////////////////
-
   Future<void> pickChatCamera() async {
     final pickedFile  =
     await picker.pickImage(source: ImageSource.camera);
@@ -502,8 +487,6 @@ class AppCubit extends Cubit<AppState> {
       emit(PickChatImageErrorState());
     }
   }
-
-
   /////////////////////////////////////////////////////////////////////
   // change viseo upload
   bool videoButtonTapped = false;
@@ -515,10 +498,7 @@ class AppCubit extends Cubit<AppState> {
   // Pick post video
   VideoPlayerController? videoPlayerController;
   CachedVideoPlayerController? controller;
-
-
   File? postVideo;
-
   void pickPostVideo2() async {
     final pickedFile =
     await picker.pickVideo(source: ImageSource.gallery);
@@ -534,9 +514,7 @@ class AppCubit extends Cubit<AppState> {
         });
     }
   }
-
-  //////////////////
-
+  //////////////////////////////////////////////////////////////
   void pickPostVideoCamera2() async {
     final pickedFile =
     await picker.pickVideo(source: ImageSource.camera);
@@ -552,7 +530,7 @@ class AppCubit extends Cubit<AppState> {
         });
     }
   }
-
+  //////////////////////////////////////////////////////
   File? postVideo3;
   void pickPostVideo3() async {
     final pickedFile =
@@ -571,9 +549,7 @@ class AppCubit extends Cubit<AppState> {
         });
     }
   }
-
-  ////////////////////////////
-
+  //////////////////////////////////////////////////
   void pickPostVideoCameraPrivate3() async {
     final pickedFile =
     await picker.pickVideo(source: ImageSource.camera);
@@ -591,9 +567,6 @@ class AppCubit extends Cubit<AppState> {
         });
     }
   }
-
-
-
 /////////////////////////////////////////////////////
 //   void pickPostVideo() async {
 //     final pickedFile =
@@ -742,17 +715,54 @@ class AppCubit extends Cubit<AppState> {
     //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
         .child('posts/${Uri.file(postVideo!.path).pathSegments.last}')
     //كدا بعمل رفع للصوره
-        .putFile(postVideo!).then((value){
-      value.ref.getDownloadURL().then((value){
-        createVideoPost(
-          dateTime:dateTime,
-          postVideo: value,
-          text: text,
-          time: time,
-          timeSpam:timeSpam,
-        );
-        getPosts();
-        emit(BrowiseUploadVideoPostSuccessState());
+
+        .putFile(postVideo!).then((value1)async{
+
+      value1.ref.getDownloadURL().then((value2)async{
+
+          var thumbTempPath = await VideoThumbnail.thumbnailFile(
+            video:  value2,
+            thumbnailPath: (await getTemporaryDirectory()).path,
+            imageFormat: ImageFormat.PNG,
+          //  maxHeight:, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+            quality: 100, // you can change the thumbnail quality here
+            timeMs: 2
+          );
+          int counter =1;
+          print(';llllllllllllllllllllllllllllllllllllllllllllllllmmjhwdvghvcjyscgfcvjshcgs------->${thumbTempPath}');
+        firebase_storage.FirebaseStorage.instance
+        .ref()
+          .child('counter/${counter}/${Uri.file(thumbTempPath!).pathSegments.last}')
+          .putFile(File(thumbTempPath)).then((value3){
+            value3.ref.getDownloadURL().then((value4){
+              print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value4}');
+              print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value2}');
+
+              createVideoPost(
+                dateTime:dateTime,
+                postVideo: value2,
+                text: text,
+                time: time,
+                timeSpam:timeSpam,
+                thumbnail: value4,
+              );
+              getPosts();
+              emit(BrowiseUploadVideoPostSuccessState());
+              counter++;
+              print('sjkjjjjjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${counter}');
+            });
+
+        });
+
+        // final uint8list = await VideoThumbnail.thumbnailData(
+        //   video: value,
+        //   imageFormat: ImageFormat.JPEG,
+        //   maxWidth: 128, // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
+        //   quality: 25,
+        // );
+
+
+
 
       }).catchError((error){
         emit(BrowiseUploadVideoPostErrorState());
@@ -769,6 +779,7 @@ class AppCubit extends Cubit<AppState> {
     required String time,
     required String? timeSpam,
     String? postVideo,
+    String? thumbnail
   }){
     emit(BrowiseCreateVideoPostLoadingState());
 
@@ -779,6 +790,7 @@ class AppCubit extends Cubit<AppState> {
       dateTime:dateTime,
       postImage:'',
       postVideo: postVideo??'',
+      thumbnail: thumbnail??"",
       time: time  ,
       text: text,
       timeSmap: timeSpam,
@@ -891,6 +903,7 @@ class AppCubit extends Cubit<AppState> {
   /////////////////////////
   //get Posts
     List<BrowisePostModel> posts=[];
+  List<BrowisePostModel> postThumbnail=[];
   List<String> postsId=[];
   List<String> myPostsId=[];
   List<int> likes=[];
@@ -910,8 +923,6 @@ class AppCubit extends Cubit<AppState> {
         if(userModel!.uId== BrowisePostModel.fromJson(element.data()).userId ){
           myPostsId.add(BrowisePostModel.fromJson(element.data()).postId!);
         }
-
-
       });
 
       for (var element in myPostsId) {
@@ -1135,77 +1146,6 @@ List<int> commentIndex=[];
    emit(SignoutSuccessState());
   }
 ///////////////////////////////////////////////////////////
-  //create posts functions
-//-------------------------------------------------------
-//1-create image post
-//-------------------------------------------------------
-  Database? database;
-  void createDatabase()async
-  {
-    await openDatabase(
-        'fan.db',
-        version: 1,
-        onCreate: (database, version) {
-          print('Database Created');
-          database.execute(
-              'CREATE TABLE Posts (postId INTEGER PRIMARY KEY , userId text ,image text , name TEXT , postImage TEXT , postVideo Text , postText Text, time text , timeSamp text )'
-          ).then((value) {
-            print('Table Created');
-          }).catchError((error) {
-            print('error while creating database${error.toString()}');
-          });
-        },
-        onOpen: (database) {
-          getDatafromdatabase(database);
-        }
-    ).then((value){
-      database =value;
-      emit(CreateDatabaseState());
-    });
-  }
-//------------------------------------------
-  //insert to database
-//------------------------------------------
-  insertTOdatabase({
-    required String postId,
-    required String userId,
-    required String image,
-    required String name,
-     String? postImage,
-     String? postVideo,
-     String? postText,
-    required String time,
-    required String timeSamp,
-
-  })async{
-    sqlposts=[];
-    await database?.transaction((txn) {
-      return txn.rawInsert(
-          'INSERT INTO Posts(postId,userId,name,image,postImage,postVideo,postText,time,timeSamp) VALUES("$postId","$userId" ,"$name","$image","$postImage","$postVideo","$postText","$time","$timeSamp")')
-          .then((value) {
-        print('Task ${value}Inserted successfully');
-        emit(InsertDatabaseSuccessState());
-        getDatafromdatabase(database);
-      }).catchError((error) {
-        print('ERROR INSERT TO DB ${error.toString()}');
-        emit(InsertDatabaseerrorState());
-      });
-    });
-  }
-
-//------------------------------------------
-  //get data from database
-//------------------------------------------
-  List<Map>sqlposts=[];
-  void getDatafromdatabase(database)async{
-    List<Map>sqlposts=[];
-    await database.rawQuery('SELECT * FROM Posts').then((value){
-      value.forEach((element){
-        sqlposts.add(element);
-      });
-      emit(GetDatabasState());
-    });
-  }
   /////////////////////////////////////////////////////////////////
   void createImageMessage({
     required String recevierId,
@@ -1409,6 +1349,7 @@ List<int> commentIndex=[];
   void getMessages({
     required String recevierId,
   }){
+    messages = [];
     FirebaseFirestore.instance
         .collection('users')
         .doc(AppStrings.uId)
@@ -1421,9 +1362,6 @@ List<int> commentIndex=[];
       messages = [];
       event.docs.forEach((element) {
         messages.add((MessageModel.fromJson(element.data())));
-        print('llllllllllllllllllllllllllllllllllllllllllllllllllllllllll');
-        print(messages[0].voice);
-
 
       });
       emit(GetMessageSuccessState());
@@ -1434,6 +1372,7 @@ List<int> commentIndex=[];
 
   List lastUsers=[];
   void getLastUsers(){
+    lastUsers=[];
     FirebaseFirestore.instance
         .collection('users')
         .doc(AppStrings.uId)
@@ -1676,7 +1615,7 @@ List<int> commentIndex=[];
     required String? text,
     required String time,
     required String? timeSpam,
-    String? thumbnailImage,
+    String? thumbnailFanPost,
     String? postVideo,
   }){
     emit(FanCreateVideoPostLoadingState());
@@ -1687,7 +1626,7 @@ List<int> commentIndex=[];
         userId:userModel!.uId,
         dateTime:dateTime,
         postImage:'',
-        thumbnailImage: thumbnailImage??"",
+        thumbnailFanPosts: thumbnailFanPost??"",
         postVideo: postVideo??'https://firebasestorage.googleapis.com/v0/b/fanchat-7db9e.appspot.com/o/fanvideo%2F2022-10-27%2012%3A18%3A53.634007%2FVRQI86oYZSZgh7Mh3xXqQDX9dxR2?alt=media&token=2c4850fd-e48f-4b7d-a90f-9eff05450531',
         time: time  ,
         timeSmap: timeSpam,
@@ -1721,46 +1660,6 @@ List<int> commentIndex=[];
   firebase_storage.SettableMetadata(
     contentType: 'video/mp4'
   );
-  // void uploadFanPostVideo({
-  //   String? userId,
-  //   String? name,
-  //   String? video,
-  //   required String dateTime,
-  //   required String time,
-  //   required String timeSpam,
-  //   required String? text,
-  // }){
-  //   emit(FanUploadVideoPostLoadingState());
-  //   //كدا انا بكريت instance من ال storage
-  //   firebase_storage.FirebaseStorage.instance
-  //   //كدا بقوله انا فين في الstorage
-  //       .ref()
-  //   //كدا بقةله هتحرك ازاي جوا ال storage
-  //   //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
-  //       .child('fanVideo').child(timeSpam).child('${AppStrings.uId}')
-  //   //كدا بعمل رفع للصوره
-  //       .putFile(fanPostVideo!,metadata).then((value){
-  //     value.ref.getDownloadURL().then((value){
-  //       createFanVideoPost(
-  //         dateTime:dateTime,
-  //         postVideo: value,
-  //         text: text,
-  //         time: time,
-  //         timeSpam:timeSpam,
-  //       );
-  //       getFanPosts();
-  //       emit(FanUploadVideoPostSuccessState());
-  //
-  //     }).catchError((error){
-  //       emit(FanUploadVideoPostErrorState());
-  //     });
-  //   }).catchError((error){
-  //     emit(FanUploadVideoPostErrorState());
-  //   });
-  // }
-////////////////////////////////////////////////////
-
-  //get Posts
   Future uploadFanPostVideo(
   {
     String? userId,
@@ -1786,30 +1685,35 @@ List<int> commentIndex=[];
 
         Uri downloadUrl = Uri.parse(await res.ref.getDownloadURL());
         ///////////////////////////////////////////////////////////
-
-        // final uint8list = await VideoThumbnail.thumbnailData(
-        //   video: fanPostVideo!.path,
-        //   imageFormat: ImageFormat.JPEG,
-        //   timeMs: 1,
-        //   maxWidth: 128, // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
-        //   quality: 25,
-        // );
-        createFanVideoPost(
-          dateTime: dateTime,
-          postVideo: '${downloadUrl}',
-          text: text,
-          time: time,
-          timeSpam: timeSpam,
+        var thumbTempPath = await VideoThumbnail.thumbnailFile(
+            video:  '${downloadUrl}',
+            thumbnailPath: (await getTemporaryDirectory()).path,
+            imageFormat: ImageFormat.PNG,
+            //  maxHeight:, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+            quality: 100, // you can change the thumbnail quality here
+            timeMs: 2
         );
-        print('p');
-        // res.ref.getDownloadURL().then((value) {
-        //
-        //   print(value);
-        // });
-       //getFanPosts();
+        int counter =1;
+        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmjhwdvghvcjyscgfcvjshcgs------->${thumbTempPath}');
+        firebase_storage.FirebaseStorage.instance
+            .ref()
+            .child('counter/${counter}/${Uri.file(thumbTempPath!).pathSegments.last}')
+            .putFile(File(thumbTempPath)).then((value3){
+          value3.ref.getDownloadURL().then((value4){
+            createFanVideoPost(
+              dateTime:dateTime,
+              postVideo: '${downloadUrl}',
+              text: text,
+              time: time,
+              timeSpam:timeSpam,
+              thumbnailFanPost: value4,
+            );
+            emit(FanUploadVideoPostSuccessState());
+            videoPlayerController!.dispose();
+          });
 
-        emit(FanUploadVideoPostSuccessState());
-        videoPlayerController!.dispose();
+        });
+
       }).catchError((error) {
         emit(FanUploadVideoPostErrorState());
         videoPlayerController!.dispose();
@@ -2135,7 +2039,7 @@ List<int> commentIndex=[];
   }
   ////////////////////////
 //get messages
-  List<PublicChatModel> teamChat=[];
+  List<TeamChatModel> teamChat=[];
   void getTeamChat(String countryName){
     teamChat=[];
     FirebaseFirestore.instance
@@ -2145,7 +2049,7 @@ List<int> commentIndex=[];
         .listen((event) {
       teamChat = [];
       event.docs.forEach((element) {
-        teamChat.add((PublicChatModel.fromJson(element.data())));
+        teamChat.add((TeamChatModel.fromJson(element.data())));
         print('llllllllllllllllllllllllllllllllllllllllllllllllllllllllll');
         print(teamChat[0].voice);
 
@@ -2340,7 +2244,7 @@ List<int> commentIndex=[];
                   print('///////////////////////////////////////////');
                   emit(GetCheeringSuccessState());
                 });
-                print( cheering.first.text);
+              // print( cheering.first.text);
                 isLast=false;
                indexCheeringList+=indexCheeringList;
                 print( isLast);
@@ -2358,71 +2262,7 @@ List<int> commentIndex=[];
 
   }
 
-  // waiting list
 
-  //Create Cheering
-  // Future<void> createWaitingPost({
-  //   required String? time,
-  //   required String? timeSpam,
-  //   required String? text,
-  //
-  // })async{
-  //
-  //   CheeringModel model=CheeringModel(
-  //       time: time,
-  //       timeSpam: timeSpam,
-  //       uId: userModel!.uId,
-  //       username: userModel!.username,
-  //       userImage: userModel!.image,
-  //       text: text
-  //   );
-  //
-  //   emit(CreateCheeringLoadingState());
-  //
-  //   FirebaseFirestore.instance
-  //       .collection('waiting')
-  //       .add(model.toMap())
-  //       .then((value){
-  //
-  //     // getCheeringPost();
-  //     print('Upload waiting message');
-  //     emit(CreateCheeringSuccessState());
-  //   })
-  //       .catchError((error){
-  //     emit(CreateCheeringErrorState());
-  //   });
-  // }
-  //
-  // Future <void> getWaitingPost() async{
-  //   waitingList=[];
-  //   FirebaseFirestore.instance
-  //       .collection('waiting')
-  //       .orderBy('timeSpam',descending: true)
-  //       .snapshots().listen((event) {
-  //     event.docs.forEach((element) {
-  //       waitingList.add(CheeringModel.formJson(element.data()));
-  //       print('Get waiting message');
-  //       emit(GetCheeringSuccessState());
-  //     });
-  //     print( cheering.first.text);
-  //     isLast=false;
-  //     print( isLast);
-  //   });
-  //
-  // }
-  //
-  // Future <void> deleteWaitingPost() async{
-  //   var collection = FirebaseFirestore.instance.collection('waiting');
-  //   var snapshots = await collection.get();
-  //   for (var doc in snapshots.docs) {
-  //     await doc.reference.delete();
-  //   }
-  //   emit(DeletePostSuccessState());
-  //
-  // }
-
-
-  //Create Cheering
   void deletePost({
     required String postId
   }){
@@ -2469,18 +2309,43 @@ List<int> commentIndex=[];
     //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
         .child('privatechat/${Uri.file(postVideo3!.path).pathSegments.last}')
     //كدا بعمل رفع للصوره
-        .putFile(postVideo3!).then((value){
-      value.ref.getDownloadURL().then((value){
-        createVideoPrivate(
-            messageViedo: value,
-            recevierId: recevierId,
-            recevierName: recevierName,
-            recevierImage: recevierImage,
-            dateTime: dateTime,
-            senderId: AppStrings.uId
+        .putFile(postVideo3!).then((value1){
+      value1.ref.getDownloadURL().then((value2)async{
+        var thumbTempPath = await VideoThumbnail.thumbnailFile(
+            video:  value2,
+            thumbnailPath: (await getTemporaryDirectory()).path,
+            imageFormat: ImageFormat.PNG,
+            //  maxHeight:, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+            quality: 100, // you can change the thumbnail quality here
+            timeMs: 2
         );
-        getPosts();
-        emit(BrowiseUploadVideoPostSuccessState());
+        int counter =1;
+        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmjhwdvghvcjyscgfcvjshcgs------->${thumbTempPath}');
+        firebase_storage.FirebaseStorage.instance
+            .ref()
+            .child('counter/${counter}/${Uri.file(thumbTempPath!).pathSegments.last}')
+            .putFile(File(thumbTempPath)).then((value3){
+          value3.ref.getDownloadURL().then((value4){
+            print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value4}');
+            print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value2}');
+
+
+            createVideoPrivate(
+                messageViedo: value2,
+                recevierId: recevierId,
+                recevierName: recevierName,
+                recevierImage: recevierImage,
+                dateTime: dateTime,
+                senderId: AppStrings.uId,
+                privateChatSumbnail: value4
+            );
+            getPosts();
+            emit(BrowiseUploadVideoPostSuccessState());
+
+          });
+
+        });
+
 
       }).catchError((error){
         emit(BrowiseUploadVideoPostErrorState());
@@ -2498,6 +2363,7 @@ List<int> commentIndex=[];
     required String dateTime,
     String? messageViedo,
     String? senderId,
+    String? privateChatSumbnail,
   }){
     emit(BrowiseCreateVideoPostLoadingState());
 
@@ -2508,6 +2374,7 @@ List<int> commentIndex=[];
         recevierId: recevierId,
         recevierName: recevierName,
         recevierImage: recevierImage,
+        privateChatSumbnail: privateChatSumbnail,
         senderId: AppStrings.uId
     );
 
@@ -2660,9 +2527,9 @@ List<int> commentIndex=[];
     await picker.pickVideo(source: ImageSource.gallery);
     if (pickedFile != null) {
       postVideo4 = File(pickedFile.path);
-      controller = CachedVideoPlayerController.file(postVideo4!)
+      videoPlayerController = VideoPlayerController.file(postVideo4!)
         ..initialize().then((value) {
-          controller!.pause();
+          videoPlayerController!.pause();
           emit(PickPrivateChatViedoSuccessState());
         }).catchError((error) {
           print('error picking video ${error.toString()}');
@@ -2676,9 +2543,9 @@ List<int> commentIndex=[];
     await picker.pickVideo(source: ImageSource.camera);
     if (pickedFile != null) {
       postVideo4 = File(pickedFile.path);
-      controller = CachedVideoPlayerController.file(postVideo4!)
+      videoPlayerController = VideoPlayerController.file(postVideo4!)
         ..initialize().then((value) {
-          controller!.pause();
+          videoPlayerController!.pause();
           emit(PickPrivateChatViedoSuccessState());
         }).catchError((error) {
           print('error picking video ${error.toString()}');
@@ -2702,17 +2569,39 @@ List<int> commentIndex=[];
     //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
         .child('publicchat/${Uri.file(postVideo4!.path).pathSegments.last}')
     //كدا بعمل رفع للصوره
-        .putFile(postVideo4!).then((value){
-      value.ref.getDownloadURL().then((value){
+        .putFile(postVideo4!).then((value1){
+      value1.ref.getDownloadURL().then((value2)async{
+        var thumbTempPath = await VideoThumbnail.thumbnailFile(
+            video:  value2,
+            thumbnailPath: (await getTemporaryDirectory()).path,
+        imageFormat: ImageFormat.PNG,
+        //  maxHeight:, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+        quality: 100, // you can change the thumbnail quality here
+        timeMs: 2
+        );
+        int counter =1;
+        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmjhwdvghvcjyscgfcvjshcgs------->${thumbTempPath}');
+        firebase_storage.FirebaseStorage.instance
+            .ref()
+            .child('counter/${counter}/${Uri.file(thumbTempPath!).pathSegments.last}')
+            .putFile(File(thumbTempPath)).then((value3){
+        value3.ref.getDownloadURL().then((value4){
+        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value4}');
+        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value2}');
+
         createVideoPublicChat(
-            messageViedo: value,
+            messageViedo: value2,
             dateTime: dateTime,
             senderId: AppStrings.uId,
             senderName:senderName,
-          senderImage: senderImage
+            senderImage: senderImage,
+          publicChatThumbnail: value4,
         );
-        getPosts();
         emit(UploadVideoPublicChatSuccessState());
+
+        });
+
+        });
 
       }).catchError((error){
         emit(UploadVideoPublicChatErrorState());
@@ -2729,6 +2618,7 @@ List<int> commentIndex=[];
     String? senderId,
     String? senderName,
     String? senderImage,
+    String? publicChatThumbnail,
   }){
     emit(CreateVideoPublicChatLoadingState());
 
@@ -2739,6 +2629,7 @@ List<int> commentIndex=[];
         senderId: AppStrings.uId,
         senderName: senderName,
         senderImage: senderImage,
+        publicChatThumbnail: publicChatThumbnail??"",
     );
 
     //Set My Chat
@@ -2808,18 +2699,41 @@ List<int> commentIndex=[];
     //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
         .child('teamchat/${Uri.file(postVideo5!.path).pathSegments.last}')
     //كدا بعمل رفع للصوره
-        .putFile(postVideo5!).then((value){
-      value.ref.getDownloadURL().then((value){
+        .putFile(postVideo5!).then((value1){
+      value1.ref.getDownloadURL().then((value2)async{
+        var thumbTempPath = await VideoThumbnail.thumbnailFile(
+            video:  value2,
+            thumbnailPath: (await getTemporaryDirectory()).path,
+        imageFormat: ImageFormat.PNG,
+        //  maxHeight:, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+        quality: 100, // you can change the thumbnail quality here
+        timeMs: 2
+        );
+        int counter =1;
+        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmjhwdvghvcjyscgfcvjshcgs------->${thumbTempPath}');
+        firebase_storage.FirebaseStorage.instance
+            .ref()
+            .child('counter/${counter}/${Uri.file(thumbTempPath!).pathSegments.last}')
+            .putFile(File(thumbTempPath)).then((value3){
+        value3.ref.getDownloadURL().then((value4){
+        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value4}');
+        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value2}');
+
+
+
         createVideoTeamChat(
-            messageViedo: value,
-            dateTime: dateTime,
-            senderName: senderName,
-            senderImage: senderImage,
-            senderId: AppStrings.uId,
-            countryName: countryName
+        messageViedo: value2,
+        dateTime: dateTime,
+        senderName: senderName,
+        senderImage: senderImage,
+        senderId: AppStrings.uId,
+        countryName: countryName,
+        teamChatThumbnail: value4
         );
         getPosts();
-        emit(UploadVideoTeamChatSuccessState());
+        emit(UploadVideoTeamChatSuccessState());});
+
+        });
 
       }).catchError((error){
         emit(UploadVideoTeamChatErrorState());
@@ -2837,16 +2751,18 @@ List<int> commentIndex=[];
     String? senderName,
     String? senderImage,
     String ? countryName,
+    String ? teamChatThumbnail,
   }){
     emit(CreateVideoTeamChatLoadingState());
 
-    PublicChatModel model= PublicChatModel(
+    TeamChatModel model= TeamChatModel(
         video:messageViedo,
         text: "",
         dateTime: dateTime,
         senderId: AppStrings.uId,
         senderName: senderName,
         senderImage: senderImage,
+      teamChatThumbnail: teamChatThumbnail ??"",
     );
 
     //Set My Chat

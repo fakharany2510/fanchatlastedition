@@ -13,7 +13,7 @@ class _PrivacyPoliciesState extends State<PrivacyPolicies> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: WebView(
-        initialUrl: 'https://github.com/mohamed-halemo/FanChat-Privacy/blob/main/privacy-policy.md',
+        initialUrl: 'https://webbingstone.org/privacy/fanchattapp/privacy.html',
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );

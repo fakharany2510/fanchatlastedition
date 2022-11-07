@@ -9,8 +9,8 @@ bool isEdit=false;
 
 
 class EditCover extends StatefulWidget {
-  String cover;
-  EditCover({Key? key,required this.cover}) : super(key: key);
+
+  EditCover({Key? key}) : super(key: key);
 
   @override
   State<EditCover> createState() => _EditCoverState();

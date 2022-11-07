@@ -4,6 +4,7 @@ import 'package:fanchat/business_logic/register/register_states.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
+import 'package:fanchat/presentation/screens/eula.dart';
 import 'package:fanchat/presentation/screens/privacy_policies.dart';
 import 'package:fanchat/presentation/screens/verify_code_screen.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
@@ -248,6 +249,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           SizedBox(height: size.height*.04,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Checkbox(
+                                  value: isCheckBoxTrue,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(2.0),
+                                  ),
+                                  side: MaterialStateBorderSide.resolveWith(
+                                        (states) => BorderSide(width: 1.0, color: AppColors.myGrey),
+                                  ),
+                                  onChanged:(bool? value){
+                                    setState((){
+                                      isCheckBoxTrue=true;
+                                    });
+                                  }
+                              ),
+                              Container(
+                                child: Text.rich(
+                                    TextSpan(
+                                        text: 'Agree to our ', style: TextStyle(
+                                        fontSize: 16, color:AppColors.myGrey
+                                    ),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                              text: 'Privacy Policies', style: TextStyle(
+                                            fontSize: 16, color: AppColors.navBarActiveIcon,
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const PrivacyPolicies()));
+                                                  // code to open / launch terms of service link here
+                                                }
+                                          ),
+                                        ]
+                                    )
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.height*.04,),
                           defaultButton(
                               textColor: AppColors.myWhite,
                               buttonText: 'LOGIN',
@@ -404,38 +447,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           //   ],
                           // ),
                           SizedBox(height: size.height*.03,),
-                          Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                               Checkbox(
-                            value: isCheckBoxTrue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(2.0),
-                            ),
-                            side: MaterialStateBorderSide.resolveWith(
-                                  (states) => BorderSide(width: 1.0, color: AppColors.myGrey),
-                            ),
-                            onChanged:(bool? value){
-                          setState((){
-                            isCheckBoxTrue=true;
-                          });
-                            }
-                        ),
-                               Container(
-                                 child: Text.rich(
+                          Container(
+                            child: Text.rich(
                                 TextSpan(
-                                    text: 'Agree to our ', style: TextStyle(
+                                    text: '', style: TextStyle(
                                     fontSize: 16, color:AppColors.myGrey
                                 ),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: 'Privacy Policies', style: TextStyle(
+                                          text: 'Fan chat end user license agreement (EULA)', style: TextStyle(
                                         fontSize: 16, color: AppColors.navBarActiveIcon,
                                         decoration: TextDecoration.underline,
                                       ),
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>const PrivacyPolicies()));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>const Eula()));
                                               // code to open / launch terms of service link here
                                             }
                                       ),
@@ -443,8 +469,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 )
                             ),
                           ),
-                      ],
-                  ),
+
                         ],
                       ),
             ),

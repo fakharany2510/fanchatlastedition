@@ -1,9 +1,11 @@
+
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
-import 'package:fanchat/presentation/screens/edit_screen/edit_screen.dart';
 import 'package:fanchat/presentation/screens/posts/open_full_video.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:fanchat/presentation/screens/user_profile.dart';
@@ -30,43 +32,44 @@ class PostWidgetState extends State<PostWidget> {
 
 
 
-  VideoPlayerController? controller;
-  Future <void> ?intilize;
+
+  // VideoPlayerController? controller;
+  // Future <void> ?intilize;
 
   @override
-  void initState() {
+  // void initState() {
+  //
+  //   // controller = CachedVideoPlayerController.network(
+  //   //     AppCubit.get(context).posts[widget.index!].postVideo!);
+  //   // controller!.initialize();
+  //   // controller!.pause();
+  //   // controller!.setLooping(true);
+  //   // controller!.setVolume(1.0);
+  //   controller=VideoPlayerController.network(
+  //       AppCubit.get(context).posts[widget.index!].postVideo!);
+  //   intilize=controller!.initialize();
+  //   controller!.setLooping(false);
+  //   controller!.setVolume(1.0);
+  //   super.initState();
+  // }
 
-    // controller = CachedVideoPlayerController.network(
-    //     AppCubit.get(context).posts[widget.index!].postVideo!);
-    // controller!.initialize();
-    // controller!.pause();
-    // controller!.setLooping(true);
-    // controller!.setVolume(1.0);
-    controller=VideoPlayerController.network(
-        AppCubit.get(context).posts[widget.index!].postVideo!);
-    intilize=controller!.initialize();
-    controller!.setLooping(false);
-    controller!.setVolume(1.0);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    controller!.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   controller!.dispose();
+  //   super.dispose();
+  // }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(listener: (context,state){
-      if(state is NavigateScreenState){
-        controller!.pause();
-        // videoPlayerController!.pause();
-      }
-      if(state is PauseVideoState){
-        controller!.pause();
-        // videoPlayerController!.pause();
-      }
+      // if(state is NavigateScreenState){
+      //   controller!.pause();
+      //   // videoPlayerController!.pause();
+      // }
+      // if(state is PauseVideoState){
+      //   controller!.pause();
+      //   // videoPlayerController!.pause();
+      // }
 
 
 
@@ -150,20 +153,6 @@ class PostWidgetState extends State<PostWidget> {
                               ],
                             ),
                           ),
-                          // Column(
-                          //   children: [
-                          //     Text('${AppCubit.get(context).posts[widget.index!].dateTime}',
-                          //       overflow: TextOverflow.ellipsis,
-                          //       style:  TextStyle(
-                          //           fontSize: 13,
-                          //           color: AppColors.myWhite,
-                          //           fontFamily: AppStrings.appFont
-                          //       ),
-                          //     ),
-                          //     const SizedBox(height: 5,),
-                          //
-                          //   ],
-                          // ),
                           const SizedBox(width: 5,),
                           if(AppCubit.get(context).userModel!.uId==AppCubit.get(context).posts[widget.index!].userId)
                             PopupMenuButton(
@@ -246,82 +235,53 @@ class PostWidgetState extends State<PostWidget> {
                       : (AppCubit.get(context).posts[widget.index!].postVideo !="")
                       ?Stack(
                     children: [
-                      FutureBuilder(
-                        future: intilize,
-                        builder: (context,snapshot){
-                          if(snapshot.connectionState == ConnectionState.done){
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20
-                              ),
-                              child: Container(
-                                height: MediaQuery.of(context).size.height*.3,
-                                width: MediaQuery.of(context).size.width,
-                                child: Align(
-
-                                  child: AspectRatio(
-                                    aspectRatio: controller!.value.size.width/controller!.value.size.height*1.6,
-                                    child: VideoPlayer(controller!),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          else{
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        },
-
-
-
+                      // Container(
+                      //         height: MediaQuery.of(context).size.height * .25,
+                      //     width: double.infinity,
+                      //     child: Image(
+                      //       image: NetworkImage(AppCubit.get(context).posts[widget.index!].thumbnail!),
+                      //     )
+                      //
+                      //
+                      //     // Image.file(
+                      //     // File(AppCubit.get(context).posts[widget.index!].thumbnail!),
+                      //     //   filterQuality: FilterQuality.high,
+                      //     //   fit: BoxFit.contain,
+                      //     //   width: MediaQuery.of(context).size.width,
+                      //     // )
+                      //     ),
+                      Material(
+                        elevation: 1000,
+                        child: Padding(
+                          padding: const EdgeInsets.all(0),
+                          child: Container(
+                            height: MediaQuery.of(context).size.height*.25,
+                            width: double.infinity,
+                            child:  CachedNetworkImage(
+                              cacheManager: AppCubit.get(context).manager,
+                              imageUrl: "${AppCubit.get(context).posts[widget.index!].thumbnail}",
+                              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                        ),
                       ),
-                      //   controller!.value.isInitialized
-                      //       ? AspectRatio(
-                      //       aspectRatio: controller!.value.aspectRatio,
-                      //       child: CachedVideoPlayer(controller!))
-                      //       : const Center(child: CircularProgressIndicator())
-                      // ),
-
-                      // FutureBuilder(
-                      //   future: intilize,
-                      //   builder: (context,snapshot){
-                      //     if(snapshot.connectionState == ConnectionState.done){
-                      //       return AspectRatio(
-                      //         aspectRatio: videoPlayerController!.value.aspectRatio,
-                      //         child: VideoPlayer(videoPlayerController!),
-                      //       );
-                      //     }
-                      //     else{
-                      //       return const Center(
-                      //         child: CircularProgressIndicator(),
-                      //       );
-                      //     }
-                      //   },
-                      //
-                      //
-                      //
-                      // ),
-
                       Positioned(
                           top: MediaQuery.of(context).size.height*.08,
-                          right: MediaQuery.of(context).size.height*.185,
+                          right: MediaQuery.of(context).size.height*.18,
                           child: InkWell(
                             onTap: (){
-
                               Navigator.push(context, MaterialPageRoute(builder: (_){
                                 return OpenFullVideo(
-                                  controller: controller,
-                                  intilize: intilize,
+                                  controller: AppCubit.get(context).posts[widget.index!].postVideo!,
                                 );
                               }));
 
                             },
                             child: CircleAvatar(
                               backgroundColor: Colors.white.withOpacity(.2),
-                              radius: 50,
-                              child: controller!.value.isPlaying?  Icon(Icons.pause,size: 50,color: Colors.white.withOpacity(.4),): Icon(Icons.play_arrow,size: 50, color:Colors.white.withOpacity(.4)),
+                              radius: 40,
+                              child:Icon(Icons.play_arrow,size: 50, color:AppColors.primaryColor1.withOpacity(.9)),
                             ),
                           )
                       ),

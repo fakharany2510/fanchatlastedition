@@ -6,7 +6,7 @@ class FanModel {
   String? image;
   String? dateTime;
   String? postImage;
-  String? thumbnailImage;
+  String? thumbnailFanPosts;
   String? postVideo;
   String? time;
   String? timeSmap;
@@ -18,7 +18,7 @@ class FanModel {
     this.image,
     this.dateTime,
     this.postImage,
-    this.thumbnailImage,
+    this.thumbnailFanPosts,
     this.postVideo,
     this.time,
     this.timeSmap,
@@ -32,7 +32,7 @@ class FanModel {
     image=json['image'];
     dateTime=json['dateTime'];
     postImage=json['postImage'];
-    thumbnailImage=json['thumbnailImage'];
+    thumbnailFanPosts=json['thumbnailFanPosts'];
     postVideo=json['postVideo'];
     time=json['time'];
     timeSmap=json['timeSmap'];
@@ -49,7 +49,7 @@ class FanModel {
       'image':image,
       'dateTime':dateTime,
       'postImage':postImage,
-      'thumbnailImage':thumbnailImage,
+      'thumbnailFanPosts':thumbnailFanPosts,
       'postVideo':postVideo,
       'time':time,
       'timeSmap':timeSmap,

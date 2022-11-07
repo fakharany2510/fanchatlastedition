@@ -12,8 +12,10 @@ import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/fan_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 class AdvertisingCubit extends Cubit<AdvertisingState>{
 
@@ -78,7 +80,7 @@ class AdvertisingCubit extends Cubit<AdvertisingState>{
       AdvertisingPostVideo = File(pickedFile.path);
       videoPlayerController = VideoPlayerController.file(AdvertisingPostVideo!)
         ..initialize().then((value) {
-          videoPlayerController!.play();
+          videoPlayerController!.pause();
           emit(PickAdvertisingPostVideoSuccessState());
         }).catchError((error) {
           print('error picking  Advertising video ${error.toString()}');
@@ -174,6 +176,7 @@ class AdvertisingCubit extends Cubit<AdvertisingState>{
     required String? timeSpam,
     required String? advertisingLink,
     String? postVideo,
+    String? advertiseThumbnail,
   }){
     emit(FanCreateVideoPostLoadingState());
 
@@ -182,6 +185,7 @@ class AdvertisingCubit extends Cubit<AdvertisingState>{
         dateTime:dateTime,
         postImage:'',
         postVideo: postVideo??'',
+        advertiseThumbnail:advertiseThumbnail??"" ,
         time: time  ,
         timeSmap: timeSpam,
         advertisingLink: advertisingLink
@@ -219,19 +223,40 @@ class AdvertisingCubit extends Cubit<AdvertisingState>{
     //ال users دا هو الملف اللي هخزن الصوره فيه ف ال storage
         .child('advertising/${Uri.file(AdvertisingPostVideo!.path).pathSegments.last}')
     //كدا بعمل رفع للصوره
-        .putFile(AdvertisingPostVideo!).then((value){
-      value.ref.getDownloadURL().then((value){
-
+        .putFile(AdvertisingPostVideo!).then((value1){
+      value1.ref.getDownloadURL().then((value2)async{
+        var thumbTempPath = await VideoThumbnail.thumbnailFile(
+            video:  value2,
+            thumbnailPath: (await getTemporaryDirectory()).path,
+        imageFormat: ImageFormat.PNG,
+        //  maxHeight:, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+        quality: 100, // you can change the thumbnail quality here
+        timeMs: 2
+        );
+        int counter =1;
+        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmjhwdvghvcjyscgfcvjshcgs------->${thumbTempPath}');
+        firebase_storage.FirebaseStorage.instance
+            .ref()
+            .child('counter/${counter}/${Uri.file(thumbTempPath!).pathSegments.last}')
+            .putFile(File(thumbTempPath)).then((value3){
+        value3.ref.getDownloadURL().then((value4){
+        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value4}');
+        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value2}');
         createAdvertisingVideoPost(
-          dateTime:dateTime,
-          postVideo: value,
-          text: text,
-          time: time,
-          timeSpam:timeSpam,
-          advertisingLink: advertisngLink,
+        dateTime:dateTime,
+        postVideo: value2,
+        text: text,
+        time: time,
+        timeSpam:timeSpam,
+        advertisingLink: advertisngLink,
+        advertiseThumbnail: value4
         );
         getAdvertisingPosts();
         emit(AdvertisingUploadVideoPostSuccessState());
+        });
+
+        });
+
 
       }).catchError((error){
         emit(AdvertisingUploadVideoPostErrorState());
@@ -279,3 +304,6 @@ class AdvertisingCubit extends Cubit<AdvertisingState>{
 
 
 }
+
+
+

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
@@ -9,10 +11,8 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:video_player/video_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:media_cache_manager/media_cache_manager.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
 
 class FanAreaWidget extends StatefulWidget {
   int? index;
@@ -24,50 +24,32 @@ class FanAreaWidget extends StatefulWidget {
 }
 
 class _FanAreaWidgetState extends State<FanAreaWidget>  with AutomaticKeepAliveClientMixin {
-  final FijkPlayer player = FijkPlayer();
-
-  //bool isLoading = true;
-  //VideoPlayerController ?fanVideoPlayerController;
-  //Future <void> ?intilize;
-  @override
-  void initState() {
-    // print('before initializeddddddddddddddddddddddddddddddddddd 11111111111111111111111111111');
-    // Future.delayed(Duration(seconds: 1),()async{
-    //   print('before initializeddddddddddddddddddddddddddddddddddd 222222222222222222222222222222222222');
-    //
-    //   fanVideoPlayerController=VideoPlayerController.network(
-    //       AppCubit.get(context).fans[widget.index!].postVideo!
-    //   );
-    //   print('before initializeddddddddddddddddddddddddddddddddddd 3333333333333333333333333333333');
-    //
-    //   await fanVideoPlayerController!.initialize().then((value){
-    //     setState((){
-    //       print('Video has been initialized ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd');
-    //     });
-    //   });
-    // });
-    // print('after initializeddddddddddddddddddddddddddddddddddd 44444444444444444444444444444444444');
-    player.setDataSource(
-      AppCubit.get(context).fans[widget.index!].postVideo!,
-      autoPlay: false,
-      showCover: true,
-    );
-    super.initState();
-  }
+  //final FijkPlayer player = FijkPlayer();
 
   @override
-  void dispose() {
-    //  fanVideoPlayerController!.dispose();
-    player.pause();
-    super.dispose();
-  }
+  // void initState() {
+  //   player.start();
+  //   player.setDataSource(
+  //     AppCubit.get(context).fans[widget.index!].postVideo!,
+  //     autoPlay: false,
+  //     showCover: true,
+  //   );
+  //   super.initState();
+  // }
+
+  // @override
+  // void dispose() {
+  //   //  fanVideoPlayerController!.dispose();
+  //   player.pause();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppState>(builder: (context, state) {
       return InkWell(
         onTap: () {
-          player.pause();
+         // player.pause();
           (AppCubit.get(context).fans[widget.index!].postImage != "")
               ? Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return FanFullPost(
@@ -238,40 +220,14 @@ class _FanAreaWidgetState extends State<FanAreaWidget>  with AutomaticKeepAliveC
                   Container(
                     height: MediaQuery.of(context).size.height * .18,
                     width: double.infinity,
-                    child: DownloadMediaBuilder(
-                      url: AppCubit.get(context).fans[widget.index!].postVideo!,
-                      builder: (context, snapshot) {
-                        if (snapshot.status == DownloadMediaStatus.loading) {
-                          return Image(
-                              image: AssetImage('assets/images/load.png'));
-                        }
-                        if (snapshot.status == DownloadMediaStatus.success) {
-                          return player == null
-                              ? Image(
-                                  image:
-                                      AssetImage('assets/images/load.png'))
-                              : IgnorePointer(
-                                  child: FijkView(
-                                    player: player,
-                                    fit: FijkFit.cover,
-                                    fsFit: FijkFit.fitWidth,
-                                  ),
-                                );
-                          // AspectRatio(
-                          //   aspectRatio: fanVideoPlayerController!.value.aspectRatio,
-                          //   child: VideoPlayer(fanVideoPlayerController!),
-                          // );
-                        }
-                        return Image(
-                          image: AssetImage('assets/images/nonet.jpg'),
-                          fit: BoxFit.cover,
-                        );
-                      },
-                    ),
+                    child: Image(
+                      image: NetworkImage(AppCubit.get(context).fans[widget.index!].thumbnailFanPosts!),
+                   fit: BoxFit.cover,
+                    )
+
                   ),
-                  player==null
-                      ?Text('')
-                      :Positioned(
+                //  player==null ?Text('') :
+                  Positioned(
                       top: MediaQuery.of(context).size.height*.05,
                       right: MediaQuery.of(context).size.height*.04,
                       child:CircleAvatar(
@@ -282,9 +238,9 @@ class _FanAreaWidgetState extends State<FanAreaWidget>  with AutomaticKeepAliveC
                         ),
                       ),
                   ),
-                  player==null
-                      ?Text('')
-                      :Positioned(
+                  //player==null ?
+                 // Text(''):
+                  Positioned(
                     bottom: 4,
                     right: 5,
                     child: Row(
@@ -355,7 +311,7 @@ class _FanAreaWidgetState extends State<FanAreaWidget>  with AutomaticKeepAliveC
     }, listener: (context, state) {
       if (state is NavigateScreenState) {
         // fanVideoPlayerController!.pause();
-        player.pause();
+        //player.pause();
         // videoPlayerController!.pause();
       }
     });

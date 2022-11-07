@@ -24,28 +24,7 @@ class MyMessageTeamChatWidget extends StatefulWidget {
 
 class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> with AutomaticKeepAliveClientMixin {
 
-  late VideoPlayerController mymessageController;
 
-  @override
-  void initState() {
-    mymessageController = VideoPlayerController.network(
-        "${AppCubit.get(context).teamChat[widget.index!].video}");
-    mymessageController.initialize().then((value) {
-      mymessageController.play();
-      mymessageController.setLooping(true);
-      mymessageController.setVolume(1.0);
-      setState(() {
-        mymessageController.pause();
-      });
-    }).catchError((error){
-      print('error while initializing video ${error.toString()}');
-    });
-    super.initState();
-  }
-  void dispose() {
-    mymessageController.dispose();
-    super.dispose();
-  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
@@ -181,7 +160,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> with 
                       ),
                     ),
                   ):
-                  (AppCubit.get(context).teamChat[widget.index!].video != null)
+                  (AppCubit.get(context).teamChat[widget.index!].teamChatThumbnail != null)
                       ?Container(
                     width: MediaQuery.of(context).size.width*.66,
                     padding: const EdgeInsets.symmetric(
@@ -214,22 +193,32 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> with 
                         const SizedBox(height: 5,),
                         Stack(
                           children: [
-                            mymessageController.value.isInitialized
-                                ? InkWell(
+                            InkWell(
                               onTap: (){
                                 Navigator.push(context, MaterialPageRoute(builder: (_){
-                                  return OpenFullVideoPrivateChat(controller: mymessageController);
+                                  return OpenFullVideoPrivateChat(controller: AppCubit.get(context).teamChat[widget.index!].video);
                                 }));
                               },
-                                  child: Container(
-                              padding: const EdgeInsets.only(left: 5),
-                              width: MediaQuery.of(context).size.width*.65,
-                              child: AspectRatio(
-                                    aspectRatio:mymessageController.value.size.width/mymessageController.value.size.height,
-                                    child:VideoPlayer(mymessageController)),
+                              child:Material(
+                                elevation: 100,
+                                shadowColor:  const Color(0xffb1b2ff).withOpacity(.16),
+
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(3),
+
+                                ),
+                                child: CachedNetworkImage(
+                                  cacheManager: AppCubit.get(context).manager,
+                                  imageUrl: "${AppCubit.get(context).teamChat[widget.index!].teamChatThumbnail}",
+                                  placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
+                                  // maxHeightDiskCache:75,
+
+                                  fit: BoxFit.contain,
+                                ),
+                              )
                             ),
-                                )
-                                : const Center(child: CircularProgressIndicator()),
 
                             Positioned(
                                 top: MediaQuery.of(context).size.height*.01,
@@ -243,16 +232,16 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> with 
                                     //     mymessageController.play();
                                     //   }
                                     // });
-                                    mymessageController.play();
-                                    isPostPlaying=false;
+                                    // mymessageController.play();
+                                    // isPostPlaying=false;
                                     Navigator.push(context, MaterialPageRoute(builder: (_){
-                                      return OpenFullVideoPrivateChat(controller: mymessageController);
+                                      return OpenFullVideoPrivateChat(controller: AppCubit.get(context).teamChat[widget.index!].video);
                                     }));
                                   },
                                   child: CircleAvatar(
                                     backgroundColor: Colors.white.withOpacity(.5),
                                     radius: 25,
-                                    child: mymessageController.value.isPlaying? Icon(Icons.pause,size: 40,color:AppColors.primaryColor1.withOpacity(.8),): Icon(Icons.play_arrow,size: 40,color:AppColors.primaryColor1.withOpacity(.8),),
+                                    child: Icon(Icons.play_arrow,size: 40,color:AppColors.primaryColor1.withOpacity(.8),),
                                   ),
                                 )
                             ),

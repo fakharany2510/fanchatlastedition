@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 import 'package:voice_message_package/voice_message_package.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
 
 class SenderPublicChatWidget extends StatefulWidget {
   int ?index;
@@ -21,30 +23,6 @@ class SenderPublicChatWidget extends StatefulWidget {
 }
 
 class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> with AutomaticKeepAliveClientMixin {
-
-  late VideoPlayerController senderController;
-
-  @override
-  void initState() {
-    senderController = VideoPlayerController.network(
-        "${AppCubit.get(context).publicChat[widget.index!].video}");
-    senderController.initialize().then((value) {
-      senderController.play();
-      senderController.setLooping(true);
-      senderController.setVolume(1.0);
-      setState(() {
-        senderController.pause();
-      });
-    }).catchError((error){
-      print('error while initializing video ${error.toString()}');
-    });
-    super.initState();
-  }
-@override
-  void dispose() {
-  senderController.dispose();
-    super.dispose();
-  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
@@ -154,7 +132,7 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> with Au
                       ),
                     ),
                   ):
-                  (AppCubit.get(context).publicChat[widget.index!].video!=null)
+                  (AppCubit.get(context).publicChat[widget.index!].publicChatThumbnail!=null)
                       ?Container(
                     width: MediaQuery.of(context).size.width*.74,
                     padding: const EdgeInsets.symmetric(
@@ -183,71 +161,46 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> with Au
                             const SizedBox(height: 5,),
                             Stack(
                     children: [
-                            InkWell(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (_){
-                                  return OpenFullVideoPrivateChat(controller: senderController);
-                                }));
-                              },
-                              child: Container(
-                                  decoration:  BoxDecoration(
-                                    borderRadius:const  BorderRadius.only(
-                                      topRight: Radius.circular(10),
-                                      topLeft: Radius.circular(10),
-                                      bottomLeft: Radius.circular(10),
-                                    ),
-                                  ),
-                                 /// height: MediaQuery.of(context).size.height*.25,
-                                  width: MediaQuery.of(context).size.width*.74,
-                                  child: senderController.value.isInitialized
-                                      ? AspectRatio(
-                                      aspectRatio:senderController.value.size.width/senderController.value.size.height,
-                                      child: VideoPlayer(senderController))
-                                      : const Center(child: CircularProgressIndicator())
+                      InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (_){
+                            return OpenFullVideoPrivateChat(controller: AppCubit.get(context).publicChat[widget.index!].video);
+                          }));
+                        },
+                        child:Material(
+                          elevation: 100,
+                          shadowColor:  const Color(0xffb1b2ff).withOpacity(.16),
 
-                              ),
-                            ),
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
 
-                            // FutureBuilder(
-                            //   future: intilize,
-                            //   builder: (context,snapshot){
-                            //     if(snapshot.connectionState == ConnectionState.done){
-                            //       return AspectRatio(
-                            //         aspectRatio: videoPlayerController!.value.aspectRatio,
-                            //         child: VideoPlayer(videoPlayerController!),
-                            //       );
-                            //     }
-                            //     else{
-                            //       return const Center(
-                            //         child: CircularProgressIndicator(),
-                            //       );
-                            //     }
-                            //   },
-                            //
-                            //
-                            //
-                            // ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(3),
+
+                          ),
+                          child: CachedNetworkImage(
+                            cacheManager: AppCubit.get(context).manager,
+                            imageUrl: "${AppCubit.get(context).publicChat[widget.index!].publicChatThumbnail}",
+                            placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
+                            // maxHeightDiskCache:75,
+
+                            fit: BoxFit.contain,
+                          ),
+                        )
+                      ),
 
                       Positioned(
                           top: MediaQuery.of(context).size.height*.01,
                           right: MediaQuery.of(context).size.height*.01,
                           child: InkWell(
                             onTap: (){
-                              // setState((){
-                              //   if(mymessageController.value.isPlaying){
-                              //     mymessageController.pause();
-                              //   }else{
-                              //     mymessageController.play();
-                              //   }
-                              // });
                               Navigator.push(context, MaterialPageRoute(builder: (_){
-                                return OpenFullVideoPrivateChat(controller: senderController);
+                                return OpenFullVideoPrivateChat(controller: AppCubit.get(context).publicChat[widget.index!].video);
                               }));
                             },
                             child: CircleAvatar(
                               backgroundColor: Colors.white.withOpacity(.5),
                               radius: 25,
-                              child: senderController.value.isPlaying? Icon(Icons.pause,size: 40,color:AppColors.primaryColor1.withOpacity(.8),): Icon(Icons.play_arrow,size: 40,color: AppColors.primaryColor1.withOpacity(.8),),
+                              child: Icon(Icons.play_arrow,size: 40,color: AppColors.primaryColor1.withOpacity(.8),),
                             ),
                           )
                       ),

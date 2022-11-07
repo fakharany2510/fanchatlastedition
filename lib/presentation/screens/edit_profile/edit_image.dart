@@ -59,18 +59,6 @@ class _EditImageState extends State<EditImage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
 
-                    // TextButton(
-                    //   onPressed: (){
-                    //     cubit.getProfileImage();
-                    //
-                    //   },
-                    //   child:  Text('Edit Image',style: TextStyle(
-                    //       color: AppColors.primaryColor1,
-                    //       fontFamily: AppStrings.appFont,
-                    //       fontWeight: FontWeight.w700,
-                    //       fontSize: 18
-                    //   ),),
-                    // ),
                     if(cubit.profileImage != null)
                     state is GetProfileImageLoadingState ||state is UpdateUserLoadingState?
                     CircularProgressIndicator(

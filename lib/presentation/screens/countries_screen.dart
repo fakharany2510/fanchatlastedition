@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
@@ -165,12 +166,22 @@ class _CountriesScreenState extends State<CountriesScreen> {
                                                                 width: 1
                                                             )
                                                         ),
-                                                        child: Image(
-                                                          image: NetworkImage(data['image']),
+                                                        child:CachedNetworkImage(
+                                                          cacheManager: AppCubit.get(context).manager,
+                                                          imageUrl: "${data['image']}",
+                                                          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                                                           fit: BoxFit.cover,
-                                                          height:MediaQuery.of(context).size.height*.04,
-                                                          width:MediaQuery.of(context).size.height*.06,
-                                                        ),
+                                                            height:MediaQuery.of(context).size.height*.04,
+                                                            width:MediaQuery.of(context).size.height*.06,
+
+                                                        )
+
+                                                        // Image(
+                                                        //   image: NetworkImage(data['image']),
+                                                        //   fit: BoxFit.cover,
+                                                        //   height:MediaQuery.of(context).size.height*.04,
+                                                        //   width:MediaQuery.of(context).size.height*.06,
+                                                        // ),
                                                       )
                                                   ),
                                                 ),

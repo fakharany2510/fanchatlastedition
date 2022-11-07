@@ -4,7 +4,6 @@ import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
-import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/screens/public_chat/public_chat_message_widget.dart';
 import 'package:fanchat/presentation/screens/public_chat/send_image_public_chat.dart';
 import 'package:fanchat/presentation/screens/public_chat/send_video_public_chat.dart';
@@ -112,6 +111,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
 
                                 padding: const EdgeInsets.all(10),
                                 child: ListView.separated(
+
                                     addAutomaticKeepAlives: true,
                                     controller: scrollController,
                                     physics: const BouncingScrollPhysics(),

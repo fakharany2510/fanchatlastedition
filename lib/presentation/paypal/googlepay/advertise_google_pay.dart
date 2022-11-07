@@ -18,7 +18,7 @@ class _AdvertiseGooglePayState extends State<AdvertiseGooglePay> {
   static const _paymentItems = [
     PaymentItem(
       label: 'Advertise package',
-      amount: '1',
+      amount: '200',
       status: PaymentItemStatus.final_price,
     )
   ];

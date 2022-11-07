@@ -1,6 +1,6 @@
 
 
-class PublicChatModel{
+class TeamChatModel{
   String? senderId;
   String? senderName;
   String? senderImage;
@@ -9,9 +9,9 @@ class PublicChatModel{
   String? image;
   String? voice;
   String? video;
-  String? publicChatThumbnail;
+  String? teamChatThumbnail;
 
-  PublicChatModel({
+  TeamChatModel({
     this.senderId,
     this.senderImage,
     this.senderName,
@@ -20,9 +20,9 @@ class PublicChatModel{
     this.image,
     this.voice,
     this.video,
-    this.publicChatThumbnail,
+    this.teamChatThumbnail,
   });
-  PublicChatModel.fromJson(Map<String , dynamic> json){
+  TeamChatModel.fromJson(Map<String , dynamic> json){
     senderId=json['senderId'];
     senderName=json['senderName'];
     senderImage=json['senderImage'];
@@ -31,7 +31,7 @@ class PublicChatModel{
     image=json['image'];
     voice=json['voice'];
     video=json['video'];
-    publicChatThumbnail=json['publicChatThumbnail'];
+    teamChatThumbnail=json['teamChatThumbnail'];
   }
 
   Map <String , dynamic> toMap(){
@@ -44,7 +44,7 @@ class PublicChatModel{
       'senderImage':senderImage,
       'senderName':senderName,
       'video':video,
-      'publicChatThumbnail':publicChatThumbnail,
+      'teamChatThumbnail':teamChatThumbnail,
     };
   }
 }

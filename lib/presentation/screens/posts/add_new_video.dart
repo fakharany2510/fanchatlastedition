@@ -45,11 +45,11 @@ class _AddNewVideoState extends State<AddNewVideo> {
          //  AppCubit.get(context).testComments();
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context)=>const HomeLayout()), (route) => false);
-          AppCubit.get(context).controller!.pause();
+          AppCubit.get(context).videoPlayerController!.pause();
           // AppCubit.get(context).postVideo=null;
 
         }
-        if(state is PickPostVideoSuccessState){AppCubit.get(context).controller!.pause();}
+        if(state is PickPostVideoSuccessState){AppCubit.get(context).videoPlayerController!.pause();}
        // if(state is BrowiseCreateVideoPostSuccessState){AppCubit.get(context).controller!.pause();}
       },
       builder: (context,state){
@@ -108,7 +108,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
                         //   //  token:AppCubit.get(context).userToken
                         // );
                       }else {
-                        AppCubit.get(context).controller!.pause();
+                        AppCubit.get(context).videoPlayerController!.pause();
                         final filesizeLimit = 15000000;  // in bytes // 30 Mega
                         final filesize = await AppCubit.get(context).postVideo!.length(); // in bytes
                         final isValidFilesize = filesize < filesizeLimit;
@@ -195,7 +195,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
                         ),
                       ),
                       const SizedBox(height: 40,),
-                      ( AppCubit.get(context).postVideo!= null && AppCubit.get(context).controller!.value.isInitialized)
+                      ( AppCubit.get(context).postVideo!= null && AppCubit.get(context).videoPlayerController!.value.isInitialized)
                           ?Container(
                             height: MediaQuery.of(context).size.height*.55,
                             child: Align(
@@ -203,11 +203,11 @@ class _AddNewVideoState extends State<AddNewVideo> {
                               heightFactor: 1,
                               widthFactor: 1,
                               child: AspectRatio(
-                                aspectRatio:AppCubit.get(context).controller!.value.aspectRatio*1,
-                                child: AppCubit.get(context).controller ==null
+                                aspectRatio:AppCubit.get(context).videoPlayerController!.value.aspectRatio*1,
+                                child: AppCubit.get(context).videoPlayerController ==null
                                     ?const SizedBox(height: 0,)
-                                    :CachedVideoPlayer(
-                                    AppCubit.get(context).controller!
+                                    :VideoPlayer(
+                                    AppCubit.get(context).videoPlayerController!
                                 ),
                               ),
                             ),

@@ -4,6 +4,7 @@ class AdvertisingModel{
   String? dateTime;
   String? postImage;
   String? postVideo;
+  String? advertiseThumbnail;
   String? time;
   String? timeSmap;
 
@@ -15,6 +16,7 @@ class AdvertisingModel{
     this.postVideo,
     this.time,
     this.timeSmap,
+    this.advertiseThumbnail
   });
 
   AdvertisingModel.formJson( Map <String , dynamic> json ){
@@ -22,6 +24,7 @@ class AdvertisingModel{
     dateTime=json['dateTime'];
     postImage=json['postImage'];
     postVideo=json['postVideo'];
+    advertiseThumbnail=json['advertiseThumbnail'];
     time=json['time'];
     timeSmap=json['timeSmap'];
   }
@@ -32,6 +35,7 @@ class AdvertisingModel{
       'dateTime':dateTime,
       'postImage':postImage,
       'postVideo':postVideo,
+      'advertiseThumbnail':advertiseThumbnail,
       'time':time,
       'timeSmap':timeSmap,
     };
