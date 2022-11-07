@@ -1233,6 +1233,18 @@ List<int> commentIndex=[];
       senderId: AppStrings.uId
     );
 
+    MessageModel myModel=MessageModel(
+        image: messageImage,
+        text: "",
+        dateTime: dateTime,
+        recevierId: userModel!.uId,
+        recevierName: userModel!.username,
+        recevierImage: userModel!.image,
+        senderId: recevierId
+    );
+
+
+
     //Set My Chat
     FirebaseFirestore.instance
         .collection('users')
@@ -1284,7 +1296,7 @@ List<int> commentIndex=[];
         .doc(recevierId)
         .collection('chats')
         .doc(AppStrings.uId)
-        .set(model.toMap())
+        .set(myModel.toMap())
         .then((value){
       emit(CreateImagePrivateSuccessState());
     })
@@ -1495,6 +1507,16 @@ List<int> commentIndex=[];
         senderId: AppStrings.uId,
         voice: voice
     );
+
+    MessageModel myModel=MessageModel(
+        text: "",
+        dateTime: dateTime,
+        recevierId: userModel!.uId,
+        recevierName: userModel!.username,
+        recevierImage: userModel!.image,
+        senderId: recevierId,
+        voice: voice
+    );
     emit(StopLoadingState());
     //Set My Chat
     FirebaseFirestore.instance
@@ -1551,7 +1573,7 @@ List<int> commentIndex=[];
         .doc(recevierId)
         .collection('chats')
         .doc(AppStrings.uId)
-        .set(model.toMap())
+        .set(myModel.toMap())
         .then((value){
       emit(SendMessageSuccessState());
     })
@@ -2455,6 +2477,18 @@ List<int> commentIndex=[];
         senderId: AppStrings.uId
     );
 
+    MessageModel myModel=MessageModel(
+        video:messageViedo,
+        text: "",
+        dateTime: dateTime,
+        recevierId: AppStrings.uId,
+        recevierName: userModel!.username,
+        recevierImage: userModel!.image,
+        privateChatSumbnail: privateChatSumbnail,
+        senderId: recevierId
+    );
+
+
     //Set My Chat
     FirebaseFirestore.instance
         .collection('users')
@@ -2504,7 +2538,7 @@ List<int> commentIndex=[];
         .doc(recevierId)
         .collection('chats')
         .doc(AppStrings.uId)
-        .set(model.toMap())
+        .set(myModel.toMap())
         .then((value){
       emit(SendMessageSuccessState());
     })
