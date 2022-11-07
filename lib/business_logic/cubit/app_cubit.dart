@@ -8,6 +8,7 @@ import 'package:fanchat/data/modles/matches_model.dart';
 import 'package:fanchat/data/modles/profile_model.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
 import 'package:fanchat/data/modles/teamchat.dart';
+import 'package:fanchat/presentation/screens/edit_profile/edit_image.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -232,11 +233,52 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+
+  Future<void> getCoverImageFirstTime() async {
+    final pickedFile = await coverPicker.pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      coverImage = File(pickedFile.path);
+      cover = FileImage(coverImage!);
+      print('Path is ${pickedFile.path}');
+      emit(UploadCoverImageSuccessState());
+      emit(GetCoverImageFirstTimeSuccessState());
+    } else {
+      print('No Image selected.');
+      emit(UploadCoverImageErrorState());
+    }
+  }
+
   File? profileImage;
 
   ImageProvider profile = const AssetImage('assets/images/profile.png');
 
   var picker = ImagePicker();
+
+
+  Future<void> getProfileImageFirstTime(context) async {
+    final pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      profileImage = File(pickedFile.path);
+      profile = FileImage(profileImage!);
+      print('Path is ${pickedFile.path}');
+      // Navigator.push(context, MaterialPageRoute(builder: (_){
+      //   return EditImage();
+      // }));
+      emit(UploadProfileImageSuccessState());
+      emit(GetProfileImageFirstTimeSuccessState());
+    } else {
+      print('No Image selected.');
+      emit(UploadProfileImageErrorState());
+    }
+
+  }
+
 
   Future<void> getProfileImage() async {
     final pickedFile = await picker.pickImage(
@@ -1282,6 +1324,16 @@ List<int> commentIndex=[];
       recevierImage: recevierImage,
       recevierName: recevierName
     );
+
+
+    MessageModel myModel =MessageModel(
+        recevierId: AppStrings.uId,
+        senderId: recevierId,
+        dateTime: dateTime,
+        text: text,
+        recevierImage: userModel!.image,
+        recevierName: userModel!.username
+    );
     //Set My Chat
     FirebaseFirestore.instance
         .collection('users')
@@ -1335,7 +1387,7 @@ List<int> commentIndex=[];
         .doc(recevierId)
         .collection('chats')
         .doc(AppStrings.uId)
-        .set(model.toMap())
+        .set(myModel.toMap())
         .then((value){
       emit(SendMessageSuccessState());
     })

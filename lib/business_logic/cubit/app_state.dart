@@ -279,3 +279,6 @@ class  GetUserIdsErrorState extends AppState{}
 class GetAllMatchesLoadingState extends AppState {}
 class GetAllMatchesSuccessState extends AppState {}
 class GetAllMatchesErrorState extends AppState {}
+
+class GetProfileImageFirstTimeSuccessState extends AppState{}
+class GetCoverImageFirstTimeSuccessState extends AppState{}

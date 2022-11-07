@@ -84,14 +84,14 @@ class MyApp extends StatelessWidget {
           child: OverlaySupport(
             child: MaterialApp(
               title: 'fanchat',
-              localizationsDelegates: [
+              localizationsDelegates: const [
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
               ],
-              supportedLocales: [
-                const Locale('en', ''),
-                const Locale('es', ''),
-                const Locale('de', ''),
+              supportedLocales: const [
+                Locale('en', ''),
+                Locale('es', ''),
+                Locale('de', ''),
               ],
               debugShowCheckedModeBanner: false,
               theme: ThemeData(

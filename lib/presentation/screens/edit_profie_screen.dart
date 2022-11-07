@@ -1,7 +1,6 @@
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
-import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/screens/edit_profile/edit_cover.dart';
 import 'package:fanchat/presentation/screens/edit_profile/edit_image.dart';
@@ -19,7 +18,19 @@ class EditProfileScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return BlocConsumer<AppCubit, AppState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is GetProfileImageFirstTimeSuccessState){
+          Navigator.push(context, MaterialPageRoute(builder: (_){
+            return EditImage();
+          }));
+        }
+
+        if(state is GetCoverImageFirstTimeSuccessState){
+          Navigator.push(context, MaterialPageRoute(builder: (_){
+            return EditCover();
+          }));
+        }
+      },
       builder: (context, state) {
         var cubit = AppCubit.get(context);
 
@@ -79,12 +90,8 @@ class EditProfileScreen extends StatelessWidget {
                                       child: IconButton(
                                           onPressed: () {
                                             // isEdit=false;
-                                            cubit.getCoverImage();
-                                            Navigator.push(context, MaterialPageRoute(builder: (_){
+                                            cubit.getCoverImageFirstTime();
 
-                                              return EditCover();
-
-                                            }));
                                           },
                                           icon: Icon(
                                             Icons.camera_alt_outlined,
@@ -113,11 +120,7 @@ class EditProfileScreen extends StatelessWidget {
                                   radius: 20,
                                   child: IconButton(
                                       onPressed: () {
-                                        cubit.getProfileImage();
-                                        Navigator.push(context, MaterialPageRoute(builder: (_){
-                                          return EditImage();
-
-                                        }));
+                                        cubit.getProfileImageFirstTime(context);
                                         print('change personal photo');
                                       },
                                       icon: Icon(

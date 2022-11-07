@@ -11,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 import 'package:voice_message_package/voice_message_package.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
-import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
 
 class SenderPublicChatWidget extends StatefulWidget {
   int ?index;

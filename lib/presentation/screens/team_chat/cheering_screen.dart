@@ -177,7 +177,7 @@ class _CheeringScreenState extends State<CheeringScreen> {
                                 else{
 
                                   customToast(title: 'Please, Wait few seconds and try again', color: AppColors.primaryColor1);
-                                  Navigator.pop(context);
+                                  // Navigator.pop(context);
 
                                 }
 
