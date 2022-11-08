@@ -168,6 +168,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                   currentIndex: cubit.currentIndex,
                   onTap: (value){
                     cubit.navigateScreen(value,context);
+
                   },
                   elevation: 20,
 

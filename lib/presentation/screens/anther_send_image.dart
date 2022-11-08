@@ -1,6 +1,6 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
-import 'package:fanchat/presentation/screens/another_match_details.dart';
+import 'package:fanchat/presentation/screens/another_chat_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../constants/app_strings.dart';

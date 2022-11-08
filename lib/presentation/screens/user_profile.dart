@@ -1,5 +1,5 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
-import 'package:fanchat/presentation/screens/another_match_details.dart';
+import 'package:fanchat/presentation/screens/another_chat_details.dart';
 import 'package:fanchat/presentation/widgets/user_profile_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

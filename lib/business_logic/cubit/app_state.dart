@@ -63,6 +63,8 @@ class GetProfileImageErrorState extends AppState {}
 class GetCoverImageLoadingState extends AppState {}
 class GetCoverImageSuccessState extends AppState {}
 class GetCoverImageErrorState extends AppState {}
+class GetProfileImageFirstTimeSuccessState extends AppState{}
+class GetCoverImageFirstTimeSuccessState extends AppState{}
 
 class UpdateUserLoadingState extends AppState {}
 class UpdateUserSuccessState extends AppState {}
@@ -280,5 +282,3 @@ class GetAllMatchesLoadingState extends AppState {}
 class GetAllMatchesSuccessState extends AppState {}
 class GetAllMatchesErrorState extends AppState {}
 
-class GetProfileImageFirstTimeSuccessState extends AppState{}
-class GetCoverImageFirstTimeSuccessState extends AppState{}

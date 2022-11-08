@@ -118,7 +118,6 @@ class MyApp extends StatelessWidget {
                 'register':(context)=>RegisterScreen(),
                 'profile':(context)=> const ProfileScreen(),
                 'edit_profile':(context)=>EditProfileScreen(),
-                'add_image':(context)=>AddNewImage(),
                 'add_video':(context)=>AddNewVideo(),
                 'add_text':(context)=>AddTextPost(),
                 'fan_post':(context)=>FanFullPost(),

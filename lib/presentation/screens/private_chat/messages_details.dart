@@ -1,7 +1,4 @@
 import 'dart:io';
-
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cached_video_player/cached_video_player.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
@@ -9,7 +6,6 @@ import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/screens/private_chat/send_notification_chat.dart';
 import 'package:fanchat/presentation/screens/private_chat/send_video_message.dart';
 import 'package:fanchat/presentation/screens/private_chat/sendimage_message.dart';
-import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:fanchat/presentation/screens/private_chat/my_widget.dart';
 import 'package:fanchat/presentation/screens/private_chat/sender_widget.dart';
 import 'package:fanchat/presentation/screens/user_profile.dart';
@@ -24,13 +20,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:record_mp3/record_mp3.dart';
 import 'package:uuid/uuid.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:voice_message_package/voice_message_package.dart';
-
-import '../../../data/modles/message_model.dart';
-import '../../../data/modles/user_model.dart';
- // CachedVideoPlayerController? controllerPrivate;
-
-
 typedef _Fn = void Function();
 Future<String> _getTempPath(String path) async {
   var tempDir = await getTemporaryDirectory();
@@ -511,31 +500,28 @@ class _ChatDetailsState extends State<ChatDetails> {
     Size size = MediaQuery.of(context).size;
     print("permission uploadRecord1");
     var uuid = const Uuid().v4();
-    Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('ali/${Uri.file(voice.path).pathSegments.last}');
+    Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('ali/${Uri.file('${voice}').pathSegments.last}');
     await storageReference.putFile(voice).then((value){
-      AppCubit.get(context).createVoiceMessage(
+      value.ref.getDownloadURL().then((value){
+        AppCubit.get(context).createVoiceMessage(
+          recevierId: widget.userId!,
+          recevierImage:widget.userImage!,
+          recevierName: widget.userName!,
+          dateTime: DateTime.now().toString(),
+          voice: value,
+        );
+        widget.onSendMessage(value, "voice", size);
 
-        recevierId: widget.userId!,
-        recevierImage:widget.userImage!,
-        recevierName: widget.userName!,
-        dateTime: DateTime.now().toString(),
-        voice: voice.path,
-      );
+        setState(() {
+          uploadingRecord = false;
+        });
+      }).catchError((){});
       print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeeeeeeeeeeeeeeeessssssssss');
     }).catchError((error){
       print('nnnnnnnnnnnnnnnnnnnooooooooooooooooooo');
       print(error.toString());
 
     });
-    var url = await storageReference.getDownloadURL();
-    print("recording file222");
-    print(url);
-    widget.onSendMessage(url, "voice", size);
-
-    setState(() {
-      uploadingRecord = false;
-    });
-
   }
 
   void pauseRecord() {

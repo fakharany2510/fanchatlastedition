@@ -792,6 +792,42 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
     }
   }
   // 5- upload record to firebase
+  // Future uploadRecord(
+  //     {
+  //       String? dateTime,
+  //       required File voice,
+  //       String? senderId,
+  //       String? senderName,
+  //       String? senderImage,
+  //
+  //     }
+  //
+  //     ) async {
+  //   Size size = MediaQuery.of(context).size;
+  //   print("permission uploadRecord1");
+  //   var uuid = const Uuid().v4();
+  //   Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('publicChat/${Uri.file(voice.path).pathSegments.last}');
+  //   await storageReference.putFile(voice).then((value){
+  //     AppCubit.get(context).createVoicePublicChat(
+  //       dateTime: DateTime.now().toString(),
+  //       voice: voice.path,
+  //     );
+  //     print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeeeeeeeeeeeeeeeessssssssss');
+  //   }).catchError((error){
+  //     print('nnnnnnnnnnnnnnnnnnnooooooooooooooooooo');
+  //     print(error.toString());
+  //
+  //   });
+  //   var url = await storageReference.getDownloadURL();
+  //   print("recording file222");
+  //   print(url);
+  //   widget.onSendMessage(url, "voice", size);
+  //
+  //   setState(() {
+  //     uploadingRecord = false;
+  //   });
+  //
+  // }
   Future uploadRecord(
       {
         String? dateTime,
@@ -806,27 +842,27 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
     Size size = MediaQuery.of(context).size;
     print("permission uploadRecord1");
     var uuid = const Uuid().v4();
-    Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('publicChat/${Uri.file(voice.path).pathSegments.last}');
+    Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('publicChatVoices/${Uri.file('${voice}').pathSegments.last}');
     await storageReference.putFile(voice).then((value){
-      AppCubit.get(context).createVoicePublicChat(
-        dateTime: DateTime.now().toString(),
-        voice: voice.path,
-      );
+      value.ref.getDownloadURL().then((value){
+        AppCubit.get(context).createVoicePublicChat(
+          dateTime: DateTime.now().toString(),
+          voice: value,
+        );
+        widget.onSendMessage(value, "voice", size);
+        print(value);
+        print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeeeeeeeeeeeeeeeessssssssss2');
+        print('nnnnnnnnnnnnnnnnnnnooooooooooooooooooo2');
+        setState(() {
+          uploadingRecord = false;
+        });
+      }).catchError((){});
       print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeeeeeeeeeeeeeeeessssssssss');
     }).catchError((error){
       print('nnnnnnnnnnnnnnnnnnnooooooooooooooooooo');
       print(error.toString());
 
     });
-    var url = await storageReference.getDownloadURL();
-    print("recording file222");
-    print(url);
-    widget.onSendMessage(url, "voice", size);
-
-    setState(() {
-      uploadingRecord = false;
-    });
-
   }
 
   void pauseRecord() {

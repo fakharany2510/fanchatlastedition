@@ -298,7 +298,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               width: size.width*.6,
                               height: size.height*.06,
                               function: (){
-                                if(name.text == "premium fan"){
+                                if(name.text == "fanchat"){
+                                  if(isCheckBoxTrue == true ){
+                                    AppStrings.uId = 'eviFlZri47OZKhqnuVMfNfx3Bgt1';
+                                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                                    const HomeLayout()), (Route<dynamic> route) => false);
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
+                                  }else{
+                                    Fluttertoast.showToast(
+                                      msg:"You Must Agree To Privacy Policies First",
+                                      toastLength: Toast.LENGTH_LONG,
+                                      gravity: ToastGravity.TOP,
+                                      timeInSecForIosWeb: 5,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 18.0,
+                                    );
+                                  }
+                                }
+                                else if(name.text == "premium fan"){
                                 if(isCheckBoxTrue == true ){
                                   CashHelper.saveData(key: 'premium',value: 1);
                                   CashHelper.saveData(key: 'days' , value: 0);
