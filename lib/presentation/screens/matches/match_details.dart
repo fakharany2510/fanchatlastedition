@@ -29,7 +29,6 @@ class _MatchDetailsState extends State<MatchDetails> {
     'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat',
   ];
 
-  List isDay= List.generate(28, (index) => false);
 
   String ?dateMatch='22 Nov 2022';
 
@@ -80,8 +79,8 @@ class _MatchDetailsState extends State<MatchDetails> {
                                         return InkWell(
                                           onTap: (){
                                             setState(() {
-                                              isDay= List.generate(28, (index) => false);
-                                              isDay[index]=!isDay[index];
+                                             AppCubit.get(context).isDay= List.generate(28, (index) => false);
+                                             AppCubit.get(context).isDay[index]=! AppCubit.get(context).isDay[index];
                                             });
 
                                             AppCubit.get(context).getAllMatches(doc: dateMatchs[index]);
@@ -111,13 +110,13 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                 Column(
                                                   children: [
                                                     Text(dayMatchs[index],style: TextStyle(
-                                                        color: isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey,
+                                                        color:  AppCubit.get(context).isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey,
                                                         fontSize: 10,
                                                         fontFamily: AppStrings.appFont
                                                     ),),
                                                     const SizedBox(height: 10,),
                                                     Text(dateMatchs[index],style: TextStyle(
-                                                        color: isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey,
+                                                        color:  AppCubit.get(context).isDay[index]==true?AppColors.primaryColor1:AppColors.myGrey,
                                                         fontSize: 16,
                                                         fontFamily: AppStrings.appFont
                                                     ),),

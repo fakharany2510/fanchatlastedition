@@ -135,6 +135,13 @@ class AppCubit extends Cubit<AppState> {
     if(currentIndex==2){
      //getFanPosts();
     }
+    if(currentIndex==1){
+      //getFanPosts();
+      AppCubit.get(context).isDay= List.generate(28, (index) => false);
+      isDay.first=true;
+      getAllMatches(doc:'20 Nov');
+
+    }
     if(currentIndex==0){
       String getTimeDifferenceFromNow(DateTime dateTime) {
         Duration difference = DateTime.now().difference(dateTime);
@@ -171,6 +178,10 @@ class AppCubit extends Cubit<AppState> {
     checkValue=value;
     emit(CheckBoxState());
   }
+
+
+  List isDay= List.generate(28, (index) => false);
+
 
   void throwState(){
 
