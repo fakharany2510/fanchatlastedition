@@ -1064,8 +1064,8 @@ List<int> commentIndex=[];
         .add(model.toMap())
         .then((value) {
       print('Comment Add');
-      getComment(postId);
-      testComments(postId);
+      // getComment(postId);
+      // testComments(postId);
       // commentIndex.length++;
       emit(CreateCommentsSuccessState());
     }).catchError((error) {
@@ -2373,9 +2373,9 @@ List<int> commentIndex=[];
   }
 
 
-  void deletePost({
+  Future<void> deletePost({
     required String postId
-  }){
+  }) async{
 
     FirebaseFirestore.instance
         .collection('posts')
@@ -2383,14 +2383,15 @@ List<int> commentIndex=[];
         .delete()
         .then((value){
 
-      print('Post Delete');
-
-      getPosts();
+      print('===================== Delete Success =================');
+      // getPosts();
       emit(DeletePostSuccessState());
     })
         .catchError((error){
       emit(DeletePostErrorState());
     });
+
+
   }
 
 

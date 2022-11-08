@@ -8,9 +8,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../constants/app_strings.dart';
 
 
+
 class CommentScreen extends StatefulWidget {
   String postId;
   CommentScreen({Key? key , required this.postId }) : super(key: key);
+
 
   @override
   State<CommentScreen> createState() => _CommentScreenState();
@@ -20,6 +22,13 @@ class _CommentScreenState extends State<CommentScreen> {
   var commentController = TextEditingController();
   bool commentControllerChanges=false;
   var formKey =GlobalKey<FormState>();
+
+  //  WillPopCallback()  {
+  //
+  // }
+
+ 
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +64,6 @@ class _CommentScreenState extends State<CommentScreen> {
                                      AppCubit.get(context).testComments(widget.postId);
                                      AppCubit.get(context).getPosts();
                                      AppCubit.get(context).returnIconColor();
-
                                      Navigator.pop(context);
                                    },
                                    child: const Icon(
@@ -206,6 +214,7 @@ class _CommentScreenState extends State<CommentScreen> {
                                 IconButton(
                                   onPressed: (){
                                     AppCubit.get(context).commentHomePost(widget.postId, commentController.text);
+                                    AppCubit.get(context).getComment(widget.postId);
                                     AppCubit.get(context).testComments(widget.postId);
                                     AppCubit.get(context).getPosts();
                                     commentController.text='';

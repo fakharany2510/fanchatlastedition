@@ -61,6 +61,18 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
     }
     isWriting = false;
   }
+
+  @override
+  dispose(){
+
+    AppCubit.get(context).publicChatController.dispose();
+    super.dispose();
+
+
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -692,7 +704,8 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                     contactFgColor: Colors.white,
                     contactPlayIconColor: AppColors.primaryColor1,
                     audioSrc: '${AppCubit.get(context).publicChat[index].voice}',
-                    played: true, // To show played badge or not.
+                    played: true, // To sh
+                    // ow played badge or not.
                     me: false, // Set message side.
                     onPlay: () {}, // Do something when voice played.
                   ),
@@ -718,10 +731,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
   );
 
   //////////////////////////voice functions////////////////////
-  @override
-  void dispose() {
-    super.dispose();
-  }
+
   _Fn getRecorderFn() {
     /* if (!_mRecorderIsInited || !_mPlayer.isStopped) {
       return () {};

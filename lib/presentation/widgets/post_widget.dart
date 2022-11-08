@@ -182,7 +182,11 @@ class PostWidgetState extends State<PostWidget> {
                                       ],
                                     ),
                                     onTap: (){
-                                      AppCubit.get(context).deletePost(postId: '${AppCubit.get(context).posts[widget.index!].postId}');
+                                      AppCubit.get(context).deletePost(postId: '${AppCubit.get(context).posts[widget.index!].postId}').then((value) {});
+                                      AppCubit.get(context).getPosts();
+
+
+
                                     },
                                   ),
                                 ]
@@ -192,7 +196,9 @@ class PostWidgetState extends State<PostWidget> {
                       ),
                     ),
                   ),
+
                   const SizedBox(height:5),
+
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5,top: 5),
                     child: Container(
@@ -370,6 +376,12 @@ class PostWidgetState extends State<PostWidget> {
                               constraints: const BoxConstraints(),
                               onPressed:(){
                                 AppCubit.get(context).getComment('${AppCubit.get(context).posts[widget.index!].postId}');
+                                print('=========================================');
+
+                                print(AppCubit.get(context).posts[widget.index!].postId);
+
+                                print('=========================================');
+
                                 Navigator.push(context, MaterialPageRoute(builder: (_){
                                   return CommentScreen(postId: '${AppCubit.get(context).posts[widget.index!].postId}');
                                 }));
