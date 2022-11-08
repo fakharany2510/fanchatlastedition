@@ -58,61 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       create: (BuildContext context) => RegisterCubit(),
       child: BlocConsumer<RegisterCubit,RegisterState>(
         listener: (context,state){
-          if(state is UserRegisterSuccessState){
-            CashHelper.saveData(
-              key: 'uid',
-              value: state.uId,
-            );
-            customToast(title: 'Login Successful', color: AppColors.primaryColor1);
-            showMyDialog(context);
 
-          }
-          if(state is UserRegisterErrorState){
-            customToast(title: 'Email or Password isn\'t correct', color: Colors.red);
-          }
-          if(state is GoogleLoginSuccessState){
-            CashHelper.saveData(key:'uid' , value: AppStrings.uId).then((value){
-              Fluttertoast.showToast(
-                msg:"Welcome",
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.TOP,
-                timeInSecForIosWeb: 5,
-                backgroundColor: Colors.green,
-                textColor: Colors.white,
-                fontSize: 18.0,
-              );
-              if(AppStrings.uId == null){
-                print('uid is null');
-              }else{
-                showMyDialog(context);
-              }
-
-            }).catchError((error){
-              print('error from saving user google id to shared ${error.toString()}');
-            });
-          }
-          //facebook check
-          if(state is FacebookLoginSuccessState){
-            CashHelper.saveData(key:'uid' , value: AppStrings.uId).then((value){
-              Fluttertoast.showToast(
-                msg:"Welcome",
-                toastLength: Toast.LENGTH_LONG,
-                gravity: ToastGravity.TOP,
-                timeInSecForIosWeb: 5,
-                backgroundColor: Colors.green,
-                textColor: Colors.white,
-                fontSize: 18.0,
-              );
-              if(AppStrings.uId == null){
-                print('uid is null');
-              }else{
-             showMyDialog(context);
-              }
-
-            }).catchError((error){
-              print('error from saving user facebook id to shared ${error.toString()}');
-            });
-          }
         },
         builder: (context,state){
           var cubit=RegisterCubit.get(context);
@@ -197,18 +143,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                           SizedBox(height: 25,),
 
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
-                            child: textFormFieldWidget(
-                                context: context,
-                                controller: name,
-                                errorMessage: "please enter your name",
-                                inputType: TextInputType.name,
-                                labelText:"Name",
-                                prefixIcon: Icon(Icons.person,color: AppColors.myGrey,)
-                            ),
-                          ),
-                          SizedBox(height: size.height*.03,),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
+                          //   child: textFormFieldWidget(
+                          //       context: context,
+                          //       controller: name,
+                          //       errorMessage: "please enter your name",
+                          //       inputType: TextInputType.name,
+                          //       labelText:"Name",
+                          //       prefixIcon: Icon(Icons.person,color: AppColors.myGrey,)
+                          //   ),
+                          // ),
+                          // SizedBox(height: size.height*.03,),
                           Padding(
                             padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
                             child: Container(

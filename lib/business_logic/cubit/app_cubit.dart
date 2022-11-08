@@ -250,6 +250,35 @@ class AppCubit extends Cubit<AppState> {
 
   }
 
+  Future<void> getUserWithId(
+      context,
+      String id,
+      ) async {
+    emit(GetUserDataLoadingState());
+    await  FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .get().then((value) {
+      // userModel = UserModel.formJson(value.data()!);
+      // printMessage('${userModel!.email}');
+      // changeUserNameController.text='${userModel!.username}';
+      // changeUserPhoneController.text='${userModel!.phone}';
+      // changeUserBioController.text='${userModel!.bio}';
+      // changeYoutubeLinkController.text='${userModel!.youtubeLink}';
+      // changeInstagramLinkController.text='${userModel!.instagramLink}';
+      // changeTwitterLinkController.text='${userModel!.twitterLink}';
+      // changeFacebookLinkController.text='${userModel!.facebookLink}';
+
+      emit(GetUserDataSuccessfulState());
+    }).catchError((error){
+
+      printMessage('Error in get user is ${error.toString()}');
+      emit(GetUserDataErrorState());
+    });
+
+  }
+
+
   File? coverImage;
 
   ImageProvider cover = const AssetImage('assets/images/profile.png');
@@ -3367,6 +3396,9 @@ List<int> commentIndex=[];
 
     });
   }
+
+  bool isFound=false;
+
 
 
   List<MatchesModel> allMatches=[];

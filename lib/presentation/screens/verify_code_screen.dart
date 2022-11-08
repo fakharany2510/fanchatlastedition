@@ -79,18 +79,15 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
       child: BlocProvider(
         create: (context)=>RegisterCubit(),
         child: BlocConsumer<RegisterCubit , RegisterState>(
-          listener: (context, state)async{
+          listener: (context, state){
+
             if (state is UserDataSuccessState){
-              if(await CashHelper.getData(key: 'Advertise')==1 || await CashHelper.getData(key: 'premium')==1 ){
-                print('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj');
-                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+              if( CashHelper.getData(key: 'Advertise')==1 ||  CashHelper.getData(key: 'premium')==1 ){
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const HomeLayout()), (route) => false);
               }else {
-                print('kkkkkkkkkkkkkkkkkkkkkkkkkkklkkkkkkkkkkkkkkkkk');
                 showMyDialog(context);
               }
-              // Navigator.pushReplacement(context,
-              //     MaterialPageRoute
-              //       (builder: (context)=>HomeLayout()));
+
             }
           },
           builder: (context, state){
@@ -105,8 +102,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                 print('iam hereeeeeeeeeeeeeeeeeeeeeeeeee 222222222222');
                 log(VerifyPhoneNumberScreen.id, msg: 'OTP sent!');
               },
-              onLoginSuccess: (userCredential, autoVerified , ) async {
-                print('iam hereeeeeeeeeeeeeeeeeeeeeeeeee 33333333333333333');
+               onLoginSuccess: (userCredential, autoVerified , ) async {
                 log(
                   VerifyPhoneNumberScreen.id,
                   msg: autoVerified
@@ -119,19 +115,43 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                   VerifyPhoneNumberScreen.id,
                   msg: 'Login Success UID: ${userCredential.user?.uid}',
                 );
-                 AppStrings.uId=userCredential.user!.uid;
-                 //RegisterCubit.get(context).userModel!.uId=userCredential.user!.uid;
-               // CashHelper.saveData(key: 'uid' , value:AppStrings.uId );
 
-
+                AppStrings.uId=userCredential.user!.uid;
                 CashHelper.saveData(key: 'uid' , value:userCredential.user!.uid );
                 print('AppStrings.uId => ${AppStrings.uId}');
                 print('userCredential.user!.uid=> ${userCredential.user!.uid}');
-                 await RegisterCubit.get(context).saveUserInfo(
-                    uId:CashHelper.getData(key: 'uid') ,
-                    phone: userCredential.user!.phoneNumber!,
-                    name: CashHelper.getData(key: 'name'),
-                  );
+
+
+
+                if(await AppCubit.get(context).userIds.contains(userCredential.user!.uid)){
+
+                  setState(()async{
+
+                    AppCubit.get(context).isFound=true;
+                    await AppCubit.get(context).getUser(context);
+                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const HomeLayout()), (route) => false);
+
+                  });
+
+                }
+                else{
+                  await RegisterCubit.get(context).saveUserInfo(
+                     uId:CashHelper.getData(key: 'uid') ,
+                     phone: userCredential.user!.phoneNumber!,
+                     name: 'New User',
+                   );
+                }
+
+                print('=====================================================================================');
+                print('=====================================================================================');
+
+                 print(await AppCubit.get(context).userIds.contains(userCredential.user!.uid));
+                print('=====================================================================================');
+
+                print('=====================================================================================');
+
+
+
 
               },
               onLoginFailed: (authException, stackTrace) {
@@ -165,6 +185,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                 showSnackBar('An error occurred!');
               },
               builder: (context, controller) {
+
                 print('hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
                 return Scaffold(
                   backgroundColor: AppColors.primaryColor1,
@@ -199,7 +220,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children:  [
                       CustomLoader(color: AppColors.navBarActiveIcon),
-                      SizedBox(height: 50),
+                      const SizedBox(height: 50),
                      const Center (
                         child:  Text(
                           'Sending OTP',
@@ -303,7 +324,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
             width: MediaQuery.of(context).size.height*.7,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
+                image: const DecorationImage(
                     image: AssetImage('assets/images/paypack.jpg'),
                     fit: BoxFit.cover
                 )
@@ -335,7 +356,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                   ),
 
                 ),
-                SizedBox(height:30,),
+                const SizedBox(height:30,),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -344,7 +365,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                       child: defaultButton(
                           width: MediaQuery.of(context).size.width*.5,
                           height: MediaQuery.of(context).size.height*.06,
-                          buttonColor: Color(0Xffd32330),
+                          buttonColor: const Color(0Xffd32330),
                           textColor: AppColors.myWhite,
                           buttonText: 'Start',
                           fontSize: 15,
@@ -354,7 +375,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                             // Navigator.of(context).pushNamedAndRemoveUntil('home_layout', (Route<dynamic>route) => false);
                           }),
                     ),
-                    SizedBox(height:20,),
+                    const SizedBox(height:20,),
                     Center(
                       child: defaultButton(
                           width: MediaQuery.of(context).size.width*.5,
@@ -364,7 +385,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                           buttonText: 'Get a premium package ',
                           fontSize: 15,
                           function: (){
-                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ChoosePayPackage()),(Route<dynamic>route) => false);
+                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const ChoosePayPackage()),(Route<dynamic>route) => false);
                           }),
                     )
                   ],

@@ -17,40 +17,40 @@ class RegisterCubit extends Cubit<RegisterState>{
 
 
 
-  Future userRegisterPhone({
-    required String uid,
-    required String phone,
-    required String name,
-
-
-  })async {
-
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: phone,
-      verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int? resendToken) {},
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    ).then((value) {
-
-      printMessage('Register Successful');
-
-      saveUserInfo(
-          name: name,
-          uId: uid,
-          phone: phone,
-      );
-
-      emit(UserRegisterSuccessState(uid));
-
-    }).catchError((error){
-      printMessage('Error is user register is ${error.toString()}');
-      emit(UserRegisterErrorState());
-    });
-
-
-
-  }
+  // Future userRegisterPhone({
+  //   required String uid,
+  //   required String phone,
+  //   required String name,
+  //
+  //
+  // })async {
+  //
+  //   await FirebaseAuth.instance.verifyPhoneNumber(
+  //     phoneNumber: phone,
+  //     verificationCompleted: (PhoneAuthCredential credential) {},
+  //     verificationFailed: (FirebaseAuthException e) {},
+  //     codeSent: (String verificationId, int? resendToken) {},
+  //     codeAutoRetrievalTimeout: (String verificationId) {},
+  //   ).then((value) {
+  //
+  //     printMessage('Register Successful');
+  //
+  //     saveUserInfo(
+  //         name: name,
+  //         uId: uid,
+  //         phone: phone,
+  //     );
+  //
+  //     emit(UserRegisterSuccessState(uid));
+  //
+  //   }).catchError((error){
+  //     printMessage('Error is user register is ${error.toString()}');
+  //     emit(UserRegisterErrorState());
+  //   });
+  //
+  //
+  //
+  // }
 
   Future saveUserInfo(
       {

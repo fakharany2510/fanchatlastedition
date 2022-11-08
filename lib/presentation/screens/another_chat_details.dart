@@ -133,7 +133,7 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                         }));
                       },
                       icon: Icon(
-                        Icons.arrow_back_ios
+                          Icons.arrow_back_ios
                       ),
                     ),
                   ),
@@ -191,9 +191,29 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500
                                   ),),
+
+                                  const SizedBox(height: 10,),
+
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
+                                      CircleAvatar(
+                                        radius: 20,
+                                        backgroundColor: AppColors.myWhite,
+                                        child:IconButton(
+                                            onPressed: (){
+                                              setState(() {
+                                                recording=false;
+                                              });
+                                              // pauseRecord();
+                                            },
+                                            icon:Icon(
+                                              Icons.delete,
+                                              color: AppColors.primaryColor1,
+                                              size: 20,
+                                            )
+                                        ),
+                                      ),
                                       CircleAvatar(
                                         radius: 20,
                                         backgroundColor: AppColors.myWhite,
@@ -201,7 +221,7 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                                             onPressed: (){
                                               pauseRecord();
                                             },
-                                            icon:   RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
+                                            icon: RecordMp3.instance.status == RecordStatus.PAUSE ?Icon(
                                               Icons.radio_button_unchecked_rounded,
                                               color: AppColors.primaryColor1,
                                               size: 20,
@@ -212,7 +232,6 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                                             )
                                         ),
                                       ),
-                                      SizedBox(width: MediaQuery.of(context).size.width*.5,),
                                       CircleAvatar(
                                         radius: 20,
                                         backgroundColor: AppColors.myWhite,
@@ -237,7 +256,6 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                                             )
                                         ),
                                       ),
-
                                     ],
                                   )
                                 ],
@@ -262,7 +280,7 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                                           padding: const EdgeInsets.only(left: 8),
                                           child: TextFormField(
                                             style: TextStyle(
-                                              color: Colors.white
+                                                color: Colors.white
                                             ),
                                             onChanged: (v){
                                               setState((){
@@ -287,7 +305,7 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                                         width: 35,
                                         height: 35,
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(50),
+                                          borderRadius: BorderRadius.circular(50),
                                           color: const Color(0xff7895b2).withOpacity(.9),
                                         ),
                                         child: Center(
@@ -598,31 +616,29 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
       ) async {
     Size size = MediaQuery.of(context).size;
     print("permission uploadRecord1");
-    var uuid = Uuid().v4();
-    Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('ali/${Uri.file(voice.path).pathSegments.last}');
+    var uuid = const Uuid().v4();
+    Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('ali/${Uri.file('${voice}').pathSegments.last}');
     await storageReference.putFile(voice).then((value){
-      AppCubit.get(context).createVoiceMessage(
-        recevierId: widget.userId!,
-        recevierName: widget.userName!,
-        recevierImage: widget.userImage!,
-        dateTime: DateTime.now().toString(),
-        voice: voice.path,
-      );
+      value.ref.getDownloadURL().then((value){
+        AppCubit.get(context).createVoiceMessage(
+          recevierId: widget.userId!,
+          recevierImage:widget.userImage!,
+          recevierName: widget.userName!,
+          dateTime: DateTime.now().toString(),
+          voice: value,
+        );
+        widget.onSendMessage(value, "voice", size);
+
+        setState(() {
+          uploadingRecord = false;
+        });
+      }).catchError((){});
       print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeeeeeeeeeeeeeeeessssssssss');
     }).catchError((error){
       print('nnnnnnnnnnnnnnnnnnnooooooooooooooooooo');
       print(error.toString());
 
     });
-    var url = await storageReference.getDownloadURL();
-    print("recording file222");
-    print(url);
-    widget.onSendMessage(url, "voice", size);
-
-    setState(() {
-      uploadingRecord = false;
-    });
-
   }
 
   void pauseRecord() {

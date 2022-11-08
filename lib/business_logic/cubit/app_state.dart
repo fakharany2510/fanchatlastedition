@@ -282,3 +282,6 @@ class GetAllMatchesLoadingState extends AppState {}
 class GetAllMatchesSuccessState extends AppState {}
 class GetAllMatchesErrorState extends AppState {}
 
+class CheckUserSuccessState extends AppState{}
+
+
