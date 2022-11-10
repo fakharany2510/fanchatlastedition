@@ -389,7 +389,7 @@ class EditProfileScreen extends StatelessWidget {
                           ).then((value) {
                             customToast(title: 'Data Updated', color: AppColors.primaryColor1);
 
-                            cubit.getUser(context);
+                          //  cubit.getUserWithId(context,AppStrings.uId!);
                             cubit.getPosts().then((value) {
                               Navigator.pop(context);
                               customToast(title: 'Data Updated', color: AppColors.primaryColor1);

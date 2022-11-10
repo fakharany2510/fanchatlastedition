@@ -5,11 +5,11 @@ import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/data/modles/cheering_model.dart';
 import 'package:fanchat/data/modles/fan_model.dart';
 import 'package:fanchat/data/modles/matches_model.dart';
+import 'package:fanchat/data/modles/post_report.dart';
 import 'package:fanchat/data/modles/profile_model.dart';
 import 'package:fanchat/data/modles/public_chat_model.dart';
 import 'package:fanchat/data/modles/teamchat.dart';
-import 'package:fanchat/presentation/screens/edit_profile/edit_image.dart';
-
+import 'package:fanchat/data/modles/user_report.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,7 +22,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -95,6 +94,8 @@ class AppCubit extends Cubit<AppState> {
 
   ScrollController publicChatController = ScrollController();
 
+  ScrollController privateScrollController = ScrollController();
+
   int currentIndex=0;
   void navigateScreen(int index,context){
 
@@ -125,6 +126,8 @@ class AppCubit extends Cubit<AppState> {
           emit(UploadProfileImageSuccessState());
         }
       });
+
+
 
 
     }
@@ -3438,10 +3441,72 @@ List<int> commentIndex=[];
     
 
   }
-  
-  
-  
-  
+
+
+  Future<void> sendPostReport({
+    required String reportType,
+    required String senderReport,
+    required String postOwner,
+    required String postId,
+    required String postText,
+    required String postImage,
+    required String postVideo,
+   })async{
+
+    PostReportModel postReportModel =PostReportModel(
+      postVideo: postVideo,
+      postImage: postImage,
+      postId: postId,
+      postOwner: postOwner,
+      postText: postText,
+      reportType: reportType,
+      senderReport: senderReport
+    );
+
+    FirebaseFirestore.instance.collection('PostReport')
+        .add(postReportModel.toMap()).then((value) {
+          emit(SendPostReportSuccessState());
+    }).catchError((error){
+
+      print('Error in seb=nd repost ${error.toString()}');
+      emit(SendPostReportErrorState());
+    });
+
+
+
+  }
+
+  Future<void> sendUserReport({
+    required String senderReportId,
+    required String  senderReportName,
+    required String  senderReportImage,
+    required String  userId,
+    required String  userName,
+    required String  userImage
+
+  })async{
+
+    UserReportModel userReportModel=UserReportModel(
+        userId:userId ,
+        senderReportId: senderReportId,
+        senderReportImage: senderReportImage,
+        senderReportName: senderReportName,
+        userImage: userImage,
+        userName:userName
+    );
+
+    FirebaseFirestore.instance.collection('UserReport')
+        .add(userReportModel.toMap()).then((value) {
+      emit(SendUserReportSuccessState());
+    }).catchError((error){
+
+      print('Error in send user repost ${error.toString()}');
+      emit(SendUserReportErrorState());
+    });
+
+  }
+
+
 
 }
 

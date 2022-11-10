@@ -12,6 +12,8 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({Key? key}) : super(key: key);
 
@@ -24,6 +26,8 @@ class _ChatsScreenState extends State<ChatsScreen> {
   ScrollController _parentScrollController = ScrollController();
   String name = "";
   UserModel? model;
+
+
   @override
   void initState(){
     AppCubit.get(context).getAllUsers();
@@ -41,6 +45,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
               controller:_parentScrollController ,
               child: Column(
                 children: [
+                  if(AppCubit.get(context).lastUsers.isNotEmpty)
                   Padding(
                     padding: EdgeInsets.only(left: 10,right: 10),
                     child: Container(
@@ -104,6 +109,8 @@ class _ChatsScreenState extends State<ChatsScreen> {
                           if (name.isEmpty) {
                             return InkWell(
                                 onTap: (){
+
+
                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>
                                       ChatDetails(
                                         userName:AppCubit.get(context).lastUsers[index]['recevierName'],
@@ -146,6 +153,8 @@ class _ChatsScreenState extends State<ChatsScreen> {
                               .startsWith(name.toLowerCase())) {
                             return InkWell(
                                 onTap: (){
+
+
                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatDetails(
                                     userName:AppCubit.get(context).lastUsers[index]['recevierName'],
                                     userId: AppCubit.get(context).lastUsers[index]['recevierId'],
@@ -184,9 +193,22 @@ class _ChatsScreenState extends State<ChatsScreen> {
                           }
                           return Container();
                         }):
-                        Center(
-                          child: CircularProgressIndicator(),
-                        )
+                    Container(
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: MediaQuery.of(context).size.height*.1,),
+                          Lottie.asset('assets/images/empty_chat.json',height: MediaQuery.of(context).size.height*.4),
+                        Text('No Chats Yet',style: TextStyle(
+                            color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20
+                        ),)
+                        ],
+                      ),
+                    )
                     // StreamBuilder<QuerySnapshot>(
                     //   stream: FirebaseFirestore.instance.collection('users').snapshots(),
                     //   builder: (context, snapshots) {

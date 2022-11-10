@@ -285,3 +285,10 @@ class GetAllMatchesErrorState extends AppState {}
 class CheckUserSuccessState extends AppState{}
 
 
+class SendPostReportLoadingState extends AppState {}
+class SendPostReportSuccessState extends AppState {}
+class SendPostReportErrorState extends AppState {}
+
+class SendUserReportLoadingState extends AppState {}
+class SendUserReportSuccessState extends AppState {}
+class SendUserReportErrorState extends AppState {}

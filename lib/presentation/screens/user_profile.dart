@@ -26,7 +26,9 @@ class UserProfile extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
-
+        if(state is SendUserReportSuccessState){
+          customToast(title: 'Report Send Success', color: AppColors.navBarActiveIcon);
+        }
       },
       builder: (context,state){
         var cubit=AppCubit.get(context);
@@ -121,7 +123,7 @@ class UserProfile extends StatelessWidget {
                       onTap: (){
                         cubit.toFacebook(facebookLink: cubit.profileFace);
                       },
-                      child: Image(
+                      child: const Image(
                         height: 35,
                         width: 35,
                         image: AssetImage('assets/images/facebook.png'),
@@ -132,7 +134,7 @@ class UserProfile extends StatelessWidget {
                       onTap: (){
                         cubit.toInstagram(instagramLink:cubit.profileInstagram);
                       },
-                      child: Image(
+                      child: const Image(
                         height: 30,
                         width: 30,
                         image: AssetImage('assets/images/instagram.png'),
@@ -144,7 +146,7 @@ class UserProfile extends StatelessWidget {
                         cubit.toTwitter(twitterLink: cubit.profileTwitter);
 
                       },
-                      child: Image(
+                      child: const Image(
                         height: 35,
                         width: 35,
                         image: AssetImage('assets/images/twitter.png'),
@@ -156,7 +158,7 @@ class UserProfile extends StatelessWidget {
                         cubit.toYoutube(youtubeLink: cubit.profileYoutube);
 
                       },
-                      child: Image(
+                      child: const Image(
                         height: 35,
                         width: 35,
                         image: AssetImage('assets/images/youtube.png'),
@@ -172,7 +174,7 @@ class UserProfile extends StatelessWidget {
                     children: [
                       GridView.count(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         childAspectRatio: 1/1.3,
                         crossAxisSpacing: 2,
                         mainAxisSpacing: 2,
@@ -187,6 +189,25 @@ class UserProfile extends StatelessWidget {
             ),
           ):const Center(
             child: CircularProgressIndicator(),
+          ),
+          floatingActionButton: FloatingActionButton.extended(
+            backgroundColor: Colors.red,
+            label: const Text('Report User',style: TextStyle(
+                fontFamily: AppStrings.appFont
+            ),),
+            icon: const Icon(
+                Icons.report
+            ),
+            onPressed: (){
+              AppCubit.get(context).sendUserReport(
+                  senderReportId: AppCubit.get(context).userModel!.uId!,
+                  senderReportName: AppCubit.get(context).userModel!.username!,
+                  senderReportImage: AppCubit.get(context).userModel!.image!,
+                  userId: userId,
+                  userName: userName,
+                  userImage: userImage
+              );
+            },
           ),
         );
       },

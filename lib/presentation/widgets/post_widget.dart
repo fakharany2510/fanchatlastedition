@@ -7,12 +7,16 @@ import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/screens/posts/open_full_video.dart';
+import 'package:fanchat/presentation/screens/private_chat/messages_details.dart';
+import 'package:fanchat/presentation/screens/profile_area/profile_screen.dart';
+import 'package:fanchat/presentation/screens/report_screen/report_screen.dart';
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:fanchat/presentation/screens/user_profile.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:video_player/video_player.dart';
 import '../../constants/app_strings.dart';
 import '../screens/comment_screen.dart';
@@ -33,46 +37,12 @@ class PostWidgetState extends State<PostWidget> {
 
 
 
-  // VideoPlayerController? controller;
-  // Future <void> ?intilize;
 
   @override
-  // void initState() {
-  //
-  //   // controller = CachedVideoPlayerController.network(
-  //   //     AppCubit.get(context).posts[widget.index!].postVideo!);
-  //   // controller!.initialize();
-  //   // controller!.pause();
-  //   // controller!.setLooping(true);
-  //   // controller!.setVolume(1.0);
-  //   controller=VideoPlayerController.network(
-  //       AppCubit.get(context).posts[widget.index!].postVideo!);
-  //   intilize=controller!.initialize();
-  //   controller!.setLooping(false);
-  //   controller!.setVolume(1.0);
-  //   super.initState();
-  // }
 
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   controller!.dispose();
-  //   super.dispose();
-  // }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(listener: (context,state){
-      // if(state is NavigateScreenState){
-      //   controller!.pause();
-      //   // videoPlayerController!.pause();
-      // }
-      // if(state is PauseVideoState){
-      //   controller!.pause();
-      //   // videoPlayerController!.pause();
-      // }
-
-
-
     },
       builder: (context,state){
 
@@ -189,9 +159,69 @@ class PostWidgetState extends State<PostWidget> {
 
                                     },
                                   ),
-                                ]
-                            )
 
+                                ]
+                            ),
+
+                          if(AppCubit.get(context).userModel!.uId!=AppCubit.get(context).posts[widget.index!].userId)
+                            PopupMenuButton(
+                                padding: EdgeInsets.zero,
+                                icon: const Icon(
+                                  Icons.more_horiz,
+                                  color: Colors.white,
+                                ),
+                                itemBuilder: (BuildContext context) => [
+                                  PopupMenuItem(
+                                    height: 10,
+                                    value: 2,
+                                    padding: EdgeInsets.zero,
+                                    child: GestureDetector(
+                                      onTap: (){
+                                        Navigator.push(context, MaterialPageRoute(builder: (_){
+                                          return ReportScreen(
+                                            postId: AppCubit.get(context).posts[widget.index!].postId!,
+                                            postImage: AppCubit.get(context).posts[widget.index!].postImage!,
+                                            postOwner: AppCubit.get(context).posts[widget.index!].name!,
+                                            postText: AppCubit.get(context).posts[widget.index!].text!,
+                                            postVideo: AppCubit.get(context).posts[widget.index!].postVideo!,
+                                          );
+                                        }));
+
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Text('Report',
+                                              style:  TextStyle(
+                                                  fontSize: 13,
+                                                  color: AppColors.primaryColor1,
+                                                  fontFamily: AppStrings.appFont
+                                              ),
+                                            ),
+                                          ),
+
+                                        ],
+                                      ),
+                                    ),
+                                    onTap: (){
+                                      setState((){
+                                        Navigator.push(context, MaterialPageRoute(builder: (_){
+                                          return ReportScreen(
+                                            postId: AppCubit.get(context).posts[widget.index!].postId!,
+                                            postImage: AppCubit.get(context).posts[widget.index!].postImage!,
+                                            postOwner: AppCubit.get(context).posts[widget.index!].name!,
+                                            postText: AppCubit.get(context).posts[widget.index!].text!,
+                                            postVideo: AppCubit.get(context).posts[widget.index!].postVideo!,
+                                          );
+                                        }));
+                                      });
+                                    },
+                                  ),
+
+                                ]
+                            ),
                         ],
                       ),
                     ),

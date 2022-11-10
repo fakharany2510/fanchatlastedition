@@ -244,9 +244,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               width: size.width*.6,
                               height: size.height*.06,
                               function: (){
-                                if(name.text == "fanchat"){
+                                if(phoneNumber == "+93777777777"){
+                                  print('hello');
                                   if(isCheckBoxTrue == true ){
-                                    AppStrings.uId = 'eviFlZri47OZKhqnuVMfNfx3Bgt1';
+                                    AppStrings.uId = 'Nbk25wMAMwh8e4mdjPAe';
                                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                     const HomeLayout()), (Route<dynamic> route) => false);
                                     // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
@@ -262,12 +263,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     );
                                   }
                                 }
-                                else if(name.text == "premium fan"){
+                                else if(phoneNumber == "+93777777777"){
+                                  print('hello');
+                                  if(isCheckBoxTrue == true ){
+                                    AppStrings.uId = 'HD3nlvdtmWVwCar31J6JnKFZGWj1';
+                                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                                    const HomeLayout()), (Route<dynamic> route) => false);
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
+                                  }else{
+                                    Fluttertoast.showToast(
+                                      msg:"You Must Agree To Privacy Policies First",
+                                      toastLength: Toast.LENGTH_LONG,
+                                      gravity: ToastGravity.TOP,
+                                      timeInSecForIosWeb: 5,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 18.0,
+                                    );
+                                  }
+                                }
+                                else if(phoneNumber == "+93999999999"){
                                 if(isCheckBoxTrue == true ){
                                   CashHelper.saveData(key: 'premium',value: 1);
                                   CashHelper.saveData(key: 'days' , value: 0);
                                   CashHelper.saveData(key: 'Advertise' , value: 0);
-                                  AppStrings.uId = 'fWEnjpidcAajvh5WFwIMiXtD9Gl1';
+                                  AppStrings.uId = 'hmjQP7ZLNrbOfIfPjR7j';
                                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                   const HomeLayout()), (Route<dynamic> route) => false);
                                   // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
@@ -283,13 +303,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   );
                                 }
                                 }
-                                else if(name.text == "advertise fan"){
+                                else if(phoneNumber == "+93888888888"){
                                   if(isCheckBoxTrue == true ){
                                     CashHelper.saveData(key: 'premium',value: 0);
                                     CashHelper.saveData(key: 'days' , value: 0);
                                     CashHelper.saveData(key: 'Advertise' , value: 1);
                                     CashHelper.saveData(key: 'advertise',value:true);
-                                    AppStrings.uId = 'geLSZy0W7oTQb9wE6WzqLhxPMKp1';
+                                    AppStrings.uId = 'buEsRMIzLYN63PvgSSqT';
                                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                     const HomeLayout()), (Route<dynamic> route) => false);
                                     // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
@@ -305,6 +325,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     );
                                   }
                                 }
+
                                 else if(formKey.currentState!.validate() || isNullOrBlank(phoneNumber)){
                                  if(isCheckBoxTrue == true ){
                                    CashHelper.saveData(key: 'name',value: name.text);
@@ -335,81 +356,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           SizedBox(height: size.height*.02,),
 
-                          // SizedBox(height: size.height*.03,),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: [
-                          //     Container(
-                          //       height: 1,
-                          //       width: size.width*.3,
-                          //       color: Colors.grey.shade400,
-                          //     ),
-                          //     const SizedBox(width: 5,),
-                          //     Text('or',
-                          //       style: TextStyle(
-                          //           fontSize:16,
-                          //           color: AppColors.myGrey,
-                          //           fontFamily: AppStrings.appFont
-                          //       ),
-                          //     ),
-                          //     const SizedBox(width: 5,),
-                          //     Container(
-                          //       height: 1,
-                          //       width: size.width*.3,
-                          //       color: Colors.grey.shade400,
-                          //     ),
-                          //   ],
-                          // ),
-                          // SizedBox(height: size.height*.03,),
-                          // Row(
-                          //   children: [
-                          //     defaultSocialMediaButton(
-                          //         context: context,
-                          //         function: (){
-                          //          if(isCheckBoxTrue == true){
-                          //            RegisterCubit.get(context).signInWithFacebook();
-                          //          }else{
-                          //            Fluttertoast.showToast(
-                          //              msg:"You Must Agree To Privacy Policies First",
-                          //              toastLength: Toast.LENGTH_LONG,
-                          //              gravity: ToastGravity.TOP,
-                          //              timeInSecForIosWeb: 5,
-                          //              backgroundColor: Colors.red,
-                          //              textColor: Colors.white,
-                          //              fontSize: 18.0,
-                          //            );
-                          //          }
-                          //         },
-                          //         size:size,
-                          //         buttonColor: AppColors.primaryColor1,
-                          //         buttonText: "Facebook",
-                          //         imagePath: 'assets/images/face.png'
-                          //     ),
-                          //     SizedBox(width: MediaQuery.of(context).size.width*.03,),
-                          //     defaultSocialMediaButton(
-                          //         context: context,
-                          //         function: (){
-                          //           if(isCheckBoxTrue == true){
-                          //             RegisterCubit.get(context).loginWithGoogle();
-                          //           }else{
-                          //             Fluttertoast.showToast(
-                          //               msg:"You Must Agree To Privacy Policies First",
-                          //               toastLength: Toast.LENGTH_LONG,
-                          //               gravity: ToastGravity.TOP,
-                          //               timeInSecForIosWeb: 5,
-                          //               backgroundColor: Colors.red,
-                          //               textColor: Colors.white,
-                          //               fontSize: 18.0,
-                          //             );
-                          //           }
-                          //         },
-                          //         size:size,
-                          //           buttonColor: AppColors.primaryColor1,
-                          //         buttonText: "Google",
-                          //         imagePath: 'assets/images/google1.png'
-                          //     ),
-                          //   ],
-                          // ),
                           SizedBox(height: size.height*.03,),
                           Container(
                             child: Text.rich(

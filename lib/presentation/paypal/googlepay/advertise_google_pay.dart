@@ -131,18 +131,18 @@ class _AdvertiseGooglePayState extends State<AdvertiseGooglePay> {
                     child: CircularProgressIndicator(),
                   ),
                 ),
-                // ApplePayButton(
-                //   paymentConfigurationAsset: 'default_payment_profile_apple_pay.json',
-                //   paymentItems: _paymentItems,
-                //   style: ApplePayButtonStyle.black,
-                //   type: ApplePayButtonType.buy,
-                //   margin: const EdgeInsets.only(top: 15.0),
-                //   onPaymentResult: onApplePayResult,
-                //   loadingIndicator: const Center(
-                //     child: CircularProgressIndicator(),
-                //   ),
-                // ),
-                // const SizedBox(height: 15)
+                ApplePayButton(
+                  paymentConfigurationAsset: 'default_payment_profile_apple_pay.json',
+                  paymentItems: _paymentItems,
+                  style: ApplePayButtonStyle.black,
+                  type: ApplePayButtonType.buy,
+                  margin: const EdgeInsets.only(top: 15.0),
+                  onPaymentResult: onApplePayResult,
+                  loadingIndicator: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+                const SizedBox(height: 15)
               ],
             ),
           ]

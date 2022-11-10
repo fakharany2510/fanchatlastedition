@@ -46,7 +46,6 @@ class _ChatDetailsState extends State<ChatDetails> {
   bool recording=false;
   bool? isComplete;
   bool? uploadingRecord = false;
-  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -55,15 +54,40 @@ class _ChatDetailsState extends State<ChatDetails> {
     isWriting = false;
     AppCubit.get(context).getMessages(recevierId: widget.userId!);
 
+    if(AppCubit.get(context).privateScrollController.hasClients){
+      AppCubit.get(context).privateScrollController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
+    }
+
+    Future.delayed(const Duration(milliseconds: 500),(){
+      if(AppCubit.get(context).privateScrollController.hasClients){
+        AppCubit.get(context).privateScrollController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
+      }
+    });
+
+    Future.delayed(const Duration(milliseconds: 1500),(){
+      if(AppCubit.get(context).privateScrollController.hasClients){
+        AppCubit.get(context).privateScrollController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
+      }
+    });
+
+    Future.delayed(const Duration(milliseconds: 2500),(){
+      if(AppCubit.get(context).privateScrollController.hasClients){
+        AppCubit.get(context).privateScrollController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
+      }
+    });
+
   }
   @override
   Widget build(BuildContext context) {
+    if(AppCubit.get(context).privateScrollController.hasClients){
+      AppCubit.get(context).privateScrollController.animateTo(AppCubit.get(context).privateScrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+    }
     return ConditionalBuilder(
       builder: (context)=>Builder(
 
           builder: (context) {
-            if(scrollController.hasClients){
-              scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+            if(AppCubit.get(context).privateScrollController.hasClients){
+              AppCubit.get(context).privateScrollController.animateTo(AppCubit.get(context).privateScrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
             }
             return BlocConsumer<AppCubit,AppState>(
               listener: (context,state){
@@ -75,8 +99,8 @@ class _ChatDetailsState extends State<ChatDetails> {
                 }
               },
               builder: (context,state){
-                if(scrollController.hasClients){
-                  scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
+                if(AppCubit.get(context).privateScrollController.hasClients){
+                  AppCubit.get(context).privateScrollController.animateTo(AppCubit.get(context).privateScrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
                 }
                 return Scaffold(
                   backgroundColor: Colors.white,
@@ -163,7 +187,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                                 height:MediaQuery.of(context).size.height*.83,
                                 padding: const EdgeInsets.all(10),
                                 child: ListView.separated(
-                                    controller: scrollController,
+                                    controller: AppCubit.get(context).privateScrollController,
                                     physics: const BouncingScrollPhysics(),
                                     itemBuilder: (context , index)
                                     {
@@ -243,8 +267,8 @@ class _ChatDetailsState extends State<ChatDetails> {
                                                 AppCubit.get(context).isSend=true;
                                               });
                                               stopRecord();
-                                              scrollController.animateTo(
-                                                scrollController.position.maxScrollExtent,
+                                              AppCubit.get(context).privateScrollController.animateTo(
+                                                AppCubit.get(context).privateScrollController.position.maxScrollExtent,
                                                 duration: const Duration(milliseconds: 300),
                                                 curve: Curves.easeOut,
                                               );
@@ -416,6 +440,7 @@ class _ChatDetailsState extends State<ChatDetails> {
   }
   @override
   void dispose() {
+    AppCubit.get(context).privateScrollController;
     super.dispose();
   }
   _Fn getRecorderFn() {

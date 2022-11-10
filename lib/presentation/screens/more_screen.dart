@@ -12,9 +12,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../constants/app_strings.dart';
 
-class MoreScreen extends StatelessWidget {
+class MoreScreen extends StatefulWidget {
   const MoreScreen({Key? key}) : super(key: key);
 
+  @override
+  State<MoreScreen> createState() => _MoreScreenState();
+}
+
+class _MoreScreenState extends State<MoreScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -134,6 +139,7 @@ class MoreScreen extends StatelessWidget {
 
 
 
+
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context)=>ChatsScreen())
                                       );
@@ -236,6 +242,7 @@ class MoreScreen extends StatelessWidget {
       },
     );
   }
+
   Future<void> showMyDialog(context) async {
     return showDialog<void>(
       context: context,
