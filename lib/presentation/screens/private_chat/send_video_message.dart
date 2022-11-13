@@ -35,7 +35,7 @@ class SendVideoMessage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/imageback.jpg'),
+                    image: AssetImage('assets/images/public_chat_image.jpeg'),
                     fit: BoxFit.cover,
                   )
               ),
@@ -105,7 +105,7 @@ class SendVideoMessage extends StatelessWidget {
 
                   AppCubit.get(context).uploadPrivateVideo(
                       senderId: AppStrings.uId!,
-                      dateTime: DateTime.now().toString(),
+                      dateTime: DateTime.now().toUtc().toString(),
                       recevierId:userId!,
                       recevierImage:userImage!,
                       recevierName:userName!,

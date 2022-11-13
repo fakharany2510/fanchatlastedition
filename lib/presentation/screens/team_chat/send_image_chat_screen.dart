@@ -40,7 +40,7 @@ class _SendImageTeamChatState extends State<SendImageTeamChat> {
                     child:const Opacity(
                       opacity: 1,
                       child:  Image(
-                        image: AssetImage('assets/images/imageback.jpg'),
+                        image: AssetImage('assets/images/public_chat_image.jpeg'),
                         fit: BoxFit.cover,
 
                       ),
@@ -96,7 +96,7 @@ class _SendImageTeamChatState extends State<SendImageTeamChat> {
 
                   AppCubit.get(context).uploadTeamChatImage(
                       countryName:widget.countryName ,
-                      dateTime:  DateTime.now().toString(), text: "", senderId:  AppStrings.uId!, senderName: '${AppCubit.get(context).userModel!.username}', senderImage: '${AppCubit.get(context).userModel!.image}'
+                      dateTime:  DateTime.now().toUtc().toString(), text: "", senderId:  AppStrings.uId!, senderName: '${AppCubit.get(context).userModel!.username}', senderImage: '${AppCubit.get(context).userModel!.image}'
                   );
 
 

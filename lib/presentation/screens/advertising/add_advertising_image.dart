@@ -32,16 +32,16 @@ class _AddAdvertisingImageState extends State<AddAdvertisingImage> {
         return Scaffold(
           backgroundColor: AppColors.myWhite,
           appBar:AppBar(
-            backgroundColor: AppColors.myWhite,
+            backgroundColor: AppColors.primaryColor1,
             title: Text('Add Image',style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.w600,
-                color: AppColors.primaryColor1,
+                color: AppColors.myWhite,
                 fontFamily: AppStrings.appFont
             )),
             elevation: 0,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back,color: Colors.black),
+              icon: const Icon(Icons.arrow_back,color: Colors.white),
               onPressed: (){
                 setState((){
                   print('${AdvertisingCubit.get(context).AdvertisingPostImage}');
@@ -53,11 +53,13 @@ class _AddAdvertisingImageState extends State<AddAdvertisingImage> {
             ),
             actions: [
               state is AdvertisingUploadImagePostLoadingState || state is BrowiseGetPostsLoadingState?
-              Center(child:CircularProgressIndicator(),)
+              Center(child:CircularProgressIndicator(
+                color: Colors.white,
+              ),)
                   :Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: defaultButton(
-                    textColor: AppColors.myWhite,
+                    textColor: AppColors.primaryColor1,
                     width: size.width*.2,
                     height: size.height*.05,
                     raduis: 10,
@@ -79,7 +81,7 @@ class _AddAdvertisingImageState extends State<AddAdvertisingImage> {
                     },
 
                     buttonText: 'add',
-                    buttonColor: AppColors.primaryColor1
+                    buttonColor: AppColors.myWhite
                 ),
               )
             ],
@@ -92,7 +94,7 @@ class _AddAdvertisingImageState extends State<AddAdvertisingImage> {
                   child:const Opacity(
                     opacity: 1,
                     child:  Image(
-                      image: AssetImage('assets/images/imageback.jpg'),
+                      image: AssetImage('assets/images/public_chat_image.jpeg'),
                       fit: BoxFit.cover,
 
                     ),
@@ -105,7 +107,7 @@ class _AddAdvertisingImageState extends State<AddAdvertisingImage> {
                     children: [
                       TextFormField(
                         style: TextStyle(
-                          color:AppColors.primaryColor1,
+                          color:AppColors.myWhite,
                           fontFamily: AppStrings.appFont,
                         ),
                         keyboardType: TextInputType.text,

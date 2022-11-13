@@ -25,7 +25,6 @@ import 'package:voice_message_package/voice_message_package.dart';
 import 'public_chat_my_messgae_widget.dart';
 
 
-
 typedef _Fn = void Function();
 Future<String> _getTempPath(String path) async {
   var tempDir = await getTemporaryDirectory();
@@ -64,14 +63,9 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
 
   @override
   dispose(){
-
     AppCubit.get(context).publicChatController.dispose();
     super.dispose();
-
-
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -286,7 +280,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                                     AppCubit.get(context).getPublicChat()
                                                   }
                                                       :AppCubit.get(context).sendPublicChat(
-                                                      dateTime: DateTime.now().toString(),
+                                                      dateTime: DateTime.now().toUtc().toString(),
                                                       text: textMessage.text);
                                                   textMessage.clear();
                                                 },

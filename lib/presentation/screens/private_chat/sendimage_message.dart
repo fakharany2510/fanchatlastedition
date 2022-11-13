@@ -43,7 +43,7 @@ class _SendImageState extends State<SendImage> {
                   child:const Opacity(
                     opacity: 1,
                     child:  Image(
-                      image: AssetImage('assets/images/imageback.jpg'),
+                      image: AssetImage('assets/images/public_chat_image.jpeg'),
                       fit: BoxFit.cover,
 
                     ),
@@ -98,7 +98,7 @@ class _SendImageState extends State<SendImage> {
 
                 AppCubit.get(context).uploadMessageImage(
                     senderId: AppStrings.uId!,
-                    dateTime: DateTime.now().toString(),
+                    dateTime: DateTime.now().toUtc().toString(),
                     recevierId:widget.userId!,
                     recevierImage:widget.userImage!,
                     recevierName: widget.userName!,

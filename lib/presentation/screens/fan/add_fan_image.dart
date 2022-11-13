@@ -30,16 +30,16 @@ class _AddFanImageState extends State<AddFanImage> {
         return Scaffold(
           backgroundColor: AppColors.myWhite,
           appBar:AppBar(
-            backgroundColor: AppColors.myWhite,
+            backgroundColor: AppColors.primaryColor1,
             title: Text('Add Image',style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.w600,
-                color: AppColors.primaryColor1,
+                color: AppColors.myWhite,
                 fontFamily: AppStrings.appFont
             )),
             elevation: 0,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back,color: Colors.black),
+              icon: const Icon(Icons.arrow_back,color: Colors.white),
               onPressed: (){
                 setState((){
                   print('${AppCubit.get(context).fanPostImage}');
@@ -51,11 +51,13 @@ class _AddFanImageState extends State<AddFanImage> {
             ),
             actions: [
               state is FanUploadImagePostLoadingState || state is BrowiseGetPostsLoadingState?
-              Center(child:CircularProgressIndicator(),)
+              Center(child:CircularProgressIndicator(
+                color: Colors.white,
+              ),)
                   :Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: defaultButton(
-                    textColor: AppColors.myWhite,
+                    textColor: AppColors.primaryColor1,
                     width: size.width*.2,
                     height: size.height*.05,
                     raduis: 10,
@@ -72,7 +74,7 @@ class _AddFanImageState extends State<AddFanImage> {
                           AppCubit.get(context).uploadFanPostImage(
                               dateTime: DateFormat.yMMMd().format(DateTime.now()),
                               time: DateFormat.Hm().format(DateTime.now()),
-                              timeSpam: DateTime.now().toString(),
+                              timeSpam: DateTime.now().toUtc().toString(),
                               image: AppCubit.get(context).userModel!.image,
                               name: AppCubit.get(context).userModel!.username,
                               text: ""
@@ -88,7 +90,7 @@ class _AddFanImageState extends State<AddFanImage> {
                     },
 
                     buttonText: 'add',
-                    buttonColor: AppColors.primaryColor1
+                    buttonColor: AppColors.myWhite
                 ),
               )
             ],
@@ -101,7 +103,7 @@ class _AddFanImageState extends State<AddFanImage> {
                   child:const Opacity(
                     opacity: 1,
                     child:  Image(
-                      image: AssetImage('assets/images/imageback.jpg'),
+                      image: AssetImage('assets/images/public_chat_image.jpeg'),
                       fit: BoxFit.cover,
                     ),
                   )

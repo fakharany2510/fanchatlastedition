@@ -28,16 +28,16 @@ class AddAdvertisingVideo extends StatelessWidget {
         return Scaffold(
           backgroundColor: AppColors.myWhite,
           appBar:AppBar(
-            backgroundColor: AppColors.myWhite,
+            backgroundColor: AppColors.primaryColor1,
             title: Text('Add Video',style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.w600,
-                color: AppColors.primaryColor1,
+                color: AppColors.myWhite,
                 fontFamily: AppStrings.appFont
             )),
             elevation: 0,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back,color: Colors.black),
+              icon: Icon(Icons.arrow_back,color: Colors.white),
               onPressed: ()async{
                 AdvertisingCubit.get(context).postVideo=null;
                 Navigator.pop(context);
@@ -49,14 +49,14 @@ class AddAdvertisingVideo extends StatelessWidget {
                   ? Center(
                 child: Center(
                   child: CircularProgressIndicator(
-                    color: AppColors.primaryColor1,
+                    color: AppColors.myWhite,
                   ),
                 ),
               )
                   :Padding(
                   padding: const EdgeInsets.all(8.0),
                   child:defaultButton(
-                      textColor: AppColors.myWhite,
+                      textColor: AppColors.primaryColor1,
                       width: size.width*.2,
                       height: size.height*.05,
                       raduis: 10,
@@ -74,7 +74,7 @@ class AddAdvertisingVideo extends StatelessWidget {
                         }
                       },
                       buttonText: 'add',
-                      buttonColor: AppColors.primaryColor1
+                      buttonColor: AppColors.myWhite
                   )
               ),
             ],
@@ -87,7 +87,7 @@ class AddAdvertisingVideo extends StatelessWidget {
                   child:const Opacity(
                     opacity: 1,
                     child:  Image(
-                      image: AssetImage('assets/images/imageback.jpg'),
+                      image: AssetImage('assets/images/public_chat_image.jpeg'),
                       fit: BoxFit.cover,
 
                     ),
@@ -100,7 +100,7 @@ class AddAdvertisingVideo extends StatelessWidget {
                     children: [
                       TextFormField(
                         style: TextStyle(
-                          color:AppColors.primaryColor1,
+                          color:AppColors.myWhite,
                           fontFamily: AppStrings.appFont,
                         ),
                         keyboardType: TextInputType.text,

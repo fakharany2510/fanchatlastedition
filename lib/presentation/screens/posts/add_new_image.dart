@@ -33,7 +33,7 @@ class _AddNewImageState extends State<AddNewImage> {
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
         if(state is BrowiseGetPostsLoadingState){
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const HomeLayout()), (route) => false);
         }
 
       },
@@ -41,16 +41,16 @@ class _AddNewImageState extends State<AddNewImage> {
         return Scaffold(
           backgroundColor: AppColors.myWhite,
           appBar:AppBar(
-            backgroundColor: AppColors.myWhite,
+            backgroundColor: AppColors.primaryColor1,
             title: Text('Add new post',style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.w600,
-                color: AppColors.primaryColor1,
+                color: AppColors.myWhite,
                 fontFamily: AppStrings.appFont
             )),
             elevation: 0,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back,color: Colors.black),
+              icon: const Icon(Icons.arrow_back,color: Colors.white),
               onPressed: (){
               setState((){
                 //AppCubit.get(context).postImage='';
@@ -64,11 +64,13 @@ class _AddNewImageState extends State<AddNewImage> {
             ),
             actions: [
               state is BrowiseUploadImagePostLoadingState || state is BrowiseGetPostsLoadingState?
-              Center(child:CircularProgressIndicator(),)
+              const Center(child:CircularProgressIndicator(
+                color: Colors.white,
+              ),)
                   :Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: defaultButton(
-                    textColor: AppColors.myWhite,
+                    textColor: AppColors.primaryColor1,
                     width: size.width*.19,
                     height: size.height*.05,
                     raduis: 10,
@@ -76,7 +78,7 @@ class _AddNewImageState extends State<AddNewImage> {
                       if(AppCubit.get(context).postImage == null){
                         AppCubit.get(context).createImagePost(
                           time: DateFormat.Hm().format(DateTime.now()),
-                          timeSpam: DateTime.now().toString(),
+                          timeSpam: DateTime.now().toUtc().toString(),
                           dateTime: DateFormat.yMMMd().format(DateTime.now()),
                           text:postText.text,
                         );
@@ -108,7 +110,7 @@ class _AddNewImageState extends State<AddNewImage> {
                           AppCubit.get(context).uploadPostImage(
                             dateTime: DateFormat.yMMMd().format(DateTime.now()),
                             time: DateFormat.Hm().format(DateTime.now()),
-                            timeSpam: DateTime.now().toString(),
+                            timeSpam: DateTime.now().toUtc().toString(),
                             text:postText.text,
                             image: AppCubit.get(context).userModel!.image,
                             name: AppCubit.get(context).userModel!.username,
@@ -137,7 +139,7 @@ class _AddNewImageState extends State<AddNewImage> {
                     },
 
                     buttonText: 'post',
-                    buttonColor: AppColors.primaryColor1
+                    buttonColor: AppColors.myWhite
               ),
                   )
             ],
@@ -150,18 +152,17 @@ class _AddNewImageState extends State<AddNewImage> {
                   child:const Opacity(
                     opacity: 1,
                     child:  Image(
-                      image: AssetImage('assets/images/imageback.jpg'),
+                      image: AssetImage('assets/images/public_chat_image.jpeg'),
                       fit: BoxFit.cover,
                     ),
                   )
               ),
               Padding(
-                  padding:  EdgeInsets.all(20.0),
+                  padding:  const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-
                         children:  [
                           CircleAvatar(
                             backgroundImage: NetworkImage('${AppCubit.get(context).userModel!.image}'),
@@ -170,7 +171,7 @@ class _AddNewImageState extends State<AddNewImage> {
                           const SizedBox(width: 10,),
                           Text('${AppCubit.get(context).userModel!.username}',
                             style: const TextStyle(
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: AppStrings.appFont
@@ -185,9 +186,17 @@ class _AddNewImageState extends State<AddNewImage> {
                         child: TextFormField(
                           maxLines: 3,
                           controller: postText,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                           decoration: const InputDecoration(
                             hintMaxLines: 1,
                             hintText: 'Say someting about this photo.....',
+                            hintStyle: TextStyle(
+                              color: Colors.white,
+
+                            ),
+
                             border:InputBorder.none,
                             enabledBorder: InputBorder.none,
                           ),

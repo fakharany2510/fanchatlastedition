@@ -344,7 +344,7 @@ class _ChatDetailsState extends State<ChatDetails> {
                                                     recording?stopRecord():startRecord(),
                                                     AppCubit.get(context).getMessages(recevierId:widget.userId!)
                                                   } :
-                                                  AppCubit.get(context).sendMessage(recevierId: widget.userId!, recevierImage:widget.userImage!, recevierName: widget.userName!, dateTime: DateTime.now().toString(), text: textMessage.text);
+                                                  AppCubit.get(context).sendMessage(recevierId: widget.userId!, recevierImage:widget.userImage!, recevierName: widget.userName!, dateTime: DateTime.now().toUtc().toString(), text: textMessage.text);
                                                   setState(() {
                                                      FirebaseFirestore.instance.collection('tokens').doc(widget.userId!).get().then((value) {
 
@@ -532,7 +532,7 @@ class _ChatDetailsState extends State<ChatDetails> {
           recevierId: widget.userId!,
           recevierImage:widget.userImage!,
           recevierName: widget.userName!,
-          dateTime: DateTime.now().toString(),
+          dateTime: DateTime.now().toUtc().toString(),
           voice: value,
         );
         widget.onSendMessage(value, "voice", size);

@@ -50,16 +50,16 @@ class _AddNewVideoState extends State<AddNewVideo> {
         return Scaffold(
           backgroundColor: AppColors.myWhite,
           appBar:AppBar(
-            backgroundColor: AppColors.myWhite,
+            backgroundColor: AppColors.primaryColor1,
             title: Text('Add New post',style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.w600,
-                color: AppColors.primaryColor1,
+                color: AppColors.myWhite,
                 fontFamily: AppStrings.appFont
             )),
             elevation: 0,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back,color: Colors.black),
+              icon: const Icon(Icons.arrow_back,color: Colors.white),
               onPressed: ()async{
                 AppCubit.get(context).postVideo=null;
                 Navigator.pop(context);
@@ -71,21 +71,21 @@ class _AddNewVideoState extends State<AddNewVideo> {
                   ? Center(
                 child: Center(
                   child: CircularProgressIndicator(
-                    color: AppColors.primaryColor1,
+                    color: AppColors.myWhite,
                   ),
                 ),
               )
                   :Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: defaultButton(
-                    textColor: AppColors.myWhite,
+                    textColor: AppColors.primaryColor1,
                     width: size.width*.2,
                     height: size.height*.05,
                     raduis: 10,
                     function: ()async{
                       if(AppCubit.get(context).postVideo == null){
                         AppCubit.get(context).createVideoPost(
-                            timeSpam: DateTime.now().toString(),
+                            timeSpam: DateTime.now().toUtc().toString(),
                             time: DateFormat.Hm().format(DateTime.now()),
                             dateTime: DateFormat.yMMMd().format(DateTime.now()),
                             text:postText.text
@@ -98,7 +98,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
                         if (isValidFilesize) {
 
                           AppCubit.get(context).uploadPostVideo(
-                            timeSpam: DateTime.now().toString(),
+                            timeSpam: DateTime.now().toUtc().toString(),
                             time: DateFormat.Hm().format(DateTime.now()),
                             dateTime:DateFormat.yMMMd().format(DateTime.now()),
                             text:postText.text,
@@ -112,7 +112,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
                       }
                     },
                     buttonText: 'post',
-                    buttonColor: AppColors.primaryColor1
+                    buttonColor: AppColors.myWhite
               ),
                   ),
             ],
@@ -125,7 +125,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
                   child:const Opacity(
                     opacity: 1,
                     child:  Image(
-                      image: AssetImage('assets/images/imageback.jpg'),
+                      image: AssetImage('assets/images/public_chat_image.jpeg'),
                       fit: BoxFit.cover,
                     ),
                   )
@@ -148,7 +148,7 @@ class _AddNewVideoState extends State<AddNewVideo> {
                           Expanded(
                             child:   Text('${AppCubit.get(context).userModel!.username}',
                               style: const TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: AppStrings.appFont
@@ -161,8 +161,15 @@ class _AddNewVideoState extends State<AddNewVideo> {
                       SingleChildScrollView(
                         child: TextFormField(
                           controller: postText,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                           decoration: const InputDecoration(
                             hintText: 'Say something about this video.....',
+                            hintStyle: TextStyle(
+                              color: Colors.white,
+                            ),
+
                             enabledBorder: InputBorder.none,
                             border: InputBorder.none,
                           ),

@@ -695,7 +695,7 @@ class AppCubit extends Cubit<AppState> {
   ////////////////////////////////////////
   //format time
   String getTimeDifferenceFromNow(DateTime dateTime) {
-    Duration difference = DateTime.now().difference(dateTime);
+    Duration difference = DateTime.now().toUtc().difference(dateTime);
     if (difference.inSeconds < 5) {
       return "Just now";
     } else if (difference.inMinutes < 1) {

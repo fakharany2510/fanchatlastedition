@@ -495,7 +495,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                                     }
                                                         :AppCubit.get(context).sendTeamChat(
                                                         countryName: widget.countryName,
-                                                        dateTime: DateTime.now().toString(),
+                                                        dateTime: DateTime.now().toUtc().toString(),
                                                         text: textMessage.text);
                                                     textMessage.clear();
                                                   },

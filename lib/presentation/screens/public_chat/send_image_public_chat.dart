@@ -38,7 +38,7 @@ class _SendImagePublicChatState extends State<SendImagePublicChat> {
                     child:const Opacity(
                       opacity: 1,
                       child:  Image(
-                        image: AssetImage('assets/images/imageback.jpg'),
+                        image: AssetImage('assets/images/public_chat_image.jpeg'),
                         fit: BoxFit.cover,
 
                       ),

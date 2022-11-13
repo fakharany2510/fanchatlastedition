@@ -111,7 +111,7 @@ class MyApp extends StatelessWidget {
                 '/' :(context)=> (AppStrings.uId != null)
                 ? CashHelper.getData(key: 'days') ==7
                     ?ShouldPay()
-                    :HomeLayout()
+                    :RegisterScreen()
                     :SplashScreen(),
                 'home_layout':(context)=> const HomeLayout(),
                 // 'login':(context)=> LoginScreen(),

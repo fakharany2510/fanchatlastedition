@@ -30,16 +30,16 @@ class AddFanVideo extends StatelessWidget {
         return Scaffold(
             backgroundColor: AppColors.myWhite,
             appBar:AppBar(
-              backgroundColor: AppColors.myWhite,
+              backgroundColor: AppColors.primaryColor1,
               title: Text('Add Video',style: TextStyle(
                   fontSize: 21,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.primaryColor1,
+                  color: AppColors.myWhite,
                   fontFamily: AppStrings.appFont
               )),
               elevation: 0,
               leading: IconButton(
-                icon: Icon(Icons.arrow_back,color: Colors.black),
+                icon: Icon(Icons.arrow_back,color: Colors.white),
                 onPressed: ()async{
                   AppCubit.get(context).postVideo=null;
                   Navigator.pop(context);
@@ -62,7 +62,7 @@ class AddFanVideo extends StatelessWidget {
                         ( state is FanUploadVideoPostSuccessState)?
                     CircularProgressIndicator(backgroundColor: AppColors.navBarActiveIcon,)
                         :defaultButton(
-                        textColor: AppColors.myWhite,
+                        textColor: AppColors.primaryColor1,
                         width: size.width*.2,
                         height: size.height*.05,
                         raduis: 10,
@@ -77,7 +77,7 @@ class AddFanVideo extends StatelessWidget {
                             if (isValidFilesize) {
 
                               AppCubit.get(context).uploadFanPostVideo(
-                                timeSpam: DateTime.now().toString(),
+                                timeSpam: DateTime.now().toUtc().toString(),
                                 time: DateFormat.Hm().format(DateTime.now()),
                                 dateTime:DateFormat.yMMMd().format(DateTime.now()),
                                 text:"",
@@ -93,7 +93,7 @@ class AddFanVideo extends StatelessWidget {
                           }
                         },
                         buttonText: 'add',
-                        buttonColor: AppColors.primaryColor1
+                        buttonColor: AppColors.myWhite
                     )
                 ),
               ],
@@ -103,7 +103,7 @@ class AddFanVideo extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/imageback.jpg'),
+                    image: AssetImage('assets/images/public_chat_image.jpeg'),
                     fit: BoxFit.cover,
                   )
               ),

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+
 class AddTextPost extends StatefulWidget {
   @override
   State<AddTextPost> createState() => _AddTextPostState();
@@ -57,87 +58,7 @@ class _AddTextPostState extends State<AddTextPost> {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: AppColors.myWhite,
-       //    appBar: AppBar(
-       //      backgroundColor: AppColors.myWhite,
-       //      title: Text('Add new post',
-       //          style: TextStyle(
-       //              fontSize: 21,
-       //              fontWeight: FontWeight.w600,
-       //              color: AppColors.primaryColor1,
-       //              fontFamily: AppStrings.appFont)),
-       //      elevation: 0,
-       //      leading: IconButton(
-       //        icon: const Icon(Icons.arrow_back, color: Colors.black),
-       //        onPressed: () {
-       //          setState(() {
-       //            AppCubit.get(context).postImage = null;
-       //            print('${AppCubit.get(context).postImage}');
-       //            Navigator.pop(context);
-       //          });
-       //        },
-       //      ),
-       //      actions: [
-       //        state is BrowiseCreateTextPostLoadingState ||
-       //                state is BrowiseGetPostsLoadingState
-       //            ? Center(
-       //                child: CircularProgressIndicator(),
-       //              )
-       //            : (textFormFielsChanged == true && postText.text != ""  && AppCubit.get(context).userModel!.numberOfPosts != 12)
-       //        ?Padding(
-       //  padding: const EdgeInsets.all(8.0),
-       //  child: defaultButton(
-       //  textColor: AppColors.myWhite,
-       //  width: size.width*.2,
-       //  height: size.height*.05,
-       //  raduis: 10,
-       //  function: () {
-       //  if(formKey.currentState!.validate()){
-       //  AppCubit.get(context).createTextPost(
-       //  text: postText.text,
-       //  timeSpam: DateTime.now().toString(),
-       //  time: DateFormat.Hm().format(DateTime.now()),
-       //  dateTime: DateFormat.yMMMd().format(DateTime.now()),
-       //  );
-       //  setState(() {
-       //    callFcmApiSendPushNotifications(
-       //      title: 'New Post Added',
-       //      description:postText.text,
-       //      imageUrl: "${AppCubit.get(context).postImage}",
-       //        context: context
-       //      //  token:AppCubit.get(context).userToken
-       //    );
-       //  });
-       //  // callFcmApiSendPushNotifications(
-       //  // title: 'New Post Added',
-       //  // description:postText.text,
-       //  // imageUrl: "",
-       //  // //  token:AppCubit.get(context).userToken
-       //  // );
-       //  // setState((){
-       //  //   increaseNumberOfPosts=increaseNumberOfPosts+1;
-       //  // });
-       // // AppCubit.get(context).increasNumberOfPosts(increaseNumberOfPosts);
-       //  }
-       //  },
-       //
-       //  buttonText: 'post',
-       //  buttonColor: AppColors.primaryColor1,
-       //  ),
-       //  )
-       //        :Padding(
-       //  padding: const EdgeInsets.all(8.0),
-       //  child: defaultButton(
-       //  textColor: AppColors.myWhite,
-       //  width: size.width*.2,
-       //  height: size.height*.05,
-       //  raduis: 10,
-       //  function: () {},
-       //  buttonText: 'post',
-       //  buttonColor: AppColors.primaryColor1.withOpacity(.2),
-       //  ),
-       //  )
-       //      ],
-       //    ),
+
           body: SafeArea(
             child: Stack(
               children: [
@@ -147,7 +68,7 @@ class _AddTextPostState extends State<AddTextPost> {
                     child:const Opacity(
                       opacity: 1,
                       child:  Image(
-                        image: AssetImage('assets/images/imageback.jpg'),
+                        image: AssetImage('assets/images/public_chat_image.jpeg'),
                         fit: BoxFit.cover,
                       ),
                     )
@@ -158,7 +79,7 @@ class _AddTextPostState extends State<AddTextPost> {
                       Row(
                         children: [
                           IconButton(
-                            icon: const Icon(Icons.arrow_back, color: Colors.black),
+                            icon: const Icon(Icons.arrow_back, color: Colors.white),
                             onPressed: () {
                               setState(() {
                                 AppCubit.get(context).postImage = null;
@@ -172,7 +93,7 @@ class _AddTextPostState extends State<AddTextPost> {
                               style: TextStyle(
                                   fontSize: 21,
                                   fontWeight: FontWeight.w600,
-                                  color: AppColors.primaryColor1,
+                                  color: AppColors.myWhite,
                                   fontFamily: AppStrings.appFont)
                           ),
                           Spacer(),
@@ -185,18 +106,23 @@ class _AddTextPostState extends State<AddTextPost> {
                               ?Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: defaultButton(
-                              textColor: AppColors.myWhite,
+                              textColor: AppColors.primaryColor1,
                               width: size.width*.21,
                               height: size.height*.06,
                               raduis: 10,
-                              function: () {
+                              function: () async{
+                                // final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
+
                                 if(formKey.currentState!.validate()){
                                   AppCubit.get(context).createTextPost(
                                     text: postText.text,
-                                    timeSpam: DateTime.now().toString(),
+                                    timeSpam: DateTime.now().toUtc().toString(),
                                     time: DateFormat.Hm().format(DateTime.now()),
                                     dateTime: DateFormat.yMMMd().format(DateTime.now()),
                                   );
+                                  print('=====================================');
+                                  print(DateTime.now().toUtc());
+
                                   setState(() {
                                     callFcmApiSendPushNotifications(
                                         title: 'New Post Added',
@@ -220,19 +146,19 @@ class _AddTextPostState extends State<AddTextPost> {
                               },
 
                               buttonText: 'post',
-                              buttonColor: AppColors.primaryColor1,
+                              buttonColor: AppColors.myWhite,
                             ),
                           )
                               :Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: defaultButton(
-                              textColor: AppColors.myWhite,
+                              textColor: AppColors.primaryColor1,
                               width: size.width*.21,
                               height: size.height*.06,
                               raduis: 10,
                               function: () {},
                               buttonText: 'post',
-                              buttonColor: AppColors.primaryColor1.withOpacity(.2),
+                              buttonColor: AppColors.myWhite.withOpacity(1),
                             ),
                           ),
                           SizedBox(width: 15,),
@@ -255,7 +181,7 @@ class _AddTextPostState extends State<AddTextPost> {
                             Text(
                               '${AppCubit.get(context).userModel!.username}',
                               style: const TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: AppStrings.appFont),
@@ -281,10 +207,17 @@ class _AddTextPostState extends State<AddTextPost> {
                                 textFormFielsChanged = true;
                               });
                             },
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
                             controller: postText,
                             decoration: const InputDecoration(
                               hintMaxLines: 1,
                               hintText: 'what is on your mind.....',
+                              hintStyle: TextStyle(
+                                color: Colors.white
+                              ),
+
                               border: InputBorder.none,
                               enabledBorder: InputBorder.none,
                             ),
@@ -304,7 +237,7 @@ class _AddTextPostState extends State<AddTextPost> {
                               Container(
                                 height: size.height * .001,
                                 width: size.width,
-                                color: AppColors.primaryColor1,
+                                color: AppColors.myWhite,
                               ),
 
                               // image
@@ -325,7 +258,7 @@ class _AddTextPostState extends State<AddTextPost> {
                                       Text(
                                         'Camera',
                                         style: TextStyle(
-                                            color: AppColors.primaryColor1,
+                                            color: Colors.white,
                                             fontFamily: AppStrings.appFont,
                                             fontSize: 18,
                                             fontWeight: FontWeight.w500),
@@ -335,7 +268,7 @@ class _AddTextPostState extends State<AddTextPost> {
                               Container(
                                 height: size.height * .001,
                                 width: size.width,
-                                color: AppColors.primaryColor1,
+                                color: AppColors.myWhite,
                               ),
                               TextButton(
                                   onPressed: () {
@@ -343,14 +276,14 @@ class _AddTextPostState extends State<AddTextPost> {
                                   },
                                   child: Row(
                                     children: [
-                                      Icon(Icons.video_camera_back,color: AppColors.primaryColor1,),
+                                      Icon(Icons.video_camera_back,color: AppColors.myWhite,),
                                       const SizedBox(
                                         width: 10,
                                       ),
                                       Text(
                                         'Video Camera',
                                         style: TextStyle(
-                                            color: AppColors.primaryColor1,
+                                            color: Colors.white,
                                             fontFamily: AppStrings.appFont,
                                             fontSize: 18,
                                             fontWeight: FontWeight.w500),
@@ -360,7 +293,7 @@ class _AddTextPostState extends State<AddTextPost> {
                               Container(
                                 height: size.height * .001,
                                 width: size.width,
-                                color: AppColors.primaryColor1,
+                                color: AppColors.myWhite,
                               ),
 
                               TextButton(
@@ -379,7 +312,7 @@ class _AddTextPostState extends State<AddTextPost> {
                                       Text(
                                         'Photo',
                                         style: TextStyle(
-                                            color: AppColors.primaryColor1,
+                                            color: Colors.white,
                                             fontFamily: AppStrings.appFont,
                                             fontSize: 18,
                                             fontWeight: FontWeight.w500),
@@ -389,7 +322,7 @@ class _AddTextPostState extends State<AddTextPost> {
                               Container(
                                 height: size.height * .001,
                                 width: size.width,
-                                color: AppColors.primaryColor1,
+                                color: AppColors.myWhite,
                               ),
 
                               TextButton(
@@ -409,7 +342,7 @@ class _AddTextPostState extends State<AddTextPost> {
                                       Text(
                                         'Video',
                                         style: TextStyle(
-                                            color: AppColors.primaryColor1,
+                                            color: Colors.white,
                                             fontFamily: AppStrings.appFont,
                                             fontSize: 18,
                                             fontWeight: FontWeight.w500),
