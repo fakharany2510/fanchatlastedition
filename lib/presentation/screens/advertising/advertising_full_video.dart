@@ -1,13 +1,14 @@
+import 'dart:developer';
+
 import 'package:fanchat/business_logic/advertising_cubit/advertising_cubit.dart';
 import 'package:fanchat/business_logic/advertising_cubit/advertising_state.dart';
-import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
-import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
+import 'package:fijkplayer/fijkplayer.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:video_player/video_player.dart';
 
 class AdvertisingFullVideo extends StatefulWidget {
   AdvertisingFullVideo({Key? key,this.video,this.videoLink}) : super(key: key);
@@ -19,24 +20,35 @@ class AdvertisingFullVideo extends StatefulWidget {
 }
 
 class _AdvertisingFullVideoState extends State<AdvertisingFullVideo> {
-  VideoPlayerController ?videoPlayerController;
- // Future <void> ?intilize;
+  final FijkPlayer player = FijkPlayer();
+  Object? error;
+
+  //bool isLoading = true;
+
+  Future<void> init() async {
+    try {
+    } catch (e, st) {
+      error = e;
+      log('max $e \n $st');
+    } finally {
+      setState(() {});
+    }
+  }
   @override
   void initState() {
-
-    //////////////////////////////////
-    videoPlayerController=VideoPlayerController.network(
-        widget.video!
-    );
-    videoPlayerController!.initialize();
-    videoPlayerController!.setLooping(false);
-    videoPlayerController!.setVolume(1.0);    super.initState();
+    init();
+    super.initState();
+    player.setDataSource(widget.video!, autoPlay: true,showCover: true);
   }
+
   @override
   void dispose() {
-    videoPlayerController!.dispose();
+    player.pause();
+    player.release();
+    // player.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AdvertisingCubit , AdvertisingState>(
@@ -78,7 +90,8 @@ class _AdvertisingFullVideoState extends State<AdvertisingFullVideo> {
             leading: IconButton(
               onPressed: (){
                 setState((){
-                  videoPlayerController!.pause();
+                  player.pause();
+                  player.release();
                 });
                 Navigator.pop(context);
 
@@ -114,36 +127,41 @@ class _AdvertisingFullVideoState extends State<AdvertisingFullVideo> {
                       width: double.infinity,
                       child: Stack(
                         children: [
-                          Container(
-                            height: MediaQuery.of(context).size.height*.6,
-                            width: double.infinity,
-                            child:AspectRatio(
-                              aspectRatio: videoPlayerController!.value.aspectRatio,
-                              child: VideoPlayer(videoPlayerController!),
+                          if (error != null)
+                            Center(child: Text(error.toString()))
+                          else if (player == null)
+                            Center(child: CupertinoActivityIndicator())
+                          else  Padding(
+                              padding: const EdgeInsets.all(0),
+                              child: FijkView(
+                                player: player,
+                                fit: FijkFit.contain,
+                                color: Colors.transparent,
+
+                              ),
                             ),
-                          ),
-                          Positioned(
-                              top: 10,
-                              right: 10,
-                              child: InkWell(
-                                onTap: (){
-                                  setState((){
-                                    if(videoPlayerController!.value.isPlaying){
-                                      videoPlayerController!.pause();
-                                    }else{
-                                      videoPlayerController!.play();
-                                    }
-                                  });
-                                },
-                                child: videoPlayerController!.value.isPlaying?  CircleAvatar(radius: 15, child: Icon(Icons.pause,color: AppColors.primaryColor1,size: 15,)): CircleAvatar(radius: 15, child: Icon(Icons.play_arrow,color: AppColors.primaryColor1,size: 15,)),
-                              )
-                          ),
                         ],
                       ),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height*.1,),
+                    defaultButton(
+                        textColor: AppColors.myWhite,
+                        buttonText: 'Show this advertisement',
+                        buttonColor: Color(0Xffd32330),
+                        width: MediaQuery.of(context).size.width*.6,
+                        height: MediaQuery.of(context).size.height*.06,
+                        function: ()async{
+                          //await widget.video==null;
+                          await player.pause();
+                          AdvertisingCubit.get(context).toAdvertisingLink(
+                              advertisingLink: widget.videoLink!
+                          );
+                        }
                     )
                   ],
                 ),
               ),
+
             ],
           ),
         );

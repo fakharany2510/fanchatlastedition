@@ -168,7 +168,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                         children: [
                                           Icon(Icons.logout,color: AppColors.primaryColor1,size: 25,),
                                           const SizedBox(width: 5,),
-                                          Text('SignOut',style: TextStyle(
+                                          Text('Logout',style: TextStyle(
                                               fontSize: 17,
                                               fontWeight: FontWeight.w500,
                                               color: AppColors.primaryColor1,
@@ -185,44 +185,6 @@ class _MoreScreenState extends State<MoreScreen> {
                                     },
                                   ),
                                   const SizedBox(height:10),
-                                  // InkWell(
-                                  //   child: Container(
-                                  //     padding: const EdgeInsets.symmetric(
-                                  //         vertical: 0,
-                                  //         horizontal: 10
-                                  //     ),
-                                  //     margin: const EdgeInsets.symmetric(
-                                  //         vertical: 0,
-                                  //         horizontal: 10
-                                  //     ),
-                                  //     width: size.width,
-                                  //     height: size.height*.05,
-                                  //     decoration: BoxDecoration(
-                                  //         color: AppColors.myGrey,
-                                  //         borderRadius: BorderRadius.circular(10)
-                                  //     ),
-                                  //     child: Row(
-                                  //       mainAxisAlignment: MainAxisAlignment.start,
-                                  //       mainAxisSize: MainAxisSize.min,
-                                  //       children: [
-                                  //         Icon(Icons.logout,color: AppColors.primaryColor1,size: 25,),
-                                  //         const SizedBox(width: 5,),
-                                  //         Text('google pay',style: TextStyle(
-                                  //             fontSize: 17,
-                                  //             fontWeight: FontWeight.w500,
-                                  //             color: AppColors.primaryColor1,
-                                  //             fontFamily: AppStrings.appFont
-                                  //         ),
-                                  //         ),
-                                  //         const Spacer(),
-                                  //         Icon(Icons.arrow_forward_ios_outlined,color: AppColors.primaryColor1,size: 20,),
-                                  //       ],
-                                  //     ),
-                                  //   ),
-                                  //   onTap: (){
-                                  //     Navigator.push(context, MaterialPageRoute(builder: (context)=>ChoosePayPackage()));
-                                  //   },
-                                  // ),
                                 ],
                               ),
                             ),

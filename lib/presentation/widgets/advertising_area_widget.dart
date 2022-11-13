@@ -16,6 +16,9 @@ import 'package:video_player/video_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
+import '../screens/advertising/advertising_full_video.dart';
+import '../screens/advertising/advertising_full_video.dart';
+
 
 class AdvertisingAreaWidget extends StatefulWidget {
   int? index;
@@ -78,22 +81,31 @@ class _AdvertisingAreaWidgetState extends State<AdvertisingAreaWidget> {
                   )
                       :Stack(
                     children: [
-                      Material(
-                        elevation: 1000,
-                        child: Padding(
-                          padding: const EdgeInsets.all(0),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height*.25,
-                            width: double.infinity,
-                            child:  CachedNetworkImage(
-                              cacheManager: AppCubit.get(context).manager,
-                              imageUrl: "${AdvertisingCubit.get(context).advertising[widget.index!].advertiseThumbnail}",
-                              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                              fit: BoxFit.fitWidth,
+                      InkWell(
+                        child: Material(
+                          elevation: 1000,
+                          child: Padding(
+                            padding: const EdgeInsets.all(0),
+                            child: Container(
+                              height: MediaQuery.of(context).size.height*.25,
+                              width: double.infinity,
+                              child:  CachedNetworkImage(
+                                cacheManager: AppCubit.get(context).manager,
+                                imageUrl: "${AdvertisingCubit.get(context).advertising[widget.index!].advertiseThumbnail}",
+                                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                                fit: BoxFit.fitWidth,
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (
+                              context) => AdvertisingFullVideo(
+                            video:AdvertisingCubit.get(context).advertising[widget.index!].postVideo ,
+                            videoLink: AdvertisingCubit.get(context).advertising[widget.index!].advertisingLink!,
+                          ))
+                          );
+                        }),
                       Positioned(
                           top: 10,
                           right: 10,

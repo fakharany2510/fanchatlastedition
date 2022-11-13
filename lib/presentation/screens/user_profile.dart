@@ -27,7 +27,7 @@ class UserProfile extends StatelessWidget {
     return BlocConsumer<AppCubit,AppState>(
       listener: (context,state){
         if(state is SendUserReportSuccessState){
-          customToast(title: 'Report Send Success', color: AppColors.navBarActiveIcon);
+          customToast(title: 'Report has been sent to admins', color: AppColors.navBarActiveIcon);
         }
       },
       builder: (context,state){
