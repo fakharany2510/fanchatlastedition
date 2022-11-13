@@ -205,6 +205,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
                                               );
                                               // toogleRecord();
                                             },
+
                                             icon:  Icon(
                                               Icons.send,
                                               color: AppColors.primaryColor1,
