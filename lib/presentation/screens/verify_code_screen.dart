@@ -127,6 +127,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
 
                       setState(()async{
 
+
                         AppCubit.get(context).isFound=true;
                         await AppCubit.get(context).getUserWithId(context,userCredential.user!.uid);
                         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const HomeLayout()), (route) => false);
