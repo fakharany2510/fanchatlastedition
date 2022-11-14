@@ -2306,6 +2306,7 @@ List<int> commentIndex=[];
   //Create Cheering
   Future<void> createCheeringPost({
     required String? time,
+    required String? countryName,
     required String? timeSpam,
     required String? text,
 
@@ -2323,6 +2324,8 @@ List<int> commentIndex=[];
     emit(CreateCheeringLoadingState());
 
     FirebaseFirestore.instance
+        .collection('$countryName')
+        .doc('1')
         .collection('cheering')
         .add(model.toMap())
         .then((value){
@@ -2372,8 +2375,12 @@ List<int> commentIndex=[];
   List <CheeringModel> waitingList=[];
 
   int indexCheeringList=0;
-  Future <void> getCheeringPost() async{
+  Future <void> getCheeringPost({
+    required String? countryName,
+}) async{
     FirebaseFirestore.instance
+        .collection('$countryName')
+        .doc('1')
         .collection('cheering')
         .orderBy('timeSpam',descending: true)
         .snapshots().listen((event) {
@@ -2394,8 +2401,8 @@ List<int> commentIndex=[];
 
   }
 
-  Future <void> deleteCheeringPost() async{
-    var collection = FirebaseFirestore.instance.collection('cheering');
+  Future <void> deleteCheeringPost({required String countryName}) async{
+    var collection = FirebaseFirestore.instance.collection(countryName).doc('1').collection('cheering');
     var snapshots = await collection.get();
     for (var doc in snapshots.docs) {
       await doc.reference.delete();

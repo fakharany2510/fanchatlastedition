@@ -624,7 +624,7 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
           recevierId: widget.userId!,
           recevierImage:widget.userImage!,
           recevierName: widget.userName!,
-          dateTime: DateTime.now().toString(),
+          dateTime: DateTime.now().toUtc().toString(),
           voice: value,
         );
         widget.onSendMessage(value, "voice", size);

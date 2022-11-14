@@ -113,7 +113,7 @@ class _CountriesScreenState extends State<CountriesScreen> {
                             if (name.isEmpty) {
                               return InkWell(
                                   onTap: (){
-                                    AppCubit.get(context).deleteCheeringPost().then((value) {
+                                    AppCubit.get(context).deleteCheeringPost(countryName: data['name']).then((value) {
                                       AppCubit.get(context).isLast=true;
                                       AppCubit.get(context).isWaiting=false;
                                       AppCubit.get(context).updateWaitingCheering();

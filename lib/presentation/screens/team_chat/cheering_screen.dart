@@ -36,7 +36,7 @@ class _CheeringScreenState extends State<CheeringScreen> {
     return BlocConsumer<AppCubit,AppState>(
         listener: (context,state){
            if(state is CreateCheeringSuccessState){
-             AppCubit.get(context).getCheeringPost().then((value) {
+             AppCubit.get(context).getCheeringPost(countryName: widget.countryName).then((value) {
                // AppCubit.get(context).getWaitingPost();
                // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                // const HomeLayout()), (Route<dynamic> route) => false);
@@ -168,7 +168,9 @@ class _CheeringScreenState extends State<CheeringScreen> {
                                 AppCubit.get(context).createCheeringPost(
                                     time: DateFormat.Hm().format(DateTime.now()),
                                     timeSpam: DateTime.now().toString(),
-                                    text: cheeringController.text
+                                    text: cheeringController.text,
+                                    countryName: widget.countryName,
+
                                 );
                                   AppCubit.get(context).isWaiting=true;
                                   print('here');

@@ -72,7 +72,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    AppCubit.get(context).getCheeringPost();
+    AppCubit.get(context).getCheeringPost(countryName: widget.countryName);
 
     return BlocConsumer<AppCubit,AppState>(builder: (context,state){
       return widget.countryName != null
@@ -310,7 +310,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                             AppCubit.get(context).updateWaitingCheering();
                                             AppCubit.get(context).isLast=false;
                                             print(AppCubit.get(context).isLast);
-                                            AppCubit.get(context).deleteCheeringPost();
+                                            AppCubit.get(context).deleteCheeringPost(countryName: widget.countryName);
 
 
                                           });
@@ -1032,7 +1032,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
     await storageReference.putFile(voice).then((value){
       AppCubit.get(context).createVoiceTeamChat(
         countryName: widget.countryName,
-        dateTime: DateTime.now().toString(),
+        dateTime: DateTime.now().toUtc().toString(),
         voice: voice.path,
       );
       print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeeeeeeeeeeeeeeeessssssssss');
