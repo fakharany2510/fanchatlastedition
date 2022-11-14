@@ -140,7 +140,9 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                         uId:CashHelper.getData(key: 'uid') ,
                         phone: userCredential.user!.phoneNumber!,
                         name: '',
-                      );
+                      ).then((value) {
+                        AppCubit.get(context).getUser(context);
+                      });
                     }
 
                   });

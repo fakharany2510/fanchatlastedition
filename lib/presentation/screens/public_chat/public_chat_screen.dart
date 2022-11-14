@@ -851,7 +851,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
     await storageReference.putFile(voice).then((value){
       value.ref.getDownloadURL().then((value){
         AppCubit.get(context).createVoicePublicChat(
-          dateTime: DateTime.now().toString(),
+          dateTime: DateTime.now().toUtc().toString(),
           voice: value,
         );
         widget.onSendMessage(value, "voice", size);

@@ -91,7 +91,7 @@ class _SendImagePublicChatState extends State<SendImagePublicChat> {
                 if (isValidFilesize) {
 
                   AppCubit.get(context).uploadPublicChatImage(
-                      dateTime:  DateTime.now().toString(),
+                      dateTime:  DateTime.now().toUtc().toString(),
                       text: "", senderId:  AppStrings.uId!,
                       senderName: '${AppCubit.get(context).userModel!.username}',
                       senderImage: '${AppCubit.get(context).userModel!.image}'
