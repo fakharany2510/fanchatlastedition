@@ -46,7 +46,6 @@ dependencies:
   video_player:
   country_pickers: ^2.0.0
   intl:
-  flutter_timezone:
   conditional_builder_null_safety: ^0.0.6
   #email_auth:
   lottie: ^1.4.1

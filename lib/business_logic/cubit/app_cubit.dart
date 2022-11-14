@@ -3378,9 +3378,9 @@ List<int> commentIndex=[];
 
   List<String> userIds=[];
 
-  void getUserIds(){
+  Future<void> getUserIds() async{
 
-    FirebaseFirestore.instance.collection('users')
+    await FirebaseFirestore.instance.collection('users')
         .get().then((value) {
 
       for (var element in value.docs) {

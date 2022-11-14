@@ -1,4 +1,5 @@
 import 'package:country_pickers/country.dart';
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/register/register_cubit.dart';
 import 'package:fanchat/business_logic/register/register_states.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
@@ -247,7 +248,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 if(phoneNumber == "+93777777777"){
                                   print('hello');
                                   if(isCheckBoxTrue == true ){
-                                    AppStrings.uId = 'Nbk25wMAMwh8e4mdjPAe';
+                                    AppStrings.uId = '1PXSal8urLgLZs4HPhESKz4oo4r1';
+                                    AppCubit.get(context).getUserWithId(context,AppStrings.uId!);
                                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                     const HomeLayout()), (Route<dynamic> route) => false);
                                     // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
@@ -263,10 +265,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     );
                                   }
                                 }
-                                else if(phoneNumber == "+93777777777"){
+                                else if(phoneNumber == "+93555555555"){
                                   print('hello');
                                   if(isCheckBoxTrue == true ){
-                                    AppStrings.uId = 'HD3nlvdtmWVwCar31J6JnKFZGWj1';
+                                    AppStrings.uId = 'ImnGr97JZ5OgXSuPjayEX2JS5QV2';
+                                    AppCubit.get(context).getUserWithId(context,AppStrings.uId!);
+
                                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                     const HomeLayout()), (Route<dynamic> route) => false);
                                     // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));

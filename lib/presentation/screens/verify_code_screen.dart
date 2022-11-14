@@ -92,14 +92,13 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
               }
             },
             builder: (context, state){
-              print('iam hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
               return FirebasePhoneAuthHandler(
                 phoneNumber: widget.phoneNumber,
                 signOutOnSuccessfulVerification: false,
                 linkWithExistingUser: false,
                 autoRetrievalTimeOutDuration: const Duration(seconds: 60),
                 otpExpirationDuration: const Duration(seconds: 60),
-                onCodeSent: () {
+                onCodeSent: () async {
                   print('iam hereeeeeeeeeeeeeeeeeeeeeeeeee 222222222222');
                   log(VerifyPhoneNumberScreen.id, msg: 'OTP sent!');
                 },
@@ -122,26 +121,29 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                   print('AppStrings.uId => ${AppStrings.uId}');
                   print('userCredential.user!.uid=> ${userCredential.user!.uid}');
 
+                  await AppCubit.get(context).getUserIds().then((value)async {
 
+                    if(AppCubit.get(context).userIds.contains(userCredential.user!.uid)){
 
-                  if(await AppCubit.get(context).userIds.contains(userCredential.user!.uid)){
+                      setState(()async{
 
-                    setState(()async{
+                        AppCubit.get(context).isFound=true;
+                        await AppCubit.get(context).getUserWithId(context,userCredential.user!.uid);
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const HomeLayout()), (route) => false);
 
-                      AppCubit.get(context).isFound=true;
-                      await AppCubit.get(context).getUserWithId(context,userCredential.user!.uid);
-                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const HomeLayout()), (route) => false);
+                      });
 
-                    });
+                    }
+                    else{
+                      await RegisterCubit.get(context).saveUserInfo(
+                        uId:CashHelper.getData(key: 'uid') ,
+                        phone: userCredential.user!.phoneNumber!,
+                        name: '',
+                      );
+                    }
 
-                  }
-                  else{
-                    await RegisterCubit.get(context).saveUserInfo(
-                      uId:CashHelper.getData(key: 'uid') ,
-                      phone: userCredential.user!.phoneNumber!,
-                      name: '',
-                    );
-                  }
+                  });
+
 
                   print('=====================================================================================');
                   print('=====================================================================================');
