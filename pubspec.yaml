@@ -65,8 +65,8 @@ dependencies:
   timer_builder: ^2.0.0
   circular_countdown_timer: ^0.2.2
   pay: ^1.0.11
-
-
+  stripe_payment: ^1.1.4
+  flutter_credit_card: ^3.0.2
 
 
   #Google SignIn
