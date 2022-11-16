@@ -110,7 +110,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                             return InkWell(
                                 onTap: (){
 
-
+                                  AppCubit.get(context).messages=[];
                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>
                                       ChatDetails(
                                         userName:AppCubit.get(context).lastUsers[index]['recevierName'],
@@ -154,6 +154,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                             return InkWell(
                                 onTap: (){
 
+                                  AppCubit.get(context).messages=[];
 
                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatDetails(
                                     userName:AppCubit.get(context).lastUsers[index]['recevierName'],

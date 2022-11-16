@@ -2343,9 +2343,12 @@ List<int> commentIndex=[];
 
   bool isWaiting=false ;
 
-  void getWaitingCheering(){
+  void getWaitingCheering({
+    required String? countryName,
 
-    FirebaseFirestore.instance.collection('watingCheering').doc('oeD0jEyvAjiaSBKjuW3d').get().then((value) {
+  }){
+
+    FirebaseFirestore.instance.collection('watingCheering').doc('$countryName').collection('$countryName').doc('1').get().then((value) {
       isWaiting=value['isWaiting'];
       print(isWaiting);
       emit(GetWaitingSuccessState());
@@ -2353,9 +2356,12 @@ List<int> commentIndex=[];
 
   }
 
-  void updateWaitingCheering(){
+  void updateWaitingCheering({
+    required String? countryName,
 
-    FirebaseFirestore.instance.collection('watingCheering').doc('oeD0jEyvAjiaSBKjuW3d').update({
+  }){
+
+    FirebaseFirestore.instance.collection('watingCheering').doc('$countryName').collection('$countryName').doc('1').update({
       'isWaiting':isWaiting
     }).then((value) {
       print('uPDATE Waiting success');

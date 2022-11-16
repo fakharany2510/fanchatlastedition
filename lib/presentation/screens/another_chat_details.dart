@@ -321,7 +321,7 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
                                                     recevierId: widget.userId!,
                                                     recevierName: widget.userName!,
                                                     recevierImage: widget.userImage!,
-                                                    dateTime: DateTime.now().toString(),
+                                                    dateTime: DateTime.now().toUtc().toString(),
                                                     text: textMessage.text);
                                                 setState(() {
                                                   FirebaseFirestore.instance.collection('tokens').doc(widget.userId!).get().then((value) {

@@ -307,7 +307,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                           setState(() {
 
                                             AppCubit.get(context).isWaiting=false;
-                                            AppCubit.get(context).updateWaitingCheering();
+                                            AppCubit.get(context).updateWaitingCheering(countryName:widget.countryName );
                                             AppCubit.get(context).isLast=false;
                                             print(AppCubit.get(context).isLast);
                                             AppCubit.get(context).deleteCheeringPost(countryName: widget.countryName);

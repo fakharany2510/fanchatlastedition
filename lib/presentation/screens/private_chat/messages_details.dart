@@ -64,17 +64,17 @@ class _ChatDetailsState extends State<ChatDetails> {
       }
     });
 
-    Future.delayed(const Duration(milliseconds: 1500),(){
-      if(AppCubit.get(context).privateScrollController.hasClients){
-        AppCubit.get(context).privateScrollController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
-      }
-    });
-
-    Future.delayed(const Duration(milliseconds: 2500),(){
-      if(AppCubit.get(context).privateScrollController.hasClients){
-        AppCubit.get(context).privateScrollController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
-      }
-    });
+    // Future.delayed(const Duration(milliseconds: 1500),(){
+    //   if(AppCubit.get(context).privateScrollController.hasClients){
+    //     AppCubit.get(context).privateScrollController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
+    //   }
+    // });
+    //
+    // Future.delayed(const Duration(milliseconds: 2500),(){
+    //   if(AppCubit.get(context).privateScrollController.hasClients){
+    //     AppCubit.get(context).privateScrollController.animateTo(AppCubit.get(context).publicChatController.position.maxScrollExtent, duration: const Duration(milliseconds:100), curve: Curves.linear);
+    //   }
+    // });
 
   }
   @override

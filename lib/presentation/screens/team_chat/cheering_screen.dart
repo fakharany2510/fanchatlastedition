@@ -27,7 +27,7 @@ class _CheeringScreenState extends State<CheeringScreen> {
 
   @override
   void initState() {
-    AppCubit.get(context).getWaitingCheering();
+    AppCubit.get(context).getWaitingCheering(countryName:widget.countryName );
     super.initState();
   }
 
@@ -174,7 +174,7 @@ class _CheeringScreenState extends State<CheeringScreen> {
                                 );
                                   AppCubit.get(context).isWaiting=true;
                                   print('here');
-                                  AppCubit.get(context).updateWaitingCheering();
+                                  AppCubit.get(context).updateWaitingCheering(countryName:widget.countryName );
                                 }
                                 else{
 
