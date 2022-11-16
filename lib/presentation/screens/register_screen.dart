@@ -248,29 +248,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 if(phoneNumber == "+93777777777"){
                                   print('hello');
                                   if(isCheckBoxTrue == true ){
-                                    AppStrings.uId = '1PXSal8urLgLZs4HPhESKz4oo4r1';
+                                    AppStrings.uId = 'qN1pYUcZN0zZD6YfNQ6H';
                                     AppCubit.get(context).getUserWithId(context,AppStrings.uId!);
-                                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                                    const HomeLayout()), (Route<dynamic> route) => false);
-                                    // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
-                                  }else{
-                                    Fluttertoast.showToast(
-                                      msg:"You Must Agree To Privacy Policies First",
-                                      toastLength: Toast.LENGTH_LONG,
-                                      gravity: ToastGravity.TOP,
-                                      timeInSecForIosWeb: 5,
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
-                                      fontSize: 18.0,
-                                    );
-                                  }
-                                }
-                                else if(phoneNumber == "+93555555555"){
-                                  print('hello');
-                                  if(isCheckBoxTrue == true ){
-                                    AppStrings.uId = 'ImnGr97JZ5OgXSuPjayEX2JS5QV2';
-                                    AppCubit.get(context).getUserWithId(context,AppStrings.uId!);
-
                                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                     const HomeLayout()), (Route<dynamic> route) => false);
                                     // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
@@ -291,7 +270,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   CashHelper.saveData(key: 'premium',value: 1);
                                   CashHelper.saveData(key: 'days' , value: 0);
                                   CashHelper.saveData(key: 'Advertise' , value: 0);
-                                  AppStrings.uId = 'hmjQP7ZLNrbOfIfPjR7j';
+                                  AppStrings.uId = 'baih02wtUjILuf9uf2MC';
                                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                   const HomeLayout()), (Route<dynamic> route) => false);
                                   // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
@@ -313,7 +292,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     CashHelper.saveData(key: 'days' , value: 0);
                                     CashHelper.saveData(key: 'Advertise' , value: 1);
                                     CashHelper.saveData(key: 'advertise',value:true);
-                                    AppStrings.uId = 'buEsRMIzLYN63PvgSSqT';
+                                    AppStrings.uId = 'kiFLBiMW9vQ1qJxHNVrm';
                                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                     const HomeLayout()), (Route<dynamic> route) => false);
                                     // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
