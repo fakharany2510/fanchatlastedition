@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
@@ -7,12 +9,11 @@ import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/screens/advertising/advertising_screen.dart';
 import 'package:fanchat/presentation/screens/countries_screen.dart';
 import 'package:fanchat/presentation/screens/public_chat/public_chat_screen.dart';
-import 'package:fanchat/presentation/screens/register_screen.dart';
 import 'package:fanchat/presentation/should_pay.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../screens/fan/fan_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/matches/match_details.dart';
@@ -26,7 +27,7 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> {
   @override
-  void initState(){
+  void initState() {
     super.initState();
     // print("==================================token================================");
     // FirebaseMessaging.instance.getToken().then((token){
@@ -35,46 +36,47 @@ class _HomeLayoutState extends State<HomeLayout> {
     //   print("==================================token================================");
     // });
 
-
-
-
-    AppCubit.get(context).getUser(context).then((value){
-      if(CashHelper.getData(key: 'premium')==1){
-        Future.delayed(const Duration(days: 365),(){
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ShouldPay()), (route) => false);
-         CashHelper.saveData(key: 'premium' , value: 0);
+    AppCubit.get(context).getUser(context).then((value) {
+      if (CashHelper.getData(key: 'premium') == 1) {
+        Future.delayed(const Duration(days: 365), () {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const ShouldPay()),
+              (route) => false);
+          CashHelper.saveData(key: 'premium', value: 0);
         });
-      }else{
+      } else {
         // print('nnnnnnnbccccccccccccccccccccccccccccccccccccccc ${AppCubit.get(context).userModel!.days}');
         // print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
         // print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
-        if(AppCubit.get(context).userModel!.days == 7 && AppCubit.get(context).userModel!.payed == false){
+        if (AppCubit.get(context).userModel!.days == 7 &&
+            AppCubit.get(context).userModel!.payed == false) {
           // print('llllllllllllllllllllllllllllllllllllllll   if 1');
-          CashHelper.saveData(key: 'days' , value: 7);
+          CashHelper.saveData(key: 'days', value: 7);
           // print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
 
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ShouldPay()), (route) => false);
-
-        }
-        else if(AppCubit.get(context).userModel!.days == 0 && AppCubit.get(context).userModel!.payed == true){
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const ShouldPay()),
+              (route) => false);
+        } else if (AppCubit.get(context).userModel!.days == 0 &&
+            AppCubit.get(context).userModel!.payed == true) {
           // print('llllllllllllllllllllllllllllllllllllllll   if 2');
 
-          CashHelper.saveData(key: 'days' , value: 0);
+          CashHelper.saveData(key: 'days', value: 0);
           // print('User Have Take Package ');
-        }
-        else{
+        } else {
           // print('llllllllllllllllllllllllllllllllllllllll   if 3');
-          Future.delayed(const Duration(days: 7),(){
-            FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
-                .update({
-              'days':7,
-              'payed':false
-            }).then((value){
-              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ShouldPay()), (route) => false);
-              CashHelper.saveData(key: 'days' , value: 7);
+          Future.delayed(const Duration(days: 7), () {
+            FirebaseFirestore.instance
+                .collection('users')
+                .doc(AppStrings.uId)
+                .update({'days': 7, 'payed': false}).then((value) {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const ShouldPay()),
+                  (route) => false);
+              CashHelper.saveData(key: 'days', value: 7);
               // print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
               print('success to update aaccountStates');
-            }).catchError((error){
+            }).catchError((error) {
               print('success to update aaccountStates${error.toString()}');
             });
             ///////////////////////////////////////////////////////////
@@ -83,36 +85,34 @@ class _HomeLayoutState extends State<HomeLayout> {
           });
         }
       }
-    }).catchError((error){
+    }).catchError((error) {
       print('error');
     });
   }
+
+  @override
   Widget build(BuildContext context) {
-
-    List <Widget> screens=[
-
-      HomeScreen(pageHeight: MediaQuery.of(context).size.height,pageWidth:MediaQuery.of(context).size.width),
+    List<Widget> screens = [
+      HomeScreen(
+          pageHeight: MediaQuery.of(context).size.height,
+          pageWidth: MediaQuery.of(context).size.width),
       MatchDetails(),
       const FanScreen(),
       const CountriesScreen(),
       PublicChatScreen(),
-       AdvertisingScreen(),
-
-
+      const AdvertisingScreen(),
     ];
 
-    return BlocConsumer<AppCubit,AppState>(
-        listener: (context,state){
-        },
-        builder: (context,state){
+    return BlocConsumer<AppCubit, AppState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = AppCubit.get(context);
 
-          var cubit=AppCubit.get(context);
-
-          return Scaffold(
-            appBar: customAppbar(cubit.screensTitles[cubit.currentIndex],context),
+        return Scaffold(
+            appBar:
+                customAppbar(cubit.screensTitles[cubit.currentIndex], context),
             body: screens[cubit.currentIndex],
-
-            bottomNavigationBar:Container(
+            bottomNavigationBar: Container(
               decoration: BoxDecoration(
                 //border: Border.symmetric(horizontal: BorderSide(width: 1,color: AppColors.navBarActiveIcon)),
                 boxShadow: [
@@ -143,118 +143,100 @@ class _HomeLayoutState extends State<HomeLayout> {
                   ),
                 ],
               ),
-              child: BottomNavigationBar
-                (
-                  selectedIconTheme:IconThemeData(
-                      color: AppColors.navBarActiveIcon,
-                      size: 25
-                  ) ,
-                  unselectedIconTheme:IconThemeData(
+              child: BottomNavigationBar(
+                  selectedIconTheme: IconThemeData(
+                      color: AppColors.navBarActiveIcon, size: 25),
+                  unselectedIconTheme: IconThemeData(
                     color: AppColors.myGrey,
-                    size:20,
-                  ) ,
-
-                  unselectedItemColor: AppColors.myGrey,
-                  selectedLabelStyle: const TextStyle(
-                      fontFamily: AppStrings.appFont
+                    size: 20,
                   ),
-                  unselectedLabelStyle:const TextStyle(
-                      fontFamily: AppStrings.appFont,
+                  unselectedItemColor: AppColors.myGrey,
+                  selectedLabelStyle:
+                      const TextStyle(fontFamily: AppStrings.appFont),
+                  unselectedLabelStyle: const TextStyle(
+                    fontFamily: AppStrings.appFont,
                   ),
                   unselectedFontSize: 10,
                   selectedFontSize: 13,
                   backgroundColor: AppColors.primaryColor1.withOpacity(1),
                   type: BottomNavigationBarType.fixed,
                   currentIndex: cubit.currentIndex,
-                  onTap: (value){
-                    cubit.navigateScreen(value,context);
-
+                  onTap: (value) {
+                    cubit.navigateScreen(value, context);
                   },
                   elevation: 20,
-
                   items: [
                     BottomNavigationBarItem(
                       icon: ImageIcon(
                         const AssetImage("assets/images/home.png"),
-                        color:AppColors.myGrey,
+                        color: AppColors.myGrey,
                       ),
-                      activeIcon:ImageIcon(
+                      activeIcon: ImageIcon(
                         const AssetImage("assets/images/home.png"),
-                        color:AppColors.navBarActiveIcon,
+                        color: AppColors.navBarActiveIcon,
                       ),
                       label: 'Home',
-
                     ),
                     BottomNavigationBarItem(
                         icon: ImageIcon(
                           const AssetImage("assets/images/times.png"),
-                          color:AppColors.myGrey,
+                          color: AppColors.myGrey,
                         ),
-                        activeIcon:ImageIcon(
+                        activeIcon: ImageIcon(
                           const AssetImage("assets/images/times.png"),
-                          color:AppColors.navBarActiveIcon,
+                          color: AppColors.navBarActiveIcon,
                         ),
-                        label: 'Matches'
-                    ),
+                        label: 'Matches'),
                     BottomNavigationBarItem(
-                        icon:ImageIcon(
+                        icon: ImageIcon(
                           const AssetImage("assets/images/gallery.png"),
-                          color:AppColors.myGrey,
+                          color: AppColors.myGrey,
                         ),
-                        activeIcon:ImageIcon(
+                        activeIcon: ImageIcon(
                           const AssetImage("assets/images/gallery.png"),
-                          color:AppColors.navBarActiveIcon,
+                          color: AppColors.navBarActiveIcon,
                         ),
-                        label: 'Gallery'
-                    ),
+                        label: 'Gallery'),
                     BottomNavigationBarItem(
                       icon: ImageIcon(
                         const AssetImage("assets/images/teanchatn.png"),
-                        color:AppColors.myGrey,
+                        color: AppColors.myGrey,
                       ),
                       label: 'Team chat',
-                      activeIcon:ImageIcon(
+                      activeIcon: ImageIcon(
                         const AssetImage("assets/images/teanchatn.png"),
-                        color:AppColors.navBarActiveIcon,
+                        color: AppColors.navBarActiveIcon,
                       ),
-
                     ),
                     BottomNavigationBarItem(
                       icon: ImageIcon(
                         const AssetImage("assets/images/chat.png"),
-                        color:AppColors.myGrey,
+                        color: AppColors.myGrey,
                       ),
-                      activeIcon:ImageIcon(
+                      activeIcon: ImageIcon(
                         const AssetImage("assets/images/chat.png"),
-                        color:AppColors.navBarActiveIcon,
+                        color: AppColors.navBarActiveIcon,
                       ),
                       label: 'Public chat',
-
                     ),
                     BottomNavigationBarItem(
                       icon: ImageIcon(
-                       const AssetImage("assets/images/ad-icon.png"),
-                        color:AppColors.myGrey,
+                        const AssetImage("assets/images/ad-icon.png"),
+                        color: AppColors.myGrey,
                       ),
                       label: 'Ads',
-                      activeIcon:ImageIcon(
+                      activeIcon: ImageIcon(
                         const AssetImage("assets/images/ad-icon.png"),
-                        color:AppColors.navBarActiveIcon,
+                        color: AppColors.navBarActiveIcon,
                       ),
-
-
                     ),
-
-                  ]
-              ),
-            )
-
-
-          );
-        },
+                  ]),
+            ));
+      },
     );
   }
 }
+
 Future<void> showMyDialog2(context) async {
   return showDialog<void>(
     context: context,
@@ -264,49 +246,48 @@ Future<void> showMyDialog2(context) async {
         backgroundColor: AppColors.myWhite,
         // title: const Text('Aew you sure you want to logout from FanChat'),
         content: SingleChildScrollView(
-            child:Container(
-
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children:   [
-                  const CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    radius: 70,
-                    child: Image(image: AssetImage('assets/images/ncolort.png'),
-                      height: 100,
-                      width: 100,
-                    ),
-                  ),
-                  Center(
-                    child: Text(
-                      'Get a premium package',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontFamily: AppStrings.appFont,
-                        color: AppColors.primaryColor1,
-                        fontSize: 19,
-                      ),
-                    )
-                  ),
-                ],
+            child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircleAvatar(
+                backgroundColor: Colors.transparent,
+                radius: 70,
+                child: Image(
+                  image: AssetImage('assets/images/ncolort.png'),
+                  height: 100,
+                  width: 100,
+                ),
               ),
-            )
-        ),
+              Center(
+                  child: Text(
+                'Get a premium package',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: AppStrings.appFont,
+                  color: AppColors.primaryColor1,
+                  fontSize: 19,
+                ),
+              )),
+            ],
+          ),
+        )),
         actions: <Widget>[
           Column(
             children: [
               defaultButton(
-                  width: MediaQuery.of(context).size.width*.7,
-                  height: MediaQuery.of(context).size.height*.07,
+                  width: MediaQuery.of(context).size.width * .7,
+                  height: MediaQuery.of(context).size.height * .07,
                   buttonColor: AppColors.navBarActiveIcon,
                   textColor: AppColors.myWhite,
                   buttonText: 'Buy a package ',
                   fontSize: 15,
-                  function: (){
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context)=>ChoosePayPackage()));
-
+                  function: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ChoosePayPackage()));
                   })
             ],
           )
