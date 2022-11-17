@@ -81,7 +81,6 @@ class UserProfile extends StatelessWidget {
                             child: CircleAvatar(
                               radius: 16,
                               backgroundColor: AppColors.myWhite,
-
                               child: CircleAvatar(
                                 radius: 15,
                                 backgroundColor: AppColors.primaryColor1,

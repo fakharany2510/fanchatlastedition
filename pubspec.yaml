@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+5
+version: 1.0.0+6
 
 environment:
   sdk: ">=2.17.5 <3.0.0"
@@ -34,6 +34,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   fcm_config: ^3.3.7
+  equatable: ^2.0.5
+  flutter_stripe: ^6.0.0
   localization: ^2.1.0
   cupertino_icons: ^1.0.2
   splash_screen_view: ^3.0.0
@@ -65,8 +67,8 @@ dependencies:
   timer_builder: ^2.0.0
   circular_countdown_timer: ^0.2.2
   pay: ^1.0.11
-  stripe_payment: ^1.1.4
-  flutter_credit_card: ^3.0.2
+#  stripe_payment: ^1.1.4
+#  flutter_credit_card: ^3.0.2
 
 
   #Google SignIn
@@ -99,12 +101,10 @@ dependencies:
   path_provider: ^2.0.8
   uuid: ^3.0.5
   voice_message_package: ^0.0.74
-  #cache network images & videos:
   cached_network_image: ^3.2.1
   flutter_cache_manager: ^3.3.0
   cached_video_player:
   media_cache_manager: ^0.0.2+1
-  #flick_video_player: ^0.5.0
   fijkplayer: ^0.10.1
   video_thumbnail: ^0.5.3
   flutter_blurhash: ^0.7.0

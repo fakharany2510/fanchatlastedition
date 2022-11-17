@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
+import 'package:fanchat/presentation/paypal/googlepay/success_pay.dart';
+import 'package:fanchat/presentation/paypal/googlepay/successadvertisepay.dart';
 import 'package:fanchat/presentation/should_pay.dart';
 import 'package:flutter/material.dart';
 import 'package:pay/pay.dart';
@@ -44,7 +46,7 @@ class _AdvertiseGooglePayState extends State<AdvertiseGooglePay> {
         .update({
       'advertise':true,
     }).then((value){
-       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>SuccessPayAdvertise()), (route) => false);
 
       print('success to update aaccountStates');
     }).catchError((error){
@@ -131,17 +133,17 @@ class _AdvertiseGooglePayState extends State<AdvertiseGooglePay> {
                     child: CircularProgressIndicator(),
                   ),
                 ),
-                ApplePayButton(
-                  paymentConfigurationAsset: 'default_payment_profile_apple_pay.json',
-                  paymentItems: _paymentItems,
-                  style: ApplePayButtonStyle.black,
-                  type: ApplePayButtonType.buy,
-                  margin: const EdgeInsets.only(top: 15.0),
-                  onPaymentResult: onApplePayResult,
-                  loadingIndicator: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
+                // ApplePayButton(
+                //   paymentConfigurationAsset: 'default_payment_profile_apple_pay.json',
+                //   paymentItems: _paymentItems,
+                //   style: ApplePayButtonStyle.black,
+                //   type: ApplePayButtonType.buy,
+                //   margin: const EdgeInsets.only(top: 15.0),
+                //   onPaymentResult: onApplePayResult,
+                //   loadingIndicator: const Center(
+                //     child: CircularProgressIndicator(),
+                //   ),
+                // ),
                 const SizedBox(height: 15)
               ],
             ),

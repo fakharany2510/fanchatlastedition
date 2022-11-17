@@ -24,17 +24,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-// import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:media_cache_manager/core/download_cache_manager.dart';
 import 'package:overlay_support/overlay_support.dart';
-
+import '';
 import 'business_logic/bloc/bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   /// ============================================
-  // Stripe.publishableKey = publishableKey;
+    Stripe.publishableKey =  AppStrings.publishableKey;
 
   // await Stripe.instance.applySettings();
 

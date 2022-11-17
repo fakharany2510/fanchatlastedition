@@ -6,14 +6,14 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class SuccessPay extends StatefulWidget {
-  const SuccessPay({Key? key}) : super(key: key);
+class SuccessPayAdvertise extends StatefulWidget {
+  const SuccessPayAdvertise({Key? key}) : super(key: key);
 
   @override
-  State<SuccessPay> createState() => _SuccessPayState();
+  State<SuccessPayAdvertise> createState() => _SuccessPayAdvertiseState();
 }
 
-class _SuccessPayState extends State<SuccessPay> {
+class _SuccessPayAdvertiseState extends State<SuccessPayAdvertise> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +45,7 @@ class _SuccessPayState extends State<SuccessPay> {
                 ),
               ),
               SizedBox(height: 20,),
-              Text('Congratualtions\nYou have purchased Premium package\nYou are now enjoying FAN Chat\n for one year',
+              Text('Congratualtions\nYou have purchased Advertise package\nYou are now enjoying FAN Chat\n for one year',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     height: 1.4,

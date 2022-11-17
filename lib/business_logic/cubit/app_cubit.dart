@@ -1494,7 +1494,6 @@ List<int> commentIndex=[];
       messages = [];
       event.docs.forEach((element) {
         messages.add((MessageModel.fromJson(element.data())));
-
       });
       emit(GetMessageSuccessState());
 

@@ -1,16 +1,9 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
-import 'package:fanchat/payment_STRIPE/payment_screen.dart';
-import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
-import 'package:fanchat/presentation/paypal/googlepay/premium_google_pay.dart';
 import 'package:fanchat/presentation/screens/private_chat/chat_screen.dart';
-
-import 'package:fanchat/presentation/screens/register_screen.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../constants/app_strings.dart';
 
 class MoreScreen extends StatefulWidget {
@@ -25,9 +18,7 @@ class _MoreScreenState extends State<MoreScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return  BlocConsumer<AppCubit,AppState>(
-      listener: (context,state){
-
-      },
+      listener: (context,state){},
       builder: (context,state){
         var cubit =AppCubit.get(context);
         cubit.userModel!.uId=AppStrings.uId;
@@ -188,45 +179,86 @@ class _MoreScreenState extends State<MoreScreen> {
                                       showMyDialog(context);
                                     },
                                   ),
-                                  const SizedBox(height:10),
-                                  InkWell(
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 0,
-                                          horizontal: 10
-                                      ),
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 0,
-                                          horizontal: 10
-                                      ),
-                                      width: size.width,
-                                      height: size.height*.05,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.myGrey,
-                                          borderRadius: BorderRadius.circular(10)
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Icon(Icons.logout,color: AppColors.primaryColor1,size: 25,),
-                                          const SizedBox(width: 5,),
-                                          Text('Payment',style: TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.primaryColor1,
-                                              fontFamily: AppStrings.appFont
-                                          ),
-                                          ),
-                                          const Spacer(),
-                                          Icon(Icons.arrow_forward_ios_outlined,color: AppColors.primaryColor1,size: 20,),
-                                        ],
-                                      ),
-                                    ),
-                                    onTap: (){
-                                     Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentScreen() ));
-                                    },
-                                  ),
+                                  // const SizedBox(height:10),
+                                  // InkWell(
+                                  //   child: Container(
+                                  //     padding: const EdgeInsets.symmetric(
+                                  //         vertical: 0,
+                                  //         horizontal: 10
+                                  //     ),
+                                  //     margin: const EdgeInsets.symmetric(
+                                  //         vertical: 0,
+                                  //         horizontal: 10
+                                  //     ),
+                                  //     width: size.width,
+                                  //     height: size.height*.05,
+                                  //     decoration: BoxDecoration(
+                                  //         color: AppColors.myGrey,
+                                  //         borderRadius: BorderRadius.circular(10)
+                                  //     ),
+                                  //     child: Row(
+                                  //       mainAxisAlignment: MainAxisAlignment.start,
+                                  //       mainAxisSize: MainAxisSize.min,
+                                  //       children: [
+                                  //         Icon(Icons.logout,color: AppColors.primaryColor1,size: 25,),
+                                  //         const SizedBox(width: 5,),
+                                  //         Text('payment',style: TextStyle(
+                                  //             fontSize: 17,
+                                  //             fontWeight: FontWeight.w500,
+                                  //             color: AppColors.primaryColor1,
+                                  //             fontFamily: AppStrings.appFont
+                                  //         ),
+                                  //         ),
+                                  //         const Spacer(),
+                                  //         Icon(Icons.arrow_forward_ios_outlined,color: AppColors.primaryColor1,size: 20,),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  //   onTap: (){
+                                  //     Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                  //     CardFormScreen()
+                                  //     ));
+                                  //   },
+                                  // ),
+                                  ///////////////////////////////////////////////////
+                                  // InkWell(
+                                  //   child: Container(
+                                  //     padding: const EdgeInsets.symmetric(
+                                  //         vertical: 0,
+                                  //         horizontal: 10
+                                  //     ),
+                                  //     margin: const EdgeInsets.symmetric(
+                                  //         vertical: 0,
+                                  //         horizontal: 10
+                                  //     ),
+                                  //     width: size.width,
+                                  //     height: size.height*.05,
+                                  //     decoration: BoxDecoration(
+                                  //         color: AppColors.myGrey,
+                                  //         borderRadius: BorderRadius.circular(10)
+                                  //     ),
+                                  //     child: Row(
+                                  //       mainAxisAlignment: MainAxisAlignment.start,
+                                  //       mainAxisSize: MainAxisSize.min,
+                                  //       children: [
+                                  //         Icon(Icons.logout,color: AppColors.primaryColor1,size: 25,),
+                                  //         const SizedBox(width: 5,),
+                                  //         Text('Payment',style: TextStyle(
+                                  //             fontSize: 17,
+                                  //             fontWeight: FontWeight.w500,
+                                  //             color: AppColors.primaryColor1,
+                                  //             fontFamily: AppStrings.appFont
+                                  //         ),
+                                  //         ),
+                                  //         const Spacer(),
+                                  //         Icon(Icons.arrow_forward_ios_outlined,color: AppColors.primaryColor1,size: 20,),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  //   onTap: (){
+                                  //    Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentScreen() ));
+                                  //   },
+                                  // ),
 
 
                                   const SizedBox(height:10),

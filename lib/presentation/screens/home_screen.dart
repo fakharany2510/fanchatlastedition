@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:fanchat/strip__/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -75,17 +76,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
 
                           /// TODO Tolba remove button comment
-                          // ElevatedButton(
-                          //   onPressed: () {
-                          //     Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //           builder: (context) =>
-                          //               const PaymentScreenTest()),
-                          //     );
-                          //   },
-                          //   child: const Text('Go to Payment Screen'),
-                          // ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PaymentScreenTest()),
+                              );
+                            },
+                            child: const Text('Go to Payment Screen'),
+                          ),
                           const SizedBox(
                             height: 5,
                           ),
