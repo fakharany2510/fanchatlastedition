@@ -74,24 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: double.infinity,
                             ),
                           ),
-
-
-
-                          /// TODO Tolba remove button comment
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const PaymentScreenTest()),
-                              );
-                            },
-                            child: const Text('Go to Payment Screen'),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
                           CarouselSlider(
                             items: cubit.carouselImage.map((e) {
                               return Image(

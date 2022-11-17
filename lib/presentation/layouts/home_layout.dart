@@ -65,7 +65,7 @@ class _HomeLayoutState extends State<HomeLayout> {
           // print('User Have Take Package ');
         } else {
           // print('llllllllllllllllllllllllllllllllllllllll   if 3');
-          Future.delayed(const Duration(days: 7), () {
+          Future.delayed(const Duration(seconds: 7), () {
             FirebaseFirestore.instance
                 .collection('users')
                 .doc(AppStrings.uId)

@@ -1,10 +1,8 @@
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
-import 'package:fanchat/presentation/paypal/advertise.dart';
-import 'package:fanchat/presentation/paypal/googlepay/advertise_google_pay.dart';
-import 'package:fanchat/presentation/paypal/googlepay/premium_google_pay.dart';
-import 'package:fanchat/presentation/paypal/premiumpackage.dart';
+import 'package:fanchat/presentation/paypal/stripe_pay/advertise_stripe_pay.dart';
+import 'package:fanchat/presentation/paypal/stripe_pay/premium_stripe_pay.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -173,10 +171,10 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
                   buttonText: 'Pay',
                   function: (){
                     if(_value==1){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PremiumGooglePay()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>PremiumPackage()));
                     }
                     if(_value==2){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>AdvertiseGooglePay()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>AdvertisePackage()));
                     }
                   }),
             )

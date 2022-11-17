@@ -388,7 +388,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                           height: MediaQuery.of(context).size.height*.06,
                           buttonColor: AppColors.primaryColor1,
                           textColor: AppColors.myWhite,
-                          buttonText: 'Get a premium package ',
+                          buttonText: 'Get a package ',
                           fontSize: 15,
                           function: (){
                             Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const ChoosePayPackage()),(Route<dynamic>route) => false);
