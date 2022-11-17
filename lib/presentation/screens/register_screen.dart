@@ -249,7 +249,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   print('hello');
                                   if(isCheckBoxTrue == true ){
                                     AppStrings.uId = 'qN1pYUcZN0zZD6YfNQ6H';
-                                    AppCubit.get(context).getUserWithId(context,AppStrings.uId!);
+                                    AppCubit.get(context).getUserWithId(context,'qN1pYUcZN0zZD6YfNQ6H');
                                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                     const HomeLayout()), (Route<dynamic> route) => false);
                                     // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
@@ -271,6 +271,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   CashHelper.saveData(key: 'days' , value: 0);
                                   CashHelper.saveData(key: 'Advertise' , value: 0);
                                   AppStrings.uId = 'baih02wtUjILuf9uf2MC';
+                                  AppCubit.get(context).getUserWithId(context,'baih02wtUjILuf9uf2MC');
+
                                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                   const HomeLayout()), (Route<dynamic> route) => false);
                                   // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));
@@ -293,6 +295,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     CashHelper.saveData(key: 'Advertise' , value: 1);
                                     CashHelper.saveData(key: 'advertise',value:true);
                                     AppStrings.uId = 'kiFLBiMW9vQ1qJxHNVrm';
+                                    AppCubit.get(context).getUserWithId(context,'kiFLBiMW9vQ1qJxHNVrm');
+
                                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                     const HomeLayout()), (Route<dynamic> route) => false);
                                     // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));

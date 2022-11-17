@@ -109,7 +109,7 @@ class _MyMessagePublicChatWidgetState extends State<MyMessagePublicChatWidget> w
                             Text(' ${AppCubit.get(context).publicChat[widget.index!].text}',
                               style:  const TextStyle(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 18,
+                                  fontSize: 15,
                                   color:  Color(0xfffbf7c2),
                                   fontFamily: AppStrings.appFont
                               ),

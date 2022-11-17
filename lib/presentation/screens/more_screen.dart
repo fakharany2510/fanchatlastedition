@@ -1,6 +1,7 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/presentation/screens/edit_profie_screen.dart';
 import 'package:fanchat/presentation/screens/private_chat/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,28 +66,30 @@ class _MoreScreenState extends State<MoreScreen> {
                                       width: size.width,
                                       height: size.height*.05,
                                       decoration: BoxDecoration(
-                                          color: AppColors.myGrey,
+                                          color: const Color(0Xffd32330),
                                           borderRadius: BorderRadius.circular(10)
                                       ),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Icon(Icons.person,color: AppColors.primaryColor1,size: 25,),
+                                          Icon(Icons.person,color: AppColors.myWhite,size: 25,),
                                           const SizedBox(width: 5,),
                                           Text('Profile',style: TextStyle(
                                               fontSize: 17,
                                               fontWeight: FontWeight.w500,
-                                              color: AppColors.primaryColor1,
+                                              color: AppColors.myWhite,
                                               fontFamily: AppStrings.appFont
                                           ),),
                                           const Spacer(),
-                                          Icon(Icons.arrow_forward_ios_outlined,color: AppColors.primaryColor1,size: 20,),
+                                          Icon(Icons.arrow_forward_ios_outlined,color: AppColors.myWhite,size: 20,),
                                         ],
                                       ),
                                     ),
                                     onTap: (){
-                                      Navigator.pushNamed(context, 'profile');
+                                      Navigator.push(context, MaterialPageRoute(builder: (_){
+                                        return EditProfileScreen();
+                                      }));
                                     },
                                   ),
                                   const SizedBox(height:10),
@@ -103,7 +106,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                       width: size.width,
                                       height: size.height*.05,
                                       decoration: BoxDecoration(
-                                          color: AppColors.myGrey,
+                                          color: const Color(0Xffd32330),
                                           borderRadius: BorderRadius.circular(10)
                                       ),
                                       child: Row(
@@ -112,18 +115,18 @@ class _MoreScreenState extends State<MoreScreen> {
                                         children: [
                                           ImageIcon(
                                             const AssetImage("assets/images/chat.png"),
-                                            color:Colors.black,
+                                            color:Colors.white,
                                             size: 25,
                                           ),
                                           const SizedBox(width: 5,),
                                           Text('Private Chat',style: TextStyle(
                                               fontSize: 17,
                                               fontWeight: FontWeight.w500,
-                                              color: AppColors.primaryColor1,
+                                              color: AppColors.myWhite,
                                               fontFamily: AppStrings.appFont
                                           ),),
                                           const Spacer(),
-                                          Icon(Icons.arrow_forward_ios_outlined,color: AppColors.primaryColor1,size: 20,),
+                                          Icon(Icons.arrow_forward_ios_outlined,color: AppColors.myWhite,size: 20,),
                                         ],
                                       ),
                                     ),
@@ -139,6 +142,49 @@ class _MoreScreenState extends State<MoreScreen> {
                                   ),
                                   const SizedBox(height:10),
 
+                                  InkWell(
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 0,
+                                          horizontal: 10
+                                      ),
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 0,
+                                          horizontal: 10
+                                      ),
+                                      width: size.width,
+                                      height: size.height*.05,
+                                      decoration: BoxDecoration(
+                                          color: const Color(0Xffd32330),
+                                          borderRadius: BorderRadius.circular(10)
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          ImageIcon(
+                                            const AssetImage("assets/images/card.png"),
+                                            color:Colors.white,
+                                            size: 25,
+                                          ),
+                                          const SizedBox(width: 5,),
+                                          Text('Upgrade Your Package',style: TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.myWhite,
+                                              fontFamily: AppStrings.appFont
+                                          ),
+                                          ),
+                                          const Spacer(),
+                                          Icon(Icons.arrow_forward_ios_outlined,color: AppColors.myWhite,size: 20,),
+                                        ],
+                                      ),
+                                    ),
+                                    onTap: (){
+                                    },
+                                  ),
+
+                                  const SizedBox(height:10),
 
 
                                   InkWell(
@@ -154,24 +200,24 @@ class _MoreScreenState extends State<MoreScreen> {
                                       width: size.width,
                                       height: size.height*.05,
                                       decoration: BoxDecoration(
-                                          color: AppColors.myGrey,
+                                          color: const Color(0Xffd32330),
                                           borderRadius: BorderRadius.circular(10)
                                       ),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Icon(Icons.logout,color: AppColors.primaryColor1,size: 25,),
+                                          Icon(Icons.logout,color: AppColors.myWhite,size: 25,),
                                           const SizedBox(width: 5,),
                                           Text('Logout',style: TextStyle(
                                               fontSize: 17,
                                               fontWeight: FontWeight.w500,
-                                              color: AppColors.primaryColor1,
+                                              color: AppColors.myWhite,
                                               fontFamily: AppStrings.appFont
                                           ),
                                           ),
                                           const Spacer(),
-                                          Icon(Icons.arrow_forward_ios_outlined,color: AppColors.primaryColor1,size: 20,),
+                                          Icon(Icons.arrow_forward_ios_outlined,color: AppColors.myWhite,size: 20,),
                                         ],
                                       ),
                                     ),

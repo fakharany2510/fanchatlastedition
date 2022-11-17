@@ -55,19 +55,22 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget> with Au
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('${AppCubit.get(context).userModel!.username}',
-                          style:  TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 9,
-                              color: AppColors.myWhite,
-                              fontFamily: AppStrings.appFont
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: Text('${AppCubit.get(context).userModel!.username}',
+                            style:  TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 9,
+                                color: AppColors.myWhite,
+                                fontFamily: AppStrings.appFont
+                            ),
                           ),
                         ),
                         const SizedBox(height: 5,),
                         Text(' ${AppCubit.get(context).publicChat[widget.index!].text}',
                           style:  TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontSize: 17,
+                              fontSize: 15,
                               color: AppColors.myWhite,
                               fontFamily: AppStrings.appFont
                           ),

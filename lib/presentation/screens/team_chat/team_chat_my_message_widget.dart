@@ -80,22 +80,28 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> with 
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('${AppCubit.get(context).teamChat[widget.index!].senderName}',
-                          style:  TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 9,
-                              color:  Color(0xfffbf7c2),
-                              fontFamily: AppStrings.appFont
-                          ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Text('${AppCubit.get(context).teamChat[widget.index!].senderName}',
+                            style:  const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 9,
+                                color:  Color(0xfffbf7c2),
+                                fontFamily: AppStrings.appFont
+                            ),
 
+                          ),
                         ),
                         const SizedBox(height: 5,),
-                        Text('${AppCubit.get(context).teamChat[widget.index!].text}',
-                          style:  const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18,
-                              color:  Color(0xfffbf7c2),
-                              fontFamily: AppStrings.appFont
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Text('${AppCubit.get(context).teamChat[widget.index!].text}',
+                            style:  const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15,
+                                color:  Color(0xfffbf7c2),
+                                fontFamily: AppStrings.appFont
+                            ),
                           ),
                         )
 
@@ -123,7 +129,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> with 
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('${AppCubit.get(context).teamChat[widget.index!].senderName}',
-                            style:  TextStyle(
+                            style:  const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 9,
                                 color:  Color(0xfffbf7c2),
@@ -181,7 +187,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> with 
                         Padding(
                           padding: const EdgeInsets.only(left: 10),
                           child: Text('${AppCubit.get(context).teamChat[widget.index!].senderName}',
-                            style:  TextStyle(
+                            style:  const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 9,
                                 color:  Color(0xfffbf7c2),
@@ -268,7 +274,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget> with 
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('${AppCubit.get(context).teamChat[widget.index!].senderName}',
-                          style:  TextStyle(
+                          style:  const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 9,
                               color:  Color(0xfffbf7c2),
