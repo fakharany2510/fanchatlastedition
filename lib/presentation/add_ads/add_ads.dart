@@ -6,7 +6,7 @@
 // import 'package:flutter_bloc/flutter_bloc.dart';
 //
 // class AddAdvertuser extends StatelessWidget {
-//    AddAdvertuser({Key? key}) : super(key: key);
+//    AddAdvertuser({super.key}) ;
 //
 //
 //   @override

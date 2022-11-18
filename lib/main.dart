@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, unused_local_variable
 
 import 'package:fanchat/business_logic/advertising_cubit/advertising_cubit.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
@@ -15,7 +15,6 @@ import 'package:fanchat/presentation/screens/posts/add_text_post.dart';
 import 'package:fanchat/presentation/screens/profile_area/profile_screen.dart';
 import 'package:fanchat/presentation/screens/register_screen.dart';
 import 'package:fanchat/presentation/screens/splash_screen.dart';
-import 'package:fanchat/presentation/should_pay.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:fanchat/strip__/blocs/bloc/payment_state.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -49,13 +48,13 @@ void main() async {
     provisional: false,
     sound: true,
   );
-  print('User granted permission: ${settings.authorizationStatus}');
+  // print('User granted permission: ${settings.authorizationStatus}');
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    print('Got a message whilst in the foreground!');
-    print('Message data: ${message.data}');
+    // print('Got a message whilst in the foreground!');
+    // print('Message data: ${message.data}');
     plant();
     if (message.notification != null) {
-      print('Message also contained a notification: ${message.notification}');
+      // print('Message also contained a notification: ${message.notification}');
     }
   });
   await CashHelper.init();
@@ -63,7 +62,7 @@ void main() async {
   AppStrings.uId = CashHelper.getData(key: 'uid');
   printMessage('userId is: ${AppStrings.uId}');
 
-  print('dggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
+  // print('dggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
 
   Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
@@ -77,17 +76,14 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          lazy: false,
-            create: (context) => AppCubit()..getUser(context),),
-
+            lazy: false, create: (context) => AppCubit()..getUser(context)),
         BlocProvider(
             create: (context) => AdvertisingCubit()..getAdvertisingPosts()),
-        // BlocProvider(create: (context) => PaymentBloc()),
       ],
       child: FirebasePhoneAuthProvider(
         child: OverlaySupport(
           child: MaterialApp(
-            title: 'fanchat',
+            title: 'Fanchat',
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
@@ -99,28 +95,29 @@ class MyApp extends StatelessWidget {
             ],
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-                navigationBarTheme: const NavigationBarThemeData(
-                  elevation: 1000,
-                ),
-                primarySwatch: Colors.blue,
-                appBarTheme: AppBarTheme(
-                    systemOverlayStyle: SystemUiOverlayStyle(
+              navigationBarTheme: const NavigationBarThemeData(
+                elevation: 1000,
+              ),
+              primarySwatch: Colors.blue,
+              appBarTheme: AppBarTheme(
+                systemOverlayStyle: SystemUiOverlayStyle(
                   statusBarBrightness: Brightness.light,
                   statusBarColor: AppColors.primaryColor1,
-                ))),
+                ),
+              ),
+            ),
             // initialRoute: 'register',
             routes: {
               '/': (context) => (AppStrings.uId != null)
                   ? const HomeLayout()
                   : SplashScreen(),
-
               'home_layout': (context) => const HomeLayout(),
-              'register': (context) => RegisterScreen(),
+              'register': (context) => const RegisterScreen(),
               'profile': (context) => const ProfileScreen(),
-              'edit_profile': (context) => EditProfileScreen(),
-              'add_video': (context) => AddNewVideo(),
-              'add_image': (context) => AddNewImage(),
-              'add_text': (context) => AddTextPost(),
+              'edit_profile': (context) => const EditProfileScreen(),
+              'add_video': (context) => const AddNewVideo(),
+              'add_image': (context) => const AddNewImage(),
+              'add_text': (context) => const AddTextPost(),
               'fan_post': (context) => FanFullPost(),
             },
           ),

@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 // import 'package:fanchat/constants/app_colors.dart';
 // import 'package:fanchat/constants/app_strings.dart';
 // import 'package:fanchat/presentation/paypal/advertise.dart';
@@ -6,7 +7,7 @@
 // import 'package:lottie/lottie.dart';
 //
 // class AdvertiseNav extends StatefulWidget {
-//   const AdvertiseNav({Key? key}) : super(key: key);
+//   const AdvertiseNav({super.key}) ;
 //
 //   @override
 //   State<AdvertiseNav> createState() => _AdvertiseNavState();

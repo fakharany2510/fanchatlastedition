@@ -1,10 +1,9 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: prefer_final_fields
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
-import 'package:fanchat/strip__/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,8 +13,7 @@ bool isPostPlaying = true;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen(
-      {Key? key, required this.pageHeight, required this.pageWidth})
-      : super(key: key);
+      {super.key, required this.pageHeight, required this.pageWidth});
   final double? pageHeight;
   final double? pageWidth;
 
@@ -111,14 +109,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   InkWell(
                                     onTap: () {
                                       setState(() {
-                                        print('State ////////////////////////');
+                                        // print('State ////////////////////////');
 
                                         state is NavigateScreenState;
-                                        print(state);
+                                        // print(state);
                                         isPostPlaying = false;
                                         AppCubit.get(context).throwState();
                                       });
-                                      print('I am here');
+                                      // print('I am here');
                                       Navigator.pushNamed(context, 'add_text');
                                     },
                                     child: Container(
@@ -225,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               }
                               return true;
                             },
-                            child: cubit.posts.length != 0
+                            child: cubit.posts.isNotEmpty
                                 ? ListView.separated(
                                     controller: _childScrollController,
                                     physics:

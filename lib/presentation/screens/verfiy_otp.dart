@@ -11,7 +11,7 @@
 // import '../../business_logic/shared/local/cash_helper.dart';
 //
 // class VerfiyOtp extends StatefulWidget {
-//    VerfiyOtp({Key? key,this.email}) : super(key: key);
+//    VerfiyOtp({super.key,this.email}) ;
 //
 //    String ?email;
 //   TextEditingController otp = TextEditingController();

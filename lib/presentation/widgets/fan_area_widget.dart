@@ -1,5 +1,6 @@
-import 'dart:io';
+// ignore_for_file: must_be_immutable
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
@@ -8,25 +9,22 @@ import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/screens/fan/fan_full_post.dart';
 import 'package:fanchat/presentation/screens/fan/fan_full_video.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
-import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
 
 class FanAreaWidget extends StatefulWidget {
   int? index;
 
-  FanAreaWidget({Key? key, this.index}) : super(key: key);
+  FanAreaWidget({super.key, this.index});
 
   @override
   State<FanAreaWidget> createState() => _FanAreaWidgetState();
 }
 
-class _FanAreaWidgetState extends State<FanAreaWidget>  with AutomaticKeepAliveClientMixin {
+class _FanAreaWidgetState extends State<FanAreaWidget>
+    with AutomaticKeepAliveClientMixin {
   //final FijkPlayer player = FijkPlayer();
 
-  @override
   // void initState() {
   //   player.start();
   //   player.setDataSource(
@@ -46,10 +44,11 @@ class _FanAreaWidgetState extends State<FanAreaWidget>  with AutomaticKeepAliveC
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocConsumer<AppCubit, AppState>(builder: (context, state) {
       return InkWell(
         onTap: () {
-         // player.pause();
+          // player.pause();
           (AppCubit.get(context).fans[widget.index!].postImage != "")
               ? Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return FanFullPost(
@@ -90,7 +89,7 @@ class _FanAreaWidgetState extends State<FanAreaWidget>  with AutomaticKeepAliveC
                     imageUrl:
                         "${AppCubit.get(context).fans[widget.index!].postImage}",
                     placeholder: (context, url) =>
-                        Center(child: CircularProgressIndicator()),
+                        const Center(child: CircularProgressIndicator()),
                     // maxHeightDiskCache:75,
                     width: 200,
                     height: MediaQuery.of(context).size.height * .18,
@@ -120,7 +119,7 @@ class _FanAreaWidgetState extends State<FanAreaWidget>  with AutomaticKeepAliveC
                         ),
                         IconButton(
                             padding: EdgeInsets.zero,
-                            constraints: BoxConstraints(),
+                            constraints: const BoxConstraints(),
                             onPressed: () {
                               AppCubit.get(context).likePosts(
                                   '${AppCubit.get(context).fans[widget.index!].postId}',
@@ -161,7 +160,7 @@ class _FanAreaWidgetState extends State<FanAreaWidget>  with AutomaticKeepAliveC
                                         .fans[widget.index!]
                                         .likes
                                   }).then((value) {
-                                    print('Siiiiiiiiiiiiiiiiiiiiiiii');
+                                    // print('Siiiiiiiiiiiiiiiiiiiiiiii');
                                   });
                                 });
                               } else {
@@ -192,7 +191,7 @@ class _FanAreaWidgetState extends State<FanAreaWidget>  with AutomaticKeepAliveC
                                   }).then((value) {
                                     printMessage(
                                         'This is right ${AppCubit.get(context).fans[widget.index!].likes}');
-                                    print('Siiiiiiiiiiiiiiiiiiiiiiii');
+                                    // print('Siiiiiiiiiiiiiiiiiiiiiiii');
                                   });
                                 });
                               }
@@ -206,7 +205,7 @@ class _FanAreaWidgetState extends State<FanAreaWidget>  with AutomaticKeepAliveC
                                 : CashHelper.getData(
                                         key:
                                             '${AppCubit.get(context).fans[widget.index!].postId}')
-                                    ? Icon(Icons.favorite,
+                                    ? const Icon(Icons.favorite,
                                         color: Colors.red, size: 20)
                                     : Icon(Icons.favorite_outline,
                                         color: AppColors.myWhite, size: 20)),
@@ -217,100 +216,147 @@ class _FanAreaWidgetState extends State<FanAreaWidget>  with AutomaticKeepAliveC
               )
             : Stack(
                 children: [
-                  Container(
+                  SizedBox(
                     height: MediaQuery.of(context).size.height * .18,
                     width: double.infinity,
-                    child:CachedNetworkImage(
+                    child: CachedNetworkImage(
                       cacheManager: AppCubit.get(context).manager,
-                      imageUrl: "${AppCubit.get(context).fans[widget.index!].thumbnailFanPosts!}",
-                      placeholder: (context, url) => const Center(child: const CircularProgressIndicator()),
+                      imageUrl: AppCubit.get(context)
+                          .fans[widget.index!]
+                          .thumbnailFanPosts!,
+                      placeholder: (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
                       // maxHeightDiskCache:75,
 
                       fit: BoxFit.cover,
                     ),
 
-                   //  Image(
-                   //    image: NetworkImage(AppCubit.get(context).fans[widget.index!].thumbnailFanPosts!),
-                   // fit: BoxFit.cover,
-                   //  )
-
+                    //  Image(
+                    //    image: NetworkImage(AppCubit.get(context).fans[widget.index!].thumbnailFanPosts!),
+                    // fit: BoxFit.cover,
+                    //  )
                   ),
-                //  player==null ?Text('') :
+                  //  player==null ?Text('') :
                   Positioned(
-                      top: MediaQuery.of(context).size.height*.05,
-                      right: MediaQuery.of(context).size.height*.04,
-                      child:CircleAvatar(
-                        radius: 35,
-                        backgroundColor: Colors.black.withOpacity(.2),
-                        child: Icon(
-                          Icons.play_arrow,size: 40,color: Colors.white.withOpacity(.7),
-                        ),
+                    top: MediaQuery.of(context).size.height * .05,
+                    right: MediaQuery.of(context).size.height * .04,
+                    child: CircleAvatar(
+                      radius: 35,
+                      backgroundColor: Colors.black.withOpacity(.2),
+                      child: Icon(
+                        Icons.play_arrow,
+                        size: 40,
+                        color: Colors.white.withOpacity(.7),
                       ),
+                    ),
                   ),
                   //player==null ?
-                 // Text(''):
+                  // Text(''):
                   Positioned(
                     bottom: 4,
                     right: 5,
                     child: Row(
                       children: [
-                        Text('${AppCubit.get(context).fans[widget.index!].likes}',
+                        Text(
+                          '${AppCubit.get(context).fans[widget.index!].likes}',
                           style: TextStyle(
                               color: AppColors.myWhite,
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
-                              fontFamily: AppStrings.appFont
-                          ),),
+                              fontFamily: AppStrings.appFont),
+                        ),
                         IconButton(
-                            padding:EdgeInsets.zero,
-                            constraints: BoxConstraints(),
-                            onPressed:(){
-                              AppCubit.get(context).likePosts('${AppCubit.get(context).fans[widget.index!].postId}',AppCubit.get(context).fans[widget.index!].likes!);
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                            onPressed: () {
+                              AppCubit.get(context).likePosts(
+                                  '${AppCubit.get(context).fans[widget.index!].postId}',
+                                  AppCubit.get(context)
+                                      .fans[widget.index!]
+                                      .likes!);
 
-                              if(CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==null || CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==false){
+                              if (CashHelper.getData(
+                                          key:
+                                              '${AppCubit.get(context).fans[widget.index!].postId}') ==
+                                      null ||
+                                  CashHelper.getData(
+                                          key:
+                                              '${AppCubit.get(context).fans[widget.index!].postId}') ==
+                                      false) {
                                 setState(() {
-                                  AppCubit.get(context).fans[widget.index!].likes=AppCubit.get(context).fans[widget.index!].likes!+1;
+                                  AppCubit.get(context)
+                                      .fans[widget.index!]
+                                      .likes = AppCubit.get(context)
+                                          .fans[widget.index!]
+                                          .likes! +
+                                      1;
                                 });
-                                AppCubit.get(context).isLikeFan[widget.index!]=true;
-                                CashHelper.saveData(key: '${AppCubit.get(context).fans[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
+                                AppCubit.get(context).isLikeFan[widget.index!] =
+                                    true;
+                                CashHelper.saveData(
+                                    key:
+                                        '${AppCubit.get(context).fans[widget.index!].postId}',
+                                    value: AppCubit.get(context)
+                                        .isLikeFan[widget.index!]);
                                 setState(() {
                                   FirebaseFirestore.instance
                                       .collection('fan')
-                                      .doc('${AppCubit.get(context).fans[widget.index!].postId}')
+                                      .doc(
+                                          '${AppCubit.get(context).fans[widget.index!].postId}')
                                       .update({
-                                    'likes':AppCubit.get(context).fans[widget.index!].likes
-                                  }).then((value){
-                                    print('Siiiiiiiiiiiiiiiiiiiiiiii');
-
+                                    'likes': AppCubit.get(context)
+                                        .fans[widget.index!]
+                                        .likes
+                                  }).then((value) {
+                                    // print('Siiiiiiiiiiiiiiiiiiiiiiii');
                                   });
                                 });
-
-                              }
-                              else{
+                              } else {
                                 setState(() {
-                                  AppCubit.get(context).fans[widget.index!].likes=AppCubit.get(context).fans[widget.index!].likes!-1;
-
+                                  AppCubit.get(context)
+                                      .fans[widget.index!]
+                                      .likes = AppCubit.get(context)
+                                          .fans[widget.index!]
+                                          .likes! -
+                                      1;
                                 });
-                                AppCubit.get(context).isLikeFan[widget.index!]=false;
-                                CashHelper.saveData(key: '${AppCubit.get(context).fans[widget.index!].postId}',value:AppCubit.get(context).isLikeFan[widget.index!] );
+                                AppCubit.get(context).isLikeFan[widget.index!] =
+                                    false;
+                                CashHelper.saveData(
+                                    key:
+                                        '${AppCubit.get(context).fans[widget.index!].postId}',
+                                    value: AppCubit.get(context)
+                                        .isLikeFan[widget.index!]);
                                 setState(() {
                                   FirebaseFirestore.instance
                                       .collection('fan')
-                                      .doc('${AppCubit.get(context).fans[widget.index!].postId}')
+                                      .doc(
+                                          '${AppCubit.get(context).fans[widget.index!].postId}')
                                       .update({
-                                    'likes':AppCubit.get(context).fans[widget.index!].likes
-                                  }).then((value){
-                                    printMessage('This is right ${AppCubit.get(context).fans[widget.index!].likes}');
-                                    print('Siiiiiiiiiiiiiiiiiiiiiiii');
-
+                                    'likes': AppCubit.get(context)
+                                        .fans[widget.index!]
+                                        .likes
+                                  }).then((value) {
+                                    printMessage(
+                                        'This is right ${AppCubit.get(context).fans[widget.index!].likes}');
+                                    // print('Siiiiiiiiiiiiiiiiiiiiiiii');
                                   });
                                 });
-
                               }
                             },
-                            icon: CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}')==null ?
-                            Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20):CashHelper.getData(key: '${AppCubit.get(context).fans[widget.index!].postId}') ?Icon(Icons.favorite,color: Colors.red,size: 20):
-                            Icon(Icons.favorite_outline,color: AppColors.myWhite,size: 20)),
+                            icon: CashHelper.getData(
+                                        key:
+                                            '${AppCubit.get(context).fans[widget.index!].postId}') ==
+                                    null
+                                ? Icon(Icons.favorite_outline,
+                                    color: AppColors.myWhite, size: 20)
+                                : CashHelper.getData(
+                                        key:
+                                            '${AppCubit.get(context).fans[widget.index!].postId}')
+                                    ? const Icon(Icons.favorite,
+                                        color: Colors.red, size: 20)
+                                    : Icon(Icons.favorite_outline,
+                                        color: AppColors.myWhite, size: 20)),
                       ],
                     ),
                   ),

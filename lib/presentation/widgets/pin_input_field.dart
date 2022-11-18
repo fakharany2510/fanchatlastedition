@@ -7,11 +7,11 @@ class PinInputField extends StatefulWidget {
   final void Function(String) onSubmit;
 
   const PinInputField({
-    Key? key,
+    super.key,
     this.length = 6,
     this.onFocusChange,
     required this.onSubmit,
-  }) : super(key: key);
+  });
 
   @override
   // ignore: library_private_types_in_public_api
@@ -56,9 +56,9 @@ class _PinInputFieldState extends State<PinInputField> {
   }
 
   PinTheme _getPinTheme(
-      BuildContext context, {
-        required Size size,
-      }) {
+    BuildContext context, {
+    required Size size,
+  }) {
     return PinTheme(
       height: size.height,
       width: size.width,

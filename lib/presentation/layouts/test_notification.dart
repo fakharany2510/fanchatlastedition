@@ -1,3 +1,4 @@
+// ignore_for_file: deprecated_member_use, library_private_types_in_public_api
 
 import 'package:fanchat/data/modles/push_notification.dart';
 import 'package:fanchat/presentation/layouts/notification_badge.dart';
@@ -7,16 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 class TestNotificationPage extends StatefulWidget {
+  const TestNotificationPage({super.key});
+
   @override
   _TestNotificationPageState createState() => _TestNotificationPageState();
 }
 
-
-
 class _TestNotificationPageState extends State {
   late int _totalNotifications;
   late final FirebaseMessaging _messaging;
-  PushNotification ?_notificationInfo;
+  PushNotification? _notificationInfo;
 
   @override
   void initState() {
@@ -61,14 +62,14 @@ class _TestNotificationPageState extends State {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
+      // print('User granted permission');
       // TODO: handle the received notifications
     } else {
-      print('User declined or has not accepted permission');
+      // print('User declined or has not accepted permission');
     }
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
+      // print('User granted permission');
 
       // For handling the received notifications
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -85,7 +86,8 @@ class _TestNotificationPageState extends State {
               // For displaying the notification as an overlay
               showSimpleNotification(
                 Text(_notificationInfo!.title!),
-                leading: NotificationBadge(totalNotifications: _totalNotifications),
+                leading:
+                    NotificationBadge(totalNotifications: _totalNotifications),
                 subtitle: Text(_notificationInfo!.body!),
                 background: Colors.cyan.shade700,
                 duration: const Duration(seconds: 2),
@@ -93,7 +95,7 @@ class _TestNotificationPageState extends State {
             }
           });
         } else {
-          print('User declined or has not accepted permission');
+          // print('User declined or has not accepted permission');
         }
         setState(() {
           _notificationInfo = notification;
@@ -101,15 +103,14 @@ class _TestNotificationPageState extends State {
         });
       });
     } else {
-      print('User declined or has not accepted permission');
+      // print('User declined or has not accepted permission');
     }
-
   }
 
   checkForInitialMessage() async {
     await Firebase.initializeApp();
     RemoteMessage? initialMessage =
-    await FirebaseMessaging.instance.getInitialMessage();
+        await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
       PushNotification notification = PushNotification(
@@ -122,7 +123,6 @@ class _TestNotificationPageState extends State {
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -149,25 +149,25 @@ class _TestNotificationPageState extends State {
 
           _notificationInfo != null
               ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'TITLE: ${_notificationInfo!.title}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                ),
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                'BODY: ${_notificationInfo!.body}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                ),
-              ),
-            ],
-          )
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'TITLE: ${_notificationInfo!.title}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Text(
+                      'BODY: ${_notificationInfo!.body}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ],
+                )
               : Container(),
         ],
       ),
@@ -175,7 +175,6 @@ class _TestNotificationPageState extends State {
   }
 }
 
-
 Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print("Handling a background message: ${message.messageId}");
+  // print("Handling a background message: ${message.messageId}");
 }

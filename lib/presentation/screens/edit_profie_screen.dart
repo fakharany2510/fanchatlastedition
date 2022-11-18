@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
@@ -5,16 +7,14 @@ import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/screens/edit_profile/edit_cover.dart';
 import 'package:fanchat/presentation/screens/edit_profile/edit_image.dart';
-import 'package:fanchat/presentation/screens/home_screen.dart';
-import 'package:fanchat/presentation/screens/profile_area/profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../constants/app_colors.dart';
 import '../widgets/shared_widgets.dart';
 
 class EditProfileScreen extends StatelessWidget {
-  EditProfileScreen({Key? key}) : super(key: key);
+  const EditProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +22,15 @@ class EditProfileScreen extends StatelessWidget {
 
     return BlocConsumer<AppCubit, AppState>(
       listener: (context, state) {
-        if(state is GetProfileImageFirstTimeSuccessState){
-          Navigator.push(context, MaterialPageRoute(builder: (_){
-            return EditImage();
+        if (state is GetProfileImageFirstTimeSuccessState) {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return const EditImage();
           }));
         }
 
-        if(state is GetCoverImageFirstTimeSuccessState){
-          Navigator.push(context, MaterialPageRoute(builder: (_){
-            return EditCover();
+        if (state is GetCoverImageFirstTimeSuccessState) {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return const EditCover();
           }));
         }
       },
@@ -42,18 +42,17 @@ class EditProfileScreen extends StatelessWidget {
             appBar: customAppbar('Edit Profile', context),
             body: Stack(
               children: [
-                Container(
+                SizedBox(
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    child:const Opacity(
+                    child: const Opacity(
                       opacity: 1,
-                      child:  Image(
-                        image: AssetImage('assets/images/public_chat_image.jpeg'),
+                      child: Image(
+                        image:
+                            AssetImage('assets/images/public_chat_image.jpeg'),
                         fit: BoxFit.cover,
-
                       ),
-                    )
-                ),
+                    )),
                 SingleChildScrollView(
                   child: Column(
                     children: [
@@ -62,7 +61,7 @@ class EditProfileScreen extends StatelessWidget {
                         const LinearProgressIndicator(),
                       Padding(
                         padding: const EdgeInsets.all(9.0),
-                        child: Container(
+                        child: SizedBox(
                           height: 200,
                           child: Stack(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -77,11 +76,12 @@ class EditProfileScreen extends StatelessWidget {
                                       height: 150,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(3),
+                                          borderRadius:
+                                              BorderRadius.circular(3),
                                           image: DecorationImage(
                                               image: cubit.coverImage == null
                                                   ? NetworkImage(
-                                                  '${cubit.userModel!.cover}')
+                                                      '${cubit.userModel!.cover}')
                                                   : cubit.cover,
                                               fit: BoxFit.cover)),
                                     ),
@@ -94,7 +94,6 @@ class EditProfileScreen extends StatelessWidget {
                                             onPressed: () {
                                               // isEdit=false;
                                               cubit.getCoverImageFirstTime();
-
                                             },
                                             icon: Icon(
                                               Icons.camera_alt_outlined,
@@ -112,9 +111,11 @@ class EditProfileScreen extends StatelessWidget {
                                     backgroundColor: Colors.white,
                                     radius: 57,
                                     child: CircleAvatar(
-                                      backgroundImage: cubit.profileImage == null
-                                          ? NetworkImage('${cubit.userModel!.image}')
-                                          : cubit.profile,
+                                      backgroundImage:
+                                          cubit.profileImage == null
+                                              ? NetworkImage(
+                                                  '${cubit.userModel!.image}')
+                                              : cubit.profile,
                                       radius: 55,
                                     ),
                                   ),
@@ -122,14 +123,15 @@ class EditProfileScreen extends StatelessWidget {
                                     backgroundColor: AppColors.myGrey,
                                     radius: 20,
                                     child: IconButton(
-                                        onPressed: () {
-                                          cubit.getProfileImageFirstTime(context);
-                                          print('change personal photo');
-                                        },
-                                        icon: Icon(
-                                          Icons.camera_alt_outlined,
-                                          color: AppColors.primaryColor1,
-                                        )),
+                                      onPressed: () {
+                                        cubit.getProfileImageFirstTime(context);
+                                        // print('change personal photo');
+                                      },
+                                      icon: Icon(
+                                        Icons.camera_alt_outlined,
+                                        color: AppColors.primaryColor1,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -202,14 +204,16 @@ class EditProfileScreen extends StatelessWidget {
                       //     ),
                       //   ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        padding:
+                            const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textFormFieldWidget(
                             context: context,
                             controller: cubit.changeUserNameController,
                             errorMessage: "please enter your name",
                             inputType: TextInputType.name,
                             labelText: "Name",
-                            prefixIcon: Icon(Icons.person, color: AppColors.myGrey)),
+                            prefixIcon:
+                                Icon(Icons.person, color: AppColors.myGrey)),
                       ),
                       // Padding(
                       //   padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -222,7 +226,8 @@ class EditProfileScreen extends StatelessWidget {
                       //       prefixIcon: Icon(Icons.phone, color: AppColors.myGrey)),
                       // ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        padding:
+                            const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textFormFieldWidget(
                           maxLines: 4,
                           context: context,
@@ -233,41 +238,44 @@ class EditProfileScreen extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        padding:
+                            const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textFormFieldWidget(
                             context: context,
                             controller: cubit.changeYoutubeLinkController,
                             errorMessage: "please enter your youtube link",
                             inputType: TextInputType.text,
                             labelText: "Enter Youtube Link",
-                            prefixIcon:  Container(
+                            prefixIcon: Container(
                               height: 5,
                               width: 5,
-                              margin: EdgeInsets.all(12),
-                              child: Image(
-                                  image: AssetImage('assets/images/youtube.png')
-                              ),
+                              margin: const EdgeInsets.all(12),
+                              child: const Image(
+                                  image:
+                                      AssetImage('assets/images/youtube.png')),
                             )),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        padding:
+                            const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textFormFieldWidget(
                             context: context,
                             controller: cubit.changeFacebookLinkController,
                             errorMessage: "please enter your facebook link",
                             inputType: TextInputType.text,
                             labelText: "Enter Facebook Link",
-                            prefixIcon:  Container(
+                            prefixIcon: Container(
                               height: 5,
                               width: 5,
-                              margin: EdgeInsets.all(12),
-                              child: Image(
-                                  image: AssetImage('assets/images/facebook.png')
-                              ),
+                              margin: const EdgeInsets.all(12),
+                              child: const Image(
+                                  image:
+                                      AssetImage('assets/images/facebook.png')),
                             )),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        padding:
+                            const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textFormFieldWidget(
                             context: context,
                             controller: cubit.changeTwitterLinkController,
@@ -277,31 +285,34 @@ class EditProfileScreen extends StatelessWidget {
                             prefixIcon: Container(
                               height: 5,
                               width: 5,
-                              margin: EdgeInsets.all(12),
-                              child: Image(
-                                  image: AssetImage('assets/images/twitter.png')
-                              ),
+                              margin: const EdgeInsets.all(12),
+                              child: const Image(
+                                  image:
+                                      AssetImage('assets/images/twitter.png')),
                             )),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        padding:
+                            const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textFormFieldWidget(
                           context: context,
-
                           controller: cubit.changeInstagramLinkController,
                           errorMessage: "please enter your instagram link",
                           inputType: TextInputType.text,
                           labelText: "Enter Instagram Link",
-                          prefixIcon:  Container(
+                          prefixIcon: Container(
                             height: 5,
                             width: 5,
-                            margin: EdgeInsets.all(12),
-                            child: Image(
-                                image: AssetImage('assets/images/instagram.png')
-                            ),
-                          ),),
+                            margin: const EdgeInsets.all(12),
+                            child: const Image(
+                                image:
+                                    AssetImage('assets/images/instagram.png')),
+                          ),
+                        ),
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
 
                       // Align(
                       //   alignment: Alignment.topLeft,
@@ -349,101 +360,118 @@ class EditProfileScreen extends StatelessWidget {
 
                       const SizedBox(height: 30),
                       state is UpdateUserLoadingState ||
-                          state is GetCoverImageSuccessState ||
-                          state is GetProfileImageSuccessState
+                              state is GetCoverImageSuccessState ||
+                              state is GetProfileImageSuccessState
                           ? const CircularProgressIndicator()
                           : defaultButton(
-                          textColor: AppColors.myWhite,
-                          buttonText: 'Save Changes',
-                          buttonColor: Color(0Xffd32330),
-                          height: size.height * .06,
-                          width: size.width * .9,
-                          function: () {
+                              textColor: AppColors.myWhite,
+                              buttonText: 'Save Changes',
+                              buttonColor: const Color(0Xffd32330),
+                              height: size.height * .06,
+                              width: size.width * .9,
+                              function: () {
+                                if (cubit.changeUserNameController.text != '') {
+                                  if (cubit.coverImage != null) {
+                                    cubit
+                                        .uploadUserCover(
+                                      name: cubit.changeUserNameController.text,
+                                      bio: cubit.changeUserBioController.text,
+                                    )
+                                        .then((value) {
+                                      customToast(
+                                          title: 'Data Updated',
+                                          color: AppColors.primaryColor1);
+                                    });
+                                  }
 
-                            if(cubit.changeUserNameController.text !=''){
+                                  //////////////////////////////////
+                                  if (cubit.profileImage != null) {
+                                    cubit
+                                        .uploadUserImage(
+                                      name: cubit.changeUserNameController.text,
+                                      bio: cubit.changeUserBioController.text,
+                                    )
+                                        .then((value) {
+                                      customToast(
+                                          title: 'Data Updated',
+                                          color: AppColors.primaryColor1);
+                                    });
+                                  }
 
-                              if(cubit.coverImage != null){
-                                cubit.uploadUserCover(
-                                  name: cubit.changeUserNameController.text,
-                                  bio: cubit.changeUserBioController.text,
-                                ).then((value) {
-                                  customToast(title: 'Data Updated', color: AppColors.primaryColor1);
-                                });
-                              }
+                                  ///////////////////////////
+                                  cubit
+                                      .updateProfile(
+                                    image: cubit.profilePath,
+                                    cover: cubit.coverPath,
+                                    name: cubit.changeUserNameController.text,
+                                    bio: cubit.changeUserBioController.text,
+                                    youtubeLink:
+                                        cubit.changeYoutubeLinkController.text,
+                                    facebookLink:
+                                        cubit.changeFacebookLinkController.text,
+                                    twitterLink:
+                                        cubit.changeTwitterLinkController.text,
+                                    instagramLink: cubit
+                                        .changeInstagramLinkController.text,
+                                  )
+                                      .then((value) {
+                                    customToast(
+                                        title: 'Data Updated',
+                                        color: AppColors.primaryColor1);
 
-                              //////////////////////////////////
-                              if(cubit.profileImage != null){
-                                cubit.uploadUserImage(
-                                  name: cubit.changeUserNameController.text,
-                                  bio: cubit.changeUserBioController.text,
-                                ).then((value) {
-                                  customToast(title: 'Data Updated', color: AppColors.primaryColor1);
-                                });
-                              }
+                                    cubit.getUser(context);
+                                    cubit.getPosts().then((value) {
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const HomeLayout()),
+                                        (route) => false,
+                                      );
+                                      customToast(
+                                          title: 'Data Updated',
+                                          color: AppColors.primaryColor1);
+                                    });
+                                  });
 
-                              ///////////////////////////
-                              cubit.updateProfile(
-                                image: cubit.profilePath,
-                                cover: cubit.coverPath,
-                                name: cubit.changeUserNameController.text,
-                                bio: cubit.changeUserBioController.text,
-                                youtubeLink: cubit.changeYoutubeLinkController.text,
-                                facebookLink: cubit.changeFacebookLinkController.text,
-                                twitterLink:cubit.changeTwitterLinkController.text,
-                                instagramLink:cubit.changeInstagramLinkController.text,
+                                  printMessage(
+                                      cubit.changeUserNameController.text);
+                                } else {
+                                  customToast(
+                                      title: 'Name is required',
+                                      color: Colors.red);
+                                }
 
-                              ).then((value) {
-                                customToast(title: 'Data Updated', color: AppColors.primaryColor1);
-
-                                cubit.getUser(context);
-                                cubit.getPosts().then((value) {
-                                  Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context)=>HomeLayout()),(route) => false,);
-                                  customToast(title: 'Data Updated', color: AppColors.primaryColor1);
-
-                                });
-                              });
-
-
-                              printMessage(cubit.changeUserNameController.text);
-
-
-                            }
-                            else{
-                              customToast(title: 'Name is required', color: Colors.red);
-
-                            }
-
-                            // Navigator.pushNamed(context, 'edit_profile');
-                          }),
+                                // Navigator.pushNamed(context, 'edit_profile');
+                              }),
                       const SizedBox(height: 30),
                     ],
                   ),
                 ),
               ],
-            )
-        );
+            ));
       },
     );
   }
+
   Widget _buildDropdownItem(Country country) => Container(
-    padding:  EdgeInsets.all(10),
-    width: 290,
-    child: Row(
-      children: <Widget>[
-
-        CountryPickerUtils.getDefaultFlagImage(country),
-        const SizedBox(
-          width: 15.0,
+        padding: const EdgeInsets.all(10),
+        width: 290,
+        child: Row(
+          children: <Widget>[
+            CountryPickerUtils.getDefaultFlagImage(country),
+            const SizedBox(
+              width: 15.0,
+            ),
+            Text(
+              country.name,
+              style: TextStyle(
+                  color: AppColors.myGrey, fontFamily: AppStrings.appFont),
+            ),
+            const SizedBox(
+              width: 15.0,
+            ),
+          ],
         ),
-        Text("${country.name}",style: TextStyle(
-            color: AppColors.myGrey,
-            fontFamily: AppStrings.appFont
-        ),),
-        const SizedBox(
-          width: 15.0,
-        ),
-      ],
-    ),
-  );
-
+      );
 }

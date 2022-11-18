@@ -12,7 +12,7 @@
 // import 'package:lottie/lottie.dart';
 //
 // class Advertise extends StatefulWidget {
-//   const Advertise({Key? key}) : super(key: key);
+//   const Advertise({super.key}) ;
 //
 //   @override
 //   State<Advertise> createState() => _AdvertiseState();
