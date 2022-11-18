@@ -17,6 +17,7 @@ import 'package:fanchat/presentation/screens/register_screen.dart';
 import 'package:fanchat/presentation/screens/splash_screen.dart';
 import 'package:fanchat/presentation/should_pay.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
+import 'package:fanchat/strip__/blocs/bloc/payment_state.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
@@ -27,18 +28,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:media_cache_manager/core/download_cache_manager.dart';
 import 'package:overlay_support/overlay_support.dart';
-import '';
+
 import 'business_logic/bloc/bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  /// ============================================
-    Stripe.publishableKey =  AppStrings.publishableKey;
-
-  // await Stripe.instance.applySettings();
-
-  /// ============================================
+  Stripe.publishableKey = AppStrings.publishableKey;
   await DownloadCacheManager.setExpireDate(daysToExpire: 1);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -58,19 +53,17 @@ void main() async {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     print('Got a message whilst in the foreground!');
     print('Message data: ${message.data}');
-
+    plant();
     if (message.notification != null) {
       print('Message also contained a notification: ${message.notification}');
     }
   });
-
   await CashHelper.init();
   // AppStrings.uId = '1832855570382325';
   AppStrings.uId = CashHelper.getData(key: 'uid');
-
   printMessage('userId is: ${AppStrings.uId}');
-  print(
-      'dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
+
+  print('dggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
 
   Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
