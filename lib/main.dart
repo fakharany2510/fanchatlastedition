@@ -84,18 +84,9 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => AppCubit()
-              ..getUser(context)
-              ..getCountries()
-              ..getProfilePosts()
-              ..getPosts()
-              ..getAllUsers()
-              ..getFanPosts()
-              ..getUserIds()
-              ..periodic()
-              ..getLastUsers()
-              ..getUserIds()
-              ..getAllMatches(doc: '20 Nov')),
+          lazy: false,
+            create: (context) => AppCubit()..getUser(context),),
+
         BlocProvider(
             create: (context) => AdvertisingCubit()..getAdvertisingPosts()),
         // BlocProvider(create: (context) => PaymentBloc()),
@@ -127,12 +118,10 @@ class MyApp extends StatelessWidget {
             // initialRoute: 'register',
             routes: {
               '/': (context) => (AppStrings.uId != null)
-                  ? CashHelper.getData(key: 'days') == 7
-                      ? const ShouldPay()
-                      : const HomeLayout()
+                  ? const HomeLayout()
                   : SplashScreen(),
+
               'home_layout': (context) => const HomeLayout(),
-              // 'login':(context)=> LoginScreen(),
               'register': (context) => RegisterScreen(),
               'profile': (context) => const ProfileScreen(),
               'edit_profile': (context) => EditProfileScreen(),

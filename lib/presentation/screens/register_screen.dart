@@ -249,7 +249,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   print('hello');
                                   if(isCheckBoxTrue == true ){
                                     AppStrings.uId = 'qN1pYUcZN0zZD6YfNQ6H';
-                                    AppCubit.get(context).getUserWithId(context,'qN1pYUcZN0zZD6YfNQ6H');
+                                    AppCubit.get(context).getUser(context);
                                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                                     const HomeLayout()), (Route<dynamic> route) => false);
                                     // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HomeLayout()));

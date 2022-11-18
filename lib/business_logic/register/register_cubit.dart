@@ -65,7 +65,7 @@ class RegisterCubit extends Cubit<RegisterState>{
         String ?instagram,
         String ?cover,
         bool ?advertise,
-        bool ?business,
+        bool ?premium,
         bool ?payed,
         int ?dayes,
 
@@ -87,7 +87,7 @@ class RegisterCubit extends Cubit<RegisterState>{
       days: 0,
       accountActive: false,
         advertise:advertise?? false,
-        business: business??false,
+      premium: premium??false,
       numberOfPosts: 0,
     );
 

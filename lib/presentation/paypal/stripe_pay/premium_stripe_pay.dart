@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
@@ -127,14 +128,12 @@ class _PremiumPackageState extends State<PremiumPackage> {
 
         await FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
             .update({
-          'days':0,
-          'payed':true,
-          'business':true
+          'premium':true,
+          'buyDate':DateTime.now()
         }).then((value){
+          AppCubit.get(context).userModel!.premium = true;
+          AppCubit.get(context).userModel!.buyDate = DateTime.now();
           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>SuccessPay()), (route) => false);
-          CashHelper.saveData(key: 'days' , value: 0);
-          CashHelper.saveData(key: 'premium' , value: 1);
-          print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
           print('success to update aaccountStates');
         }).catchError((error){
           print('success to update aaccountStates${error.toString()}');

@@ -229,28 +229,39 @@ class AppCubit extends Cubit<AppState> {
   //get one user
 
   Future<void> getUser(context) async {
-    emit(GetUserDataLoadingState());
-   await  FirebaseFirestore.instance
-        .collection('users')
-        .doc(AppStrings.uId)
-        .get().then((value) {
-          userModel = UserModel.formJson(value.data()!);
-          printMessage('${userModel!.email}');
-          changeUserNameController.text='${userModel!.username}';
-          changeUserPhoneController.text='${userModel!.phone}';
-          changeUserBioController.text='${userModel!.bio}';
-          changeYoutubeLinkController.text='${userModel!.youtubeLink}';
-          changeInstagramLinkController.text='${userModel!.instagramLink}';
-          changeTwitterLinkController.text='${userModel!.twitterLink}';
-          changeFacebookLinkController.text='${userModel!.facebookLink}';
+   if(AppStrings.uId !=null){
+     emit(GetUserDataLoadingState());
+     await  FirebaseFirestore.instance
+         .collection('users')
+         .doc(AppStrings.uId)
+         .get().then((value)async {
+       userModel = UserModel.formJson(value.data()!);
+       printMessage('${userModel!.email}');
+       changeUserNameController.text='${userModel!.username}';
+       changeUserPhoneController.text='${userModel!.phone}';
+       changeUserBioController.text='${userModel!.bio}';
+       changeYoutubeLinkController.text='${userModel!.youtubeLink}';
+       changeInstagramLinkController.text='${userModel!.instagramLink}';
+       changeTwitterLinkController.text='${userModel!.twitterLink}';
+       changeFacebookLinkController.text='${userModel!.facebookLink}';
+       await getCountries();
+       await  getProfilePosts();
+       await  getPosts();
+       await getAllUsers();
+       await  getFanPosts();
+       await getUserIds();
+       await periodic();
+       await  getLastUsers();
+       await getUserIds();
+       await getAllMatches(doc: '20 Nov');
+       emit(GetUserDataSuccessfulState());
+     }).catchError((error){
 
-          emit(GetUserDataSuccessfulState());
-    }).catchError((error){
+       printMessage('Error in get user is ${error.toString()}');
+       emit(GetUserDataErrorState());
+     });
 
-      printMessage('Error in get user is ${error.toString()}');
-          emit(GetUserDataErrorState());
-    });
-
+   }
   }
 
   Future<void> getUserWithId(
@@ -1502,9 +1513,9 @@ List<int> commentIndex=[];
 
 
   List lastUsers=[];
-  void getLastUsers(){
+  Future<void> getLastUsers()async {
     lastUsers=[];
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('users')
         .doc(AppStrings.uId)
         .collection('chats')
@@ -1874,12 +1885,12 @@ List<int> commentIndex=[];
 
   }
   List<FanModel> fans=[];
-  void getFanPosts(){
+  Future<void> getFanPosts() async{
     fans=[];
     postsId=[];
     likes=[];
     emit(BrowiseGetFanPostsLoadingState());
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('fan')
         .orderBy('timeSmap',descending: true)
         .get()
@@ -2605,9 +2616,9 @@ List<int> commentIndex=[];
 
   List countries=[];
 
-  void getCountries(){
+  Future<void> getCountries() async{
 
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('countries').orderBy('name')
         .get().then((value) {
 
@@ -2629,7 +2640,7 @@ List<int> commentIndex=[];
   int ?timerCheering;
 
 
-  void periodic(){
+   periodic(){
 
     Timer.periodic(
 
@@ -3297,12 +3308,12 @@ List<int> commentIndex=[];
 
 //get Posts
   List<ProfileModel> profileImages=[];
-  void getProfilePosts(){
+  Future<void> getProfilePosts()async{
     profileImages=[];
     postsId=[];
     likes=[];
     emit(BrowiseGetProfilePostsLoadingState());
-    FirebaseFirestore.instance
+   await FirebaseFirestore.instance
          .collection('users')
          .doc('${AppStrings.uId}')
         .collection('profileImages')

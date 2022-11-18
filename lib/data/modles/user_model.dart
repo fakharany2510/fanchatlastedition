@@ -13,7 +13,9 @@ class UserModel{
   String ?instagramLink;
   bool ?accountActive ;
   bool ?advertise ;
-  bool ?business ;
+  bool ?premium ;
+  DateTime? buyDate;
+  DateTime? trialStartDate;
   int? numberOfPosts;
   bool? payed;
   int? days;
@@ -33,10 +35,12 @@ class UserModel{
     this.youtubeLink,
     this.accountActive,
     this.advertise,
-    this.business,
+    this.premium,
     this.numberOfPosts,
     this.payed,
     this.days,
+    this.buyDate,
+    this.trialStartDate,
 
   });
 
@@ -58,7 +62,11 @@ class UserModel{
     instagramLink=json['instagramLink'];
     numberOfPosts=json['numberOfPosts'];
     payed=json['payed'];
+    premium=json['premium'];
+    advertise=json['advertise'];
     days=json['days'];
+    buyDate=json['buyDate'];
+    trialStartDate=json['trialStartDate'];
 
   }
 
@@ -74,7 +82,7 @@ class UserModel{
       'countryCode':countryCode,
       'accountActive':accountActive,
       'advertise':advertise,
-      'business':business,
+      'premium':premium,
       'facebookLink':facebookLink,
       'youtubeLink':youtubeLink,
       'twitterLink':twitterLink,
@@ -82,6 +90,8 @@ class UserModel{
       'numberOfPosts':numberOfPosts,
       'payed':payed,
       'days':days,
+      'buyDate':buyDate,
+      'trialStartDate':trialStartDate,
     };
   }
 

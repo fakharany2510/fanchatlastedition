@@ -13,81 +13,43 @@ import 'package:fanchat/presentation/should_pay.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../screens/fan/fan_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/matches/match_details.dart';
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({Key? key}) : super(key: key);
-
   @override
   State<HomeLayout> createState() => _HomeLayoutState();
 }
-
 class _HomeLayoutState extends State<HomeLayout> {
   @override
   void initState() {
-    super.initState();
-    // print("==================================token================================");
-    // FirebaseMessaging.instance.getToken().then((token){
-    //   AppCubit.get(context).saveToken(token!);
-    //   print(token);
-    //   print("==================================token================================");
-    // });
-
-    AppCubit.get(context).getUser(context).then((value) {
-      if (CashHelper.getData(key: 'premium') == 1) {
-        Future.delayed(const Duration(days: 365), () {
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const ShouldPay()),
-              (route) => false);
-          CashHelper.saveData(key: 'premium', value: 0);
-        });
-      } else {
-        // print('nnnnnnnbccccccccccccccccccccccccccccccccccccccc ${AppCubit.get(context).userModel!.days}');
-        // print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'business')}');
-        // print('llllljjjjjjjjjjjjjjjjjjjjjjjj${CashHelper.getData(key: 'advertise') }');
-        if (AppCubit.get(context).userModel!.days == 7 &&
-            AppCubit.get(context).userModel!.payed == false) {
-          // print('llllllllllllllllllllllllllllllllllllllll   if 1');
-          CashHelper.saveData(key: 'days', value: 7);
-          // print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
-
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const ShouldPay()),
-              (route) => false);
-        } else if (AppCubit.get(context).userModel!.days == 0 &&
-            AppCubit.get(context).userModel!.payed == true) {
-          // print('llllllllllllllllllllllllllllllllllllllll   if 2');
-
-          CashHelper.saveData(key: 'days', value: 0);
-          // print('User Have Take Package ');
-        } else {
-          // print('llllllllllllllllllllllllllllllllllllllll   if 3');
-          Future.delayed(const Duration(seconds: 7), () {
-            FirebaseFirestore.instance
-                .collection('users')
-                .doc(AppStrings.uId)
-                .update({'days': 7, 'payed': false}).then((value) {
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const ShouldPay()),
-                  (route) => false);
-              CashHelper.saveData(key: 'days', value: 7);
-              // print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
-              print('success to update aaccountStates');
-            }).catchError((error) {
-              print('success to update aaccountStates${error.toString()}');
-            });
-            ///////////////////////////////////////////////////////////
-            AppCubit.get(context).userModel!.days == 7;
-            // print('timeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ${AppCubit.get(context).userModel!.days}');
+    AppCubit.get(context).getUser(context).then((value)async {
+      if(AppCubit.get(context).userModel!.buyDate != null){
+        if(AppCubit.get(context).userModel!.buyDate!.difference(DateTime.now()).inDays >= 365){
+          await FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
+              .update({
+            'advertise':false,
+            'premium':false,
+          }).then((value){
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                builder: (context)=>ShouldPay()
+            ), (route) => false);
           });
+
+        }
+      }else{
+        if(AppCubit.get(context).userModel!.trialStartDate!.difference(DateTime.now()).inDays>=3){
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+              builder: (context)=>ShouldPay()
+          ), (route) => false);
         }
       }
     }).catchError((error) {
       print('error');
     });
+    super.initState();
   }
 
   @override

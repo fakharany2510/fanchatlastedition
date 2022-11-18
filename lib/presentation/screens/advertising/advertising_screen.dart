@@ -1,5 +1,6 @@
 import 'package:fanchat/business_logic/advertising_cubit/advertising_cubit.dart';
 import 'package:fanchat/business_logic/advertising_cubit/advertising_state.dart';
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/presentation/paypal/advertiseNavAds.dart';
@@ -77,7 +78,7 @@ class AdvertisingScreen extends StatelessWidget {
               children: [
                 SpeedDialChild(
                     onTap: (){
-                      if(CashHelper.getData(key: 'advertise') == true){
+                      if(AppCubit.get(context).userModel!.advertise == true){
                         AdvertisingCubit.get(context).pickAdvertisingPostVideo();
                       }else{
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>AdsNav()));
@@ -89,7 +90,7 @@ class AdvertisingScreen extends StatelessWidget {
                 ),
                 SpeedDialChild(
                   onTap: (){
-    if(CashHelper.getData(key: 'advertise') == true){
+    if(AppCubit.get(context).userModel!.advertise == true){
       AdvertisingCubit.get(context).pickAdvertisingPostImage();
     }else{
       Navigator.push(context, MaterialPageRoute(builder: (context)=>AdsNav()));

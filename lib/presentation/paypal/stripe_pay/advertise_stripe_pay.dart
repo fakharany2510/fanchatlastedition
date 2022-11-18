@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
@@ -126,28 +127,13 @@ class _AdvertisePackageState extends State<AdvertisePackage> {
       await Stripe.instance.presentPaymentSheet().then((value) async{
         await FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
             .update({
-          'days':0,
-          'payed':true,
-          'advertise':true
-        }).then((value){
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>SuccessPayAdvertise()), (route) => false);
-          CashHelper.saveData(key: 'days' , value: 0);
-          CashHelper.saveData(key: 'Advertise' , value: 1);
-          CashHelper.saveData(key: 'advertise',value:true);
-          print('dgggggggggggggggggggggggggggggggggggg ${CashHelper.getData(key: 'days')}');
-          print('resullllllllllllllllllllllllllllllt :');
-          print('success to update aaccountStates');
-        }).catchError((error){
-          print('success to update aaccountStates${error.toString()}');
-        });
-        ////////////////////////////////////////////////////////////
-        CashHelper.saveData(key: 'advertise' , value: true);
-        FirebaseFirestore.instance.collection('users').doc(AppStrings.uId)
-            .update({
           'advertise':true,
+          'buyDate':DateTime.now()
         }).then((value){
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>SuccessPayAdvertise()), (route) => false);
+          AppCubit.get(context).userModel!.advertise = true;
+          AppCubit.get(context).userModel!.buyDate = DateTime.now();
 
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>SuccessPayAdvertise()), (route) => false);
           print('success to update aaccountStates');
         }).catchError((error){
           print('success to update aaccountStates${error.toString()}');
