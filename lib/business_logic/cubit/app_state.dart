@@ -177,7 +177,7 @@ class LaunchTwitterSuccessState extends AppState {}
 class LaunchFacebookSuccessState extends AppState {}
 class LaunchInstagramSuccessState extends AppState {}
 class SaveTokenSuccessState extends AppState {}
-class getTokenSuccessState extends AppState {}
+class GetTokenSuccessState extends AppState {}
 
 
 // ------------ Public Chat Video

@@ -5,7 +5,7 @@
 // import 'package:flutter/material.dart';
 //
 // class ChoosePaymentMethod extends StatefulWidget {
-//   const ChoosePaymentMethod({Key? key}) : super(key: key);
+//   const ChoosePaymentMethod({super.key}) ;
 //
 //   @override
 //   State<ChoosePaymentMethod> createState() => _ChoosePaymentMethodState();
@@ -106,4 +106,3 @@
 //     );
 //   }
 // }
-

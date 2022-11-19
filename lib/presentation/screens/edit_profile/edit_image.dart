@@ -5,42 +5,37 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-bool isEdit=false;
-
+bool isEdit = false;
 
 class EditImage extends StatefulWidget {
-  EditImage({Key? key}) : super(key: key);
+  const EditImage({super.key});
 
   @override
   State<EditImage> createState() => _EditImageState();
 }
 
 class _EditImageState extends State<EditImage> {
-
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit,AppState>(
-      listener: (context,state){
-        if(state is UpdateUserSuccessState){
-        }
-
+    return BlocConsumer<AppCubit, AppState>(
+      listener: (context, state) {
+        if (state is UpdateUserSuccessState) {}
       },
-      builder: (context,state){
+      builder: (context, state) {
+        var cubit = AppCubit.get(context);
 
-        var cubit=AppCubit.get(context);
-
-        return  Scaffold(
+        return Scaffold(
           appBar: customAppbar('Edit Profile', context),
           body: Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: 20
-            ),
+            margin: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 60,),
+                const SizedBox(
+                  height: 60,
+                ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     cubit.getProfileImage();
                   },
                   child: CircleAvatar(
@@ -54,39 +49,38 @@ class _EditImageState extends State<EditImage> {
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-
-                    if(cubit.profileImage != null)
-                    state is GetProfileImageLoadingState ||state is UpdateUserLoadingState?
-                    CircularProgressIndicator(
-                      color: AppColors.primaryColor1,
-                    ):
-                    TextButton(
-                      onPressed: (){
-                        Navigator.pop(context);
-
-                      },
-                      child:  Text('Ok',style: TextStyle(
-                          color: AppColors.primaryColor1,
-                          fontFamily: AppStrings.appFont,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18
-                      ),),
-                    )
-
+                    if (cubit.profileImage != null)
+                      state is GetProfileImageLoadingState ||
+                              state is UpdateUserLoadingState
+                          ? CircularProgressIndicator(
+                              color: AppColors.primaryColor1,
+                            )
+                          : TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                'Ok',
+                                style: TextStyle(
+                                    color: AppColors.primaryColor1,
+                                    fontFamily: AppStrings.appFont,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 18),
+                              ),
+                            )
                   ],
                 ),
-                SizedBox(height: 15,),
+                const SizedBox(
+                  height: 15,
+                ),
               ],
             ),
           ),
-
-
         );
-
       },
     );
   }

@@ -1,18 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 
 Future<void> callFcmApiSendPushNotificationsChat({
   required String title,
   required String imageUrl,
   required String description,
   required String token,
-})async{
-
-  const postUrl ='https://fcm.googleapis.com/fcm/send';
-  final data ={
-    "to":token,
+}) async {
+  const postUrl = 'https://fcm.googleapis.com/fcm/send';
+  final data = {
+    "to": token,
     "notification": {
       "title": title,
       "body": description,
@@ -30,8 +28,7 @@ Future<void> callFcmApiSendPushNotificationsChat({
   final headers = {
     'content-type': 'application/json',
     'Authorization':
-    'key=AAAAIqG6C9s:APA91bHMARfKha7noUEJOzAreVnEVX9kgkH8_TeV2sPiYqERN2IedimCpRNDjO7N9BMiHYYNEu3GolVunt14JtX7LI3nYv2TZ9me2vDtbeOpbCiVA4GXUuK5M22cZVRVV1ad9GQGF0ef' ,// 'key=YOUR_SERVER_KEY'
-
+        'key=AAAAIqG6C9s:APA91bHMARfKha7noUEJOzAreVnEVX9kgkH8_TeV2sPiYqERN2IedimCpRNDjO7N9BMiHYYNEu3GolVunt14JtX7LI3nYv2TZ9me2vDtbeOpbCiVA4GXUuK5M22cZVRVV1ad9GQGF0ef', // 'key=YOUR_SERVER_KEY'
   };
 
   final response = await http.post(Uri.parse(postUrl),
@@ -40,9 +37,8 @@ Future<void> callFcmApiSendPushNotificationsChat({
       headers: headers);
 
   if (response.statusCode == 200) {
-    print('Push Notification Succeded');
+    // print('Push Notification Succeded');
   } else {
-    print('Push Notification Error');
+    // print('Push Notification Error');
   }
-
 }

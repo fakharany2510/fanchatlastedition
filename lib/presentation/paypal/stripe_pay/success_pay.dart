@@ -1,13 +1,12 @@
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
-import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class SuccessPay extends StatefulWidget {
-  const SuccessPay({Key? key}) : super(key: key);
+  const SuccessPay({super.key});
 
   @override
   State<SuccessPay> createState() => _SuccessPayState();
@@ -19,53 +18,58 @@ class _SuccessPayState extends State<SuccessPay> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
+          SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              child:const Opacity(
+              child: const Opacity(
                 opacity: 1,
-                child:  Image(
+                child: Image(
                   image: AssetImage('assets/images/public_chat_image.jpeg'),
                   fit: BoxFit.cover,
                 ),
-              )
-          ),
+              )),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding:EdgeInsets.only(top:0),
-                child:  Row(
+                padding: const EdgeInsets.only(top: 0),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Lottie.asset('assets/images/success_pay.json',height: MediaQuery.of(context).size.height*.1),
-
+                    Lottie.asset('assets/images/success_pay.json',
+                        height: MediaQuery.of(context).size.height * .1),
                   ],
                 ),
               ),
-              SizedBox(height: 20,),
-              Text('Congratualtions\nYou have purchased Premium package\nYou are now enjoying FAN Chat\n for one year',
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Congratualtions\nYou have purchased Premium package\nYou are now enjoying FAN Chat\n for one year',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     height: 1.4,
                     fontFamily: AppStrings.appFont,
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.myWhite
-                ),
+                    color: AppColors.myWhite),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height*.04,),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .04,
+              ),
               defaultButton(
                   textColor: AppColors.myWhite,
                   buttonText: 'Ok',
-                  buttonColor: Color(0Xffd32330),
-                  width: MediaQuery.of(context).size.width*.6,
-                  height: MediaQuery.of(context).size.height*.06,
-                  function: (){
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>HomeLayout()),(Route<dynamic>route) => false);
-                  }
-              )
+                  buttonColor: const Color(0Xffd32330),
+                  width: MediaQuery.of(context).size.width * .6,
+                  height: MediaQuery.of(context).size.height * .06,
+                  function: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => const HomeLayout()),
+                        (Route<dynamic> route) => false);
+                  })
             ],
           )
         ],

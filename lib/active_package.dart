@@ -5,7 +5,7 @@ import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 
 class ShouldPay extends StatefulWidget {
-  const ShouldPay({Key? key}) : super(key: key);
+  const ShouldPay({super.key});
 
   @override
   State<ShouldPay> createState() => _ShouldPayState();
@@ -17,52 +17,61 @@ class _ShouldPayState extends State<ShouldPay> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
+          SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              child:const Opacity(
+              child: const Opacity(
                 opacity: 1,
-                child:  Image(
+                child: Image(
                   image: AssetImage('assets/images/paypack.jpg'),
                   fit: BoxFit.cover,
                 ),
-              )
-          ),
+              )),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding:EdgeInsets.only(top:0),
-                child:  Row(
+                padding: const EdgeInsets.only(top: 0),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(image: AssetImage('assets/images/ncolort.png'),width: 250,height: 250),
+                  children: const [
+                    Image(
+                      image: AssetImage('assets/images/ncolort.png'),
+                      width: 250,
+                      height: 250,
+                    ),
                   ],
                 ),
               ),
-              SizedBox(height: 20,),
-              Text('You should pay to continue using Fan Chat',
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                'You should pay to continue using Fan Chat',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     height: 1.4,
                     fontFamily: AppStrings.appFont,
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.primaryColor1
-                ),
+                    color: AppColors.primaryColor1),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height*.1,),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .1,
+              ),
               defaultButton(
                   textColor: AppColors.myWhite,
                   buttonText: 'Choose Package',
-                  buttonColor: Color(0Xffd32330),
-                  width: MediaQuery.of(context).size.width*.6,
-                  height: MediaQuery.of(context).size.height*.06,
-                  function: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChoosePayPackage()));
-                  }
-              )
+                  buttonColor: const Color(0Xffd32330),
+                  width: MediaQuery.of(context).size.width * .6,
+                  height: MediaQuery.of(context).size.height * .06,
+                  function: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ChoosePayPackage()));
+                  })
             ],
           )
         ],

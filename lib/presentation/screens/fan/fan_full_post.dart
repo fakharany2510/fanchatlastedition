@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_strings.dart';
@@ -9,37 +11,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../constants/app_colors.dart';
 
 class FanFullPost extends StatelessWidget {
-
-  FanFullPost({Key? key,this.image,this.userImage,this.userName,this.userId}) : super(key: key);
-  String ?image;
-  String ?userName;
-  String ?userImage;
-  String ?userId;
-
+  FanFullPost(
+      {super.key, this.image, this.userImage, this.userName, this.userId});
+  String? image;
+  String? userName;
+  String? userImage;
+  String? userId;
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit , AppState>(
-      listener: (context,state){
-
-      },
-      builder: (context , state){
+    return BlocConsumer<AppCubit, AppState>(
+      listener: (context, state) {},
+      builder: (context, state) {
         return Scaffold(
-          backgroundColor:Colors.white,
-          appBar: customAppbar('fan Post',context),
+          backgroundColor: Colors.white,
+          appBar: customAppbar('fan Post', context),
           body: Stack(
             children: [
-              Container(
+              SizedBox(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  child:const Opacity(
+                  child: const Opacity(
                     opacity: 1,
-                    child:  Image(
+                    child: Image(
                       image: AssetImage('assets/images/imageback.jpg'),
                       fit: BoxFit.cover,
                     ),
-                  )
-              ),
+                  )),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -49,25 +47,30 @@ class FanFullPost extends StatelessWidget {
                       child: Row(
                         children: [
                           GestureDetector(
-                            onTap: (){
-                              AppCubit.get(context).getUserProfilePosts(id: '$userId').then((value) {
-                                Navigator.push(context, MaterialPageRoute(builder: (_){
+                            onTap: () {
+                              AppCubit.get(context)
+                                  .getUserProfilePosts(id: '$userId')
+                                  .then((value) {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (_) {
                                   return UserProfile(
                                     userId: '$userId',
                                     userImage: '$userImage',
                                     userName: '$userName',
-
                                   );
                                 }));
                               });
                             },
                             child: CircleAvatar(
-                              backgroundImage: NetworkImage('$userImage',
+                              backgroundImage: NetworkImage(
+                                '$userImage',
                               ),
                               radius: 18,
                             ),
                           ),
-                          const SizedBox(width: 7,),
+                          const SizedBox(
+                            width: 7,
+                          ),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,14 +78,14 @@ class FanFullPost extends StatelessWidget {
                                 Row(
                                   children: [
                                     Expanded(
-                                      child: Text('$userName',
+                                      child: Text(
+                                        '$userName',
                                         overflow: TextOverflow.ellipsis,
-                                        style:  TextStyle(
+                                        style: TextStyle(
                                             color: AppColors.primaryColor1,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500,
-                                            fontFamily: AppStrings.appFont
-                                        ),
+                                            fontFamily: AppStrings.appFont),
                                       ),
                                     ),
                                   ],
@@ -99,25 +102,25 @@ class FanFullPost extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20),
                     Expanded(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          child:  CachedNetworkImage(
-                            cacheManager: AppCubit.get(context).manager,
-                            imageUrl: "$image",
-                            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                          ),
-                        )
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: CachedNetworkImage(
+                          cacheManager: AppCubit.get(context).manager,
+                          imageUrl: "$image",
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                        ),
+                      ),
                     )
                   ],
                 ),
               ),
             ],
-          )
+          ),
         );
       },
-
     );
   }
 }

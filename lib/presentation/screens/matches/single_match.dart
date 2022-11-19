@@ -7,7 +7,7 @@
 // import '../../../constants/app_strings.dart';
 //
 // class SingleMatch extends StatelessWidget {
-//   const SingleMatch({Key? key}) : super(key: key);
+//   const SingleMatch({super.key}) ;
 //
 //   @override
 //   Widget build(BuildContext context) {

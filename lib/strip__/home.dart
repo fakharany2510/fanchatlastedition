@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:fanchat/constants/app_strings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 
 class PaymentScreenTest extends StatefulWidget {
-  const PaymentScreenTest({Key? key}) : super(key: key);
+  const PaymentScreenTest({super.key});
 
   @override
   State<PaymentScreenTest> createState() => _PaymentScreenTestState();
@@ -49,11 +50,12 @@ class _PaymentScreenTestState extends State<PaymentScreenTest> {
 
       ///now finally display payment sheeet
       displayPaymentSheet();
-    } catch (e, s) {
-      print('exception:$e$s');
+    } catch (e) {
+      // print('exception:$e$s');
     }
   }
-///success payed
+
+  ///success payed
   displayPaymentSheet() async {
     try {
       await Stripe.instance.presentPaymentSheet().then((value) {
@@ -82,17 +84,23 @@ class _PaymentScreenTestState extends State<PaymentScreenTest> {
 
         paymentIntent = null;
       }).onError((error, stackTrace) {
-        print('Error is:--->$error $stackTrace');
+        if (kDebugMode) {
+          print('Error is:--->$error $stackTrace');
+        }
       });
     } on StripeException catch (e) {
-      print('Error is:---> $e');
+      if (kDebugMode) {
+        print('Error is:---> $e');
+      }
       showDialog(
           context: context,
           builder: (_) => const AlertDialog(
                 content: Text("Cancelled "),
               ));
     } catch (e) {
-      print('$e');
+      if (kDebugMode) {
+        print('$e');
+      }
     }
   }
 
@@ -113,10 +121,10 @@ class _PaymentScreenTestState extends State<PaymentScreenTest> {
         },
         body: body,
       );
-      print('Payment Intent Body->>> ${response.body.toString()}');
+      // print('Payment Intent Body->>> ${response.body.toString()}');
       return jsonDecode(response.body);
     } catch (err) {
-      print('err charging user: ${err.toString()}');
+      // print('err charging user: ${err.toString()}');
     }
   }
 
