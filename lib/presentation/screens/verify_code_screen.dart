@@ -141,10 +141,9 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                         phone: userCredential.user!.phoneNumber!,
                         name: '',
                       ).then((value) {
-                        AppCubit.get(context).getUserWithId(context,userCredential.user!.uid);
+                        AppCubit.get(context).getUser(context);
                       });
                     }
-
                   });
 
 

@@ -24,9 +24,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  ScrollController _childScrollController = ScrollController();
+  final ScrollController _childScrollController = ScrollController();
 
-  ScrollController _parentScrollController = ScrollController();
+  final ScrollController _parentScrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -75,20 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
 
-
-
-                          /// TODO Tolba remove button comment
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const PaymentScreenTest()),
-                              );
-                            },
-                            child: const Text('Go to Payment Screen'),
-                          ),
                           const SizedBox(
                             height: 5,
                           ),

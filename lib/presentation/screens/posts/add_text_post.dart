@@ -50,7 +50,7 @@ class _AddTextPostState extends State<AddTextPost> {
         if (state is BrowiseGetPostsLoadingState) {
           // AppCubit.get(context).testLikes();
           // AppCubit.get(context).testComments();
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeLayout()), (route) => false);
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const HomeLayout()), (route) => false);
 
           AppCubit.get(context).postImage = null;
         }
@@ -88,7 +88,7 @@ class _AddTextPostState extends State<AddTextPost> {
                               });
                             },
                           ),
-                          SizedBox(width: 15,),
+                          const SizedBox(width: 15,),
                           Text('Add new post',
                               style: TextStyle(
                                   fontSize: 21,
@@ -96,21 +96,21 @@ class _AddTextPostState extends State<AddTextPost> {
                                   color: AppColors.myWhite,
                                   fontFamily: AppStrings.appFont)
                           ),
-                          Spacer(),
+                          const Spacer(),
                           state is BrowiseCreateTextPostLoadingState ||
                               state is BrowiseGetPostsLoadingState
-                              ? Center(
+                              ? const Center(
                             child: CircularProgressIndicator(),
                           )
                               : (textFormFielsChanged == true && postText.text != ""  && AppCubit.get(context).userModel!.numberOfPosts != 12)
                               ?Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: defaultButton(
-                              textColor: AppColors.primaryColor1,
-                              width: size.width*.21,
-                              height: size.height*.06,
-                              raduis: 10,
-                              function: () async{
+                               child: defaultButton(
+                               textColor: AppColors.primaryColor1,
+                               width: size.width*.21,
+                               height: size.height*.06,
+                               raduis: 10,
+                               function: () async{
                                 // final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
 
                                 if(formKey.currentState!.validate()){
@@ -161,12 +161,12 @@ class _AddTextPostState extends State<AddTextPost> {
                               buttonColor: AppColors.myWhite.withOpacity(1),
                             ),
                           ),
-                          SizedBox(width: 15,),
+                          const SizedBox(width: 15,),
 
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 25),
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -193,7 +193,7 @@ class _AddTextPostState extends State<AddTextPost> {
                         height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 25),
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
                         child: Form(
                           key: formKey,
                           child: TextFormField(
@@ -207,10 +207,11 @@ class _AddTextPostState extends State<AddTextPost> {
                                 textFormFielsChanged = true;
                               });
                             },
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                             ),
                             controller: postText,
+                            maxLines: 3,
                             decoration: const InputDecoration(
                               hintMaxLines: 1,
                               hintText: 'what is on your mind.....',
@@ -229,7 +230,7 @@ class _AddTextPostState extends State<AddTextPost> {
                       ),
 
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 25),
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
                         child: Align(
                           alignment: Alignment.bottomCenter,
                           child: Column(
@@ -248,14 +249,14 @@ class _AddTextPostState extends State<AddTextPost> {
                                   child: Row(
                                     children: [
                                       ImageIcon(
-                                        AssetImage("assets/images/camera.png"),
+                                        const AssetImage("assets/images/camera.png"),
                                         color:AppColors.navBarActiveIcon,
 
                                       ),
                                       const SizedBox(
                                         width: 10,
                                       ),
-                                      Text(
+                                      const Text(
                                         'Camera',
                                         style: TextStyle(
                                             color: Colors.white,
@@ -280,7 +281,7 @@ class _AddTextPostState extends State<AddTextPost> {
                                       const SizedBox(
                                         width: 10,
                                       ),
-                                      Text(
+                                      const Text(
                                         'Video Camera',
                                         style: TextStyle(
                                             color: Colors.white,
@@ -301,7 +302,7 @@ class _AddTextPostState extends State<AddTextPost> {
                                     AppCubit.get(context).pickPostImage();
                                   }, child: Row(
                                     children: [
-                                      ImageIcon(
+                                      const ImageIcon(
                                         AssetImage("assets/images/fanarea.png"),
                                         color:Colors.green,
 
@@ -309,7 +310,7 @@ class _AddTextPostState extends State<AddTextPost> {
                                       const SizedBox(
                                         width: 10,
                                       ),
-                                      Text(
+                                      const Text(
                                         'Photo',
                                         style: TextStyle(
                                             color: Colors.white,
@@ -331,7 +332,7 @@ class _AddTextPostState extends State<AddTextPost> {
                                   },
                                   child: Row(
                                     children: [
-                                      ImageIcon(
+                                      const ImageIcon(
                                         AssetImage("assets/images/video.png"),
                                         color:Colors.red,
 
@@ -339,7 +340,7 @@ class _AddTextPostState extends State<AddTextPost> {
                                       const SizedBox(
                                         width: 10,
                                       ),
-                                      Text(
+                                      const Text(
                                         'Video',
                                         style: TextStyle(
                                             color: Colors.white,

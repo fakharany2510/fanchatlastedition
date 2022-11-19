@@ -6,6 +6,7 @@ class MatchesModel{
   String? date;
   String? score;
   String? secondImage;
+  int? clock;
 
 
   MatchesModel({
@@ -15,6 +16,7 @@ class MatchesModel{
     this.secondImage,
     this.date,
     this.score,
+    this.clock,
   });
 
 
@@ -25,6 +27,7 @@ class MatchesModel{
     secondImage=json['secondImage'];
     date=json['data'];
     score=json['score'];
+    clock=json['clock'];
   }
 
   Map <String , dynamic> toMap(){
@@ -35,6 +38,7 @@ class MatchesModel{
       'secondImage':secondImage,
       'data':date,
       'score':score,
+      'clock':clock,
     };
   }
 }

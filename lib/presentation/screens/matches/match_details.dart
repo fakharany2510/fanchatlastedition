@@ -173,6 +173,7 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                   color:  AppColors.primaryColor1,
                                               ),
                                               child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
                                                 children: [
 
 
@@ -182,6 +183,15 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                       fontSize: 16,
                                                       fontFamily: AppStrings.appFont
                                                   ),),
+                                                  const SizedBox(height: 5,),
+
+
+                                                  Text('${AppCubit.get(context).allMatches[index].clock!+ DateTime.now().timeZoneOffset.inHours}:00 PM',style: TextStyle(
+                                                      color: AppColors.myWhite,
+                                                      fontSize: 15,
+                                                      fontFamily: AppStrings.appFont
+                                                  ),),
+
                                                   const SizedBox(height: 5,),
 
                                                   Row(
@@ -275,6 +285,9 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                       ),
                                                     ],
                                                   ),
+
+
+
                                                   const SizedBox(height: 20,),
                                                 ],
                                               ),

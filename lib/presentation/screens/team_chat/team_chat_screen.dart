@@ -129,9 +129,14 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          CircleAvatar(
-                            backgroundImage:  NetworkImage(widget.countryImage),
-                            radius: 22,
+                          CachedNetworkImage(
+                            cacheManager: AppCubit.get(context).manager,
+                            imageUrl: widget.countryImage,
+                            placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                            fit: BoxFit.cover,
+                            height:MediaQuery.of(context).size.height*.04,
+                            width:MediaQuery.of(context).size.height*.06,
+
                           ),
                           const SizedBox(width: 15,),
                           Column(

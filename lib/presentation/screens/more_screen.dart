@@ -155,7 +155,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                       width: size.width,
                                       height: size.height*.05,
                                       decoration: BoxDecoration(
-                                          color: const Color(0Xffd32330),
+                                          color:  Colors.grey,
                                           borderRadius: BorderRadius.circular(10)
                                       ),
                                       child: Row(

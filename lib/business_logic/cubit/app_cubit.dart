@@ -87,7 +87,7 @@ class AppCubit extends Cubit<AppState> {
 
   List carouselImage=[
     'https://mostaql.hsoubcdn.com/uploads/thumbnails/1014251/60c7b6a350d3d/%D8%A7%D9%84%D8%AA%D8%B5%D9%85%D9%8A%D9%85.jpg',
- 'https://pbs.twimg.com/media/Bp_KtB2CQAAo2FG?format=jpg&name=900x900',
+    'https://pbs.twimg.com/media/Bp_KtB2CQAAo2FG?format=jpg&name=900x900',
     'https://economickey.com/wp-content/uploads/2021/12/images-2021-12-09T123459.676.jpeg',
     'https://images.netdirector.co.uk/gforces-auto/image/upload/w_1349,h_450,q_auto,c_fill,f_auto,fl_lossy/auto-client/07057d0e6193c6b928e53a2ec37e91ef/mg_hs_cover.png'
   ];
@@ -1022,14 +1022,34 @@ class AppCubit extends Cubit<AppState> {
     posts=[];
     postsId=[];
     likes=[];
+    likes=[];
     emit(BrowiseGetPostsLoadingState());
-    FirebaseFirestore.instance
+
+    await FirebaseFirestore.instance
         .collection('posts')
         .orderBy('timeSmap',descending: true)
         .get()
-        .then((value) {
+        .then((value) async{
+
       value.docs.forEach((element) async{
-        posts.add(BrowisePostModel.fromJson(element.data()));
+
+        if(hidePostsId.isNotEmpty){
+
+          for (var element2 in hidePostsId) {
+
+            if( BrowisePostModel.fromJson(element.data()).postId !=element2 ){
+
+              posts.add(BrowisePostModel.fromJson(element.data()));
+
+            }
+          }
+        }
+        else{
+
+          posts.add(BrowisePostModel.fromJson(element.data()));
+
+        }
+
         if(userModel!.uId== BrowisePostModel.fromJson(element.data()).userId ){
           myPostsId.add(BrowisePostModel.fromJson(element.data()).postId!);
         }
@@ -3514,6 +3534,63 @@ List<int> commentIndex=[];
 
       print('Error in send user repost ${error.toString()}');
       emit(SendUserReportErrorState());
+    });
+
+  }
+
+  Future<void> hidePosts({
+
+    required String postId
+
+  })async{
+
+    emit(HidePostsLoadingState());
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc('${AppStrings.uId}')
+        .collection('hidePosts')
+        .doc(postId)
+        .set({
+      'postId':postId
+    }).then((value) {
+
+      print('=============================== post Hide Id Add ===============');
+      emit(HidePostsSuccessState());
+    }).catchError((error){
+
+        print('Error in hide Posts ${error.toString()}');
+        emit(HidePostsErrorState());
+    });
+
+  }
+
+
+  List hidePostsId=[];
+
+  Future<void> getHidePosts()async{
+
+    hidePostsId=[];
+    emit(GetHidePostsLoadingState());
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc('${AppStrings.uId}')
+        .collection('hidePosts')
+        .get().
+      then((value) {
+      hidePostsId=[];
+        for (var element in value.docs) {
+          hidePostsId.add(element.data()['postId']);
+        }
+
+      print('================= hidePostsId.length = ${hidePostsId.length} ==============');
+
+      // getPosts();
+
+        emit(GetHidePostsLoadingState());
+    }).catchError((error){
+
+      print('Error in get hide Posts ${error.toString()}');
+      emit(GetHidePostsLoadingState());
     });
 
   }

@@ -292,3 +292,11 @@ class SendPostReportErrorState extends AppState {}
 class SendUserReportLoadingState extends AppState {}
 class SendUserReportSuccessState extends AppState {}
 class SendUserReportErrorState extends AppState {}
+
+class HidePostsLoadingState extends AppState {}
+class HidePostsSuccessState extends AppState {}
+class HidePostsErrorState extends AppState {}
+
+class GetHidePostsLoadingState extends AppState {}
+class GetHidePostsSuccessState extends AppState {}
+class GetHidePostsErrorState extends AppState {}

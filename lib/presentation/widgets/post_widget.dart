@@ -191,6 +191,10 @@ class PostWidgetState extends State<PostWidget> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
+
+                                          const SizedBox(height: 5,),
+
+
                                           Align(
                                             alignment: Alignment.center,
                                             child: Text('Report',
@@ -216,6 +220,72 @@ class PostWidgetState extends State<PostWidget> {
                                             postVideo: AppCubit.get(context).posts[widget.index!].postVideo!,
                                           );
                                         }));
+                                      });
+                                    },
+                                  ),
+
+
+                                  PopupMenuItem(
+                                    height: 10,
+                                    value: 2,
+                                    padding: EdgeInsets.zero,
+                                    child: GestureDetector(
+                                      onTap: (){
+
+                                        AppCubit.get(context).hidePosts(postId: AppCubit.get(context).posts[widget.index!].postId!).then((value) {
+
+                                        AppCubit.get(context).getHidePosts();
+
+                                        }).then((value) {
+
+                                          print('========== I am here =======');
+                                          AppCubit.get(context).getPosts();
+
+                                        });
+
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+
+                                          const Padding(
+                                            padding: EdgeInsets.all(5.0),
+                                            child: Divider(),
+                                          ),
+
+
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Text('Block',
+                                              style:  TextStyle(
+                                                  fontSize: 13,
+                                                  color: AppColors.primaryColor1,
+                                                  fontFamily: AppStrings.appFont
+                                              ),
+                                            ),
+                                          ),
+
+                                          const SizedBox(height: 5,),
+
+                                        ],
+                                      ),
+                                    ),
+                                    onTap: (){
+                                      setState((){
+                                        AppCubit.get(context).hidePosts(postId: AppCubit.get(context).posts[widget.index!].postId!).then((value) {
+
+                                        AppCubit.get(context).getHidePosts();
+
+                                        }).then((value) {
+
+                                          print('========== I am here =======');
+                                          AppCubit.get(context).getPosts();
+
+
+                                        });
+
+
+
                                       });
                                     },
                                   ),
