@@ -349,7 +349,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
                 ),
                 Center(
                   child:Text(
-                    'Congratulations\nYou are now on a 7-day\n free trial.\n Enjoy FAN Chat',
+                    'Congratulations\nYou are now on a 3-day\n free trial.\n Enjoy FAN Chat',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 18,

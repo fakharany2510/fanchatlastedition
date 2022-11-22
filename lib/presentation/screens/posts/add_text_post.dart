@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
-import 'package:fanchat/data/services/notification_helper.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/notifications/functions/send_notification.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
@@ -10,7 +8,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-
 
 class AddTextPost extends StatefulWidget {
   @override
@@ -24,7 +21,7 @@ class _AddTextPostState extends State<AddTextPost> {
   var formKey =GlobalKey<FormState>();
 
 
-  var notifyHelper;
+ // var notifyHelper;
   bool textFormFielsChanged = false;
   bool isbuttonDisabled = false;
   int increaseNumberOfPosts=0;
@@ -32,15 +29,15 @@ class _AddTextPostState extends State<AddTextPost> {
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   void initState() {
     super.initState();
-    notifyHelper = NotifyHelper();
-    notifyHelper.initializeNotification();
+    //notifyHelper = NotifyHelper();
+    //notifyHelper.initializeNotification();
     // _fcm.getToken().then((token) =>{
     //   print('token =====> ${token}'),
     // FirebaseFirestore.instance.collection('tokens').add({
     // 'token':token,
     // })
     // });
-    notifyHelper.requestIOSPermissions();
+   // notifyHelper.requestIOSPermissions();
   }
 
   Widget build(BuildContext context) {
@@ -124,13 +121,13 @@ class _AddTextPostState extends State<AddTextPost> {
                                   print(DateTime.now().toUtc());
 
                                   setState(() {
-                                    callFcmApiSendPushNotifications(
-                                        title: 'New Post Added',
-                                        description:postText.text,
-                                        imageUrl: "${AppCubit.get(context).postImage}",
-                                        context: context
-                                      //  token:AppCubit.get(context).userToken
-                                    );
+                                    // callFcmApiSendPushNotifications(
+                                    //     title: 'New Post Added',
+                                    //     description:postText.text,
+                                    //     imageUrl: "${AppCubit.get(context).postImage}",
+                                    //     context: context
+                                    //   //  token:AppCubit.get(context).userToken
+                                    // );
                                   });
                                   // callFcmApiSendPushNotifications(
                                   // title: 'New Post Added',

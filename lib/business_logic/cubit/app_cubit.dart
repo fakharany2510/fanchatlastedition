@@ -43,7 +43,7 @@ class AppCubit extends Cubit<AppState> {
   TextEditingController changeInstagramLinkController= TextEditingController();
 
 //caching manager
-   final manager=CacheManager(Config(
+  final manager=CacheManager(Config(
     'customCacheKey',
     stalePeriod: const Duration(days: 15),maxNrOfCacheObjects: 100,));
 
@@ -86,10 +86,9 @@ class AppCubit extends Cubit<AppState> {
   ];
 
   List carouselImage=[
-    'https://mostaql.hsoubcdn.com/uploads/thumbnails/1014251/60c7b6a350d3d/%D8%A7%D9%84%D8%AA%D8%B5%D9%85%D9%8A%D9%85.jpg',
-    'https://pbs.twimg.com/media/Bp_KtB2CQAAo2FG?format=jpg&name=900x900',
-    'https://economickey.com/wp-content/uploads/2021/12/images-2021-12-09T123459.676.jpeg',
-    'https://images.netdirector.co.uk/gforces-auto/image/upload/w_1349,h_450,q_auto,c_fill,f_auto,fl_lossy/auto-client/07057d0e6193c6b928e53a2ec37e91ef/mg_hs_cover.png'
+    'assets/images/ads1.jpg',
+    'assets/images/ads1.jpg',
+    'assets/images/ads1.jpg',
   ];
 
   ScrollController publicChatController = ScrollController();
@@ -136,7 +135,7 @@ class AppCubit extends Cubit<AppState> {
       getLastUsers();
     }
     if(currentIndex==2){
-     //getFanPosts();
+      //getFanPosts();
     }
     if(currentIndex==1){
       //getFanPosts();
@@ -160,7 +159,7 @@ class AppCubit extends Cubit<AppState> {
           return "${difference.inDays}d ago";
         }
       }
-     // getPosts();
+      // getPosts();
     }
     emit(NavigateScreenState());
   }
@@ -205,22 +204,22 @@ class AppCubit extends Cubit<AppState> {
     FirebaseFirestore.instance
         .collection('users')
         .get().then((value){
-          value.docs.forEach((element) {
-            if(element.data()['uId'] != AppStrings.uId)
-              users.add(UserModel.formJson(element.data()));
+      value.docs.forEach((element) {
+        if(element.data()['uId'] != AppStrings.uId)
+          users.add(UserModel.formJson(element.data()));
 
-            if(profileId== element.data()['uId'] ){
+        if(profileId== element.data()['uId'] ){
 
-                profileFace=element.data()['facebookLink'];
-                profileTwitter=element.data()['twitterLink'];
-                profileYoutube=element.data()['youtubeLink'];
-                profileInstagram=element.data()['instagramLink'];
+          profileFace=element.data()['facebookLink'];
+          profileTwitter=element.data()['twitterLink'];
+          profileYoutube=element.data()['youtubeLink'];
+          profileInstagram=element.data()['instagramLink'];
 
-            }
-          });
+        }
+      });
 
 
-            emit(GetAllUsersDataSuccessfulState());
+      emit(GetAllUsersDataSuccessfulState());
     }).catchError((error){
       emit(GetAllUsersDataErrorState());
       print('error while getting all users ${error.toString()}');
@@ -230,25 +229,25 @@ class AppCubit extends Cubit<AppState> {
 
   Future<void> getUser(context) async {
     emit(GetUserDataLoadingState());
-   await  FirebaseFirestore.instance
+    await  FirebaseFirestore.instance
         .collection('users')
         .doc(AppStrings.uId)
         .get().then((value) {
-          userModel = UserModel.formJson(value.data()!);
-          printMessage('${userModel!.email}');
-          changeUserNameController.text='${userModel!.username}';
-          changeUserPhoneController.text='${userModel!.phone}';
-          changeUserBioController.text='${userModel!.bio}';
-          changeYoutubeLinkController.text='${userModel!.youtubeLink}';
-          changeInstagramLinkController.text='${userModel!.instagramLink}';
-          changeTwitterLinkController.text='${userModel!.twitterLink}';
-          changeFacebookLinkController.text='${userModel!.facebookLink}';
+      userModel = UserModel.formJson(value.data()!);
+      printMessage('${userModel!.email}');
+      changeUserNameController.text='${userModel!.username}';
+      changeUserPhoneController.text='${userModel!.phone}';
+      changeUserBioController.text='${userModel!.bio}';
+      changeYoutubeLinkController.text='${userModel!.youtubeLink}';
+      changeInstagramLinkController.text='${userModel!.instagramLink}';
+      changeTwitterLinkController.text='${userModel!.twitterLink}';
+      changeFacebookLinkController.text='${userModel!.facebookLink}';
 
-          emit(GetUserDataSuccessfulState());
+      emit(GetUserDataSuccessfulState());
     }).catchError((error){
 
       printMessage('Error in get user is ${error.toString()}');
-          emit(GetUserDataErrorState());
+      emit(GetUserDataErrorState());
     });
 
   }
@@ -366,7 +365,7 @@ class AppCubit extends Cubit<AppState> {
       emit(UploadProfileImageErrorState());
     }
 
-}
+  }
 
   String ?profilePath;
 
@@ -418,12 +417,12 @@ class AppCubit extends Cubit<AppState> {
   String ?coverPath;
   Future uploadUserCover(
       {
-         String ?name,
-         String ?bio,
-         String ?youtubeLink,
-         String ?facebookLink,
-         String ?instagramLink,
-         String ?twitterLink,
+        String ?name,
+        String ?bio,
+        String ?youtubeLink,
+        String ?facebookLink,
+        String ?instagramLink,
+        String ?twitterLink,
 
       }
       ){
@@ -466,27 +465,27 @@ class AppCubit extends Cubit<AppState> {
 
   Future updateProfile({
     context,
-      String ?image,
-      String ?cover,
-      required String ?name,
-      required String ?bio,
-      required String ?youtubeLink,
-      required String ?instagramLink,
-      required String ?twitterLink,
-      required String ?facebookLink,
-   })async{
+    String ?image,
+    String ?cover,
+    required String ?name,
+    required String ?bio,
+    required String ?youtubeLink,
+    required String ?instagramLink,
+    required String ?twitterLink,
+    required String ?facebookLink,
+  })async{
     emit(UpdateUserLoadingState());
 
     UserModel model= UserModel(
-      username: name,
-      bio: bio,
-      uId: AppStrings.uId,
-      image: image?? userModel!.image,
-      cover: cover?? userModel!.cover,
-      facebookLink: facebookLink??'Enter your facebook link',
-      instagramLink: instagramLink??'Enter your instagram link',
-      twitterLink: twitterLink??'Enter your twitter link',
-      youtubeLink: youtubeLink??'Enter your youtube link'
+        username: name,
+        bio: bio,
+        uId: AppStrings.uId,
+        image: image?? userModel!.image,
+        cover: cover?? userModel!.cover,
+        facebookLink: facebookLink??'Enter your facebook link',
+        instagramLink: instagramLink??'Enter your instagram link',
+        twitterLink: twitterLink??'Enter your twitter link',
+        youtubeLink: youtubeLink??'Enter your youtube link'
 
     );
     FirebaseFirestore.instance.
@@ -647,12 +646,12 @@ class AppCubit extends Cubit<AppState> {
     await picker.pickVideo(source: ImageSource.gallery);
     if (pickedFile != null) {
       postVideo3 = File(pickedFile.path);
-     // var decodedVideo = await decodeImageFromList(postVideo3!.readAsBytesSync());
+      // var decodedVideo = await decodeImageFromList(postVideo3!.readAsBytesSync());
       controller = CachedVideoPlayerController.file(postVideo3!)
         ..initialize().then((value) {
           controller!.pause();
-        //  videoWidth3=double.parse('${decodedVideo.width}');
-         // videoHeight3=double.parse('${decodedVideo.height}');
+          //  videoWidth3=double.parse('${decodedVideo.width}');
+          // videoHeight3=double.parse('${decodedVideo.height}');
           emit(PickPrivateChatViedoSuccessState());
         }).catchError((error) {
           print('error picking video ${error.toString()}');
@@ -731,11 +730,11 @@ class AppCubit extends Cubit<AppState> {
         .putFile(postImage!).then((value){
       value.ref.getDownloadURL().then((value){
         createImagePost(
-            dateTime: dateTime,
-            postImage: value,
-            text: text,
-            time: time,
-            timeSpam: timeSpam,
+          dateTime: dateTime,
+          postImage: value,
+          text: text,
+          time: time,
+          timeSpam: timeSpam,
 
         );
         emit(BrowiseUploadImagePostSuccessState());
@@ -761,44 +760,44 @@ class AppCubit extends Cubit<AppState> {
     emit(BrowiseCreatePostLoadingState());
 
     BrowisePostModel model=BrowisePostModel(
-        name: userModel!.username,
-        image:userModel!.image,
-        userId:userModel!.uId,
-        dateTime:dateTime,
-        time: time,
-        postImage:postImage??'',
-        postVideo: "",
-        timeSmap: timeSpam,
-        text: text,
-        likes: 0,
-        comments:0,
-        postId: AppStrings.postUid,
+      name: userModel!.username,
+      image:userModel!.image,
+      userId:userModel!.uId,
+      dateTime:dateTime,
+      time: time,
+      postImage:postImage??'',
+      postVideo: "",
+      timeSmap: timeSpam,
+      text: text,
+      likes: 0,
+      comments:0,
+      postId: AppStrings.postUid,
     );
 
     FirebaseFirestore.instance
         .collection('posts')
         .add(model.toMap())
         .then((value){
-          printMessage(value.id);
-          AppStrings.postUid=value.id;
-          FirebaseFirestore.instance
-              .collection('posts')
-              .doc(AppStrings.postUid)
-               .update({
-                'postId':AppStrings.postUid
-              }).then((value){
-            emit(BrowiseCreatePostSuccessState());
-          });
-          uploadPostImage(
-            text:text ,
-            dateTime:time ,
-            time: time,
-            timeSpam:time ,
-            image: postImage,
-            name: userModel!.username ,
-            userId: userModel!.uId,
-          );
-        //  getPosts();
+      printMessage(value.id);
+      AppStrings.postUid=value.id;
+      FirebaseFirestore.instance
+          .collection('posts')
+          .doc(AppStrings.postUid)
+          .update({
+        'postId':AppStrings.postUid
+      }).then((value){
+        emit(BrowiseCreatePostSuccessState());
+      });
+      uploadPostImage(
+        text:text ,
+        dateTime:time ,
+        time: time,
+        timeSpam:time ,
+        image: postImage,
+        name: userModel!.username ,
+        userId: userModel!.uId,
+      );
+      //  getPosts();
     })
         .catchError((error){
       emit(BrowiseCreatePostErrorState());
@@ -830,37 +829,37 @@ class AppCubit extends Cubit<AppState> {
 
       value1.ref.getDownloadURL().then((value2)async{
 
-          var thumbTempPath = await VideoThumbnail.thumbnailFile(
+        var thumbTempPath = await VideoThumbnail.thumbnailFile(
             video:  value2,
             thumbnailPath: (await getTemporaryDirectory()).path,
             imageFormat: ImageFormat.PNG,
-          //  maxHeight:, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+            //  maxHeight:, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
             quality: 100, // you can change the thumbnail quality here
             timeMs: 2
-          );
-          int counter =1;
-          print(';llllllllllllllllllllllllllllllllllllllllllllllllmmjhwdvghvcjyscgfcvjshcgs------->${thumbTempPath}');
+        );
+        int counter =1;
+        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmjhwdvghvcjyscgfcvjshcgs------->${thumbTempPath}');
         firebase_storage.FirebaseStorage.instance
-        .ref()
-          .child('counter/${counter}/${Uri.file(thumbTempPath!).pathSegments.last}')
-          .putFile(File(thumbTempPath)).then((value3){
-            value3.ref.getDownloadURL().then((value4){
-              print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value4}');
-              print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value2}');
+            .ref()
+            .child('counter/${counter}/${Uri.file(thumbTempPath!).pathSegments.last}')
+            .putFile(File(thumbTempPath)).then((value3){
+          value3.ref.getDownloadURL().then((value4){
+            print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value4}');
+            print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value2}');
 
-              createVideoPost(
-                dateTime:dateTime,
-                postVideo: value2,
-                text: text,
-                time: time,
-                timeSpam:timeSpam,
-                thumbnail: value4,
-              );
-              getPosts();
-              emit(BrowiseUploadVideoPostSuccessState());
-              counter++;
-              print('sjkjjjjjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${counter}');
-            });
+            createVideoPost(
+              dateTime:dateTime,
+              postVideo: value2,
+              text: text,
+              time: time,
+              timeSpam:timeSpam,
+              thumbnail: value4,
+            );
+            getPosts();
+            emit(BrowiseUploadVideoPostSuccessState());
+            counter++;
+            print('sjkjjjjjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${counter}');
+          });
 
         });
 
@@ -896,26 +895,26 @@ class AppCubit extends Cubit<AppState> {
     emit(BrowiseCreateVideoPostLoadingState());
 
     BrowisePostModel model=BrowisePostModel(
-      name: userModel!.username,
-      image:userModel!.image,
-      userId:userModel!.uId,
-      dateTime:dateTime,
-      postImage:'',
-      postVideo: postVideo??'',
-      thumbnail: thumbnail??"",
-      time: time  ,
-      text: text,
-      timeSmap: timeSpam,
-      likes: 0,
-      comments:0,
-      postId: AppStrings.postUid
+        name: userModel!.username,
+        image:userModel!.image,
+        userId:userModel!.uId,
+        dateTime:dateTime,
+        postImage:'',
+        postVideo: postVideo??'',
+        thumbnail: thumbnail??"",
+        time: time  ,
+        text: text,
+        timeSmap: timeSpam,
+        likes: 0,
+        comments:0,
+        postId: AppStrings.postUid
     );
 
     FirebaseFirestore.instance
         .collection('posts')
         .add(model.toMap())
         .then((value){
-          //getPosts();
+      //getPosts();
       AppStrings.postUid=value.id;
       FirebaseFirestore.instance
           .collection('posts')
@@ -1014,13 +1013,13 @@ class AppCubit extends Cubit<AppState> {
 //////////////////////////////////////////////
   /////////////////////////
   //get Posts
-    List<BrowisePostModel> posts=[];
+  List<BrowisePostModel> posts=[];
   List<BrowisePostModel> postThumbnail=[];
   List<String> postsId=[];
   List<String> myPostsId=[];
   List<int> likes=[];
 
-  Future<void> getPosts()async{
+  Future getPosts()async{
     posts=[];
     postsId=[];
     likes=[];
@@ -1032,25 +1031,34 @@ class AppCubit extends Cubit<AppState> {
         .orderBy('timeSmap',descending: true)
         .get()
         .then((value) async{
-
+      posts=[];
       value.docs.forEach((element) async{
+        if(blockedUsersIds.isNotEmpty || hidePostsId.isNotEmpty){
+          if(blockedUsersIds.contains(BrowisePostModel.fromJson(element.data()).userId)
+          ||
+              hidePostsId.contains(BrowisePostModel.fromJson(element.data()).postId)
+          ){
 
-        if(hidePostsId.isNotEmpty){
-
-          for (var element2 in hidePostsId) {
-
-            if( BrowisePostModel.fromJson(element.data()).postId !=element2 ){
-
-              posts.add(BrowisePostModel.fromJson(element.data()));
-
-            }
+          }else{
+            posts.add(BrowisePostModel.fromJson(element.data()));
           }
-        }
-        else{
-
+        }else{
           posts.add(BrowisePostModel.fromJson(element.data()));
-
         }
+
+        // if(hidePostsId.isNotEmpty){
+        //
+        //   if(hidePostsId.contains(BrowisePostModel.fromJson(element.data()).postId)){
+        //     print('post deleted');
+        //   }else{
+        //     posts.add(BrowisePostModel.fromJson(element.data()));
+        //   }
+        // }
+        // else{
+        //
+        //   posts.add(BrowisePostModel.fromJson(element.data()));
+        //
+        // }
 
         if(userModel!.uId== BrowisePostModel.fromJson(element.data()).userId ){
           myPostsId.add(BrowisePostModel.fromJson(element.data()).postId!);
@@ -1060,10 +1068,10 @@ class AppCubit extends Cubit<AppState> {
       for (var element in myPostsId) {
 
         FirebaseFirestore.instance.collection('posts').doc(element).update(
-          {
-            'image':userModel!.image,
-            'name':userModel!.username
-          }
+            {
+              'image':userModel!.image,
+              'name':userModel!.username
+            }
         ).then((value) {
 
         });
@@ -1088,7 +1096,7 @@ class AppCubit extends Cubit<AppState> {
         .doc(userModel!.uId)
         .set({
       'likes':true,
-      }).then((value){
+    }).then((value){
       // testLikes();
       emit(CreateLikesSuccessState());
       testLikes(postId,Likes);
@@ -1101,7 +1109,7 @@ class AppCubit extends Cubit<AppState> {
   /////////////////////////////////////////////////////////
 // Create Comment
   /////////////////////////////////////
-List<int> commentIndex=[];
+  List<int> commentIndex=[];
   List <CommentModel> comments=[];
   void commentHomePost(String postId, String comment) {
     CommentModel model = CommentModel(
@@ -1135,7 +1143,7 @@ List<int> commentIndex=[];
         .collection('posts')
         .doc(postId)
         .collection('comments')
-         .orderBy('date',descending: true)
+        .orderBy('date',descending: true)
         .get()
         .then((value) {
       print('Get Comments Success');
@@ -1166,8 +1174,8 @@ List<int> commentIndex=[];
         element.reference
             .collection('likes')
             .snapshots().listen((event) {
-              // postsId.add(element.id);
-           if(postId==element.id){
+          // postsId.add(element.id);
+          if(postId==element.id){
             Likes = event.docs.length;
             FirebaseFirestore.instance
                 .collection('posts')
@@ -1220,7 +1228,7 @@ List<int> commentIndex=[];
   List<int> commentNum=[];
   int ?Comments=0;
   void testComments(postId) {
-   // posts=[];
+    // posts=[];
     postsId = [];
     commentNum = [];
     FirebaseFirestore.instance
@@ -1263,19 +1271,19 @@ List<int> commentIndex=[];
             commentNum.add(event.docs.length);
             emit(TestCommentsSuccessState());
           });
-            });
+        });
       });
     });
   }
   ////////////////////////////////////////////
-                   //sign out
+  //sign out
   ///////////////////////////////////////////
   Future<void> signOut() async{
-     CashHelper.removeData(key: 'uid').then((value) async {
+    CashHelper.removeData(key: 'uid').then((value) async {
       await FirebaseAuth.instance.signOut();
     });
 
-   emit(SignoutSuccessState());
+    emit(SignoutSuccessState());
   }
 ///////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////
@@ -1289,13 +1297,13 @@ List<int> commentIndex=[];
   }){
     emit(CreateImagePrivateLoadingState());
     MessageModel model=MessageModel(
-      image: messageImage,
-      text: "",
-      dateTime: dateTime,
-      recevierId: recevierId,
-      recevierName: recevierName,
-      recevierImage: recevierImage,
-      senderId: AppStrings.uId
+        image: messageImage,
+        text: "",
+        dateTime: dateTime,
+        recevierId: recevierId,
+        recevierName: recevierName,
+        recevierImage: recevierImage,
+        senderId: AppStrings.uId
     );
 
     MessageModel myModel=MessageModel(
@@ -1390,12 +1398,12 @@ List<int> commentIndex=[];
         .putFile(chatImage!).then((value){
       value.ref.getDownloadURL().then((value){
         createImageMessage(
-          messageImage: value,
-          recevierId: recevierId,
-          recevierName: recevierName,
-          recevierImage: recevierImage,
-          dateTime: dateTime,
-          senderId: AppStrings.uId
+            messageImage: value,
+            recevierId: recevierId,
+            recevierName: recevierName,
+            recevierImage: recevierImage,
+            dateTime: dateTime,
+            senderId: AppStrings.uId
         );
 
         emit(UploadImagePrivateSuccessState());
@@ -1419,12 +1427,12 @@ List<int> commentIndex=[];
 
   }){
     MessageModel model =MessageModel(
-      recevierId:recevierId,
-      senderId: AppStrings.uId,
-      dateTime: dateTime,
-      text: text,
-      recevierImage: recevierImage,
-      recevierName: recevierName
+        recevierId:recevierId,
+        senderId: AppStrings.uId,
+        dateTime: dateTime,
+        text: text,
+        recevierImage: recevierImage,
+        recevierName: recevierName
     );
 
 
@@ -1535,7 +1543,7 @@ List<int> commentIndex=[];
         .listen((event) {
       lastUsers = [];
       event.docs.forEach((element) {
-      lastUsers.add((element.data()));
+        lastUsers.add((element.data()));
         print('llllllllllllllllllllllllllllllllllllllllllllllllllllllllll');
       });
       emit(GetMessageSuccessState());
@@ -1553,18 +1561,18 @@ List<int> commentIndex=[];
   bool isSend=false;
   ///////////////////////////////voice message
   void createVoiceMessage({
-     required String recevierId,
-     required String recevierName,
-     required String recevierImage,
+    required String recevierId,
+    required String recevierName,
+    required String recevierImage,
     required String dateTime,
-   required String voice,
+    required String voice,
 
   }){
     emit(StopLoadingState());
 
     MessageModel model=MessageModel(
         text: "",
-       dateTime: dateTime,
+        dateTime: dateTime,
         recevierId: recevierId,
         recevierName: recevierName,
         recevierImage: recevierImage,
@@ -1592,7 +1600,7 @@ List<int> commentIndex=[];
         .add(model.toMap())
         .then((value){
       emit(StopLoadingState());
-        isSend=false;
+      isSend=false;
       emit(SendMessageSuccessState());
     })
         .catchError((error){
@@ -1652,7 +1660,7 @@ List<int> commentIndex=[];
   File? fanPostImage;
   Future<void> pickFanPostImage() async {
     final pickedFile  =
-      await picker.pickImage(source: ImageSource.gallery);
+    await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       fanPostImage=File(pickedFile.path);
       var decodedImage = await decodeImageFromList(fanPostImage!.readAsBytesSync());
@@ -1675,12 +1683,12 @@ List<int> commentIndex=[];
       fanPostVideo = File(pickedFile.path);
       videoPlayerController = VideoPlayerController.file(fanPostVideo!);
       await videoPlayerController!.initialize().then((value) {
-          videoPlayerController!.pause();
-          emit(PickFanPostVideoSuccessState());
-        }).catchError((error) {
-          print('error picking  fan video ${error.toString()}');
-          emit(PickFanPostVideoErrorState());
-        });
+        videoPlayerController!.pause();
+        emit(PickFanPostVideoSuccessState());
+      }).catchError((error) {
+        print('error picking  fan video ${error.toString()}');
+        emit(PickFanPostVideoErrorState());
+      });
     }
   }
 ////////////////////////////////////////
@@ -1821,18 +1829,18 @@ List<int> commentIndex=[];
 //upload fan post video to storage
   firebase_storage.SettableMetadata metadata =
   firebase_storage.SettableMetadata(
-    contentType: 'video/mp4'
+      contentType: 'video/mp4'
   );
   Future uploadFanPostVideo(
-  {
-    String? userId,
-    String? name,
-    String? video,
-    required String dateTime,
-    required String time,
-    required String timeSpam,
-    required String? text,
-}
+      {
+        String? userId,
+        String? name,
+        String? video,
+        required String dateTime,
+        required String time,
+        required String timeSpam,
+        required String? text,
+      }
       ) async {
     try {
       emit(FanUploadVideoPostLoadingState());
@@ -1890,9 +1898,9 @@ List<int> commentIndex=[];
 
       // print(url);
       //
-      } catch (error) {
+    } catch (error) {
       print('error while uploading video ${error}');
-      }
+    }
 
   }
   List<FanModel> fans=[];
@@ -2097,7 +2105,7 @@ List<int> commentIndex=[];
 
   void createImageTeamChat({
     required String dateTime,
-     String? countryName,
+    String? countryName,
     String? messageImage,
     String? senderId,
     String? senderName,
@@ -2153,12 +2161,12 @@ List<int> commentIndex=[];
         .putFile(postImage!).then((value){
       value.ref.getDownloadURL().then((value){
         createImageTeamChat(
-          messageImage: value,
-          dateTime: dateTime,
-          senderId: AppStrings.uId,
-          senderName: userModel!.username,
-          senderImage: userModel!.image,
-          countryName: countryName
+            messageImage: value,
+            dateTime: dateTime,
+            senderId: AppStrings.uId,
+            senderName: userModel!.username,
+            senderImage: userModel!.image,
+            countryName: countryName
         );
 
         emit(BrowiseUploadImagePostSuccessState());
@@ -2334,12 +2342,12 @@ List<int> commentIndex=[];
   })async{
 
     CheeringModel model=CheeringModel(
-       time: time,
-      timeSpam: timeSpam,
-      uId: userModel!.uId,
-      username: userModel!.username,
-      userImage: userModel!.image,
-      text: text
+        time: time,
+        timeSpam: timeSpam,
+        uId: userModel!.uId,
+        username: userModel!.username,
+        userImage: userModel!.image,
+        text: text
     );
 
     emit(CreateCheeringLoadingState());
@@ -2351,7 +2359,7 @@ List<int> commentIndex=[];
         .add(model.toMap())
         .then((value){
 
-          // getCheeringPost();
+      // getCheeringPost();
       // isLast=false;
 
       print('Upload Cheering message');
@@ -2404,7 +2412,7 @@ List<int> commentIndex=[];
   int indexCheeringList=0;
   Future <void> getCheeringPost({
     required String? countryName,
-}) async{
+  }) async{
     FirebaseFirestore.instance
         .collection('$countryName')
         .doc('1')
@@ -2413,17 +2421,17 @@ List<int> commentIndex=[];
         .snapshots().listen((event) {
       cheering=[];
       event.docs.forEach((element) {
-                  cheering.add(CheeringModel.formJson(element.data()));
-                  print('Get Cheering message');
-                  print('///////////////////////////////////////////');
-                  print(cheering.length);
-                  print('///////////////////////////////////////////');
-                  emit(GetCheeringSuccessState());
-                });
-              // print( cheering.first.text);
-                isLast=false;
-               indexCheeringList+=indexCheeringList;
-                print( isLast);
+        cheering.add(CheeringModel.formJson(element.data()));
+        print('Get Cheering message');
+        print('///////////////////////////////////////////');
+        print(cheering.length);
+        print('///////////////////////////////////////////');
+        emit(GetCheeringSuccessState());
+      });
+      // print( cheering.first.text);
+      isLast=false;
+      indexCheeringList+=indexCheeringList;
+      print( isLast);
     });
 
   }
@@ -2633,15 +2641,15 @@ List<int> commentIndex=[];
         .collection('countries').orderBy('name')
         .get().then((value) {
 
-          value.docs.forEach((element) {
+      value.docs.forEach((element) {
 
-            countries.add(element.data());
+        countries.add(element.data());
 
-          });
-          print('///////////////////////////////////////////////////////');
-          print(countries[0]['name']);
-          print('///////////////////////////////////////////////////////');
-          emit(GetCountriesSuccessState());
+      });
+      print('///////////////////////////////////////////////////////');
+      print(countries[0]['name']);
+      print('///////////////////////////////////////////////////////');
+      emit(GetCountriesSuccessState());
     });
 
     emit(GetCountriesErrorState());
@@ -2655,15 +2663,15 @@ List<int> commentIndex=[];
 
     Timer.periodic(
 
-      const Duration(seconds: 1),
-      (Timer time){
-        //print("time ${time.tick}");
-         timerCheering=time.tick;
-        if(time.tick==5){
-          time.cancel();
-          //print("Timer Cancelled");
+        const Duration(seconds: 1),
+            (Timer time){
+          //print("time ${time.tick}");
+          timerCheering=time.tick;
+          if(time.tick==5){
+            time.cancel();
+            //print("Timer Cancelled");
+          }
         }
-      }
 
     );
     emit(GetTimerSuccessState());
@@ -2671,7 +2679,7 @@ List<int> commentIndex=[];
 
   Future <void> toYoutube({
     required String youtubeLink,
-   })async
+  })async
   {
     String url= youtubeLink;
     await launch(url , forceSafariVC: false);
@@ -2763,10 +2771,10 @@ List<int> commentIndex=[];
         var thumbTempPath = await VideoThumbnail.thumbnailFile(
             video:  value2,
             thumbnailPath: (await getTemporaryDirectory()).path,
-        imageFormat: ImageFormat.PNG,
-        //  maxHeight:, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
-        quality: 100, // you can change the thumbnail quality here
-        timeMs: 2
+            imageFormat: ImageFormat.PNG,
+            //  maxHeight:, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+            quality: 100, // you can change the thumbnail quality here
+            timeMs: 2
         );
         int counter =1;
         print(';llllllllllllllllllllllllllllllllllllllllllllllllmmjhwdvghvcjyscgfcvjshcgs------->${thumbTempPath}');
@@ -2774,21 +2782,21 @@ List<int> commentIndex=[];
             .ref()
             .child('counter/${counter}/${Uri.file(thumbTempPath!).pathSegments.last}')
             .putFile(File(thumbTempPath)).then((value3){
-        value3.ref.getDownloadURL().then((value4){
-        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value4}');
-        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value2}');
+          value3.ref.getDownloadURL().then((value4){
+            print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value4}');
+            print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value2}');
 
-        createVideoPublicChat(
-            messageViedo: value2,
-            dateTime: dateTime,
-            senderId: AppStrings.uId,
-            senderName:senderName,
-            senderImage: senderImage,
-          publicChatThumbnail: value4,
-        );
-        emit(UploadVideoPublicChatSuccessState());
+            createVideoPublicChat(
+              messageViedo: value2,
+              dateTime: dateTime,
+              senderId: AppStrings.uId,
+              senderName:senderName,
+              senderImage: senderImage,
+              publicChatThumbnail: value4,
+            );
+            emit(UploadVideoPublicChatSuccessState());
 
-        });
+          });
 
         });
 
@@ -2812,13 +2820,13 @@ List<int> commentIndex=[];
     emit(CreateVideoPublicChatLoadingState());
 
     PublicChatModel model= PublicChatModel(
-        video:messageViedo,
-        text: "",
-        dateTime: dateTime,
-        senderId: AppStrings.uId,
-        senderName: senderName,
-        senderImage: senderImage,
-        publicChatThumbnail: publicChatThumbnail??"",
+      video:messageViedo,
+      text: "",
+      dateTime: dateTime,
+      senderId: AppStrings.uId,
+      senderName: senderName,
+      senderImage: senderImage,
+      publicChatThumbnail: publicChatThumbnail??"",
     );
 
     //Set My Chat
@@ -2893,10 +2901,10 @@ List<int> commentIndex=[];
         var thumbTempPath = await VideoThumbnail.thumbnailFile(
             video:  value2,
             thumbnailPath: (await getTemporaryDirectory()).path,
-        imageFormat: ImageFormat.PNG,
-        //  maxHeight:, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
-        quality: 100, // you can change the thumbnail quality here
-        timeMs: 2
+            imageFormat: ImageFormat.PNG,
+            //  maxHeight:, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+            quality: 100, // you can change the thumbnail quality here
+            timeMs: 2
         );
         int counter =1;
         print(';llllllllllllllllllllllllllllllllllllllllllllllllmmjhwdvghvcjyscgfcvjshcgs------->${thumbTempPath}');
@@ -2904,23 +2912,23 @@ List<int> commentIndex=[];
             .ref()
             .child('counter/${counter}/${Uri.file(thumbTempPath!).pathSegments.last}')
             .putFile(File(thumbTempPath)).then((value3){
-        value3.ref.getDownloadURL().then((value4){
-        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value4}');
-        print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value2}');
+          value3.ref.getDownloadURL().then((value4){
+            print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value4}');
+            print(';llllllllllllllllllllllllllllllllllllllllllllllllmmmmmmmmmmmmmmmmmmmmmmmmm${value2}');
 
 
 
-        createVideoTeamChat(
-        messageViedo: value2,
-        dateTime: dateTime,
-        senderName: senderName,
-        senderImage: senderImage,
-        senderId: AppStrings.uId,
-        countryName: countryName,
-        teamChatThumbnail: value4
-        );
-        getPosts();
-        emit(UploadVideoTeamChatSuccessState());});
+            createVideoTeamChat(
+                messageViedo: value2,
+                dateTime: dateTime,
+                senderName: senderName,
+                senderImage: senderImage,
+                senderId: AppStrings.uId,
+                countryName: countryName,
+                teamChatThumbnail: value4
+            );
+            getPosts();
+            emit(UploadVideoTeamChatSuccessState());});
 
         });
 
@@ -2945,12 +2953,12 @@ List<int> commentIndex=[];
     emit(CreateVideoTeamChatLoadingState());
 
     TeamChatModel model= TeamChatModel(
-        video:messageViedo,
-        text: "",
-        dateTime: dateTime,
-        senderId: AppStrings.uId,
-        senderName: senderName,
-        senderImage: senderImage,
+      video:messageViedo,
+      text: "",
+      dateTime: dateTime,
+      senderId: AppStrings.uId,
+      senderName: senderName,
+      senderImage: senderImage,
       teamChatThumbnail: teamChatThumbnail ??"",
     );
 
@@ -2993,11 +3001,11 @@ List<int> commentIndex=[];
       print('No Image selected.');
     }
   }
- void increasNumberOfPosts(int index){
+  void increasNumberOfPosts(int index){
     FirebaseFirestore.instance.collection('users').doc(AppStrings.uId).update(
-      {
-        'numberOfPosts':index
-      }
+        {
+          'numberOfPosts':index
+        }
     ).then((value){
       emit(IncreaseNumberOfPostsSuccessState());
     });
@@ -3325,8 +3333,8 @@ List<int> commentIndex=[];
     likes=[];
     emit(BrowiseGetProfilePostsLoadingState());
     FirebaseFirestore.instance
-         .collection('users')
-         .doc('${AppStrings.uId}')
+        .collection('users')
+        .doc('${AppStrings.uId}')
         .collection('profileImages')
         .orderBy('timeSmap',descending: true)
         .get()
@@ -3352,7 +3360,7 @@ List<int> commentIndex=[];
   List<ProfileModel> userProfileImages=[];
   Future<void> getUserProfilePosts({
     required String id,
-   })async{
+  })async{
     userProfileImages=[];
     postsId=[];
     likes=[];
@@ -3388,9 +3396,9 @@ List<int> commentIndex=[];
   String ?singleViedo;
   Future<void> getSingleVideo({
 
-  required int index,
+    required int index,
 
-})async{
+  })async{
 
     print('');
     emit(GetSingleVideoLoadingState());
@@ -3442,7 +3450,7 @@ List<int> commentIndex=[];
 
   Future<void> getAllMatches({
 
-   required String doc
+    required String doc
 
   })async{
 
@@ -3452,18 +3460,18 @@ List<int> commentIndex=[];
         .doc(doc)
         .collection('matches')
         .get().then((value){
-        allMatches=[];
+      allMatches=[];
 
-          value.docs.forEach((element) {
+      value.docs.forEach((element) {
 
-            allMatches.add(MatchesModel.fromJson(element.data()));
+        allMatches.add(MatchesModel.fromJson(element.data()));
 
-          });
+      });
 
-          print('============== lenght ===============');
-          print(allMatches.length);
+      print('============== lenght ===============');
+      print(allMatches.length);
 
-          emit(GetAllMatchesSuccessState());
+      emit(GetAllMatchesSuccessState());
 
 
     }).catchError((error){
@@ -3472,7 +3480,7 @@ List<int> commentIndex=[];
       emit(GetAllMatchesErrorState());
 
     });
-    
+
 
   }
 
@@ -3485,21 +3493,21 @@ List<int> commentIndex=[];
     required String postText,
     required String postImage,
     required String postVideo,
-   })async{
+  })async{
 
     PostReportModel postReportModel =PostReportModel(
-      postVideo: postVideo,
-      postImage: postImage,
-      postId: postId,
-      postOwner: postOwner,
-      postText: postText,
-      reportType: reportType,
-      senderReport: senderReport
+        postVideo: postVideo,
+        postImage: postImage,
+        postId: postId,
+        postOwner: postOwner,
+        postText: postText,
+        reportType: reportType,
+        senderReport: senderReport
     );
 
     FirebaseFirestore.instance.collection('PostReport')
         .add(postReportModel.toMap()).then((value) {
-          emit(SendPostReportSuccessState());
+      emit(SendPostReportSuccessState());
     }).catchError((error){
 
       print('Error in seb=nd repost ${error.toString()}');
@@ -3560,8 +3568,8 @@ List<int> commentIndex=[];
       emit(HidePostsSuccessState());
     }).catchError((error){
 
-        print('Error in hide Posts ${error.toString()}');
-        emit(HidePostsErrorState());
+      print('Error in hide Posts ${error.toString()}');
+      emit(HidePostsErrorState());
     });
 
   }
@@ -3572,23 +3580,24 @@ List<int> commentIndex=[];
   Future<void> getHidePosts()async{
 
     hidePostsId=[];
+    posts=[];
     emit(GetHidePostsLoadingState());
     FirebaseFirestore.instance
         .collection('users')
         .doc('${AppStrings.uId}')
         .collection('hidePosts')
         .get().
-      then((value) {
+    then((value) {
       hidePostsId=[];
-        for (var element in value.docs) {
-          hidePostsId.add(element.data()['postId']);
-        }
+      for (var element in value.docs) {
+        hidePostsId.add(element.data()['postId']);
+      }
 
       print('================= hidePostsId.length = ${hidePostsId.length} ==============');
 
-      // getPosts();
+      getPosts();
 
-        emit(GetHidePostsLoadingState());
+      emit(GetHidePostsLoadingState());
     }).catchError((error){
 
       print('Error in get hide Posts ${error.toString()}');
@@ -3596,8 +3605,61 @@ List<int> commentIndex=[];
     });
 
   }
+///////////////////////////////////////////////////////////////////////////////////////////////
+  Future<void> blocUser({
+
+    required String userId
+
+  })async{
+
+   // emit(HidePostsUsersLoadingState());
+    FirebaseFirestore.instance
+        .collection('BlockedUsers')
+        .doc('${userId}')
+        .set({
+      'blockedUserId':userId
+    }).then((value) {
+      getBlockedUsers(userId: userId);
+      print('=============================== user Hide Id Add ===============');
+     // emit(HidePostsSuccessState());
+    }).catchError((error){
+
+      print('Error in hide user Posts ${error.toString()}');
+     // emit(HidePostsErrorState());
+    });
+
+  }
+  List blockedUsersIds=[];
+
+  Future<void> getBlockedUsers({
+  required String userId
+})async{
+
+    blockedUsersIds=[];
+    posts=[];
+   // emit(GetHidePostsLoadingState());
+    FirebaseFirestore.instance
+        .collection('BlockedUsers')
+        .doc('${userId}')
+        .get().
+    then((value) {
+      blockedUsersIds=[];
+      if (value.id == userId) {
+        blockedUsersIds.add(value.id);
+      }
+      print('================= blockedUsersIds.length = ${blockedUsersIds.length} ==============');
 
 
+      getPosts();
+
+     // emit(GetHidePostsLoadingState());
+    }).catchError((error){
+
+      print('Error in get hide Posts ${error.toString()}');
+     // emit(GetHidePostsLoadingState());
+    });
+
+  }
 
 }
 

@@ -79,7 +79,7 @@ class _HomeLayoutState extends State<HomeLayout> {
       const MatchDetails(),
       const FanScreen(),
       const CountriesScreen(),
-      const PublicChatScreen(),
+       PublicChatScreen(),
       const AdvertisingScreen(),
     ];
 

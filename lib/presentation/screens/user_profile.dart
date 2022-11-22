@@ -1,10 +1,15 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/presentation/layouts/home_layout.dart';
 import 'package:fanchat/presentation/screens/another_chat_details.dart';
+import 'package:fanchat/presentation/screens/home_screen.dart';
 import 'package:fanchat/presentation/widgets/user_profile_area.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_strings.dart';
@@ -218,23 +223,44 @@ class UserProfile extends StatelessWidget {
               : const Center(
                   child: CircularProgressIndicator(),
                 ),
-          floatingActionButton: FloatingActionButton.extended(
-            backgroundColor: Colors.red,
-            label: const Text(
-              'Report User',
-              style: TextStyle(fontFamily: AppStrings.appFont),
-            ),
-            icon: const Icon(Icons.report),
-            onPressed: () {
-              AppCubit.get(context).sendUserReport(
-                  senderReportId: AppCubit.get(context).userModel!.uId!,
-                  senderReportName: AppCubit.get(context).userModel!.username!,
-                  senderReportImage: AppCubit.get(context).userModel!.image!,
-                  userId: userId,
-                  userName: userName,
-                  userImage: userImage);
-            },
-          ),
+          floatingActionButton: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton.extended(
+                backgroundColor: Colors.red,
+                label: const Text(
+                  ' bloc User  ',
+                  style: TextStyle(fontFamily: AppStrings.appFont),
+                ),
+                icon: const Icon(Icons.report),
+                onPressed: () {
+                  AppCubit.get(context).blocUser(userId: userId).then((value){
+                    AppCubit.get(context).getPosts();
+                    AppCubit.get(context).getBlockedUsers(userId: userId);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeLayout()));
+                  });
+                },
+              ),
+              SizedBox(height: 10,),
+              FloatingActionButton.extended(
+                backgroundColor: Colors.red,
+                label: const Text(
+                  'Report User',
+                  style: TextStyle(fontFamily: AppStrings.appFont),
+                ),
+                icon: const Icon(Icons.report),
+                onPressed: () {
+                  AppCubit.get(context).sendUserReport(
+                      senderReportId: AppCubit.get(context).userModel!.uId!,
+                      senderReportName: AppCubit.get(context).userModel!.username!,
+                      senderReportImage: AppCubit.get(context).userModel!.image!,
+                      userId: userId,
+                      userName: userName,
+                      userImage: userImage);
+                },
+              ),
+            ],
+          )
         );
       },
     );

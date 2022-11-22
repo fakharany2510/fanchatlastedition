@@ -104,22 +104,22 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                     backgroundColor: Colors.white,
                     appBar: AppBar(
                       actions: [
-                       Padding(
-                         padding: const EdgeInsets.all(10.0),
-                         child: InkWell(
-                           child:SvgPicture.asset('assets/images/uninform_cheer_icon.svg',
-                             fit: BoxFit.contain,height: 25,width: 25,),
-                           onTap: (){
-                             Navigator.push(context, MaterialPageRoute(builder: (_){
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: InkWell(
+                            child:SvgPicture.asset('assets/images/uninform_cheer_icon.svg',
+                              fit: BoxFit.contain,height: 25,width: 25,),
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (_){
 
 
-                               return CheeringScreen(countryName: widget.countryName,countryImage: widget.countryImage,);
+                                return CheeringScreen(countryName: widget.countryName,countryImage: widget.countryImage,);
 
-                             }));
+                              }));
 
-                           },
-                         ),
-                       )
+                            },
+                          ),
+                        )
                       ],
                       backgroundColor: AppColors.primaryColor1,
                       elevation: 0,
@@ -470,7 +470,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                               controller: textMessage,
                                               decoration:  const InputDecoration(
                                                 hintStyle: TextStyle(
-                                                  color: Colors.white
+                                                    color: Colors.white
                                                 ),
                                                 border: InputBorder.none,
                                                 hintText: 'Write your message...',
@@ -486,8 +486,8 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
                                             width:37,
                                             height: 37,
                                             decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(50),
-                                             color: const Color(0xff7895b2).withOpacity(.9),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: const Color(0xff7895b2).withOpacity(.9),
                                             ),
                                             child: Center(
                                               child: IconButton(

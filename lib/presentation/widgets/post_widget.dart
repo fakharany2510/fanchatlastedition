@@ -232,16 +232,16 @@ class PostWidgetState extends State<PostWidget> {
                                     child: GestureDetector(
                                       onTap: (){
 
-                                        AppCubit.get(context).hidePosts(postId: AppCubit.get(context).posts[widget.index!].postId!).then((value) {
-
-                                        AppCubit.get(context).getHidePosts();
-
-                                        }).then((value) {
-
-                                          print('========== I am here =======');
-                                          AppCubit.get(context).getPosts();
-
-                                        });
+                                        //  AppCubit.get(context).hidePosts(postId: AppCubit.get(context).posts[widget.index!].postId!).then((value)async {
+                                        //
+                                        // await AppCubit.get(context).getHidePosts();
+                                        //
+                                        //  }).then((value) {
+                                        //
+                                        //    print('========== I am here =======');
+                                        //   // AppCubit.get(context).getPosts();
+                                        //
+                                        //  });
 
                                       },
                                       child: Column(
@@ -272,14 +272,14 @@ class PostWidgetState extends State<PostWidget> {
                                     ),
                                     onTap: (){
                                       setState((){
-                                        AppCubit.get(context).hidePosts(postId: AppCubit.get(context).posts[widget.index!].postId!).then((value) {
+                                        AppCubit.get(context).hidePosts(postId: AppCubit.get(context).posts[widget.index!].postId!).then((value) async{
 
-                                        AppCubit.get(context).getHidePosts();
+                                          await AppCubit.get(context).getHidePosts();
 
                                         }).then((value) {
 
                                           print('========== I am here =======');
-                                          AppCubit.get(context).getPosts();
+                                          // AppCubit.get(context).getPosts();
 
 
                                         });

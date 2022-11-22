@@ -116,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           padding: const EdgeInsets.only(
                               top: 0, left: 30, right: 30),
                           child: Text(
-                            'Enjoy chatting in special team fans’ rooms, public rooms, '
+                            'Version 1.0.0\nEnjoy chatting in special team fans’ rooms, public rooms, '
                             'and one-to-one chats. Share videos, photos, and voice notes with '
                             'football fans around the world. Broadcast a cheer to all your team '
                             'fans rooms,and follow match scores and news during',
@@ -266,7 +266,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           width: size.width * .6,
                           height: size.height * .06,
                           function: () {
-                            if (phoneNumber == "+93777777777") {
+                            if (phoneNumber == "+93666666666") {
                               // print('hello');
                               if (isCheckBoxTrue == true) {
                                 AppStrings.uId = 'qN1pYUcZN0zZD6YfNQ6H';

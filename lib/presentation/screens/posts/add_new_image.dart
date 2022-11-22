@@ -21,14 +21,14 @@ class AddNewImage extends StatefulWidget {
 class _AddNewImageState extends State<AddNewImage> {
   TextEditingController postText = TextEditingController();
 
-  var notifyHelper;
+ // var notifyHelper;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    notifyHelper = NotifyHelper();
-    notifyHelper.initializeNotification();
-    notifyHelper.requestIOSPermissions();
+    //notifyHelper = NotifyHelper();
+    //notifyHelper.initializeNotification();
+    //notifyHelper.requestIOSPermissions();
   }
 
   @override

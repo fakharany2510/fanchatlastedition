@@ -1,6 +1,7 @@
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
+import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
 import 'package:fanchat/presentation/screens/edit_profie_screen.dart';
 import 'package:fanchat/presentation/screens/private_chat/chat_screen.dart';
 import 'package:flutter/material.dart';
@@ -155,7 +156,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                       width: size.width,
                                       height: size.height*.05,
                                       decoration: BoxDecoration(
-                                          color:  Colors.grey,
+                                          color:  const Color(0Xffd32330),
                                           borderRadius: BorderRadius.circular(10)
                                       ),
                                       child: Row(
@@ -181,6 +182,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                       ),
                                     ),
                                     onTap: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ChoosePayPackage()));
                                     },
                                   ),
 

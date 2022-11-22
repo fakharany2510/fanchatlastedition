@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           CarouselSlider(
                             items: cubit.carouselImage.map((e) {
                               return Image(
-                                image: NetworkImage(e),
+                                image: AssetImage(e),
                                 width: double.infinity,
                                 fit: BoxFit.cover,
                               );

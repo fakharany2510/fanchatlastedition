@@ -28,7 +28,7 @@ class _MatchDetailsState extends State<MatchDetails> {
 
 
   String ?dateMatch='22 Nov 2022';
-
+   var matchTime =DateTime.now().timeZoneOffset.inHours;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppState>(
@@ -68,7 +68,7 @@ class _MatchDetailsState extends State<MatchDetails> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
 
-                                 // Days List
+                                  // Days List
                                   Container(
                                     decoration: const BoxDecoration(
                                         image: DecorationImage(
@@ -85,8 +85,8 @@ class _MatchDetailsState extends State<MatchDetails> {
                                             return InkWell(
                                               onTap: (){
                                                 setState(() {
-                                                 AppCubit.get(context).isDay= List.generate(28, (index) => false);
-                                                 AppCubit.get(context).isDay[index]=! AppCubit.get(context).isDay[index];
+                                                  AppCubit.get(context).isDay= List.generate(28, (index) => false);
+                                                  AppCubit.get(context).isDay[index]=! AppCubit.get(context).isDay[index];
                                                 });
 
                                                 AppCubit.get(context).getAllMatches(doc: dateMatchs[index]);
@@ -98,7 +98,7 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                 ),
 
                                                 decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(15),
+                                                  borderRadius: BorderRadius.circular(15),
                                                 ),
                                                 child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -119,7 +119,7 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                         ),),
                                                       ],
                                                     ),
-                                                     const SizedBox(width: 15,),
+                                                    const SizedBox(width: 15,),
                                                     Container(
                                                       width: 1,
                                                       height: 25,
@@ -146,10 +146,10 @@ class _MatchDetailsState extends State<MatchDetails> {
                                   // Matches List
                                   Container(
                                     decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage('assets/images/public_chat_image.jpeg'),
-                                        fit: BoxFit.cover,
-                                      )
+                                        image: DecorationImage(
+                                          image: AssetImage('assets/images/public_chat_image.jpeg'),
+                                          fit: BoxFit.cover,
+                                        )
                                     ),
                                     child: ListView.separated(
                                         shrinkWrap: true,
@@ -169,8 +169,8 @@ class _MatchDetailsState extends State<MatchDetails> {
                                               ),
                                               width: double.infinity,
                                               decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(7),
-                                                  color:  AppColors.primaryColor1,
+                                                borderRadius: BorderRadius.circular(7),
+                                                color:  AppColors.primaryColor1,
                                               ),
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -186,7 +186,8 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                   const SizedBox(height: 5,),
 
 
-                                                  Text('${AppCubit.get(context).allMatches[index].clock!+ DateTime.now().timeZoneOffset.inHours}:00 PM',style: TextStyle(
+                                                  Text('${AppCubit.get(context).allMatches[index].clock!+ DateTime.now().timeZoneOffset.inHours}:00 PM',
+                                                    style: TextStyle(
                                                       color: AppColors.myWhite,
                                                       fontSize: 15,
                                                       fontFamily: AppStrings.appFont
@@ -238,16 +239,24 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                             child: Row(
                                                               mainAxisAlignment: MainAxisAlignment.center,
                                                               children: [
-
                                                                 const SizedBox(width: 10,),
-                                                                Text('Not Started',style: TextStyle(
+
+                                                               (matchTime != AppCubit.get(context).allMatches[index].clock!+ DateTime.now().timeZoneOffset.inHours)?
+                                                                Text('${AppCubit.get(context).allMatches[index].score!}',style: TextStyle(
                                                                     color: AppColors.myWhite,
                                                                     fontSize: 17,
                                                                     fontWeight: FontWeight.w500,
                                                                     fontFamily: AppStrings.appFont
                                                                 ),
                                                                   textAlign: TextAlign.center,
-                                                                ),
+                                                                ):Text('Not Started',style: TextStyle(
+                                                                   color: AppColors.myWhite,
+                                                                   fontSize: 17,
+                                                                   fontWeight: FontWeight.w500,
+                                                                   fontFamily: AppStrings.appFont
+                                                               ),
+                                                                 textAlign: TextAlign.center,
+                                                               ),
                                                                 const SizedBox(width: 10,),
 
                                                               ],
@@ -264,7 +273,7 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                             height: 50,
                                                             width: 50,
                                                             decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.circular(50)
+                                                                borderRadius: BorderRadius.circular(50)
                                                             ),
                                                             child: CachedNetworkImage(
                                                               cacheManager: AppCubit.get(context).manager,
