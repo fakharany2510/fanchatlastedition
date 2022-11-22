@@ -27,7 +27,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:media_cache_manager/core/download_cache_manager.dart';
 import 'package:overlay_support/overlay_support.dart';
-import '';
 import 'business_logic/bloc/bloc_observer.dart';
 
 void main() async {
@@ -94,6 +93,7 @@ class MyApp extends StatelessWidget {
               ..getUserIds()
               ..periodic()
               ..getPosts()
+              ..getSlider()
               ..getLastUsers()
               ..getUserIds()
               ..getAllMatches(doc: '20 Nov')),
@@ -134,11 +134,11 @@ class MyApp extends StatelessWidget {
                   : SplashScreen(),
               'home_layout': (context) => const HomeLayout(),
               // 'login':(context)=> LoginScreen(),
-              'register': (context) => RegisterScreen(),
+              'register': (context) => const RegisterScreen(),
               'profile': (context) => const ProfileScreen(),
-              'edit_profile': (context) => EditProfileScreen(),
-              'add_video': (context) => AddNewVideo(),
-              'add_image': (context) => AddNewImage(),
+              'edit_profile': (context) => const EditProfileScreen(),
+              'add_video': (context) => const AddNewVideo(),
+              'add_image': (context) => const AddNewImage(),
               'add_text': (context) => AddTextPost(),
               'fan_post': (context) => FanFullPost(),
             },

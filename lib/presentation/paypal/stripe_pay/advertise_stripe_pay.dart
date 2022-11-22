@@ -43,7 +43,7 @@ class _AdvertisePackageState extends State<AdvertisePackage> {
               ),
             ),
             const Text(
-              'Advertise package for FanChat app',
+              'Advertising Package for FanChat app',
               style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,
@@ -52,7 +52,7 @@ class _AdvertisePackageState extends State<AdvertisePackage> {
             ),
             const SizedBox(height: 10),
             Text(
-              'Price : \$200 ',
+              'Price : \$200 for 1 year  ',
               style: TextStyle(
                 color: Colors.red.shade900,
                 fontSize: 18,
@@ -60,7 +60,7 @@ class _AdvertisePackageState extends State<AdvertisePackage> {
             ),
             const SizedBox(height: 15),
             const Text(
-              'Details of Advertise package',
+              'Details',
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.white,
@@ -69,7 +69,7 @@ class _AdvertisePackageState extends State<AdvertisePackage> {
             ),
             const SizedBox(height: 10),
             Text(
-              'Buy a advertise package and enjoy FanChat for one year and add your advertisement',
+              'Place your ads on FAN Char adverising page and link them to your page',
               style: TextStyle(
                 color: Colors.red.shade900,
                 fontSize: 18,

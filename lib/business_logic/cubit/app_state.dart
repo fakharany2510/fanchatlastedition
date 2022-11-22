@@ -13,6 +13,9 @@ class CheckBoxState extends AppState {}
 class PickPostImageSuccessState extends AppState {}
 class PickPostImageErrorState extends AppState {}
 
+class GetSliderSuccessState extends AppState {}
+class GetSliderErrorState extends AppState {}
+
 class PickChatImageSuccessState extends AppState {}
 class PickChatImageErrorState extends AppState {}
 class CreatePostLoadingState extends AppState {}

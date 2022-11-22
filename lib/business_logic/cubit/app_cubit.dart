@@ -85,11 +85,28 @@ class AppCubit extends Cubit<AppState> {
 
   ];
 
-  List carouselImage=[
-    'assets/images/ads1.jpg',
-    'assets/images/ads1.jpg',
-    'assets/images/ads1.jpg',
-  ];
+  List carouselImage=[];
+
+
+  void getSlider(){
+
+    FirebaseFirestore.instance.collection('sliderImage')
+        .get()
+        .then((value) {
+          value.docs.forEach((element) {
+
+            carouselImage.add(element['image']);
+
+          });
+         emit(GetSliderSuccessState());
+    }).catchError((error){
+
+
+      debugPrint('Error in getSlider is ${error.toString()}');
+      emit(GetSliderErrorState());
+    });
+
+  }
 
   ScrollController publicChatController = ScrollController();
 

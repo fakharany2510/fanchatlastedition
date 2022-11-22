@@ -158,18 +158,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           height: 25,
                         ),
 
-                        // Padding(
-                        //   padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
-                        //   child: textFormFieldWidget(
-                        //       context: context,
-                        //       controller: name,
-                        //       errorMessage: "please enter your name",
-                        //       inputType: TextInputType.name,
-                        //       labelText:"Name",
-                        //       prefixIcon: Icon(Icons.person,color: AppColors.myGrey,)
-                        //   ),
-                        // ),
-                        // SizedBox(height: size.height*.03,),
+
                         Padding(
                           padding: const EdgeInsets.only(
                               top: 0, left: 30, right: 30),
