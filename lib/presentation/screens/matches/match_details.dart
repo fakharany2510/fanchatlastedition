@@ -198,29 +198,35 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                   Row(
                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
-                                                      Column(
-                                                        children: [
-                                                          Container(
-                                                            height: 50,
-                                                            width: 50,
-                                                            decoration: BoxDecoration(
-                                                                borderRadius: BorderRadius.circular(50)
+                                                      Expanded(
+                                                        child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: [
+                                                            Container(
+                                                              height: MediaQuery.of(context).size.height*.05,
+                                                              width: MediaQuery.of(context).size.height*.07,
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(50)
+                                                              ),
+                                                              child: CachedNetworkImage(
+                                                                cacheManager: AppCubit.get(context).manager,
+                                                                imageUrl: AppCubit.get(context).allMatches[index].firstImage!,
+                                                                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                                                                fit: BoxFit.cover,
+                                                              ) ,
                                                             ),
-                                                            child: CachedNetworkImage(
-                                                              cacheManager: AppCubit.get(context).manager,
-                                                              imageUrl: AppCubit.get(context).allMatches[index].firstImage!,
-                                                              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                                                              fit: BoxFit.fitWidth,
-                                                            ) ,
-                                                          ),
-                                                          const  SizedBox(height: 5,),
-                                                          Text(AppCubit.get(context).allMatches[index].firstTeam!,style: TextStyle(
-                                                              color: AppColors.myWhite,
-                                                              fontSize: 13,
-                                                              fontWeight: FontWeight.bold,
-                                                              fontFamily: AppStrings.appFont
-                                                          ),),
-                                                        ],
+                                                            const  SizedBox(height: 5,),
+                                                            Text(AppCubit.get(context).allMatches[index].firstTeam!,style: TextStyle(
+                                                                color: AppColors.myWhite,
+                                                                fontSize: 13,
+                                                                fontWeight: FontWeight.bold,
+                                                                fontFamily: AppStrings.appFont
+                                                            ),
+                                                              textAlign: TextAlign.center,
+
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
 
                                                       const SizedBox(width: 25,),
@@ -267,30 +273,36 @@ class _MatchDetailsState extends State<MatchDetails> {
                                                       ),
 
                                                       const SizedBox(width: 25,),
-                                                      Column(
-                                                        children: [
-                                                          Container(
-                                                            height: 50,
-                                                            width: 50,
-                                                            decoration: BoxDecoration(
-                                                                borderRadius: BorderRadius.circular(50)
+                                                      
+                                                      Expanded(
+                                                        child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          children: [
+                                                            Container(
+                                                              height: MediaQuery.of(context).size.height*.05,
+                                                              width: MediaQuery.of(context).size.height*.07,
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(50)
+                                                              ),
+                                                              child: CachedNetworkImage(
+                                                                cacheManager: AppCubit.get(context).manager,
+                                                                imageUrl: AppCubit.get(context).allMatches[index].secondImage!,
+                                                                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                                                                fit: BoxFit.cover,
+                                                              ) ,
                                                             ),
-                                                            child: CachedNetworkImage(
-                                                              cacheManager: AppCubit.get(context).manager,
-                                                              imageUrl: AppCubit.get(context).allMatches[index].secondImage!,
-                                                              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                                                              fit: BoxFit.fitWidth,
-                                                            ) ,
-                                                          ),
 
-                                                          const SizedBox(height: 5,),
-                                                          Text(AppCubit.get(context).allMatches[index].secondTeam!,style: TextStyle(
-                                                              color: AppColors.myWhite,
-                                                              fontSize: 13,
-                                                              fontWeight: FontWeight.bold,
-                                                              fontFamily: AppStrings.appFont
-                                                          ),),
-                                                        ],
+                                                            const SizedBox(height: 5,),
+                                                            Text(AppCubit.get(context).allMatches[index].secondTeam!,style: TextStyle(
+                                                                color: AppColors.myWhite,
+                                                                fontSize: 13,
+                                                                fontWeight: FontWeight.bold,
+                                                                fontFamily: AppStrings.appFont
+                                                            ),
+                                                             textAlign: TextAlign.center,
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
                                                     ],
                                                   ),

@@ -81,7 +81,7 @@ class _AdvertisePackageState extends State<AdvertisePackage> {
                 await makePayment();
               },
               textColor: AppColors.myWhite,
-              buttonText: 'Buy Adverise Package',
+              buttonText: 'Buy Advertising Package',
               buttonColor: const Color(0Xffd32330),
               width: MediaQuery.of(context).size.width * .6,
               height: MediaQuery.of(context).size.height * .06,

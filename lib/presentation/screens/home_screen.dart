@@ -53,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           body: AppCubit.get(context).userModel != null
               ? RefreshIndicator(
                   onRefresh: () async {
+                    AppCubit.get(context).getSlider();
                     await AppCubit.get(context).getPosts();
                   },
                   child: SingleChildScrollView(

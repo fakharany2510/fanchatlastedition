@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, depend_on_referenced_packages
 
 import 'package:fanchat/business_logic/advertising_cubit/advertising_cubit.dart';
+import 'package:flutter/services.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
@@ -31,6 +32,9 @@ import 'business_logic/bloc/bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   /// ============================================
     Stripe.publishableKey =  AppStrings.publishableKey;
