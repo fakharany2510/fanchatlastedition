@@ -407,8 +407,10 @@ class AppCubit extends Cubit<AppState> {
 
         printMessage('Upload Success');
         profilePath = value;
-        updateProfile(name: name,
+        updateProfile(
+            name: name,
             bio: bio,
+            phone: phone,
             image: profilePath,
             facebookLink: facebookLink??'Enter your facebook link',
             instagramLink: instagramLink??'Enter your instagram link',
@@ -436,6 +438,7 @@ class AppCubit extends Cubit<AppState> {
       {
         String ?name,
         String ?bio,
+        String ?phone,
         String ?youtubeLink,
         String ?facebookLink,
         String ?instagramLink,
@@ -455,6 +458,7 @@ class AppCubit extends Cubit<AppState> {
         updateProfile(
             name: name,
             bio: bio,
+            phone: phone,
             cover: coverPath,
             facebookLink: facebookLink??'Enter your facebook link',
             instagramLink: instagramLink??'Enter your instagram link',
@@ -486,6 +490,7 @@ class AppCubit extends Cubit<AppState> {
     String ?cover,
     required String ?name,
     required String ?bio,
+    required String ?phone,
     required String ?youtubeLink,
     required String ?instagramLink,
     required String ?twitterLink,
@@ -496,6 +501,7 @@ class AppCubit extends Cubit<AppState> {
     UserModel model= UserModel(
         username: name,
         bio: bio,
+        phone: phone,
         uId: AppStrings.uId,
         image: image?? userModel!.image,
         cover: cover?? userModel!.cover,

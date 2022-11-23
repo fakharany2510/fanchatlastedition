@@ -215,16 +215,16 @@ class EditProfileScreen extends StatelessWidget {
                             prefixIcon:
                                 Icon(Icons.person, color: AppColors.myGrey)),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                      //   child: textFormFieldWidget(
-                      //       context: context,
-                      //       controller: cubit.changeUserPhoneController,
-                      //       errorMessage: "please enter your phone",
-                      //       inputType: TextInputType.phone,
-                      //       labelText: "phone",
-                      //       prefixIcon: Icon(Icons.phone, color: AppColors.myGrey)),
-                      // ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        child: textFormFieldWidget(
+                            context: context,
+                            controller: cubit.changeUserPhoneController,
+                            errorMessage: "please enter your phone",
+                            inputType: TextInputType.phone,
+                            labelText: "phone",
+                            prefixIcon: Icon(Icons.phone, color: AppColors.myGrey)),
+                      ),
                       Padding(
                         padding:
                             const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -374,6 +374,7 @@ class EditProfileScreen extends StatelessWidget {
                                   if (cubit.coverImage != null) {
                                     cubit
                                         .uploadUserCover(
+                                      phone: cubit.changeUserPhoneController.text,
                                       name: cubit.changeUserNameController.text,
                                       bio: cubit.changeUserBioController.text,
                                     )
@@ -388,6 +389,7 @@ class EditProfileScreen extends StatelessWidget {
                                   if (cubit.profileImage != null) {
                                     cubit
                                         .uploadUserImage(
+                                      phone: cubit.changeUserPhoneController.text,
                                       name: cubit.changeUserNameController.text,
                                       bio: cubit.changeUserBioController.text,
                                     )
@@ -403,6 +405,7 @@ class EditProfileScreen extends StatelessWidget {
                                       .updateProfile(
                                     image: cubit.profilePath,
                                     cover: cubit.coverPath,
+                                    phone: cubit.changeUserPhoneController.text,
                                     name: cubit.changeUserNameController.text,
                                     bio: cubit.changeUserBioController.text,
                                     youtubeLink:
