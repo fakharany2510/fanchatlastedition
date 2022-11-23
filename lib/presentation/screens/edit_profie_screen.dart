@@ -218,6 +218,7 @@ class EditProfileScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textFormFieldWidget(
+                            enable: false,
                             context: context,
                             controller: cubit.changeUserPhoneController,
                             errorMessage: "please enter your phone",

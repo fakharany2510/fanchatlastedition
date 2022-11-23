@@ -35,8 +35,9 @@ class _MoreScreenState extends State<MoreScreen> {
                     child: Padding(
                       padding:const  EdgeInsets.all(10),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(height: 10,),
+                          const SizedBox(height: 10,),
                           CircleAvatar(
                             backgroundImage: NetworkImage('${cubit.userModel!.image}'),
                             radius: 60,
@@ -314,6 +315,15 @@ class _MoreScreenState extends State<MoreScreen> {
                               ),
                             ),
                           ),
+
+                          Text('Ver 1.0.0',style:  TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20,
+                              fontFamily: AppStrings.appFont,
+                              color: AppColors.myWhite
+                          ),),
+                          const SizedBox(height: 20,),
+
                         ],
                       ),
                     ),

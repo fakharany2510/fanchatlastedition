@@ -229,7 +229,7 @@ class UserProfile extends StatelessWidget {
               FloatingActionButton.extended(
                 backgroundColor: Colors.red,
                 label: const Text(
-                  ' bloc User  ',
+                  ' Block User  ',
                   style: TextStyle(fontFamily: AppStrings.appFont),
                 ),
                 icon: const Icon(Icons.report),

@@ -150,7 +150,7 @@ class _FanFullVideoState extends State<FanFullVideo> {
                                         '${widget.userName}',
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                            color: AppColors.primaryColor1,
+                                            color: AppColors.myWhite,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500,
                                             fontFamily: AppStrings.appFont),

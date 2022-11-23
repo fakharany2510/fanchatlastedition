@@ -947,6 +947,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
   //////////////////////////voice functions////////////////////
   @override
   void dispose() {
+    scrollController.dispose();
     super.dispose();
   }
   _Fn getRecorderFn() {

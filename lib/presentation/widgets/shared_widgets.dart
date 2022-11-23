@@ -17,6 +17,7 @@ Widget textFormFieldWidget({
   required String errorMessage,
   Widget? prefixIcon,
   Function? function,
+  bool enable=true,
   int? maxLines,
 }) =>
     Container(
@@ -28,6 +29,7 @@ Widget textFormFieldWidget({
           fontFamily: AppStrings.appFont,
         ),
         keyboardType: inputType,
+        enabled: enable,
         controller: controller,
         onChanged: (value) {
           function!;
