@@ -33,6 +33,7 @@ class _AddAdvertisingImageState extends State<AddAdvertisingImage> {
       },
       builder: (context, state) {
         return Scaffold(
+
           backgroundColor: AppColors.myWhite,
           appBar: AppBar(
             backgroundColor: AppColors.primaryColor1,

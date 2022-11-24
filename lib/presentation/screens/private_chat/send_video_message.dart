@@ -35,6 +35,8 @@ class SendVideoMessage extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
             backgroundColor: AppColors.myWhite,
+            appBar: customUpdateAppbar('', context),
+
             body: Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,

@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,7 @@ class _OpenFullVideoState extends State<OpenFullVideo> {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
+            appBar: customUpdateAppbar('', context),
             body: Stack(
           children: [
             SizedBox(

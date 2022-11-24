@@ -26,6 +26,7 @@ class SendVideoPublicChat extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
+            appBar: customUpdateAppbar('', context),
             backgroundColor: AppColors.myWhite,
             body: Container(
               height: MediaQuery.of(context).size.height,

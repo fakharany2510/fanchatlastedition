@@ -23,6 +23,7 @@ class _AdvertisePackageState extends State<AdvertisePackage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: customUpdateAppbar('', context),
       body: Stack(children: [
         Container(
           height: MediaQuery.of(context).size.height,
@@ -36,10 +37,10 @@ class _AdvertisePackageState extends State<AdvertisePackage> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           children: [
             Container(
-              margin: const EdgeInsets.symmetric(vertical: 20),
+              margin: const EdgeInsets.symmetric(vertical: 0),
               child: const Image(
                 image: AssetImage('assets/images/ncolors.png'),
-                height: 350,
+                height: 300,
               ),
             ),
             const Text(

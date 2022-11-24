@@ -18,6 +18,7 @@ class _AdsNavState extends State<AdsNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: customUpdateAppbar('', context),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(

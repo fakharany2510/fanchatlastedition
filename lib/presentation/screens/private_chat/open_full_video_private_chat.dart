@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,6 +69,8 @@ class _OpenFullVideoPrivateChatState extends State<OpenFullVideoPrivateChat> {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
+          appBar: customUpdateAppbar('', context),
+
           body: Stack(
             children: [
               SizedBox(

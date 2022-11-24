@@ -35,6 +35,7 @@ class _SendImageState extends State<SendImage> {
       },
       builder: (context, state) {
         return Scaffold(
+            appBar: customUpdateAppbar('', context),
             backgroundColor: AppColors.myWhite,
             body: Stack(
               children: [

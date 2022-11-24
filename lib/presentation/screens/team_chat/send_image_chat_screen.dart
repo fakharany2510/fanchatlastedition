@@ -31,6 +31,8 @@ class _SendImageTeamChatState extends State<SendImageTeamChat> {
       },
       builder: (context, state) {
         return Scaffold(
+            appBar: customUpdateAppbar('', context),
+
             backgroundColor: AppColors.myWhite,
             body: Stack(
               children: [

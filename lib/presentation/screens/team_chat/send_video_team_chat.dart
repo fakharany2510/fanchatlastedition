@@ -28,6 +28,7 @@ class SendVideoTeamChat extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
+            appBar: customUpdateAppbar('', context),
             backgroundColor: AppColors.myWhite,
             body: Container(
               height: MediaQuery.of(context).size.height,
@@ -38,7 +39,7 @@ class SendVideoTeamChat extends StatelessWidget {
                 fit: BoxFit.cover,
               )),
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   children: [
                     (AppCubit.get(context).postVideo5 != null)

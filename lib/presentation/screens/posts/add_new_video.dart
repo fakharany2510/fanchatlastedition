@@ -203,29 +203,24 @@ class _AddNewVideoState extends State<AddNewVideo> {
                                     .controller!
                                     .value
                                     .isInitialized)
-                            ? SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * .55,
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  heightFactor: 1,
-                                  widthFactor: 1,
-                                  child: AspectRatio(
-                                    aspectRatio: AppCubit.get(context)
-                                            .controller!
-                                            .value
-                                            .aspectRatio *
-                                        1,
-                                    child: AppCubit.get(context).controller ==
-                                            null
-                                        ? const SizedBox(
-                                            height: 0,
-                                          )
-                                        : CachedVideoPlayer(
-                                            AppCubit.get(context).controller!),
-                                  ),
-                                ),
-                              )
+                            ? Expanded(
+                          child: SizedBox(
+                            height: size.height,
+                            child: AspectRatio(
+                              aspectRatio: AppCubit.get(context)
+                                      .controller!
+                                      .value
+                                      .aspectRatio * 1,
+                              child: AppCubit.get(context).controller ==
+                                      null
+                                  ? const SizedBox(
+                                      height: 0,
+                                    )
+                                  : CachedVideoPlayer(
+                                      AppCubit.get(context).controller!),
+                            ),
+                          ),
+                        )
                             : Expanded(
                                 child: Center(
                                     child: Text('No Video Selected Yet',

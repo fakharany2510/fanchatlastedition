@@ -2,6 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 
 class ShowHomeImage extends StatelessWidget {
@@ -11,6 +12,8 @@ class ShowHomeImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: customUpdateAppbar('', context),
+
         body: Stack(
       children: [
         SizedBox(
