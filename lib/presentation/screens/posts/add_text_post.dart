@@ -2,7 +2,6 @@ import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/layouts/home_layout.dart';
-import 'package:fanchat/presentation/notifications/functions/send_notification.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -223,7 +222,7 @@ class _AddTextPostState extends State<AddTextPost> {
                         ),
                       ),
                       SizedBox(
-                        height: size.height * .5,
+                        height: size.height * .4,
                       ),
 
                       Padding(
