@@ -325,7 +325,7 @@ class _VerifyPhoneNumberScreenState extends State<VerifyPhoneNumberScreen>
           backgroundColor:Colors.transparent,
           // title: const Text('Aew you sure you want to logout from FanChat'),
           content: Container(
-            height: MediaQuery.of(context).size.height*.5,
+            height: MediaQuery.of(context).size.height*.8,
             width: MediaQuery.of(context).size.height*.8,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),

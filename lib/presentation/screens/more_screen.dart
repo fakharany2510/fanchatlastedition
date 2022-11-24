@@ -29,15 +29,24 @@ class _MoreScreenState extends State<MoreScreen> {
             body:(cubit.userModel!.uId !=null)
                 ? SafeArea(
                   child: Container(
-                    margin: EdgeInsets.only(
-                        top: 50
+                    margin: const EdgeInsets.only(
+                        top: 10
                     ),
                     child: Padding(
                       padding:const  EdgeInsets.all(10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const SizedBox(height: 10,),
+                          Align(
+                            alignment: Alignment.topLeft,
+                              child: IconButton(
+                                  onPressed: (){
+                                    Navigator.pop(context);
+                                    },
+                                  icon: const Icon(Icons.arrow_back_ios,color: Colors.white,)
+                              )
+                          ),
+                           SizedBox(height: MediaQuery.of(context).size.height*.02,),
                           CircleAvatar(
                             backgroundImage: NetworkImage('${cubit.userModel!.image}'),
                             radius: 60,
@@ -90,7 +99,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                     ),
                                     onTap: (){
                                       Navigator.push(context, MaterialPageRoute(builder: (_){
-                                        return EditProfileScreen();
+                                        return const EditProfileScreen();
                                       }));
                                     },
                                   ),
@@ -115,8 +124,8 @@ class _MoreScreenState extends State<MoreScreen> {
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          ImageIcon(
-                                            const AssetImage("assets/images/chat.png"),
+                                          const ImageIcon(
+                                            AssetImage("assets/images/chat.png"),
                                             color:Colors.white,
                                             size: 25,
                                           ),
@@ -138,7 +147,7 @@ class _MoreScreenState extends State<MoreScreen> {
 
 
                                       Navigator.push(context,
-                                          MaterialPageRoute(builder: (context)=>ChatsScreen())
+                                          MaterialPageRoute(builder: (context)=>const ChatsScreen())
                                       );
                                     },
                                   ),
@@ -164,8 +173,8 @@ class _MoreScreenState extends State<MoreScreen> {
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          ImageIcon(
-                                            const AssetImage("assets/images/card.png"),
+                                          const ImageIcon(
+                                            AssetImage("assets/images/card.png"),
                                             color:Colors.white,
                                             size: 25,
                                           ),
@@ -183,7 +192,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                       ),
                                     ),
                                     onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ChoosePayPackage()));
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const ChoosePayPackage()));
                                     },
                                   ),
 
@@ -358,7 +367,7 @@ class _MoreScreenState extends State<MoreScreen> {
                   Align(
                     alignment: Alignment.topRight,
                     child:InkWell(
-                      child: Image(image: AssetImage('assets/images/x-mark.png'),height: 20,width: 20),
+                      child: const Image(image: AssetImage('assets/images/x-mark.png'),height: 20,width: 20),
                       onTap: (){
                         Navigator.pop(context);
                       },

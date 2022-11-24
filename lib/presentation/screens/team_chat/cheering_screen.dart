@@ -53,7 +53,7 @@ class _CheeringScreenState extends State<CheeringScreen> {
       },
       builder: (context, state) {
         return Scaffold(
-          appBar: customAppbar('Profile', context),
+          appBar: customUpdateAppbar('Profile', context),
           body: Stack(
             children: [
               SizedBox(

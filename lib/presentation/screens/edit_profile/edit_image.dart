@@ -25,7 +25,7 @@ class _EditImageState extends State<EditImage> {
         var cubit = AppCubit.get(context);
 
         return Scaffold(
-          appBar: customAppbar('Edit Profile', context),
+          appBar: customUpdateAppbar('Edit Profile', context),
           body: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(

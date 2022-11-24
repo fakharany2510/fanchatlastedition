@@ -23,7 +23,7 @@ class AdvertisingFullPost extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.white,
-          appBar: customAppbar('fan Post', context),
+          appBar: customUpdateAppbar('fan Post', context),
           body: Stack(
             children: [
               SizedBox(

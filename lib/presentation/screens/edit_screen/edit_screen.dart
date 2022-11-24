@@ -28,7 +28,7 @@ class EditPostImageScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-          appBar: customAppbar('', context),
+          appBar: customUpdateAppbar('', context),
         );
       },
     );

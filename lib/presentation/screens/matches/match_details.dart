@@ -77,7 +77,7 @@ class _MatchDetailsState extends State<MatchDetails> {
                                     ),
                                     child: SizedBox(
                                       width: double.infinity,
-                                      height: MediaQuery.of(context).size.height*.09,
+                                      height: MediaQuery.of(context).size.height*.11,
                                       child: ListView.separated(
                                           scrollDirection:Axis.horizontal,
                                           shrinkWrap: true,

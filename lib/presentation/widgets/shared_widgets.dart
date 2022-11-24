@@ -179,6 +179,51 @@ customAppbar(String title, context) {
   );
 }
 
+
+customUpdateAppbar(String title, context) {
+  return AppBar(
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.light,
+      statusBarColor: AppColors.primaryColor1,
+    ),
+    iconTheme: IconThemeData(color: AppColors.myWhite),
+    backgroundColor: AppColors.primaryColor1,
+    leading: IconButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios,color: Colors.white,)
+        ),
+
+    title: GestureDetector(
+      onTap: () {
+        AppCubit.get(context).currentIndex = 0;
+        AppCubit.get(context).getPosts();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) {
+              return const HomeLayout();
+            },
+          ),
+        );
+      },
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 1,
+        width: MediaQuery.of(context).size.width * .25,
+        child: const Image(
+          image: AssetImage('assets/images/ncolors.png'),
+          height: 100,
+          width: 100,
+        ),
+      ),
+    ),
+    centerTitle: true,
+    elevation: 0.0,
+    actions: const [],
+  );
+}
+
 printMessage(String title) {
   debugPrint(title);
 }

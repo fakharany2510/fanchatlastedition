@@ -19,7 +19,7 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor1,
-      appBar: customAppbar('payPackage', context),
+      appBar: customUpdateAppbar('payPackage', context),
       body: Padding(
           padding: const EdgeInsets.only(bottom: 15, left: 10, top: 25),
           child: CashHelper.getData(key: 'Advertise') == 1 &&

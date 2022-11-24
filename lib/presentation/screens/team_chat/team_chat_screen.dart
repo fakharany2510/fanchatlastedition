@@ -582,7 +582,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
         fallback: (context)=>const Center(child: CircularProgressIndicator()),
       )
           :Scaffold(
-          appBar: customAppbar('Team Chat', context),
+          appBar: customUpdateAppbar('Team Chat', context),
           body: Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

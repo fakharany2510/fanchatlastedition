@@ -47,7 +47,7 @@ class ReportScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: AppColors.primaryColor1,
-          appBar: customAppbar('dsd', context),
+          appBar: customUpdateAppbar('dsd', context),
           body: SingleChildScrollView(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),

@@ -37,7 +37,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
       builder: (context, state) {
         return Scaffold(
             backgroundColor: AppColors.primaryColor1,
-            appBar: customAppbar('private chat', context),
+            appBar: customUpdateAppbar('private chat', context),
             body: SingleChildScrollView(
               controller: _parentScrollController,
               child: Column(

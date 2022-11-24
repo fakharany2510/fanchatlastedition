@@ -40,7 +40,7 @@ class UserProfile extends StatelessWidget {
       builder: (context, state) {
         var cubit = AppCubit.get(context);
         return Scaffold(
-          appBar: customAppbar('Profile', context),
+          appBar: customUpdateAppbar('Profile', context),
           backgroundColor: AppColors.primaryColor1,
           body: cubit.userModel != null
               ? SingleChildScrollView(

@@ -39,7 +39,7 @@ class EditProfileScreen extends StatelessWidget {
 
         return Scaffold(
             backgroundColor: AppColors.primaryColor1,
-            appBar: customAppbar('Edit Profile', context),
+            appBar: customUpdateAppbar('Edit Profile', context),
             body: Stack(
               children: [
                 SizedBox(
