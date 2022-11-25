@@ -80,11 +80,11 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
             return BlocConsumer<AppCubit,AppState>(
               listener: (context,state){
                 if(state is PickPostImageSuccessState ){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SendImagePublicChat()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const SendImagePublicChat()));
                 }
 
                 if(state is PickPrivateChatViedoSuccessState ){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SendVideoPublicChat()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const SendVideoPublicChat()));
                 }
               },
               builder: (context,state){
