@@ -519,7 +519,7 @@ class _ChatDetailsState extends State<ChatDetails> {
     Size size = MediaQuery.of(context).size;
     print("permission uploadRecord1");
     var uuid = const Uuid().v4();
-    Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('privateChatVoice/${Uri.file('${voice}').pathSegments.last}');
+    Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('privateChatVoice/${AppCubit.get(context).userModel!.uId}/${Uri.file('${voice.path}').pathSegments.last}');
     await storageReference.putFile(voice).then((value1){
       value1.ref.getDownloadURL().then((value){
         AppCubit.get(context).createVoiceMessage(
