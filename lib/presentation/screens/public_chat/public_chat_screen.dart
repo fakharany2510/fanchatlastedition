@@ -796,43 +796,7 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
       }
     }
   }
-  // 5- upload record to firebase
-  // Future uploadRecord(
-  //     {
-  //       String? dateTime,
-  //       required File voice,
-  //       String? senderId,
-  //       String? senderName,
-  //       String? senderImage,
-  //
-  //     }
-  //
-  //     ) async {
-  //   Size size = MediaQuery.of(context).size;
-  //   print("permission uploadRecord1");
-  //   var uuid = const Uuid().v4();
-  //   Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('publicChat/${Uri.file(voice.path).pathSegments.last}');
-  //   await storageReference.putFile(voice).then((value){
-  //     AppCubit.get(context).createVoicePublicChat(
-  //       dateTime: DateTime.now().toString(),
-  //       voice: voice.path,
-  //     );
-  //     print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeeeeeeeeeeeeeeeessssssssss');
-  //   }).catchError((error){
-  //     print('nnnnnnnnnnnnnnnnnnnooooooooooooooooooo');
-  //     print(error.toString());
-  //
-  //   });
-  //   var url = await storageReference.getDownloadURL();
-  //   print("recording file222");
-  //   print(url);
-  //   widget.onSendMessage(url, "voice", size);
-  //
-  //   setState(() {
-  //     uploadingRecord = false;
-  //   });
-  //
-  // }
+
   Future uploadRecord(
       {
         String? dateTime,
@@ -848,8 +812,8 @@ class _PublicChatScreenState extends State<PublicChatScreen> {
     print("permission uploadRecord1");
     var uuid = const Uuid().v4();
     Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('publicChatVoices/${Uri.file('${voice}').pathSegments.last}');
-    await storageReference.putFile(voice).then((value){
-      value.ref.getDownloadURL().then((value){
+    await storageReference.putFile(voice).then((value1)async{
+      await value1.ref.getDownloadURL().then((value){
         AppCubit.get(context).createVoicePublicChat(
           dateTime: DateTime.now().toUtc().toString(),
           voice: value,

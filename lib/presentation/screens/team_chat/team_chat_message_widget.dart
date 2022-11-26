@@ -303,8 +303,7 @@ class _SenderTeamChatWidgetState extends State<SenderTeamChatWidget>
                                             AppColors.primaryColor1,
                                         audioSrc:
                                             '${AppCubit.get(context).teamChat[widget.index!].voice}',
-                                        played:
-                                            true, // To show played badge or not.
+                                        played: true, // To show played badge or not.
                                         me: false, // Set message side.
                                         onPlay:
                                             () {}, // Do something when voice played.

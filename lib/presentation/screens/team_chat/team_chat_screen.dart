@@ -1034,28 +1034,29 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
     Size size = MediaQuery.of(context).size;
     print("permission uploadRecord1");
     var uuid = const Uuid().v4();
-    Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('teamChat/${Uri.file('${voice}').pathSegments.last}');
-    await storageReference.putFile(voice).then((value){
-      value.ref.getDownloadURL().then((value){
+    Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('teamChatVoice/${Uri.file('${voice}').pathSegments.last}');
+    await storageReference.putFile(voice).then((value)async{
+      await value.ref.getDownloadURL().then((value){
         AppCubit.get(context).createVoiceTeamChat(
           countryName: widget.countryName,
           dateTime: DateTime.now().toUtc().toString(),
           voice: value,
         );
+        widget.onSendMessage(value, "voice", size);
+        setState(() {
+          uploadingRecord = false;
+        });
       });
     }).catchError((error){
       print('nnnnnnnnnnnnnnnnnnnooooooooooooooooooo');
       print(error.toString());
 
     });
-    var url = await storageReference.getDownloadURL();
+    //var url = await storageReference.getDownloadURL();
     print("recording file222");
-    print(url);
-    widget.onSendMessage(url, "voice", size);
 
-    setState(() {
-      uploadingRecord = false;
-    });
+
+
 
   }
 

@@ -342,8 +342,7 @@ class _MyMessageTeamChatWidgetState extends State<MyMessageTeamChatWidget>
                                       VoiceMessage(
                                         audioSrc:
                                             '${AppCubit.get(context).teamChat[widget.index!].voice}',
-                                        played:
-                                            true, // To show played badge or not.
+                                        played: true, // To show played badge or not.
                                         me: true, // Set message side.
                                         contactBgColor: AppColors.myGrey,
 

@@ -157,7 +157,7 @@ class _SenderMessageWidgetState extends State<SenderMessageWidget>
                           audioSrc:
                               '${AppCubit.get(context).messages[widget.index!].voice}',
                           played: true, // To show played badge or not.
-                          me: true, // Set message side.
+                          me: false, // Set message side.
                           meBgColor: AppColors.myGrey,
                           mePlayIconColor: AppColors.navBarActiveIcon,
                           onPlay: () {}, // Do something when voice played.

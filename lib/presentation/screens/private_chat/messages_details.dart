@@ -342,19 +342,13 @@ class _ChatDetailsState extends State<ChatDetails> {
                                                   textMessage.text==""
                                                       ?{
                                                     recording?stopRecord():startRecord(),
-                                                    AppCubit.get(context).getMessages(recevierId:widget.userId!)
+                                                   // AppCubit.get(context).getMessages(recevierId:widget.userId!)
                                                   } :
                                                   AppCubit.get(context).sendMessage(recevierId: widget.userId!, recevierImage:widget.userImage!, recevierName: widget.userName!, dateTime: DateTime.now().toUtc().toString(), text: textMessage.text);
                                                   setState(() {
                                                     FirebaseFirestore.instance.collection('tokens').doc(widget.userId!).get().then((value) {
 
-                                                      callFcmApiSendPushNotificationsChat(
-                                                        token: value.data()!['token'],
-                                                        title: 'Check Your message',
-                                                        description:textMessage.text,
-                                                        imageUrl: widget.userImage!,
-                                                        //  token:AppCubit.get(context).userToken
-                                                      );
+
 
                                                     });
                                                   });
@@ -525,7 +519,7 @@ class _ChatDetailsState extends State<ChatDetails> {
     Size size = MediaQuery.of(context).size;
     print("permission uploadRecord1");
     var uuid = const Uuid().v4();
-    Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('ali/${Uri.file('${voice}').pathSegments.last}');
+    Reference storageReference =firebase_storage.FirebaseStorage.instance.ref().child('privateChatVoice/${Uri.file('${voice}').pathSegments.last}');
     await storageReference.putFile(voice).then((value){
       value.ref.getDownloadURL().then((value){
         AppCubit.get(context).createVoiceMessage(
@@ -543,7 +537,8 @@ class _ChatDetailsState extends State<ChatDetails> {
       }).catchError((){});
       print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeeeeeeeeeeeeeeeessssssssss');
     }).catchError((error){
-      print('nnnnnnnnnnnnnnnnnnnooooooooooooooooooo');
+      print('nnnnnnnnnnnnnnnnnnnooooooooooooooooooo${error.toString()}');
+
       print(error.toString());
 
     });
