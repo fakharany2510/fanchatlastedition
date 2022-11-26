@@ -83,9 +83,9 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
               if(scrollController.hasClients){
                 scrollController.animateTo(scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.linear);
               }
-              print('sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
-              print(AppCubit.get(context).cheering.length);
-              print('sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
+              // print('sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
+              // print(AppCubit.get(context).cheering.length);
+              // print('sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
               return BlocConsumer<AppCubit,AppState>(
                 listener: (context,state){
                   if(state is PickPostImageSuccessState ){

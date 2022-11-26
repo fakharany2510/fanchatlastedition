@@ -690,9 +690,9 @@ class _AntherChatDetailsState extends State<AntherChatDetails> {
     var uuid = const Uuid().v4();
     Reference storageReference = firebase_storage.FirebaseStorage.instance
         .ref()
-        .child('ali/${Uri.file('${voice}').pathSegments.last}');
-    await storageReference.putFile(voice).then((value) {
-      value.ref.getDownloadURL().then((value) {
+        .child('privateChatVoice/${Uri.file('${voice}').pathSegments.last}');
+    await storageReference.putFile(voice).then((value1) {
+      value1.ref.getDownloadURL().then((value) {
         AppCubit.get(context).createVoiceMessage(
           recevierId: widget.userId!,
           recevierImage: widget.userImage!,
