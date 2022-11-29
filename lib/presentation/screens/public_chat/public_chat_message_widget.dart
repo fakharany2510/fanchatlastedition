@@ -8,6 +8,7 @@ import 'package:fanchat/presentation/screens/private_chat/open_full_video_privat
 import 'package:fanchat/presentation/screens/show_home_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:voice_message_package/voice_message_package.dart';
 
 class SenderPublicChatWidget extends StatefulWidget {
@@ -72,7 +73,24 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget>
                                     fontSize: 15,
                                     color: AppColors.myWhite,
                                     fontFamily: AppStrings.appFont),
-                              )
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 5),
+                                  child: Text(
+                                    DateFormat('kk:mm').format(DateTime.parse(AppCubit.get(context).publicChat[widget.index!].dateTime!).toLocal()),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 12,
+                                        color: Color(0xfffbf7c2),
+                                        fontFamily: AppStrings.appFont),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         )
@@ -142,7 +160,24 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget>
                                           // maxHeightDiskCache:75,
                                           fit: BoxFit.contain,
                                         ),
-                                      )
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(left: 5),
+                                          child: Text(
+                                            DateFormat('kk:mm').format(DateTime.parse(AppCubit.get(context).publicChat[widget.index!].dateTime!).toLocal()),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 12,
+                                                color: Color(0xfffbf7c2),
+                                                fontFamily: AppStrings.appFont),
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -259,6 +294,23 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget>
                                               )),
                                         ],
                                       ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(left: 5),
+                                          child: Text(
+                                            DateFormat('kk:mm').format(DateTime.parse(AppCubit.get(context).publicChat[widget.index!].dateTime!).toLocal()),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 12,
+                                                color: Color(0xfffbf7c2),
+                                                fontFamily: AppStrings.appFont),
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 )
@@ -303,6 +355,23 @@ class _SenderPublicChatWidgetState extends State<SenderPublicChatWidget>
                                         me: false, // Set message side.
                                         onPlay:
                                             () {}, // Do something when voice played.
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(left: 5),
+                                          child: Text(
+                                            DateFormat('kk:mm').format(DateTime.parse(AppCubit.get(context).publicChat[widget.index!].dateTime!).toLocal()),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 12,
+                                                color: Color(0xfffbf7c2),
+                                                fontFamily: AppStrings.appFont),
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),

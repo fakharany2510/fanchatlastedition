@@ -81,9 +81,9 @@ class _SplashScreenState extends State<SplashScreen> {
         width: MediaQuery.of(context).size.width,
         child: controller.value.isInitialized
             ? AspectRatio(
-                aspectRatio: controller.value.aspectRatio,
-                child: VideoPlayer(controller),
-              )
+          aspectRatio: controller.value.aspectRatio,
+          child: VideoPlayer(controller),
+        )
             : Container(),
       ),
     );

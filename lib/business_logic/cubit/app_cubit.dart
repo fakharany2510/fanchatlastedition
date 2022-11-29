@@ -45,7 +45,8 @@ class AppCubit extends Cubit<AppState> {
 //caching manager
   final manager=CacheManager(Config(
     'customCacheKey',
-    stalePeriod: const Duration(days: 15),maxNrOfCacheObjects: 100,));
+    stalePeriod: const Duration(days: 15),maxNrOfCacheObjects: 100,)
+  );
 
   List screensTitles=[
 

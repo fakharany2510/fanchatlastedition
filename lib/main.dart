@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, depend_on_referenced_packages
 
 import 'package:fanchat/business_logic/advertising_cubit/advertising_cubit.dart';
+import 'package:fanchat/presentation/screens/splash_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
 import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
@@ -15,7 +16,6 @@ import 'package:fanchat/presentation/screens/posts/add_new_video.dart';
 import 'package:fanchat/presentation/screens/posts/add_text_post.dart';
 import 'package:fanchat/presentation/screens/profile_area/profile_screen.dart';
 import 'package:fanchat/presentation/screens/register_screen.dart';
-import 'package:fanchat/presentation/screens/splash_screen.dart';
 import 'package:fanchat/presentation/should_pay.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:firebase_core/firebase_core.dart';
