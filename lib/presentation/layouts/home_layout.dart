@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fanchat/business_logic/cubit/app_cubit.dart';
+import 'package:fanchat/business_logic/shared/local/cash_helper.dart';
 import 'package:fanchat/constants/app_colors.dart';
 import 'package:fanchat/constants/app_strings.dart';
 import 'package:fanchat/presentation/paypal/choosepaypackage.dart';
@@ -10,6 +11,7 @@ import 'package:fanchat/presentation/should_pay.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:new_version/new_version.dart';
 
 import '../screens/fan/fan_screen.dart';
 import '../screens/home_screen.dart';
@@ -24,16 +26,15 @@ class HomeLayout extends StatefulWidget {
 class _HomeLayoutState extends State<HomeLayout> {
   @override
   void initState() {
+
+    print('ppppppppppppppppppppppppppppppppppppppppppayed 11111111111');
     AppCubit.get(context).getUser(context).then((value) async {
-      if (AppCubit.get(context).userModel!.buyDate != null) {
-        if (AppCubit.get(context)
-                .userModel!
-                .buyDate!
-                .difference(
-                  DateTime.now(),
-                )
-                .inDays >=
-            365) {
+      print('///////////////////////////////////////////////////////////${AppCubit.get(context).userModel!.buyDate}');
+      print('///////////////////////////////////////////////////////////${AppCubit.get(context).userModel!.trialStartDate}');
+      print('ppppppppppppppppppppppppppppppppppppppppppayed 22222222222222222');
+      if (AppCubit.get(context).userModel!.buyDate != null ) {
+        print('ppppppppppppppppppppppppppppppppppppppppppayed 33333333333333333333');
+        if ((DateTime.now().difference(AppCubit.get(context).userModel!.buyDate!)).inDays >= 365) {
           await FirebaseFirestore.instance
               .collection('users')
               .doc(AppStrings.uId)
@@ -49,19 +50,18 @@ class _HomeLayoutState extends State<HomeLayout> {
           });
         }
       } else {
-        if (AppCubit.get(context)
-                .userModel!
-                .trialStartDate!
-                .difference(
-                  DateTime.now(),
-                )
-                .inDays >=
-            3) {
+        print('1111111111111111111111111111111111111111111111');
+        print('1111111111111111111111111111111111111111111111  -----${DateTime.parse(AppCubit.get(context).userModel!.trialStartDate!)}');
+        print('1111111111111111111111111111111111111111111111  ${((DateTime.now()).difference(DateTime.parse(AppCubit.get(context).userModel!.trialStartDate!)).inSeconds) }');
+        if (((DateTime.now()).difference(DateTime.parse(AppCubit.get(context).userModel!.trialStartDate!)).inDays) >= 3) {
+          print('2222222222222222222222222222222222222222222222222222');
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                 builder: (context) => const ShouldPay(),
               ),
               (route) => false);
+        }else{
+          print('oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo');
         }
       }
     }).catchError((error) {

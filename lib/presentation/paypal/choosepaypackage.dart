@@ -119,7 +119,7 @@ class _ChoosePayPackageState extends State<ChoosePayPackage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    CashHelper.getData(key: 'Advertise') == 1
+                    CashHelper.getData(key: 'advertise') == 1
                         ? const SizedBox()
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.start,

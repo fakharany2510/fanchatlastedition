@@ -13,9 +13,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../constants/app_colors.dart';
 import '../widgets/shared_widgets.dart';
 
-class EditProfileScreen extends StatelessWidget {
+class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
 
+  @override
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
+}
+
+class _EditProfileScreenState extends State<EditProfileScreen> {
+  @override
+  void initState() {
+    AppCubit.get(context).getUser(context);
+    AppCubit.get(context).getAllUsers();
+    AppCubit.get(context).getUserWithId(context,AppStrings.uId!);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -40,7 +52,8 @@ class EditProfileScreen extends StatelessWidget {
         return Scaffold(
             backgroundColor: AppColors.primaryColor1,
             appBar: customUpdateAppbar('Edit Profile', context),
-            body: Stack(
+            body: cubit.userModel != null
+        ?Stack(
               children: [
                 SizedBox(
                     height: MediaQuery.of(context).size.height,
@@ -49,7 +62,7 @@ class EditProfileScreen extends StatelessWidget {
                       opacity: 1,
                       child: Image(
                         image:
-                            AssetImage('assets/images/public_chat_image.jpeg'),
+                        AssetImage('assets/images/public_chat_image.jpeg'),
                         fit: BoxFit.cover,
                       ),
                     )),
@@ -77,11 +90,11 @@ class EditProfileScreen extends StatelessWidget {
                                       width: double.infinity,
                                       decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(3),
+                                          BorderRadius.circular(3),
                                           image: DecorationImage(
                                               image: cubit.coverImage == null
                                                   ? NetworkImage(
-                                                      '${cubit.userModel!.cover}')
+                                                  '${cubit.userModel!.cover}')
                                                   : cubit.cover,
                                               fit: BoxFit.cover)),
                                     ),
@@ -112,10 +125,10 @@ class EditProfileScreen extends StatelessWidget {
                                     radius: 57,
                                     child: CircleAvatar(
                                       backgroundImage:
-                                          cubit.profileImage == null
-                                              ? NetworkImage(
-                                                  '${cubit.userModel!.image}')
-                                              : cubit.profile,
+                                      cubit.profileImage == null
+                                          ? NetworkImage(
+                                          '${cubit.userModel!.image}')
+                                          : cubit.profile,
                                       radius: 55,
                                     ),
                                   ),
@@ -139,73 +152,9 @@ class EditProfileScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // if (AppCubit.get(context).profileImage != null ||
-                      //     AppCubit.get(context).coverImage != null)
-                      //   Container(
-                      //     margin: const EdgeInsets.symmetric(horizontal: 10),
-                      //     child: Row(
-                      //       children: [
-                      //         if (cubit.profileImage != null)
-                      //           Expanded(
-                      //             child: Column(
-                      //               children: [
-                      //                 defaultButton(
-                      //                   textColor: AppColors.primaryColor1,
-                      //                   width: size.width * .6,
-                      //                   height: size.height * .06,
-                      //                   fontSize: 14,
-                      //                   buttonColor: AppColors.myGrey,
-                      //                   buttonText: 'Upload profile image',
-                      //                   function: () {
-                      //                     // cubit
-                      //                     //     .uploadUserImage(
-                      //                     //   name: cubit.changeUserNameController.text,
-                      //                     //   phone:
-                      //                     //       cubit.changeUserPhoneController.text,
-                      //                     //   bio: cubit.changeUserBioController.text,
-                      //                     // )
-                      //                     //     .then((value) {
-                      //                     //   cubit.getUser();
-                      //                     // });
-                      //                   },
-                      //                 )
-                      //               ],
-                      //             ),
-                      //           ),
-                      //         SizedBox(width: 5),
-                      //         if (cubit.coverImage != null)
-                      //           Expanded(
-                      //             child: Column(
-                      //               children: [
-                      //                 defaultButton(
-                      //                   textColor: AppColors.primaryColor1,
-                      //                   width: size.width * .6,
-                      //                   height: size.height * .06,
-                      //                   fontSize: 14,
-                      //                   buttonColor: AppColors.myGrey,
-                      //                   buttonText: 'Upload cover image',
-                      //                   function: () {
-                      //                     // cubit
-                      //                     //     .uploadUserCover(
-                      //                     //   name: cubit.changeUserNameController.text,
-                      //                     //   phone:
-                      //                     //       cubit.changeUserPhoneController.text,
-                      //                     //   bio: cubit.changeUserBioController.text,
-                      //                     // )
-                      //                     //     .then((value) {
-                      //                     //   cubit.getUser();
-                      //                     // });
-                      //                   },
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //       ],
-                      //     ),
-                      //   ),
                       Padding(
                         padding:
-                            const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textFormFieldWidget(
                             context: context,
                             controller: cubit.changeUserNameController,
@@ -213,7 +162,7 @@ class EditProfileScreen extends StatelessWidget {
                             inputType: TextInputType.name,
                             labelText: "Name",
                             prefixIcon:
-                                Icon(Icons.person, color: AppColors.myGrey)),
+                            Icon(Icons.person, color: AppColors.myGrey)),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -228,7 +177,7 @@ class EditProfileScreen extends StatelessWidget {
                       ),
                       Padding(
                         padding:
-                            const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textFormFieldWidget(
                           maxLines: 4,
                           context: context,
@@ -240,7 +189,7 @@ class EditProfileScreen extends StatelessWidget {
                       ),
                       Padding(
                         padding:
-                            const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textFormFieldWidget(
                             context: context,
                             controller: cubit.changeYoutubeLinkController,
@@ -253,12 +202,12 @@ class EditProfileScreen extends StatelessWidget {
                               margin: const EdgeInsets.all(12),
                               child: const Image(
                                   image:
-                                      AssetImage('assets/images/youtube.png')),
+                                  AssetImage('assets/images/youtube.png')),
                             )),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textFormFieldWidget(
                             context: context,
                             controller: cubit.changeFacebookLinkController,
@@ -271,12 +220,12 @@ class EditProfileScreen extends StatelessWidget {
                               margin: const EdgeInsets.all(12),
                               child: const Image(
                                   image:
-                                      AssetImage('assets/images/facebook.png')),
+                                  AssetImage('assets/images/facebook.png')),
                             )),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textFormFieldWidget(
                             context: context,
                             controller: cubit.changeTwitterLinkController,
@@ -289,12 +238,12 @@ class EditProfileScreen extends StatelessWidget {
                               margin: const EdgeInsets.all(12),
                               child: const Image(
                                   image:
-                                      AssetImage('assets/images/twitter.png')),
+                                  AssetImage('assets/images/twitter.png')),
                             )),
                       ),
                       Padding(
                         padding:
-                            const EdgeInsets.only(left: 20, right: 20, top: 20),
+                        const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: textFormFieldWidget(
                           context: context,
                           controller: cubit.changeInstagramLinkController,
@@ -307,153 +256,111 @@ class EditProfileScreen extends StatelessWidget {
                             margin: const EdgeInsets.all(12),
                             child: const Image(
                                 image:
-                                    AssetImage('assets/images/instagram.png')),
+                                AssetImage('assets/images/instagram.png')),
                           ),
                         ),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
-
-                      // Align(
-                      //   alignment: Alignment.topLeft,
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.only(left: 25),
-                      //     child: Text("Select Favorite Team :",style: TextStyle(
-                      //         color: AppColors.myGrey,
-                      //         fontSize: 16,
-                      //         fontFamily: AppStrings.appFont
-                      //     ),),
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(left: 0, right: 0, top: 10),
-                      //   child: Container(
-                      //     margin: const EdgeInsets.symmetric(
-                      //       horizontal: 15
-                      //     ),
-                      //     decoration: BoxDecoration(
-                      //       border: Border.all(
-                      //         color: AppColors.myWhite,
-                      //         width: 1
-                      //       ),
-                      //       borderRadius: BorderRadius.circular(20)
-                      //     ),
-                      //     child: CountryPickerDropdown(
-                      //       dropdownColor: AppColors.primaryColor1,
-                      //       initialValue: CashHelper.getData(key: 'isoCode')==null? 'QA':CashHelper.getData(key: 'isoCode'),
-                      //       itemBuilder: _buildDropdownItem,
-                      //       priorityList:[
-                      //         CountryPickerUtils.getCountryByIsoCode('GB'),
-                      //         CountryPickerUtils.getCountryByIsoCode('CN'),
-                      //       ],
-                      //       sortComparator: (Country a, Country b) => a.isoCode.compareTo(b.isoCode),
-                      //       onValuePicked: (Country country) {
-                      //         print("${country.isoCode}");
-                      //         printMessage("+${country.phoneCode}");
-                      //         CashHelper.saveData(key: 'isoCode',value:"${country.isoCode}" );
-                      //
-                      //         CashHelper.saveData(key: 'Team',value:"${country.name}" );
-                      //       },
-                      //     ),
-                      //   ),
-                      // ),
-
                       const SizedBox(height: 30),
                       state is UpdateUserLoadingState ||
-                              state is GetCoverImageSuccessState ||
-                              state is GetProfileImageSuccessState
+                          state is GetCoverImageSuccessState ||
+                          state is GetProfileImageSuccessState
                           ? const CircularProgressIndicator()
                           : defaultButton(
-                              textColor: AppColors.myWhite,
-                              buttonText: 'Save Changes',
-                              buttonColor: const Color(0Xffd32330),
-                              height: size.height * .06,
-                              width: size.width * .9,
-                              function: () {
-                                if (cubit.changeUserNameController.text != '') {
-                                  if (cubit.coverImage != null) {
-                                    cubit
-                                        .uploadUserCover(
-                                      phone: cubit.changeUserPhoneController.text,
-                                      name: cubit.changeUserNameController.text,
-                                      bio: cubit.changeUserBioController.text,
-                                    )
-                                        .then((value) {
-                                      customToast(
-                                          title: 'Data Updated',
-                                          color: AppColors.primaryColor1);
-                                    });
-                                  }
-
-                                  //////////////////////////////////
-                                  if (cubit.profileImage != null) {
-                                    cubit
-                                        .uploadUserImage(
-                                      phone: cubit.changeUserPhoneController.text,
-                                      name: cubit.changeUserNameController.text,
-                                      bio: cubit.changeUserBioController.text,
-                                    )
-                                        .then((value) {
-                                      customToast(
-                                          title: 'Data Updated',
-                                          color: AppColors.primaryColor1);
-                                    });
-                                  }
-
-                                  ///////////////////////////
-                                  cubit
-                                      .updateProfile(
-                                    image: cubit.profilePath,
-                                    cover: cubit.coverPath,
-                                    phone: cubit.changeUserPhoneController.text,
-                                    name: cubit.changeUserNameController.text,
-                                    bio: cubit.changeUserBioController.text,
-                                    youtubeLink:
-                                        cubit.changeYoutubeLinkController.text,
-                                    facebookLink:
-                                        cubit.changeFacebookLinkController.text,
-                                    twitterLink:
-                                        cubit.changeTwitterLinkController.text,
-                                    instagramLink: cubit
-                                        .changeInstagramLinkController.text,
-                                  )
-                                      .then((value) {
-                                    customToast(
-                                        title: 'Data Updated',
-                                        color: AppColors.primaryColor1);
-
-                                    cubit.getUser(context);
-                                    cubit.getPosts().then((value) {
-                                      Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const HomeLayout()),
-                                        (route) => false,
-                                      );
-                                      customToast(
-                                          title: 'Data Updated',
-                                          color: AppColors.primaryColor1);
-                                    });
-                                  });
-
-                                  printMessage(
-                                      cubit.changeUserNameController.text);
-                                } else {
+                          textColor: AppColors.myWhite,
+                          buttonText: 'Save Changes',
+                          buttonColor: const Color(0Xffd32330),
+                          height: size.height * .06,
+                          width: size.width * .9,
+                          function: () {
+                            if (cubit.changeUserNameController.text != '') {
+                              if (cubit.coverImage != null) {
+                                cubit
+                                    .uploadUserCover(
+                                  phone: cubit.changeUserPhoneController.text,
+                                  name: cubit.changeUserNameController.text,
+                                  bio: cubit.changeUserBioController.text,
+                                )
+                                    .then((value) {
                                   customToast(
-                                      title: 'Name is required',
-                                      color: Colors.red);
-                                }
+                                      title: 'Data Updated',
+                                      color: AppColors.primaryColor1);
+                                });
+                              }
 
-                                // Navigator.pushNamed(context, 'edit_profile');
-                              }),
+                              //////////////////////////////////
+                              if (cubit.profileImage != null) {
+                                cubit
+                                    .uploadUserImage(
+                                  phone: cubit.changeUserPhoneController.text,
+                                  name: cubit.changeUserNameController.text,
+                                  bio: cubit.changeUserBioController.text,
+                                )
+                                    .then((value) {
+                                  customToast(
+                                      title: 'Data Updated',
+                                      color: AppColors.primaryColor1);
+                                });
+                              }
+
+                              ///////////////////////////
+                              cubit
+                                  .updateProfile(
+                                image: cubit.profilePath,
+                                cover: cubit.coverPath,
+                                phone: cubit.changeUserPhoneController.text,
+                                name: cubit.changeUserNameController.text,
+                                bio: cubit.changeUserBioController.text,
+                                youtubeLink:
+                                cubit.changeYoutubeLinkController.text,
+                                facebookLink:
+                                cubit.changeFacebookLinkController.text,
+                                twitterLink:
+                                cubit.changeTwitterLinkController.text,
+                                instagramLink: cubit
+                                    .changeInstagramLinkController.text,
+
+                              )
+                                  .then((value) {
+                                customToast(
+                                    title: 'Data Updated',
+                                    color: AppColors.primaryColor1);
+
+                                cubit.getUser(context);
+                                cubit.getPosts().then((value) {
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const HomeLayout()),
+                                        (route) => false,
+                                  );
+                                  customToast(
+                                      title: 'Data Updated',
+                                      color: AppColors.primaryColor1);
+                                });
+                              });
+
+                              printMessage(
+                                  cubit.changeUserNameController.text);
+                            } else {
+                              customToast(
+                                  title: 'Name is required',
+                                  color: Colors.red);
+                            }
+
+                            // Navigator.pushNamed(context, 'edit_profile');
+                          }),
                       const SizedBox(height: 30),
                     ],
                   ),
                 ),
               ],
-            ));
+            )
+        :Center(child: CircularProgressIndicator(),)
+        );
       },
     );
   }

@@ -15,7 +15,7 @@ class UserModel{
   bool ?advertise ;
   bool ?premium ;
   DateTime? buyDate;
-  DateTime? trialStartDate;
+  String? trialStartDate;
   int? numberOfPosts;
   bool? payed;
   int? days;

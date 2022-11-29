@@ -5,14 +5,10 @@ import 'package:fanchat/data/modles/user_model.dart';
 import 'package:fanchat/presentation/widgets/shared_widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
-class RegisterCubit extends Cubit<RegisterState>{
+class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(RegisterInitialState());
   static RegisterCubit get(context) => BlocProvider.of(context);
   UserModel? userModel;
-
-
-
 
   // Future userRegisterPhone({
   //   required String uid,
@@ -49,58 +45,55 @@ class RegisterCubit extends Cubit<RegisterState>{
   //
   // }
 
-  Future saveUserInfo(
-      {
-        required String name,
-        required String uId,
-        required String phone,
-        String ?bio,
-        String ?image,
-        String ?youtube,
-        String ?twitter,
-        String ?facebook,
-        String ?instagram,
-        String ?cover,
-        bool ?advertise,
-        bool ?premium,
-        bool ?payed,
-        int ?dayes,
-
-
-      })
-  async{
-    UserModel userModel  =UserModel(
-        username: name,
-        phone: phone,
-        uId: uId,
-        bio: bio??'Enter your bio',
-        youtubeLink: youtube??'Enter your youtube link',
-        instagramLink: instagram??'Enter your instagram link',
-        twitterLink: twitter??'Enter your twitter link',
-        facebookLink: facebook??'Enter your facebook link',
-        image: image??'https://firebasestorage.googleapis.com/v0/b/m2mapp-91014.appspot.com/o/user-svgrepo-com.png?alt=media&token=2a3faefa-613f-4d0e-a3b6-5b6556530ed7',
-      cover: cover??'https://firebasestorage.googleapis.com/v0/b/m2mapp-91014.appspot.com/o/user-svgrepo-com.png?alt=media&token=2a3faefa-613f-4d0e-a3b6-5b6556530ed7',
+  Future saveUserInfo({
+    required String name,
+    required String uId,
+    required String phone,
+    String? bio,
+    String? image,
+    String? youtube,
+    String? twitter,
+    String? facebook,
+    String? instagram,
+    String? cover,
+    bool? advertise,
+    bool? premium,
+    bool? payed,
+    int? dayes,
+  }) async {
+    UserModel userModel = UserModel(
+      username: name,
+      phone: phone,
+      uId: uId,
+      bio: bio ?? 'Enter your bio',
+      youtubeLink: youtube ?? 'Enter your youtube link',
+      instagramLink: instagram ?? 'Enter your instagram link',
+      twitterLink: twitter ?? 'Enter your twitter link',
+      facebookLink: facebook ?? 'Enter your facebook link',
+      image: image ??
+          'https://firebasestorage.googleapis.com/v0/b/m2mapp-91014.appspot.com/o/user-svgrepo-com.png?alt=media&token=2a3faefa-613f-4d0e-a3b6-5b6556530ed7',
+      cover: cover ??
+          'https://firebasestorage.googleapis.com/v0/b/m2mapp-91014.appspot.com/o/user-svgrepo-com.png?alt=media&token=2a3faefa-613f-4d0e-a3b6-5b6556530ed7',
       payed: false,
       days: 0,
       accountActive: false,
-        advertise:advertise?? false,
-      premium: premium??false,
+      advertise: advertise ?? false,
+      premium: premium ?? false,
       numberOfPosts: 0,
+      buyDate: null,
+      trialStartDate: '${DateTime.now()}'
     );
-
     FirebaseFirestore.instance
         .collection('users')
         .doc(uId)
-        .set(userModel.toMap()).then((value) {
-
+        .set(userModel.toMap())
+        .then((value) {
       printMessage('User Created');
       emit(UserDataSuccessState());
-
-    }).catchError((error){
+    }).catchError((error) {
       printMessage('Error is Save Data is ${error.toString()}');
       emit(UserDataErrorState());
     });
-
   }
 
 //   //send otp to mail
@@ -124,7 +117,7 @@ class RegisterCubit extends Cubit<RegisterState>{
 //     }
 // }
   //////////////////////////////////////////////////////////////
-  bool isLoggedIn =false;
+  bool isLoggedIn = false;
   // Future<void> signInWithFacebook() async {
   //   emit(FacebookLoginLoadingState());
   //
@@ -201,13 +194,4 @@ class RegisterCubit extends Cubit<RegisterState>{
   //
   // }
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
 }

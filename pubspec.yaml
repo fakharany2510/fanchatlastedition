@@ -88,6 +88,8 @@ dependencies:
   video_thumbnail: ^0.5.3
   flutter_blurhash: ^0.7.0
   video_thumbnail_imageview: ^0.0.5
+  new_version: ^0.3.1
+
 
 dev_dependencies:
   flutter_test:

@@ -249,7 +249,7 @@ class AppCubit extends Cubit<AppState> {
     await  FirebaseFirestore.instance
         .collection('users')
         .doc(AppStrings.uId)
-        .get().then((value) {
+        .get().then((value)async {
       userModel = UserModel.formJson(value.data()!);
       printMessage('${userModel!.email}');
       changeUserNameController.text='${userModel!.username}';
@@ -278,15 +278,15 @@ class AppCubit extends Cubit<AppState> {
         .collection('users')
         .doc(id)
         .get().then((value) {
-      // userModel = UserModel.formJson(value.data()!);
-      // printMessage('${userModel!.email}');
-      // changeUserNameController.text='${userModel!.username}';
-      // changeUserPhoneController.text='${userModel!.phone}';
-      // changeUserBioController.text='${userModel!.bio}';
-      // changeYoutubeLinkController.text='${userModel!.youtubeLink}';
-      // changeInstagramLinkController.text='${userModel!.instagramLink}';
-      // changeTwitterLinkController.text='${userModel!.twitterLink}';
-      // changeFacebookLinkController.text='${userModel!.facebookLink}';
+      userModel = UserModel.formJson(value.data()!);
+      printMessage('${userModel!.email}');
+      changeUserNameController.text='${userModel!.username}';
+      changeUserPhoneController.text='${userModel!.phone}';
+      changeUserBioController.text='${userModel!.bio}';
+      changeYoutubeLinkController.text='${userModel!.youtubeLink}';
+      changeInstagramLinkController.text='${userModel!.instagramLink}';
+      changeTwitterLinkController.text='${userModel!.twitterLink}';
+      changeFacebookLinkController.text='${userModel!.facebookLink}';
 
       emit(GetUserDataSuccessfulState());
     }).catchError((error){
@@ -508,7 +508,8 @@ class AppCubit extends Cubit<AppState> {
         facebookLink: facebookLink??'Enter your facebook link',
         instagramLink: instagramLink??'Enter your instagram link',
         twitterLink: twitterLink??'Enter your twitter link',
-        youtubeLink: youtubeLink??'Enter your youtube link'
+        youtubeLink: youtubeLink??'Enter your youtube link',
+      trialStartDate: '${DateTime.now()}'
 
     );
     FirebaseFirestore.instance.
