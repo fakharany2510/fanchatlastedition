@@ -1071,20 +1071,6 @@ class AppCubit extends Cubit<AppState> {
           posts.add(BrowisePostModel.fromJson(element.data()));
         }
 
-        // if(hidePostsId.isNotEmpty){
-        //
-        //   if(hidePostsId.contains(BrowisePostModel.fromJson(element.data()).postId)){
-        //     print('post deleted');
-        //   }else{
-        //     posts.add(BrowisePostModel.fromJson(element.data()));
-        //   }
-        // }
-        // else{
-        //
-        //   posts.add(BrowisePostModel.fromJson(element.data()));
-        //
-        // }
-
         if(userModel!.uId== BrowisePostModel.fromJson(element.data()).userId ){
           myPostsId.add(BrowisePostModel.fromJson(element.data()).postId!);
         }
@@ -1919,8 +1905,6 @@ class AppCubit extends Cubit<AppState> {
       print('4');
 
       //final String url = downloadUrl.toString();
-
-
       // print(url);
       //
     } catch (error) {
@@ -1928,6 +1912,7 @@ class AppCubit extends Cubit<AppState> {
     }
 
   }
+  List<String> myFansId=[];
   List<FanModel> fans=[];
   void getFanPosts(){
     fans=[];
@@ -1946,14 +1931,27 @@ class AppCubit extends Cubit<AppState> {
         print(element.data()['postVideo']);
         print('================================ link fan ============================');
 
-        // Delete a record
-        // await database?.rawDelete('DELETE * FROM Posts');
+        if(userModel!.uId== FanModel.fromJson(element.data()).userId ){
+          myFansId.add(FanModel.fromJson(element.data()).postId!);
+        }
+
+      for (var element in myFansId) {
+
+        FirebaseFirestore.instance.collection('fan').doc(element).update(
+            {
+              'image':userModel!.image,
+              'name':userModel!.username
+            }
+        ).then((value) {
+
+        });
+      }
+
         emit(BrowiseGetFanPostsSuccessState());
 
       });
     }
-    )
-        .catchError((error){
+    ).catchError((error){
       emit(BrowiseGetFanPostsErrorState());
       print('error while getting Fan posts ${error.toString()}');
     });
