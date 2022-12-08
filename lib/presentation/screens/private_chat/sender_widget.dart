@@ -52,7 +52,8 @@ class _SenderMessageWidgetState extends State<SenderMessageWidget>
                             fontWeight: FontWeight.w500,
                             fontSize: 17,
                             color: Color(0xff7895b2),
-                            fontFamily: AppStrings.appFont),
+                            fontFamily: AppStrings.appFont
+                        ),
                       ),
                       const SizedBox(
                         height: 5,

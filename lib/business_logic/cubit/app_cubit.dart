@@ -58,6 +58,7 @@ class AppCubit extends Cubit<AppState> {
     'More Screen',
 
   ];
+  ScrollController matchesScroll= ScrollController();
 
 
   final List <String> groupsImages=[
@@ -148,6 +149,8 @@ class AppCubit extends Cubit<AppState> {
 
 
     }
+
+
     if(currentIndex==3){
       getAllUsers();
       getLastUsers();
@@ -158,8 +161,13 @@ class AppCubit extends Cubit<AppState> {
     if(currentIndex==1){
       //getFanPosts();
       AppCubit.get(context).isDay= List.generate(28, (index) => false);
-      isDay.first=true;
-      getAllMatches(doc:'20 Nov');
+      if (matchesScroll.hasClients) {
+        matchesScroll.jumpTo(1500);
+      }
+
+      // isDay.first=true;
+      print('${DateTime.now().day} ${DateTime.now().month.toString()}');
+      getAllMatches(doc:'${DateTime.now().day} Dec');
 
     }
     if(currentIndex==0){
@@ -1931,25 +1939,28 @@ class AppCubit extends Cubit<AppState> {
         print(element.data()['postVideo']);
         print('================================ link fan ============================');
 
-        if(userModel!.uId== FanModel.fromJson(element.data()).userId ){
-          myFansId.add(FanModel.fromJson(element.data()).postId!);
-        }
-
-      for (var element in myFansId) {
-
-        FirebaseFirestore.instance.collection('fan').doc(element).update(
-            {
-              'image':userModel!.image,
-              'name':userModel!.username
-            }
-        ).then((value) {
-
-        });
-      }
-
-        emit(BrowiseGetFanPostsSuccessState());
+        // if(userModel!.uId== FanModel.fromJson(element.data()).userId && FanModel.fromJson(element.data()).postId!=null){
+        //   myFansId.add((FanModel.fromJson(element.data()).postId!));
+        // }
+        // emit(BrowiseGetFanPostsSuccessState());
 
       });
+      // for (var element in myFansId) {
+      //
+      //   print(myFansId.length);
+      //   FirebaseFirestore.instance.collection('fan').doc(element).update(
+      //       {
+      //         'image':userModel!.image,
+      //         'name':userModel!.username
+      //       }
+      //   ).then((value) {
+      //     emit(BrowiseGetFanPostsSuccessState());
+      //
+      //   });
+      //
+      // }
+      emit(BrowiseGetFanPostsSuccessState());
+
     }
     ).catchError((error){
       emit(BrowiseGetFanPostsErrorState());

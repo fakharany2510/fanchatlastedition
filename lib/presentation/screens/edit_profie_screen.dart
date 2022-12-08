@@ -329,6 +329,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     color: AppColors.primaryColor1);
 
                                 cubit.getUser(context);
+                                // cubit.getFanPosts();
                                 cubit.getPosts().then((value) {
                                   Navigator.pushAndRemoveUntil(
                                     context,
