@@ -325,7 +325,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             ),
                           ),
 
-                          Text('Ver 1.0.0',style:  TextStyle(
+                          Text('Ver 1.0.1',style:  TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 20,
                               fontFamily: AppStrings.appFont,
