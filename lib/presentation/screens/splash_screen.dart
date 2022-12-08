@@ -44,6 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
       return Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
         return widget.widget!;
+        
       }));
     });
 
