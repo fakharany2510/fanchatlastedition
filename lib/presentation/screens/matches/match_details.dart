@@ -30,6 +30,7 @@ class _MatchDetailsState extends State<MatchDetails> {
     '2 Dec',
     '3 Dec',
     '4 Dec',
+    '5 Dec',
     '6 Dec',
     '7 Dec',
     '8 Dec',
@@ -74,6 +75,7 @@ class _MatchDetailsState extends State<MatchDetails> {
     'Thu',
     'Fri',
     'Sat',
+    'Sun',
   ];
 
   String? dateMatch = '22 Nov 2022';

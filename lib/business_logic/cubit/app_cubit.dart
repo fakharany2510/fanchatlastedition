@@ -160,7 +160,7 @@ class AppCubit extends Cubit<AppState> {
     }
     if(currentIndex==1){
       //getFanPosts();
-      AppCubit.get(context).isDay= List.generate(28, (index) => false);
+      AppCubit.get(context).isDay= List.generate(29, (index) => false);
       if (matchesScroll.hasClients) {
         matchesScroll.jumpTo(1500);
       }
@@ -208,7 +208,7 @@ class AppCubit extends Cubit<AppState> {
   }
 
 
-  List isDay= List.generate(28, (index) => false);
+  List isDay= List.generate(29, (index) => false);
 
 
   void throwState(){
