@@ -525,6 +525,7 @@ class AppCubit extends Cubit<AppState> {
     collection('users').
     doc(AppStrings.uId).update(model.toMap()).then((value) {
       getUser(context);
+      getFanPosts();
       emit(UpdateUserSuccessState());
     }).catchError((error){
 
@@ -1939,26 +1940,30 @@ class AppCubit extends Cubit<AppState> {
         print(element.data()['postVideo']);
         print('================================ link fan ============================');
 
-        // if(userModel!.uId== FanModel.fromJson(element.data()).userId && FanModel.fromJson(element.data()).postId!=null){
-        //   myFansId.add((FanModel.fromJson(element.data()).postId!));
-        // }
-        // emit(BrowiseGetFanPostsSuccessState());
+        if(FanModel.fromJson(element.data()).postId!=null){
+          if(userModel!.uId== FanModel.fromJson(element.data()).userId  ){
+            myFansId.add((FanModel.fromJson(element.data()).postId!));
+          }
+          print('My Fans added to list=============================>');
+          emit(BrowiseGetFanPostsSuccessState());
+        }
+
+        emit(BrowiseGetFanPostsSuccessState());
 
       });
-      // for (var element in myFansId) {
-      //
-      //   print(myFansId.length);
-      //   FirebaseFirestore.instance.collection('fan').doc(element).update(
-      //       {
-      //         'image':userModel!.image,
-      //         'name':userModel!.username
-      //       }
-      //   ).then((value) {
-      //     emit(BrowiseGetFanPostsSuccessState());
-      //
-      //   });
-      //
-      // }
+      for (var element in myFansId) {
+
+        print(myFansId.length);
+        FirebaseFirestore.instance.collection('fan').doc(element).update(
+            {
+              'image':userModel!.image,
+              'name':userModel!.username
+            }
+        ).then((value) {
+          emit(BrowiseGetFanPostsSuccessState());
+        });
+
+      }
       emit(BrowiseGetFanPostsSuccessState());
 
     }
