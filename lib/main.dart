@@ -100,7 +100,8 @@ class MyApp extends StatelessWidget {
               ..getSlider()
               ..getLastUsers()
               ..getUserIds()
-              ..getAllMatches(doc: '20 Nov')),
+              ..getAllMatches(doc: '20 Nov')
+        ),
         BlocProvider(
             create: (context) => AdvertisingCubit()..getAdvertisingPosts()),
         // BlocProvider(create: (context) => PaymentBloc()),

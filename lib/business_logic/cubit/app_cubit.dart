@@ -156,7 +156,7 @@ class AppCubit extends Cubit<AppState> {
       getLastUsers();
     }
     if(currentIndex==2){
-      //getFanPosts();
+       getFanPosts();
     }
     if(currentIndex==1){
       //getFanPosts();
@@ -523,9 +523,9 @@ class AppCubit extends Cubit<AppState> {
     );
     FirebaseFirestore.instance.
     collection('users').
-    doc(AppStrings.uId).update(model.toMap()).then((value) {
+    doc(AppStrings.uId).update(model.toMap()).then((value)async {
       getUser(context);
-      getFanPosts();
+     await getFanPosts();
       emit(UpdateUserSuccessState());
     }).catchError((error){
 
@@ -1923,7 +1923,8 @@ class AppCubit extends Cubit<AppState> {
   }
   List<String> myFansId=[];
   List<FanModel> fans=[];
-  void getFanPosts(){
+
+  Future<void> getFanPosts()async{
     fans=[];
     postsId=[];
     likes=[];
